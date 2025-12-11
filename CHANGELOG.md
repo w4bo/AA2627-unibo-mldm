@@ -1,3 +1,9 @@
+## 1.0.0 (2025-12-11)
+
+### Bug Fixes
+
+* copy of AY2526 ([6760da4](https://github.com/w4bo/AA2627-unibo-mldm/commit/6760da481e6eb29912bf2d0e0204b00ccb1285c8))
+
 ## [1.0.20](https://github.com/w4bo/AA2526-unibo-mldm/compare/1.0.19...1.0.20) (2025-12-11)
 
 ### Dependency updates
