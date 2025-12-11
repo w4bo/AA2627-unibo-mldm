@@ -1,0 +1,3160 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-cimice_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lab-cimice_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-cimice_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lab-cimice_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-cimice_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lab-cimice_files/libs/quarto-html/quarto-syntax-highlighting-cdaacfc258cb6f151192107f105ac881.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.12">
+
+  <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
+  <title>Machine Learning and Data Mining (Module 2)</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lab-cimice_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lab-cimice_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="lab-cimice_files/libs/revealjs/dist/theme/quarto-b3aa9dda08c8fde6dffd4aadb76df7d0.css">
+  <link href="lab-cimice_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lab-cimice_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lab-cimice_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lab-cimice_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Machine Learning and Data Mining (Module 2)</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it 
+</div>
+</div>
+</div>
+
+</section>
+<section id="a-telemetry-system-for-precision-agriculture" class="title-slide slide level1 center">
+<h1>A telemetry system for precision agriculture</h1>
+<p>The impacts of climate change are so rapid that what happened last year is no longer true today.</p>
+<ul>
+<li>We need to act quickly and make decisions based on evidence, not just history.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/cimice/controlroom.png"></p>
+<figcaption>F1 control room</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/cimice/abds.svg"></p>
+<figcaption>The “Agro.Big.Data.Science” platform</figcaption>
+</figure>
+</div>
+</div></div>
+<p><em>ABDS</em>: A modular platform for collecting, analyzing, and visualizing heterogeneous data from the field and the post-harvest phase.</p>
+</section>
+
+<section id="cimice.net" class="title-slide slide level1 center">
+<h1>Cimice.Net</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>The brown marmorated stink bug (Halyomorpha halys) is an insect pest species causing economic damage to several agricultural commodities</p>
+<ul>
+<li>We want to build a data-driven approach to support the application of Integrated Pest Management strategies</li>
+<li>We want to monitor the spread of H. Halys</li>
+<li>And learn the most important environmental factors</li>
+</ul>
+<p>Three years-long project</p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/cimice/cimice2.jpg"></p>
+<figcaption>Brown marmorated stink bug</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/cimice/timeline2.png"></p>
+<figcaption>Timeline</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="cimice.net-1" class="title-slide slide level1 center">
+<h1>Cimice.Net</h1>
+<p>Goal: help farmers protect crops</p>
+<ul>
+<li>A network of monitoring traps has been deployed in Emilia-Romagna</li>
+<li>Monitoring 145, 168, and 101 farms in 2020-2022 (also in 2023 and 2024)</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/cimice/trap2.jpg"></p>
+<figcaption>Trap</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p><img data-src="./img/cimice/tableau.png"></p>
+</div></div>
+</section>
+
+<section id="collaborative-agro-sensing" class="title-slide slide level1 center">
+<h1>Collaborative Agro SEnsing</h1>
+<p>The acquisition of data concerning the installation and monitoring of traps have been aided by <em>CASE</em> (<em>Collaborative Agro SEnsing</em>)</p>
+<ul>
+<li>Dynamic questionnaire application for on-field data crowdsourcing in the agricultural domain</li>
+<li>Facilitate and standardize the communications between on-field operators with first-hand visuals of a given field/orchard and the technicians needing a 360-degree view of all fields</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="./img/cimice/case1.png"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="./img/cimice/case2.png"></p>
+</div></div>
+</section>
+
+<section id="section" class="title-slide slide level1 center">
+<h1></h1>
+
+<img src="./img/cimice/case3.png" class="center-img r-stretch"></section>
+
+<section id="section-1" class="title-slide slide level1 center">
+<h1></h1>
+
+<img src="./img/cimice/case4.png" class="center-img r-stretch"></section>
+
+<section id="section-2" class="title-slide slide level1 center">
+<h1></h1>
+
+<img src="./img/cimice/case5.png" class="center-img r-stretch"></section>
+
+<section id="section-3" class="title-slide slide level1 center">
+<h1></h1>
+
+<img src="./img/cimice/case8.png" class="center-img r-stretch"></section>
+
+<section id="section-4" class="title-slide slide level1 center">
+<h1></h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/cimice/case6.png"></p>
+<figcaption>Database</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/cimice/case7.png"></p>
+<figcaption>Multidimensional cube (DFM)</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="live" class="title-slide slide level1 center">
+<h1><a href="https://big.csr.unibo.it/projects/cimice/monitoring.php?lan=en">Live!</a></h1>
+
+</section>
+
+<section id="the-stinkbug-dataset" class="title-slide slide level1 center">
+<h1>The <code>Stinkbug</code> dataset</h1>
+
+</section>
+
+<section id="loading-the-data" class="title-slide slide level1 center">
+<h1>Loading the data</h1>
+<div id="cell-3" class="cell" data-execution_count="23">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">"./datasets/cimice/captures-raw.csv"</span>, sep<span class="op">=</span><span class="st">','</span>)</span>
+<span id="cb1-3"><a href=""></a>df</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">GID</th>
+<th data-quarto-table-cell-role="th">TIMESTAMP</th>
+<th data-quarto-table-cell-role="th">CROP_ID</th>
+<th data-quarto-table-cell-role="th">ADULTS</th>
+<th data-quarto-table-cell-role="th">SMALL_INSTARS</th>
+<th data-quarto-table-cell-role="th">LARGE_INSTARS</th>
+<th data-quarto-table-cell-role="th">TEMPERATURE_AVG</th>
+<th data-quarto-table-cell-role="th">TEMPERATURE_MAX</th>
+<th data-quarto-table-cell-role="th">TEMPERATURE_MIN</th>
+<th data-quarto-table-cell-role="th">HUMIDITY_AVG</th>
+<th data-quarto-table-cell-role="th">HUMIDITY_MAX</th>
+<th data-quarto-table-cell-role="th">HUMIDITY_MIN</th>
+<th data-quarto-table-cell-role="th">PRECIPITATIONS</th>
+<th data-quarto-table-cell-role="th">WINDSPEED_AVG</th>
+<th data-quarto-table-cell-role="th">WINDSPEED_MAX</th>
+<th data-quarto-table-cell-role="th">TOTAL_CAPTURES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>149</td>
+<td>2020-04-27</td>
+<td>41</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>16.966669</td>
+<td>22.683333</td>
+<td>10.550002</td>
+<td>63.500000</td>
+<td>84.833333</td>
+<td>41.500000</td>
+<td>2.199999</td>
+<td>1.500000</td>
+<td>3.200000</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>144</td>
+<td>2020-04-27</td>
+<td>31</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>15.785717</td>
+<td>22.885719</td>
+<td>8.042862</td>
+<td>64.571429</td>
+<td>90.142857</td>
+<td>39.000000</td>
+<td>4.000001</td>
+<td>1.657143</td>
+<td>3.157143</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>215</td>
+<td>2020-04-27</td>
+<td>47</td>
+<td>5.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>17.037496</td>
+<td>22.787504</td>
+<td>11.149999</td>
+<td>53.000000</td>
+<td>72.375000</td>
+<td>36.250000</td>
+<td>2.599999</td>
+<td>2.625000</td>
+<td>4.737500</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>222</td>
+<td>2020-04-27</td>
+<td>19</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>16.942861</td>
+<td>23.457143</td>
+<td>9.414279</td>
+<td>59.857143</td>
+<td>90.571429</td>
+<td>38.142857</td>
+<td>3.299999</td>
+<td>2.857143</td>
+<td>5.471429</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>217</td>
+<td>2020-04-27</td>
+<td>19</td>
+<td>9.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>17.028571</td>
+<td>22.885710</td>
+<td>10.371432</td>
+<td>58.428571</td>
+<td>84.428571</td>
+<td>39.571429</td>
+<td>5.000000</td>
+<td>2.657143</td>
+<td>5.000000</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10944</th>
+<td>810</td>
+<td>2022-10-17</td>
+<td>19</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>17.687498</td>
+<td>24.512502</td>
+<td>12.149995</td>
+<td>76.125000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.200000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">10945</th>
+<td>845</td>
+<td>2022-10-17</td>
+<td>39</td>
+<td>26.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>18.025003</td>
+<td>23.975000</td>
+<td>13.274995</td>
+<td>76.500000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>26.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10946</th>
+<td>888</td>
+<td>2022-10-17</td>
+<td>11</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>16.900003</td>
+<td>23.875002</td>
+<td>10.900003</td>
+<td>77.500000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.400000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">10947</th>
+<td>885</td>
+<td>2022-10-17</td>
+<td>36</td>
+<td>16.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>17.599991</td>
+<td>23.614282</td>
+<td>12.300003</td>
+<td>76.857143</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.299999</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>16.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10948</th>
+<td>815</td>
+<td>2022-10-17</td>
+<td>41</td>
+<td>3.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>17.175001</td>
+<td>23.887502</td>
+<td>11.062498</td>
+<td>81.750000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.600001</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>10949 rows × 16 columns</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="and-then" class="title-slide slide level1 center">
+<h1>… and then?</h1>
+
+</section>
+
+<section id="how-many-of-you-apply-genai-e.g.-llms-such-as-chatgpt-to-data-science" class="title-slide slide level1 center">
+<h1>How many of you apply <strong>GenAI</strong> (e.g., LLMs such as ChatGPT) to data science?</h1>
+
+</section>
+
+<section id="disagree-dblpjournalscacmwelsh23" class="title-slide slide level1 center">
+<h1>(Dis)Agree? <span class="citation" data-cites="DBLP:journals/cacm/Welsh23">(<a href="#/references" role="doc-biblioref" onclick="">Welsh 2023</a>)</span></h1>
+<p>“Programming will be obsolete. I believe the conventional idea of ‘writing a program’ is headed for extinction, and indeed, for all but very specialized applications, most software, as we know it, will be replaced by AI systems that are trained rather than programmed. In situations where one needs a ‘simple’ program (after all, not everything should require a model of hundreds of billions of parameters running on a cluster of GPUs), those programs will, themselves, be generated by an AI rather than coded by hand.”</p>
+</section>
+
+<section id="dblpjournalscacmwaldob25" class="title-slide slide level1 center">
+<h1><span class="citation" data-cites="DBLP:journals/cacm/WaldoB25">(<a href="#/references" role="doc-biblioref" onclick="">Waldo and Boussard 2025</a>)</span></h1>
+<p>Despite their powerful capabilities, however, generative pre-trained transformers (GPTs) have the tendency to “hallucinate” responses. A hallucination occurs when an LLM-based GPT generates a response that is seemingly realistic yet is nonfactual, nonsensical, or inconsistent with the given prompt.</p>
+</section>
+
+<section id="how-many-of-you-use-automl-for-training-machine-learning-pipelines" class="title-slide slide level1 center">
+<h1>How many of you use <strong>AutoML</strong> for training Machine Learning pipelines?</h1>
+
+</section>
+
+<section id="automl-in-brief" class="title-slide slide level1 center">
+<h1>AutoML in brief</h1>
+
+<img data-src="https://developers.google.com/static/machine-learning/crash-course/automl/images/ml-workflow.png" class="r-stretch quarto-figure-center"><p class="caption">Repetitive tasks in ML</p><p>Check the crash course from <a href="https://developers.google.com/machine-learning/crash-course/automl">Google</a></p>
+</section>
+
+<section id="automl-in-brief-1" class="title-slide slide level1 center">
+<h1>AutoML in brief</h1>
+
+<img data-src="./img/cimice/bo.png" class="r-stretch quarto-figure-center"><p class="caption">Example of Bayesian Optimization</p></section>
+
+<section id="dblpjournalscacmbierhhsw22" class="title-slide slide level1 center">
+<h1><span class="citation" data-cites="DBLP:journals/cacm/BieRHHSW22">(<a href="#/references" role="doc-biblioref" onclick="">Bie et al. 2022</a>)</span></h1>
+<p>“<strong>AutoML</strong> falls squarely into the first form of automation, mechanization […] as it can be seen as yet another level of abstraction over a series of automation stages.</p>
+<ol type="1">
+<li>First, there is the well-known use of <em>programming for automation</em>.</li>
+<li>Second, <em>machine learning automatically generates hypotheses and predictive models</em>, which typically take the form of algorithms (for example, in the case of a decision tree or a neural network); therefore, machine learning methods can be seen as <em>meta-algorithms that automate programming tasks</em>, and hence “automate automation.”</li>
+<li>And third, <em>automated machine learning makes use of algorithms that select and configure machine learning algorithms</em>—that is, of <em>meta-meta-algorithms that can be understood as automating the automation of automation</em>.”</li>
+</ol>
+</section>
+
+<section id="dblpjournalscacmbierhhsw22-1" class="title-slide slide level1 center">
+<h1><span class="citation" data-cites="DBLP:journals/cacm/BieRHHSW22">(<a href="#/references" role="doc-biblioref" onclick="">Bie et al. 2022</a>)</span></h1>
+<p>“The impressive performance levels reached by AutoML systems are evident in the results from recent competitions.</p>
+<p>Notably, Auto-sklearn significantly outperformed human experts in the human track of the 2015/2016 ChaLearn AutoML Challenge.”</p>
+</section>
+
+<section id="do-we-still-need-data-scientists" class="title-slide slide level1 center">
+<h1>Do we still need data scientists?</h1>
+
+</section>
+
+<section id="genai-and-automl" class="title-slide slide level1 center">
+<h1>GenAI and AutoML</h1>
+<p>This <strong>code was written by ChatGPT 4o</strong> and uses <strong>AutoML to train several models</strong> given a specific budget</p>
+<div id="cell-15" class="cell" data-execution_count="24">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> root_mean_squared_error</span>
+<span id="cb2-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb2-3"><a href=""></a><span class="im">from</span> flaml <span class="im">import</span> AutoML</span>
+<span id="cb2-4"><a href=""></a></span>
+<span id="cb2-5"><a href=""></a>X <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">'ADULTS'</span>])</span>
+<span id="cb2-6"><a href=""></a>y <span class="op">=</span> df[<span class="st">'ADULTS'</span>]</span>
+<span id="cb2-7"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb2-8"><a href=""></a></span>
+<span id="cb2-9"><a href=""></a>automl <span class="op">=</span> AutoML()</span>
+<span id="cb2-10"><a href=""></a>automl_settings <span class="op">=</span> {</span>
+<span id="cb2-11"><a href=""></a>    <span class="st">"time_budget"</span>: <span class="dv">30</span>,  <span class="co"># Time budget in seconds</span></span>
+<span id="cb2-12"><a href=""></a>    <span class="st">"max_iter"</span>: <span class="dv">30</span>,  <span class="co"># Max number of iterations</span></span>
+<span id="cb2-13"><a href=""></a>    <span class="st">"metric"</span>: <span class="st">'rmse'</span>,  <span class="co"># Evaluation metric</span></span>
+<span id="cb2-14"><a href=""></a>    <span class="st">"task"</span>: <span class="st">'regression'</span>,  <span class="co"># Task type</span></span>
+<span id="cb2-15"><a href=""></a>}</span>
+<span id="cb2-16"><a href=""></a>automl.fit(X_train, y_train, <span class="op">**</span>automl_settings)</span>
+<span id="cb2-17"><a href=""></a>y_pred <span class="op">=</span> automl.predict(X_test)</span>
+<span id="cb2-18"><a href=""></a>rmse <span class="op">=</span> root_mean_squared_error(y_test, y_pred)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[flaml.automl.logger: 04-08 20:44:01] {1728} INFO - task = regression
+[flaml.automl.logger: 04-08 20:44:01] {1739} INFO - Evaluation method: holdout
+[flaml.automl.logger: 04-08 20:44:00] {1838} INFO - Minimizing error metric: rmse
+[flaml.automl.logger: 04-08 20:44:00] {1955} INFO - List of ML learners in AutoML Run: ['lgbm', 'rf', 'xgboost', 'extra_tree', 'xgb_limitdepth', 'sgd']
+[flaml.automl.logger: 04-08 20:44:00] {2258} INFO - iteration 0, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:00] {2393} INFO - Estimated sufficient time budget=0s. Estimated necessary time budget=0s.
+[flaml.automl.logger: 04-08 20:44:00] {2442} INFO -  at -0.5s,  estimator lgbm's best error=12.0178,    best estimator lgbm's best error=12.0178
+[flaml.automl.logger: 04-08 20:44:00] {2258} INFO - iteration 1, current learner rf
+[flaml.automl.logger: 04-08 20:44:00] {2442} INFO -  at -0.4s,  estimator rf's best error=7.9172,   best estimator rf's best error=7.9172
+[flaml.automl.logger: 04-08 20:44:00] {2258} INFO - iteration 2, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:00] {2442} INFO -  at -0.1s,  estimator xgboost's best error=12.1446, best estimator rf's best error=7.9172
+[flaml.automl.logger: 04-08 20:44:00] {2258} INFO - iteration 3, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:00] {2442} INFO -  at -0.0s,  estimator extra_tree's best error=10.9591,  best estimator rf's best error=7.9172
+[flaml.automl.logger: 04-08 20:44:00] {2258} INFO - iteration 4, current learner xgb_limitdepth
+[flaml.automl.logger: 04-08 20:44:01] {2442} INFO -  at 0.5s,   estimator xgb_limitdepth's best error=1.8870,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:01] {2258} INFO - iteration 5, current learner sgd
+[flaml.automl.logger: 04-08 20:44:03] {2442} INFO -  at 2.5s,   estimator sgd's best error=14.5275, best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:03] {2258} INFO - iteration 6, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:03] {2442} INFO -  at 2.8s,   estimator lgbm's best error=12.0178,    best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:03] {2258} INFO - iteration 7, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:03] {2442} INFO -  at 2.9s,   estimator extra_tree's best error=8.3080,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:03] {2258} INFO - iteration 8, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:04] {2442} INFO -  at 3.1s,   estimator lgbm's best error=8.1328, best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:04] {2258} INFO - iteration 9, current learner rf
+[flaml.automl.logger: 04-08 20:44:04] {2442} INFO -  at 3.3s,   estimator rf's best error=5.3341,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:04] {2258} INFO - iteration 10, current learner rf
+[flaml.automl.logger: 04-08 20:44:04] {2442} INFO -  at 3.5s,   estimator rf's best error=5.3341,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:04] {2258} INFO - iteration 11, current learner rf
+[flaml.automl.logger: 04-08 20:44:04] {2442} INFO -  at 3.8s,   estimator rf's best error=3.5688,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:04] {2258} INFO - iteration 12, current learner rf
+[flaml.automl.logger: 04-08 20:44:05] {2442} INFO -  at 4.1s,   estimator rf's best error=2.8167,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:05] {2258} INFO - iteration 13, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:05] {2442} INFO -  at 4.3s,   estimator xgboost's best error=12.1446, best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:05] {2258} INFO - iteration 14, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:05] {2442} INFO -  at 4.5s,   estimator xgboost's best error=8.1855,  best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:05] {2258} INFO - iteration 15, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:05] {2442} INFO -  at 4.6s,   estimator extra_tree's best error=8.3080,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:05] {2258} INFO - iteration 16, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:05] {2442} INFO -  at 4.8s,   estimator xgboost's best error=5.7739,  best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:05] {2258} INFO - iteration 17, current learner xgb_limitdepth
+[flaml.automl.logger: 04-08 20:44:06] {2442} INFO -  at 5.2s,   estimator xgb_limitdepth's best error=1.8870,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:06] {2258} INFO - iteration 18, current learner rf
+[flaml.automl.logger: 04-08 20:44:06] {2442} INFO -  at 5.5s,   estimator rf's best error=2.8167,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:06] {2258} INFO - iteration 19, current learner xgb_limitdepth
+[flaml.automl.logger: 04-08 20:44:06] {2442} INFO -  at 5.9s,   estimator xgb_limitdepth's best error=1.8870,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:06] {2258} INFO - iteration 20, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:07] {2442} INFO -  at 6.1s,   estimator lgbm's best error=4.8052, best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:07] {2258} INFO - iteration 21, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:07] {2442} INFO -  at 6.3s,   estimator extra_tree's best error=5.3649,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:07] {2258} INFO - iteration 22, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:07] {2442} INFO -  at 6.4s,   estimator xgboost's best error=5.7739,  best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:07] {2258} INFO - iteration 23, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:07] {2442} INFO -  at 6.6s,   estimator extra_tree's best error=3.5723,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:07] {2258} INFO - iteration 24, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:07] {2442} INFO -  at 6.7s,   estimator lgbm's best error=4.8052, best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:07] {2258} INFO - iteration 25, current learner rf
+[flaml.automl.logger: 04-08 20:44:08] {2442} INFO -  at 7.0s,   estimator rf's best error=2.8167,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:08] {2258} INFO - iteration 26, current learner xgb_limitdepth
+[flaml.automl.logger: 04-08 20:44:08] {2442} INFO -  at 7.4s,   estimator xgb_limitdepth's best error=1.8870,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:08] {2258} INFO - iteration 27, current learner sgd
+[flaml.automl.logger: 04-08 20:44:10] {2442} INFO -  at 9.8s,   estimator sgd's best error=13.3065, best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:10] {2258} INFO - iteration 28, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:11] {2442} INFO -  at 10.1s,  estimator xgboost's best error=5.7739,  best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:11] {2258} INFO - iteration 29, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:11] {2442} INFO -  at 10.3s,  estimator extra_tree's best error=3.5723,   best estimator xgb_limitdepth's best error=1.8870
+[flaml.automl.logger: 04-08 20:44:11] {2685} INFO - retrain xgb_limitdepth for 0.3s
+[flaml.automl.logger: 04-08 20:44:11] {2688} INFO - retrained model: XGBRegressor(base_score=None, booster=None, callbacks=[], colsample_bylevel=1.0,
+             colsample_bynode=None, colsample_bytree=1.0, device=None,
+             early_stopping_rounds=None, enable_categorical=False,
+             eval_metric=None, feature_types=None, gamma=None, grow_policy=None,
+             importance_type=None, interaction_constraints=None,
+             learning_rate=np.float64(0.29999999999999993), max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=6, max_leaves=None,
+             min_child_weight=np.float64(0.9999999999999993), missing=nan,
+             monotone_constraints=None, multi_strategy=None, n_estimators=10,
+             n_jobs=-1, num_parallel_tree=None, random_state=None, ...)
+[flaml.automl.logger: 04-08 20:44:11] {1985} INFO - fit succeeded
+[flaml.automl.logger: 04-08 20:44:11] {1986} INFO - Time taken to find the best model: 0.4630732536315918</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-5" class="title-slide slide level1 center">
+<h1></h1>
+<div id="cell-17" class="cell" data-execution_count="25">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="bu">print</span>(<span class="st">"RMSE using AutoML:"</span>, <span class="bu">round</span>(rmse, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE using AutoML: 2.19</code></pre>
+</div>
+</div>
+<p>Is this error high/low?</p>
+</section>
+
+<section id="rmse-vs-nrmse" class="title-slide slide level1 center">
+<h1>RMSE vs NRMSE</h1>
+<p><span class="math inline">\(RMSE = \sqrt{\frac{1}{n}\sum(y_{true}−y_{pred})^2}\)</span></p>
+<p>The squared differences have squared units, but the square root brings it back to the same unit as the target variable</p>
+<p><span class="math inline">\(NRMSE = \frac{RMSE}{avg(y_{true})}\)</span></p>
+<div id="cell-22" class="cell" data-execution_count="26">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-2"><a href=""></a>mean_df <span class="op">=</span> df.groupby(<span class="st">'TIMESTAMP'</span>)[<span class="st">'ADULTS'</span>].mean()</span>
+<span id="cb6-3"><a href=""></a>mean_df.plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>), color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb6-4"><a href=""></a>plt.xticks([])  <span class="co"># Hide the x-axis ticks</span></span>
+<span id="cb6-5"><a href=""></a>mean <span class="op">=</span> mean_df.mean()</span>
+<span id="cb6-6"><a href=""></a>plt.axhline(y<span class="op">=</span>mean, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Average ADULTS'</span>)</span>
+<span id="cb6-7"><a href=""></a>plt.legend()</span>
+<span id="cb6-8"><a href=""></a></span>
+<span id="cb6-9"><a href=""></a><span class="bu">print</span>(<span class="ss">f"RMSE </span><span class="sc">{</span>rmse<span class="sc">:.3}</span><span class="ss">, Mean </span><span class="sc">{</span>mean<span class="sc">:.3}</span><span class="ss">, NRMSE </span><span class="sc">{</span>rmse <span class="op">/</span> mean<span class="sc">:.2%}</span><span class="ss">"</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE 2.19, Mean 8.92, NRMSE 24.52%</code></pre>
+</div>
+
+</div>
+<img data-src="lab-cimice_files/figure-revealjs/cell-5-output-2.png" class="r-stretch"></section>
+
+<section id="lets-try-to-better-understand-the-data" class="title-slide slide level1 center">
+<h1>Let’s try to better understand the data</h1>
+<div id="cell-24" class="cell" data-execution_count="27">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>df.info()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 10949 entries, 0 to 10948
+Data columns (total 16 columns):
+ #   Column           Non-Null Count  Dtype  
+---  ------           --------------  -----  
+ 0   GID              10949 non-null  int64  
+ 1   TIMESTAMP        10949 non-null  object 
+ 2   CROP_ID          10949 non-null  int64  
+ 3   ADULTS           10949 non-null  float64
+ 4   SMALL_INSTARS    10949 non-null  float64
+ 5   LARGE_INSTARS    10949 non-null  float64
+ 6   TEMPERATURE_AVG  10949 non-null  float64
+ 7   TEMPERATURE_MAX  10949 non-null  float64
+ 8   TEMPERATURE_MIN  10949 non-null  float64
+ 9   HUMIDITY_AVG     10949 non-null  float64
+ 10  HUMIDITY_MAX     8180 non-null   float64
+ 11  HUMIDITY_MIN     8180 non-null   float64
+ 12  PRECIPITATIONS   10949 non-null  float64
+ 13  WINDSPEED_AVG    8180 non-null   float64
+ 14  WINDSPEED_MAX    8180 non-null   float64
+ 15  TOTAL_CAPTURES   10949 non-null  float64
+dtypes: float64(13), int64(2), object(1)
+memory usage: 1.3+ MB</code></pre>
+</div>
+</div>
+</section>
+
+<section id="lets-try-simpler-models" class="title-slide slide level1 center">
+<h1>Let’s try simpler models</h1>
+<div id="cell-26" class="cell" data-execution_count="28">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb10-2"><a href=""></a></span>
+<span id="cb10-3"><a href=""></a>X <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">'ADULTS'</span>])  <span class="co"># Drop the target variable 'ADULTS' from the feature set</span></span>
+<span id="cb10-4"><a href=""></a>X[<span class="st">'TIMESTAMP'</span>] <span class="op">=</span> pd.to_datetime(X[<span class="st">'TIMESTAMP'</span>]).astype(<span class="bu">int</span>) <span class="op">/</span> <span class="dv">10</span><span class="op">**</span><span class="dv">9</span>  <span class="co"># Convert the 'TIMESTAMP' column to datetime and then to a Unix timestamp (seconds)</span></span>
+<span id="cb10-5"><a href=""></a>X.fillna(X.mean(), inplace<span class="op">=</span><span class="va">True</span>)  <span class="co"># Fill missing values with the mean of each column</span></span>
+<span id="cb10-6"><a href=""></a>y <span class="op">=</span> df[<span class="st">'ADULTS'</span>]  <span class="co"># Define the target variable</span></span>
+<span id="cb10-7"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)  <span class="co"># Split the dataset into training and testing sets (80% train, 20% test)</span></span>
+<span id="cb10-8"><a href=""></a>log_reg <span class="op">=</span> LinearRegression()  <span class="co"># Initialize and train a Linear Regression model</span></span>
+<span id="cb10-9"><a href=""></a>log_reg.fit(X_train, y_train)</span>
+<span id="cb10-10"><a href=""></a>y_pred_log_reg <span class="op">=</span> log_reg.predict(X_test)  <span class="co"># Predict the target variable on the test set</span></span>
+<span id="cb10-11"><a href=""></a><span class="co"># Calculate Root Mean Squared Error (RMSE)</span></span>
+<span id="cb10-12"><a href=""></a>rmse_log_reg <span class="op">=</span> root_mean_squared_error(y_test, y_pred_log_reg)</span>
+<span id="cb10-13"><a href=""></a><span class="bu">print</span>(<span class="st">"RMSE using Linear Regression:"</span>, <span class="bu">round</span>(rmse_log_reg, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE using Linear Regression: 0.0</code></pre>
+</div>
+</div>
+</section>
+
+<section id="why" class="title-slide slide level1 center">
+<h1>Why?</h1>
+
+</section>
+
+<section id="lets-take-a-look-at-the-features.-do-they-ring-a-bell" class="title-slide slide level1 center">
+<h1>Let’s take a look at the features. Do they ring a bell?</h1>
+<div id="cell-29" class="cell" data-execution_count="29">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>df.columns</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>Index(['GID', 'TIMESTAMP', 'CROP_ID', 'ADULTS', 'SMALL_INSTARS',
+       'LARGE_INSTARS', 'TEMPERATURE_AVG', 'TEMPERATURE_MAX',
+       'TEMPERATURE_MIN', 'HUMIDITY_AVG', 'HUMIDITY_MAX', 'HUMIDITY_MIN',
+       'PRECIPITATIONS', 'WINDSPEED_AVG', 'WINDSPEED_MAX', 'TOTAL_CAPTURES'],
+      dtype='object')</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-6" class="title-slide slide level1 center">
+<h1></h1>
+<div id="cell-31" class="cell" data-execution_count="30">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>log_reg.coef_  <span class="co"># weights (coefficients) of the Linear Regression model</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>array([-1.36733869e-15,  9.57400348e-19,  3.29282180e-16, -1.00000000e+00,
+       -1.00000000e+00, -3.97477621e-15,  2.59706955e-15,  1.71515845e-15,
+        7.82904180e-16,  1.03568861e-15, -1.04128233e-15, -1.15471256e-16,
+       -1.29189124e-15, -3.68890616e-17,  1.00000000e+00])</code></pre>
+</div>
+</div>
+<p>LinearRegression correctly captures this pattern, AutoML does not</p>
+<p><code>ADULTS</code> = - <code>SMALL_INSTARS</code> - <code>LARGE_INSTARS</code> + <code>TOTAL_CAPTURES</code></p>
+<div id="cell-33" class="cell" data-execution_count="31">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href=""></a>equation <span class="op">=</span> <span class="st">" "</span>.join(<span class="ss">f"</span><span class="sc">{</span><span class="st">''</span> <span class="cf">if</span> weight <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">'+'</span><span class="sc">}{</span><span class="bu">round</span>(weight, <span class="dv">2</span>)<span class="sc">}</span><span class="ss">*</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> weight, col <span class="kw">in</span> <span class="bu">zip</span>(log_reg.coef_, X_train.columns) <span class="cf">if</span> <span class="bu">abs</span>(weight) <span class="op">&gt;</span> <span class="fl">0.01</span>)</span>
+<span id="cb16-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f"ADULTS = </span><span class="sc">{</span>equation<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>ADULTS = -1.0*SMALL_INSTARS -1.0*LARGE_INSTARS +1.0*TOTAL_CAPTURES</code></pre>
+</div>
+</div>
+</section>
+
+<section id="lets-drop-the-total_captures" class="title-slide slide level1 center">
+<h1>Let’s drop the <code>TOTAL_CAPTURES</code></h1>
+<p>This was a trick, usually we do not have this type of derived features in the dataset</p>
+<div id="cell-35" class="cell" data-execution_count="32">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href=""></a>X <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">'ADULTS'</span>, <span class="st">'TOTAL_CAPTURES'</span>])</span>
+<span id="cb18-2"><a href=""></a>y <span class="op">=</span> df[<span class="st">'ADULTS'</span>]</span>
+<span id="cb18-3"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb18-4"><a href=""></a>automl <span class="op">=</span> AutoML()</span>
+<span id="cb18-5"><a href=""></a>automl_settings <span class="op">=</span> {</span>
+<span id="cb18-6"><a href=""></a>    <span class="st">"time_budget"</span>: <span class="dv">30</span>,  <span class="co"># Time budget in seconds</span></span>
+<span id="cb18-7"><a href=""></a>    <span class="st">"max_iter"</span>: <span class="dv">30</span>,  <span class="co"># Max number of iterations</span></span>
+<span id="cb18-8"><a href=""></a>    <span class="st">"metric"</span>: <span class="st">'rmse'</span>,  <span class="co"># Evaluation metric</span></span>
+<span id="cb18-9"><a href=""></a>    <span class="st">"task"</span>: <span class="st">'regression'</span>,  <span class="co"># Task type</span></span>
+<span id="cb18-10"><a href=""></a>}</span>
+<span id="cb18-11"><a href=""></a>automl.fit(X_train, y_train, <span class="op">**</span>automl_settings)</span>
+<span id="cb18-12"><a href=""></a>y_pred <span class="op">=</span> automl.predict(X_test)</span>
+<span id="cb18-13"><a href=""></a>rmse <span class="op">=</span> root_mean_squared_error(y_test, y_pred)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[flaml.automl.logger: 04-08 20:44:12] {1728} INFO - task = regression
+[flaml.automl.logger: 04-08 20:44:12] {1739} INFO - Evaluation method: holdout
+[flaml.automl.logger: 04-08 20:44:12] {1838} INFO - Minimizing error metric: rmse
+[flaml.automl.logger: 04-08 20:44:12] {1955} INFO - List of ML learners in AutoML Run: ['lgbm', 'rf', 'xgboost', 'extra_tree', 'xgb_limitdepth', 'sgd']
+[flaml.automl.logger: 04-08 20:44:12] {2258} INFO - iteration 0, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:12] {2393} INFO - Estimated sufficient time budget=582s. Estimated necessary time budget=4s.
+[flaml.automl.logger: 04-08 20:44:12] {2442} INFO -  at 0.2s,   estimator lgbm's best error=14.1248,    best estimator lgbm's best error=14.1248
+[flaml.automl.logger: 04-08 20:44:12] {2258} INFO - iteration 1, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:13] {2442} INFO -  at 0.2s,   estimator lgbm's best error=14.1248,    best estimator lgbm's best error=14.1248
+[flaml.automl.logger: 04-08 20:44:13] {2258} INFO - iteration 2, current learner sgd
+[flaml.automl.logger: 04-08 20:44:14] {2442} INFO -  at 2.1s,   estimator sgd's best error=16.9466, best estimator lgbm's best error=14.1248
+[flaml.automl.logger: 04-08 20:44:14] {2258} INFO - iteration 3, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.3s,   estimator lgbm's best error=12.7827,    best estimator lgbm's best error=12.7827
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 4, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.4s,   estimator xgboost's best error=14.8380, best estimator lgbm's best error=12.7827
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 5, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.4s,   estimator lgbm's best error=12.2781,    best estimator lgbm's best error=12.2781
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 6, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.5s,   estimator lgbm's best error=12.2781,    best estimator lgbm's best error=12.2781
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 7, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.5s,   estimator lgbm's best error=12.0187,    best estimator lgbm's best error=12.0187
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 8, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.6s,   estimator lgbm's best error=12.0187,    best estimator lgbm's best error=12.0187
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 9, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.7s,   estimator lgbm's best error=12.0187,    best estimator lgbm's best error=12.0187
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 10, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.8s,   estimator lgbm's best error=11.6593,    best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 11, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 2.9s,   estimator xgboost's best error=14.8380, best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 12, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 3.0s,   estimator xgboost's best error=13.9034, best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 13, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 3.1s,   estimator extra_tree's best error=14.7095,  best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 14, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:15] {2442} INFO -  at 3.2s,   estimator extra_tree's best error=14.1609,  best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:15] {2258} INFO - iteration 15, current learner rf
+[flaml.automl.logger: 04-08 20:44:16] {2442} INFO -  at 3.3s,   estimator rf's best error=13.8960,  best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:16] {2258} INFO - iteration 16, current learner rf
+[flaml.automl.logger: 04-08 20:44:16] {2442} INFO -  at 3.5s,   estimator rf's best error=12.9380,  best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:16] {2258} INFO - iteration 17, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:16] {2442} INFO -  at 3.9s,   estimator lgbm's best error=11.6593,    best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:16] {2258} INFO - iteration 18, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:16] {2442} INFO -  at 4.0s,   estimator extra_tree's best error=14.1609,  best estimator lgbm's best error=11.6593
+[flaml.automl.logger: 04-08 20:44:16] {2258} INFO - iteration 19, current learner lgbm
+[flaml.automl.logger: 04-08 20:44:21] {2442} INFO -  at 8.4s,   estimator lgbm's best error=11.2939,    best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:21] {2258} INFO - iteration 20, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:21] {2442} INFO -  at 8.5s,   estimator xgboost's best error=13.0185, best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:21] {2258} INFO - iteration 21, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:21] {2442} INFO -  at 8.7s,   estimator xgboost's best error=13.0185, best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:21] {2258} INFO - iteration 22, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:21] {2442} INFO -  at 8.8s,   estimator xgboost's best error=13.0185, best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:21] {2258} INFO - iteration 23, current learner rf
+[flaml.automl.logger: 04-08 20:44:21] {2442} INFO -  at 9.0s,   estimator rf's best error=12.9380,  best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:21] {2258} INFO - iteration 24, current learner rf
+[flaml.automl.logger: 04-08 20:44:22] {2442} INFO -  at 9.3s,   estimator rf's best error=12.5801,  best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:22] {2258} INFO - iteration 25, current learner sgd
+[flaml.automl.logger: 04-08 20:44:22] {2442} INFO -  at 9.4s,   estimator sgd's best error=16.9466, best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:22] {2258} INFO - iteration 26, current learner sgd
+[flaml.automl.logger: 04-08 20:44:22] {2442} INFO -  at 9.5s,   estimator sgd's best error=16.0682, best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:22] {2258} INFO - iteration 27, current learner xgboost
+[flaml.automl.logger: 04-08 20:44:22] {2442} INFO -  at 9.7s,   estimator xgboost's best error=12.5459, best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:22] {2258} INFO - iteration 28, current learner extra_tree
+[flaml.automl.logger: 04-08 20:44:22] {2442} INFO -  at 9.9s,   estimator extra_tree's best error=12.7479,  best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:22] {2258} INFO - iteration 29, current learner sgd
+[flaml.automl.logger: 04-08 20:44:24] {2442} INFO -  at 12.0s,  estimator sgd's best error=16.0682, best estimator lgbm's best error=11.2939
+[flaml.automl.logger: 04-08 20:44:29] {2685} INFO - retrain lgbm for 4.7s
+[flaml.automl.logger: 04-08 20:44:29] {2688} INFO - retrained model: LGBMRegressor(colsample_bytree=np.float64(0.6649148062238498),
+              learning_rate=np.float64(0.17402065726724145), max_bin=255,
+              min_child_samples=3, n_estimators=99, n_jobs=-1, num_leaves=15,
+              reg_alpha=0.0009765625,
+              reg_lambda=np.float64(0.006761362450996487), verbose=-1)
+[flaml.automl.logger: 04-08 20:44:29] {1985} INFO - fit succeeded
+[flaml.automl.logger: 04-08 20:44:29] {1986} INFO - Time taken to find the best model: 8.385986566543579</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-7" class="title-slide slide level1 center">
+<h1></h1>
+<div id="cell-37" class="cell" data-execution_count="33">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="bu">print</span>(<span class="st">"RMSE using AutoML:"</span>, <span class="bu">round</span>(rmse, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE using AutoML: 11.13</code></pre>
+</div>
+</div>
+<div id="cell-38" class="cell" data-execution_count="34">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href=""></a>automl.best_estimator</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>'lgbm'</code></pre>
+</div>
+</div>
+<div id="cell-39" class="cell" data-execution_count="35">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href=""></a>automl.best_config</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<pre><code>{'n_estimators': 99,
+ 'num_leaves': 15,
+ 'min_child_samples': 3,
+ 'learning_rate': np.float64(0.17402065726724145),
+ 'log_max_bin': 8,
+ 'colsample_bytree': np.float64(0.6649148062238498),
+ 'reg_alpha': 0.0009765625,
+ 'reg_lambda': np.float64(0.006761362450996487)}</code></pre>
+</div>
+</div>
+</section>
+
+<section id="can-we-do-better" class="title-slide slide level1 center">
+<h1>Can we do better?</h1>
+<p>From the literature, we know that the spreading of bugs depends on:</p>
+<ol type="1">
+<li>Cumulative degree days: <span class="math inline">\(\sum_{d \in [May-Sep]} max(0, T^{avg}_d-12.2)\)</span> <span class="citation" data-cites="DBLP:journals/ecoi/ForresiGGMPV24">(<a href="#/references" role="doc-biblioref" onclick="">Forresi et al. 2024</a>)</span></li>
+<li>Time. How?</li>
+</ol>
+</section>
+
+<section id="captures-over-time" class="title-slide slide level1 center">
+<h1>Captures over time</h1>
+<div id="cell-43" class="cell" data-execution_count="36">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href=""></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb26-2"><a href=""></a></span>
+<span id="cb26-3"><a href=""></a><span class="cf">for</span> c <span class="kw">in</span> [<span class="st">"ADULTS"</span>, <span class="st">"LARGE_INSTARS"</span>, <span class="st">"SMALL_INSTARS"</span>]:</span>
+<span id="cb26-4"><a href=""></a>    df.groupby(<span class="st">"TIMESTAMP"</span>)[c].mean().plot(x<span class="op">=</span><span class="st">"TIMESTAMP"</span>, y<span class="op">=</span>c, ax<span class="op">=</span>ax)</span>
+<span id="cb26-5"><a href=""></a></span>
+<span id="cb26-6"><a href=""></a>plt.xticks(rotation<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb26-7"><a href=""></a>fig.legend()</span>
+<span id="cb26-8"><a href=""></a>fig.tight_layout()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-cimice_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
+
+<section id="predicting-adults-with-past-previous-adults" class="title-slide slide level1 center">
+<h1>Predicting Adults with past (previous) Adults</h1>
+<div id="cell-45" class="cell" data-execution_count="37">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href=""></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb27-2"><a href=""></a></span>
+<span id="cb27-3"><a href=""></a><span class="cf">for</span> c <span class="kw">in</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">4</span>]:</span>
+<span id="cb27-4"><a href=""></a>    df.groupby(<span class="st">'TIMESTAMP'</span>)[<span class="st">'ADULTS'</span>].mean().shift(c).fillna(<span class="dv">0</span>).plot(x<span class="op">=</span><span class="st">"ADULTS"</span>, y<span class="op">=</span>c, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="ss">f"ADULTS-</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb27-5"><a href=""></a></span>
+<span id="cb27-6"><a href=""></a>plt.xticks(rotation<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb27-7"><a href=""></a>fig.legend()</span>
+<span id="cb27-8"><a href=""></a>fig.tight_layout()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-cimice_files/figure-revealjs/cell-16-output-1.png" class="r-stretch"></section>
+
+<section id="preprocessing" class="title-slide slide level1 center">
+<h1>Preprocessing</h1>
+<div id="cell-47" class="cell" data-execution_count="38">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">"./datasets/cimice/captures-raw.csv"</span>, sep<span class="op">=</span><span class="st">','</span>)  <span class="co"># Load the dataset from a CSV file</span></span>
+<span id="cb28-2"><a href=""></a></span>
+<span id="cb28-3"><a href=""></a>df[<span class="st">'TIMESTAMP'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'TIMESTAMP'</span>])  <span class="co"># Convert 'TIMESTAMP' to datetime format for time-based analysis</span></span>
+<span id="cb28-4"><a href=""></a>df.sort_values(by<span class="op">=</span>[<span class="st">'GID'</span>, <span class="st">'TIMESTAMP'</span>], inplace<span class="op">=</span><span class="va">True</span>)  <span class="co"># Sort dataset by 'GID' (Group ID) and 'TIMESTAMP' to maintain chronological order</span></span>
+<span id="cb28-5"><a href=""></a></span>
+<span id="cb28-6"><a href=""></a>df[<span class="st">'WEEK'</span>] <span class="op">=</span> df[<span class="st">'TIMESTAMP'</span>].dt.isocalendar().week  <span class="co"># Extract the week number from the timestamp for seasonal analysis</span></span>
+<span id="cb28-7"><a href=""></a></span>
+<span id="cb28-8"><a href=""></a>df[<span class="st">'DEGREE_DAYS'</span>] <span class="op">=</span> df[<span class="st">'TEMPERATURE_AVG'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">max</span>(<span class="dv">0</span>, x <span class="op">-</span> <span class="fl">12.2</span>))  <span class="co"># Calculate degree days: only consider temperatures above 12.2°C</span></span>
+<span id="cb28-9"><a href=""></a>df[<span class="st">'DAYS_DIFF'</span>] <span class="op">=</span> df.groupby(<span class="st">'GID'</span>)[<span class="st">'TIMESTAMP'</span>].diff().dt.days.fillna(<span class="dv">14</span>)  <span class="co"># Compute the time difference (in days) between consecutive observations per 'GID'</span></span>
+<span id="cb28-10"><a href=""></a>df[<span class="st">'CUM_DEGREE_DAYS'</span>] <span class="op">=</span> df.groupby(<span class="st">'GID'</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> group: (group[<span class="st">'DEGREE_DAYS'</span>] <span class="op">*</span> group[<span class="st">'DAYS_DIFF'</span>]).cumsum()).reset_index(level<span class="op">=</span><span class="dv">0</span>, drop<span class="op">=</span><span class="va">True</span>)  <span class="co"># Compute cumulative degree days for each 'GID' (sum of DEGREE_DAYS * DAYS_DIFF)</span></span>
+<span id="cb28-11"><a href=""></a></span>
+<span id="cb28-12"><a href=""></a>df[<span class="st">'ADULTS-1'</span>] <span class="op">=</span> df.groupby(<span class="st">'GID'</span>)[<span class="st">'ADULTS'</span>].shift(<span class="dv">1</span>).fillna(<span class="dv">0</span>)  <span class="co"># Create a lag feature: previous 'ADULTS' count for each 'GID', fill missing values with 0</span></span>
+<span id="cb28-13"><a href=""></a></span>
+<span id="cb28-14"><a href=""></a>df[<span class="st">'TIMESTAMP'</span>] <span class="op">=</span> df[<span class="st">'TIMESTAMP'</span>].astype(<span class="bu">int</span>) <span class="op">/</span> <span class="dv">10</span><span class="op">**</span><span class="dv">9</span>  <span class="co"># Convert 'TIMESTAMP' to Unix timestamp (seconds) for numerical processing</span></span>
+<span id="cb28-15"><a href=""></a></span>
+<span id="cb28-16"><a href=""></a>df.fillna(df.groupby(<span class="st">'WEEK'</span>).transform(<span class="st">'mean'</span>), inplace<span class="op">=</span><span class="va">True</span>)  <span class="co"># Fill missing values using the mean of each column, grouped by 'WEEK'</span></span>
+<span id="cb28-17"><a href=""></a></span>
+<span id="cb28-18"><a href=""></a>df.drop(columns<span class="op">=</span>[<span class="st">'TOTAL_CAPTURES'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb28-19"><a href=""></a>X <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">'ADULTS'</span>])</span>
+<span id="cb28-20"><a href=""></a>y <span class="op">=</span> df[<span class="st">'ADULTS'</span>]</span>
+<span id="cb28-21"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb28-22"><a href=""></a></span>
+<span id="cb28-23"><a href=""></a>df.head()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">GID</th>
+<th data-quarto-table-cell-role="th">TIMESTAMP</th>
+<th data-quarto-table-cell-role="th">CROP_ID</th>
+<th data-quarto-table-cell-role="th">ADULTS</th>
+<th data-quarto-table-cell-role="th">SMALL_INSTARS</th>
+<th data-quarto-table-cell-role="th">LARGE_INSTARS</th>
+<th data-quarto-table-cell-role="th">TEMPERATURE_AVG</th>
+<th data-quarto-table-cell-role="th">TEMPERATURE_MAX</th>
+<th data-quarto-table-cell-role="th">TEMPERATURE_MIN</th>
+<th data-quarto-table-cell-role="th">HUMIDITY_AVG</th>
+<th data-quarto-table-cell-role="th">HUMIDITY_MAX</th>
+<th data-quarto-table-cell-role="th">HUMIDITY_MIN</th>
+<th data-quarto-table-cell-role="th">PRECIPITATIONS</th>
+<th data-quarto-table-cell-role="th">WINDSPEED_AVG</th>
+<th data-quarto-table-cell-role="th">WINDSPEED_MAX</th>
+<th data-quarto-table-cell-role="th">WEEK</th>
+<th data-quarto-table-cell-role="th">DEGREE_DAYS</th>
+<th data-quarto-table-cell-role="th">DAYS_DIFF</th>
+<th data-quarto-table-cell-role="th">CUM_DEGREE_DAYS</th>
+<th data-quarto-table-cell-role="th">ADULTS-1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>24</td>
+<td>1.587946e+09</td>
+<td>47</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>16.871423</td>
+<td>23.171424</td>
+<td>9.642855</td>
+<td>61.142857</td>
+<td>84.571429</td>
+<td>41.285714</td>
+<td>3.199999</td>
+<td>2.114286</td>
+<td>3.885714</td>
+<td>18</td>
+<td>4.671423</td>
+<td>14.0</td>
+<td>65.399927</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">43</th>
+<td>24</td>
+<td>1.588550e+09</td>
+<td>47</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>16.700002</td>
+<td>22.900001</td>
+<td>9.314286</td>
+<td>62.714286</td>
+<td>86.857143</td>
+<td>37.714286</td>
+<td>0.000000</td>
+<td>2.014286</td>
+<td>3.728571</td>
+<td>19</td>
+<td>4.500002</td>
+<td>7.0</td>
+<td>96.899939</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">194</th>
+<td>24</td>
+<td>1.589155e+09</td>
+<td>47</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>18.485712</td>
+<td>24.899997</td>
+<td>12.028571</td>
+<td>65.857143</td>
+<td>87.571429</td>
+<td>42.714286</td>
+<td>3.199997</td>
+<td>1.885714</td>
+<td>3.514286</td>
+<td>20</td>
+<td>6.285712</td>
+<td>7.0</td>
+<td>140.899921</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">358</th>
+<td>24</td>
+<td>1.589760e+09</td>
+<td>47</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>19.362497</td>
+<td>24.737505</td>
+<td>13.624998</td>
+<td>67.875000</td>
+<td>89.375000</td>
+<td>46.250000</td>
+<td>2.000004</td>
+<td>1.762500</td>
+<td>3.237500</td>
+<td>21</td>
+<td>7.162497</td>
+<td>7.0</td>
+<td>191.037399</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">453</th>
+<td>24</td>
+<td>1.590365e+09</td>
+<td>47</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>19.699996</td>
+<td>25.883335</td>
+<td>11.683333</td>
+<td>55.333333</td>
+<td>84.500000</td>
+<td>32.500000</td>
+<td>2.600000</td>
+<td>2.033333</td>
+<td>3.816667</td>
+<td>22</td>
+<td>7.499996</td>
+<td>7.0</td>
+<td>243.537371</td>
+<td>2.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="average-temperature-vs-cumulative-degree-days" class="title-slide slide level1 center">
+<h1>Average temperature vs cumulative degree days</h1>
+<div id="cell-49" class="cell" data-execution_count="39">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb29-2"><a href=""></a><span class="co"># Calculate weekly averages for temperature and cumulative degree days</span></span>
+<span id="cb29-3"><a href=""></a>weekly_avg_temp <span class="op">=</span> df.groupby(<span class="st">'WEEK'</span>)[<span class="st">'TEMPERATURE_AVG'</span>].mean()</span>
+<span id="cb29-4"><a href=""></a>weekly_avg_cum_degree_days <span class="op">=</span> df.groupby(<span class="st">'WEEK'</span>)[<span class="st">'CUM_DEGREE_DAYS'</span>].mean()</span>
+<span id="cb29-5"><a href=""></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))  <span class="co"># Create subplots</span></span>
+<span id="cb29-6"><a href=""></a>axes[<span class="dv">0</span>].plot(weekly_avg_temp.index, weekly_avg_temp.values, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'blue'</span>)  <span class="co"># Plot average temperature by week</span></span>
+<span id="cb29-7"><a href=""></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Average Temperature by Week'</span>)</span>
+<span id="cb29-8"><a href=""></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Week'</span>)</span>
+<span id="cb29-9"><a href=""></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Temperature (°C)'</span>)</span>
+<span id="cb29-10"><a href=""></a>axes[<span class="dv">1</span>].plot(weekly_avg_cum_degree_days.index, weekly_avg_cum_degree_days.values, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'green'</span>)  <span class="co"># Plot average cumulative degree days by week</span></span>
+<span id="cb29-11"><a href=""></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Average Cumulative Degree Days by Week'</span>)</span>
+<span id="cb29-12"><a href=""></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Week'</span>)</span>
+<span id="cb29-13"><a href=""></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Cumulative Degree Days'</span>)</span>
+<span id="cb29-14"><a href=""></a>plt.tight_layout()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-cimice_files/figure-revealjs/cell-18-output-1.png" class="r-stretch"></section>
+
+<section id="data-understanding" class="title-slide slide level1 center">
+<h1>Data understanding</h1>
+<div id="cell-51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;ruby&quot;}}" data-execution_count="40">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href=""></a>numerical_columns <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns  <span class="co"># Select numerical columns</span></span>
+<span id="cb30-2"><a href=""></a>df[numerical_columns].hist(bins<span class="op">=</span><span class="dv">50</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">9</span>), color<span class="op">=</span><span class="st">'blue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)  <span class="co"># Plot histograms for numerical columns</span></span>
+<span id="cb30-3"><a href=""></a>plt.suptitle(<span class="st">'Distribution of Numerical Features'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb30-4"><a href=""></a>plt.tight_layout()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-cimice_files/figure-revealjs/cell-19-output-1.png" class="r-stretch"></section>
+
+<section id="data-understanding-1" class="title-slide slide level1 center">
+<h1>Data understanding</h1>
+<div id="cell-53" class="cell" data-execution_count="41">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href=""></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb31-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb31-3"><a href=""></a>correlation_matrix <span class="op">=</span> df.corr()  <span class="co"># Compute the correlation matrix</span></span>
+<span id="cb31-4"><a href=""></a>filtered_correlation_matrix <span class="op">=</span> correlation_matrix[correlation_matrix.<span class="bu">abs</span>() <span class="op">&gt;=</span> <span class="fl">0.25</span>]  <span class="co"># Mask correlations with absolute values below 0.25</span></span>
+<span id="cb31-5"><a href=""></a>filtered_correlation_matrix[np.eye(filtered_correlation_matrix.shape[<span class="dv">0</span>], dtype<span class="op">=</span><span class="bu">bool</span>)] <span class="op">=</span> np.nan  <span class="co"># Mask the diagonal</span></span>
+<span id="cb31-6"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb31-7"><a href=""></a>sns.heatmap(filtered_correlation_matrix, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">".2f"</span>, cmap<span class="op">=</span><span class="st">"coolwarm"</span>, cbar<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb31-8"><a href=""></a>plt.title(<span class="st">"Pairwise Correlations (|correlation| &gt;= 0.25)"</span>)</span>
+<span id="cb31-9"><a href=""></a>plt.tight_layout()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-cimice_files/figure-revealjs/cell-20-output-1.png" class="r-stretch"></section>
+
+<section id="plotting-the-correlations" class="title-slide slide level1 center">
+<h1>Plotting the correlations</h1>
+<div id="cell-55" class="cell" data-execution_count="43">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb32-2"><a href=""></a>sns.pairplot(df[[<span class="st">"ADULTS"</span> , <span class="st">"LARGE_INSTARS"</span>, <span class="st">"WEEK"</span>, <span class="st">"CUM_DEGREE_DAYS"</span>, <span class="st">"ADULTS-1"</span>]])</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 1000x1000 with 0 Axes&gt;</code></pre>
+</div>
+
+</div>
+<img data-src="lab-cimice_files/figure-revealjs/cell-21-output-2.png" class="r-stretch"></section>
+
+<section id="lets-apply-simple-models" class="title-slide slide level1 center">
+<h1>Let’s apply simple models</h1>
+<div id="cell-57" class="cell" data-execution_count="44">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb34-1"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb34-2"><a href=""></a>log_reg <span class="op">=</span> LinearRegression()</span>
+<span id="cb34-3"><a href=""></a>log_reg.fit(X_train, y_train)</span>
+<span id="cb34-4"><a href=""></a>y_pred_log_reg <span class="op">=</span> log_reg.predict(X_test)</span>
+<span id="cb34-5"><a href=""></a>rmse_log_reg <span class="op">=</span> root_mean_squared_error(y_test, y_pred_log_reg)</span>
+<span id="cb34-6"><a href=""></a><span class="bu">print</span>(<span class="st">"RMSE using Logistic Regression:"</span>, <span class="bu">round</span>(rmse_log_reg, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE using Logistic Regression: 9.88</code></pre>
+</div>
+</div>
+<div id="cell-58" class="cell" data-execution_count="45">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb36-1"><a href=""></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb36-2"><a href=""></a>rf_regressor <span class="op">=</span> RandomForestRegressor(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb36-3"><a href=""></a>rf_regressor.fit(X_train, y_train)</span>
+<span id="cb36-4"><a href=""></a>y_pred_rf <span class="op">=</span> rf_regressor.predict(X_test)</span>
+<span id="cb36-5"><a href=""></a>rmse_rf <span class="op">=</span> root_mean_squared_error(y_test, y_pred_rf)</span>
+<span id="cb36-6"><a href=""></a><span class="bu">print</span>(<span class="st">"RMSE using Random Forest Regressor:"</span>, <span class="bu">round</span>(rmse_rf, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE using Random Forest Regressor: 9.57</code></pre>
+</div>
+</div>
+</section>
+
+<section id="lets-do-hyper-parameter-tuning-on-rf" class="title-slide slide level1 center">
+<h1>Let’s do hyper-parameter tuning on RF</h1>
+<div id="cell-60" class="cell" data-execution_count="46">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb38-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
+<span id="cb38-2"><a href=""></a>rf <span class="op">=</span> RandomForestRegressor(random_state<span class="op">=</span><span class="dv">42</span>)  <span class="co"># Define the base model</span></span>
+<span id="cb38-3"><a href=""></a>param_dist <span class="op">=</span> {  <span class="co"># Define the hyperparameter grid</span></span>
+<span id="cb38-4"><a href=""></a>    <span class="st">'n_estimators'</span>: [<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>],</span>
+<span id="cb38-5"><a href=""></a>    <span class="st">'max_depth'</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>],</span>
+<span id="cb38-6"><a href=""></a>    <span class="st">'min_samples_split'</span>: [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>],</span>
+<span id="cb38-7"><a href=""></a>    <span class="st">'min_samples_leaf'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>],</span>
+<span id="cb38-8"><a href=""></a>    <span class="st">'max_features'</span>: [<span class="st">'sqrt'</span>, <span class="st">'log2'</span>]</span>
+<span id="cb38-9"><a href=""></a>}</span>
+<span id="cb38-10"><a href=""></a>random_search <span class="op">=</span> RandomizedSearchCV(estimator<span class="op">=</span>rf, param_distributions<span class="op">=</span>param_dist, n_iter<span class="op">=</span><span class="dv">20</span>, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_root_mean_squared_error'</span>, verbose<span class="op">=</span><span class="dv">2</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">42</span>)  <span class="co"># Use RandomizedSearchCV for rough tuning</span></span>
+<span id="cb38-11"><a href=""></a>random_search.fit(X_train, y_train)  <span class="co"># Best parameters from Randomized Search</span></span>
+<span id="cb38-12"><a href=""></a>best_model <span class="op">=</span> random_search.best_estimator_</span>
+<span id="cb38-13"><a href=""></a>y_pred_rf <span class="op">=</span> best_model.predict(X_test)  <span class="co"># Make predictions</span></span>
+<span id="cb38-14"><a href=""></a>rmse_rf <span class="op">=</span> root_mean_squared_error(y_test, y_pred_rf)  <span class="co"># Compute RMSE</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fitting 5 folds for each of 20 candidates, totalling 100 fits
+[CV] END max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   1.8s
+[CV] END max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   1.7s
+[CV] END max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   1.8s
+[CV] END max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   2.6s
+[CV] END max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   2.7s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=100; total time=   4.7s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=100; total time=   4.9s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=100; total time=   4.9s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=100; total time=   7.4s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=100; total time=   7.7s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=400; total time=  13.7s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=   9.2s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=400; total time=  14.1s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=2, n_estimators=100; total time=   6.0s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=   9.5s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=   9.5s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=2, n_estimators=100; total time=   5.9s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=400; total time=  13.7s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=  11.8s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=  11.7s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=400; total time=  13.9s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=400; total time=  14.5s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=2, n_estimators=100; total time=   5.3s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=2, n_estimators=100; total time=   5.3s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=2, n_estimators=100; total time=   6.0s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=50; total time=   1.0s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=50; total time=   1.0s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=50; total time=   2.0s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=50; total time=   1.9s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=50; total time=   1.9s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  11.8s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  11.9s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  11.9s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  17.9s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  18.7s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=400; total time=  21.5s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=400; total time=  21.4s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=300; total time=  17.6s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=400; total time=  24.4s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=200; total time=  11.7s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=300; total time=  18.9s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=300; total time=  19.1s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=400; total time=  30.4s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=300; total time=  20.2s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=200; total time=  11.4s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=300; total time=  25.3s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=2, min_samples_split=10, n_estimators=400; total time=  33.6s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=200; total time=  15.5s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=200; total time=  10.5s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=5, n_estimators=200; total time=  17.8s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=4, min_samples_split=10, n_estimators=300; total time=  14.5s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=4, min_samples_split=10, n_estimators=300; total time=  16.1s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300; total time=  19.7s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=4, min_samples_split=10, n_estimators=300; total time=  15.8s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300; total time=  19.9s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300; total time=  20.4s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300; total time=  20.6s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  14.4s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300; total time=  29.3s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=   8.4s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=4, min_samples_split=10, n_estimators=300; total time=  25.0s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=   8.2s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=4, min_samples_split=10, n_estimators=300; total time=  25.5s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=   8.5s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=   8.1s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   2.4s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   2.3s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=4, min_samples_split=5, n_estimators=200; total time=  10.6s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   2.6s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   2.5s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  14.5s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=4, min_samples_split=2, n_estimators=50; total time=   2.9s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  14.6s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  22.0s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=200; total time=  13.7s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=100; total time=   5.3s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=100; total time=   4.3s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=100; total time=   6.4s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=100; total time=   5.0s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=100; total time=   5.5s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=100; total time=   5.4s
+[CV] END max_depth=30, max_features=log2, min_samples_leaf=1, min_samples_split=2, n_estimators=100; total time=   6.3s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=100; total time=   5.4s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=100; total time=   5.4s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=2, min_samples_split=2, n_estimators=50; total time=   2.0s
+[CV] END max_depth=20, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=100; total time=   8.8s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=2, min_samples_split=2, n_estimators=50; total time=   2.1s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=2, min_samples_split=2, n_estimators=50; total time=   2.2s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=2, min_samples_split=2, n_estimators=50; total time=   3.0s
+[CV] END max_depth=10, max_features=log2, min_samples_leaf=2, min_samples_split=2, n_estimators=50; total time=   2.2s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  22.3s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  22.5s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  22.1s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  22.1s
+[CV] END max_depth=30, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  26.4s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  21.1s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  21.0s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  24.3s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  19.8s
+[CV] END max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=400; total time=  23.2s</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-8" class="title-slide slide level1 center">
+<h1></h1>
+<div id="cell-62" class="cell" data-execution_count="47">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb40-1"><a href=""></a>random_search.best_params_</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<pre><code>{'n_estimators': 200,
+ 'min_samples_split': 2,
+ 'min_samples_leaf': 1,
+ 'max_features': 'log2',
+ 'max_depth': 30}</code></pre>
+</div>
+</div>
+<div id="cell-63" class="cell" data-execution_count="48">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb42-1"><a href=""></a>random_search.best_estimator_</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestRegressor(max_depth=30, max_features='log2', n_estimators=200,
+                      random_state=42)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>RandomForestRegressor</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.RandomForestRegressor.html">?<span>Documentation for RandomForestRegressor</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>RandomForestRegressor(max_depth=30, max_features='log2', n_estimators=200,
+                      random_state=42)</pre></div> </div></div></div></div>
+</div>
+</div>
+<div id="cell-64" class="cell" data-execution_count="49">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb43-1"><a href=""></a><span class="bu">print</span>(<span class="st">"Optimized RMSE using Random Forest Regressor:"</span>, <span class="bu">round</span>(rmse_rf, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimized RMSE using Random Forest Regressor: 9.49</code></pre>
+</div>
+</div>
+</section>
+
+<section id="lets-try-more-complex-models" class="title-slide slide level1 center">
+<h1>Let’s try more complex models</h1>
+<div id="cell-66" class="cell" data-execution_count="50">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb45-1"><a href=""></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb45-2"><a href=""></a>xgb_regressor <span class="op">=</span> xgb.XGBRegressor(objective<span class="op">=</span><span class="st">'reg:squarederror'</span>, random_state<span class="op">=</span><span class="dv">42</span>)  <span class="co"># Define base XGBoost model</span></span>
+<span id="cb45-3"><a href=""></a>param_dist <span class="op">=</span> {  <span class="co"># Define hyperparameter grid</span></span>
+<span id="cb45-4"><a href=""></a>    <span class="st">'n_estimators'</span>: [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">500</span>],</span>
+<span id="cb45-5"><a href=""></a>    <span class="st">'learning_rate'</span>: [<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>],</span>
+<span id="cb45-6"><a href=""></a>    <span class="st">'max_depth'</span>: [<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>],</span>
+<span id="cb45-7"><a href=""></a>    <span class="st">'min_child_weight'</span>: [<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>],</span>
+<span id="cb45-8"><a href=""></a>    <span class="st">'subsample'</span>: [<span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">1.0</span>],</span>
+<span id="cb45-9"><a href=""></a>    <span class="st">'colsample_bytree'</span>: [<span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">1.0</span>],</span>
+<span id="cb45-10"><a href=""></a>    <span class="st">'gamma'</span>: [<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>]</span>
+<span id="cb45-11"><a href=""></a>}</span>
+<span id="cb45-12"><a href=""></a><span class="co"># Perform Randomized Search for broad tuning</span></span>
+<span id="cb45-13"><a href=""></a>random_search <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb45-14"><a href=""></a>    estimator<span class="op">=</span>xgb_regressor, param_distributions<span class="op">=</span>param_dist,</span>
+<span id="cb45-15"><a href=""></a>    n_iter<span class="op">=</span><span class="dv">30</span>, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_root_mean_squared_error'</span>,</span>
+<span id="cb45-16"><a href=""></a>    verbose<span class="op">=</span><span class="dv">2</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb45-17"><a href=""></a>)</span>
+<span id="cb45-18"><a href=""></a>random_search.fit(X_train, y_train)  <span class="co"># Get best parameters from Randomized Search</span></span>
+<span id="cb45-19"><a href=""></a>best_xgb <span class="op">=</span> random_search.best_estimator_</span>
+<span id="cb45-20"><a href=""></a>y_pred_xgb <span class="op">=</span> best_xgb.predict(X_test)  <span class="co"># Make predictions</span></span>
+<span id="cb45-21"><a href=""></a>rmse_xgb <span class="op">=</span> root_mean_squared_error(y_test, y_pred_xgb)  <span class="co"># Compute RMSE</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.01, max_depth=3, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   0.6s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.01, max_depth=3, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   0.7s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.01, max_depth=3, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   0.6s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.01, max_depth=3, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   0.6s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.01, max_depth=3, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   0.6s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=5, min_child_weight=7, n_estimators=300, subsample=1.0; total time=   2.3s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=5, min_child_weight=7, n_estimators=300, subsample=1.0; total time=   2.3s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=5, min_child_weight=7, n_estimators=300, subsample=1.0; total time=   2.7s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=300, subsample=0.8; total time=   1.6s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=300, subsample=0.8; total time=   1.4s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=300, subsample=0.8; total time=   1.4s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=300, subsample=0.8; total time=   1.5s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=300, subsample=0.8; total time=   1.6s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=5, min_child_weight=7, n_estimators=300, subsample=1.0; total time=   4.9s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=5, min_child_weight=7, n_estimators=300, subsample=1.0; total time=   5.0s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   5.4s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   5.7s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   2.5s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   2.3s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   4.3s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.1, max_depth=5, min_child_weight=5, n_estimators=500, subsample=0.8; total time=   2.5s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.1, max_depth=5, min_child_weight=5, n_estimators=500, subsample=0.8; total time=   3.8s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  20.1s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  20.9s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  17.5s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  18.2s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.1, max_depth=5, min_child_weight=5, n_estimators=500, subsample=0.8; total time=   3.8s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  22.7s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  19.1s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.3s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.1, max_depth=5, min_child_weight=5, n_estimators=500, subsample=0.8; total time=   4.0s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.3s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.1, max_depth=5, min_child_weight=5, n_estimators=500, subsample=0.8; total time=   3.4s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.3s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.3s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  24.1s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.3s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.4s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  20.8s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.3s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.2s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   2.3s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.2, max_depth=5, min_child_weight=3, n_estimators=300, subsample=0.6; total time=   2.9s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.2, max_depth=5, min_child_weight=3, n_estimators=300, subsample=0.6; total time=   2.8s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=1, n_estimators=500, subsample=0.8; total time=   3.8s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=1, n_estimators=100, subsample=0.8; total time=   0.7s
+[CV] END colsample_bytree=0.8, gamma=0.5, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  24.0s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=1, n_estimators=100, subsample=0.8; total time=   0.9s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=1, n_estimators=100, subsample=0.8; total time=   0.6s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.2, max_depth=5, min_child_weight=3, n_estimators=300, subsample=0.6; total time=   3.0s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.2, max_depth=5, min_child_weight=3, n_estimators=300, subsample=0.6; total time=   3.0s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.2, max_depth=5, min_child_weight=3, n_estimators=300, subsample=0.6; total time=   4.6s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.05, max_depth=10, min_child_weight=3, n_estimators=500, subsample=0.8; total time=  28.5s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=1, n_estimators=100, subsample=0.8; total time=   0.6s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=7, n_estimators=100, subsample=0.8; total time=   0.6s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=1, n_estimators=100, subsample=0.8; total time=   0.9s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=7, n_estimators=100, subsample=0.8; total time=   0.8s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=7, n_estimators=100, subsample=0.8; total time=   0.9s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=7, n_estimators=100, subsample=0.8; total time=   0.6s
+[CV] END colsample_bytree=1.0, gamma=0.1, learning_rate=0.01, max_depth=3, min_child_weight=7, n_estimators=100, subsample=0.8; total time=   1.0s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   5.1s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=500, subsample=0.6; total time=   6.9s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=500, subsample=0.6; total time=   7.3s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   6.6s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=500, subsample=0.6; total time=   6.9s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=1, n_estimators=200, subsample=1.0; total time=  12.1s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=1, n_estimators=200, subsample=1.0; total time=  12.2s[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=1, n_estimators=200, subsample=1.0; total time=  11.9s
+
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=500, subsample=0.6; total time=   9.6s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   4.3s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.01, max_depth=7, min_child_weight=5, n_estimators=500, subsample=0.6; total time=   9.9s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=1, n_estimators=200, subsample=1.0; total time=  12.0s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=7, n_estimators=100, subsample=0.6; total time=   0.9s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=7, n_estimators=100, subsample=0.6; total time=   1.0s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=7, n_estimators=100, subsample=0.6; total time=   0.8s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=7, n_estimators=100, subsample=0.6; total time=   1.0s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   3.9s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   4.1s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   4.3s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=7, n_estimators=100, subsample=0.6; total time=   0.9s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   5.0s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.1, max_depth=3, min_child_weight=5, n_estimators=300, subsample=1.0; total time=   1.2s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.1, max_depth=3, min_child_weight=5, n_estimators=300, subsample=1.0; total time=   1.4s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   3.6s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.1, max_depth=3, min_child_weight=5, n_estimators=300, subsample=1.0; total time=   1.3s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.1, max_depth=3, min_child_weight=5, n_estimators=300, subsample=1.0; total time=   1.3s
+[CV] END colsample_bytree=0.6, gamma=0.1, learning_rate=0.1, max_depth=3, min_child_weight=5, n_estimators=300, subsample=1.0; total time=   1.4s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   3.7s
+[CV] END colsample_bytree=0.8, gamma=0.2, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   3.9s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=1, n_estimators=200, subsample=1.0; total time=  16.7s
+[CV] END colsample_bytree=0.8, gamma=0, learning_rate=0.05, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   1.6s
+[CV] END colsample_bytree=0.8, gamma=0, learning_rate=0.05, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   1.6s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=0.6; total time=   1.2s
+[CV] END colsample_bytree=0.8, gamma=0, learning_rate=0.05, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   1.8s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=0.6; total time=   1.0s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=0.6; total time=   1.1s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=0.6; total time=   1.9s
+[CV] END colsample_bytree=0.8, gamma=0, learning_rate=0.05, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   2.9s
+[CV] END colsample_bytree=1.0, gamma=0, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=0.6; total time=   1.2s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=5, n_estimators=100, subsample=1.0; total time=   0.8s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=300, subsample=0.8; total time=   3.7s
+[CV] END colsample_bytree=0.8, gamma=0, learning_rate=0.05, max_depth=7, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   2.9s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=300, subsample=0.8; total time=   4.3s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=5, n_estimators=100, subsample=1.0; total time=   0.5s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=5, n_estimators=100, subsample=1.0; total time=   0.6s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=300, subsample=0.8; total time=   3.6s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=5, n_estimators=100, subsample=1.0; total time=   0.9s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.05, max_depth=3, min_child_weight=5, n_estimators=100, subsample=1.0; total time=   0.8s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   0.8s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   1.0s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   1.0s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   1.0s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.05, max_depth=5, min_child_weight=3, n_estimators=100, subsample=1.0; total time=   1.0s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=300, subsample=0.8; total time=   4.4s
+[CV] END colsample_bytree=0.8, gamma=0.1, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=300, subsample=0.8; total time=   5.5s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.1, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   2.4s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.1, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   2.5s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.1, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   2.6s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.1, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   2.6s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   2.6s
+[CV] END colsample_bytree=0.6, gamma=0.2, learning_rate=0.1, max_depth=7, min_child_weight=5, n_estimators=300, subsample=0.8; total time=   3.0s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   4.0s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   4.3s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   4.7s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   4.4s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   3.0s
+[CV] END colsample_bytree=1.0, gamma=0.2, learning_rate=0.01, max_depth=10, min_child_weight=5, n_estimators=100, subsample=0.8; total time=   4.7s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   3.2s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   3.4s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=5, min_child_weight=1, n_estimators=500, subsample=1.0; total time=   3.6s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=500, subsample=1.0; total time=   4.7s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=500, subsample=1.0; total time=   4.5s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=500, subsample=1.0; total time=   5.0s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=3, min_child_weight=7, n_estimators=500, subsample=0.8; total time=   2.1s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=500, subsample=1.0; total time=   4.5s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=3, min_child_weight=7, n_estimators=500, subsample=0.8; total time=   2.1s
+[CV] END colsample_bytree=1.0, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=7, n_estimators=500, subsample=1.0; total time=   5.2s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=3, min_child_weight=7, n_estimators=500, subsample=0.8; total time=   2.1s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=3, min_child_weight=7, n_estimators=500, subsample=0.8; total time=   2.0s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.1, max_depth=3, min_child_weight=7, n_estimators=500, subsample=0.8; total time=   2.0s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=200, subsample=1.0; total time=   2.1s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=200, subsample=1.0; total time=   2.2s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=200, subsample=1.0; total time=   2.1s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=200, subsample=1.0; total time=   2.2s
+[CV] END colsample_bytree=0.6, gamma=0.5, learning_rate=0.2, max_depth=7, min_child_weight=5, n_estimators=200, subsample=1.0; total time=   1.9s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.01, max_depth=10, min_child_weight=7, n_estimators=500, subsample=0.6; total time=   9.5s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.01, max_depth=10, min_child_weight=7, n_estimators=500, subsample=0.6; total time=  10.0s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.01, max_depth=10, min_child_weight=7, n_estimators=500, subsample=0.6; total time=   9.8s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.01, max_depth=10, min_child_weight=7, n_estimators=500, subsample=0.6; total time=  10.1s
+[CV] END colsample_bytree=0.6, gamma=0, learning_rate=0.01, max_depth=10, min_child_weight=7, n_estimators=500, subsample=0.6; total time=   9.3s</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-9" class="title-slide slide level1 center">
+<h1></h1>
+<div id="cell-68" class="cell" data-execution_count="51">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb47-1"><a href=""></a>random_search.best_params_</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="51">
+<pre><code>{'subsample': 0.6,
+ 'n_estimators': 500,
+ 'min_child_weight': 5,
+ 'max_depth': 7,
+ 'learning_rate': 0.01,
+ 'gamma': 0.5,
+ 'colsample_bytree': 0.6}</code></pre>
+</div>
+</div>
+<div id="cell-69" class="cell" data-execution_count="52">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb49-1"><a href=""></a>random_search.best_estimator_</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="52">
+<style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+#sk-container-id-2 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=0.6, device=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             gamma=0.5, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=0.01, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=7, max_leaves=None,
+             min_child_weight=5, missing=nan, monotone_constraints=None,
+             multi_strategy=None, n_estimators=500, n_jobs=None,
+             num_parallel_tree=None, random_state=42, ...)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked=""><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>XGBRegressor</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=0.6, device=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             gamma=0.5, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=0.01, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=7, max_leaves=None,
+             min_child_weight=5, missing=nan, monotone_constraints=None,
+             multi_strategy=None, n_estimators=500, n_jobs=None,
+             num_parallel_tree=None, random_state=42, ...)</pre></div> </div></div></div></div>
+</div>
+</div>
+<div id="cell-70" class="cell" data-execution_count="53">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb50-1"><a href=""></a><span class="bu">print</span>(<span class="st">"Optimized RMSE using XGBoost:"</span>, <span class="bu">round</span>(rmse_xgb, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimized RMSE using XGBoost: 9.48</code></pre>
+</div>
+</div>
+</section>
+
+<section id="plotting-feature-importance" class="title-slide slide level1 center">
+<h1>Plotting feature importance</h1>
+<div id="cell-72" class="cell" data-execution_count="54">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb52-1"><a href=""></a>feature_importance <span class="op">=</span> best_xgb.feature_importances_  <span class="co"># Get feature importance</span></span>
+<span id="cb52-2"><a href=""></a>feature_importance_df <span class="op">=</span> pd.DataFrame({ <span class="st">'Feature'</span>: X_train.columns, <span class="st">'Importance'</span>: feature_importance }).sort_values(by<span class="op">=</span><span class="st">'Importance'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb52-3"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb52-4"><a href=""></a>plt.barh(feature_importance_df[<span class="st">'Feature'</span>], feature_importance_df[<span class="st">'Importance'</span>])</span>
+<span id="cb52-5"><a href=""></a>plt.xlabel(<span class="st">'Importance'</span>)</span>
+<span id="cb52-6"><a href=""></a>plt.ylabel(<span class="st">'Feature'</span>)</span>
+<span id="cb52-7"><a href=""></a>plt.title(<span class="st">'Feature Importance from XGBoost'</span>)</span>
+<span id="cb52-8"><a href=""></a>plt.gca().invert_yaxis()</span>
+<span id="cb52-9"><a href=""></a>plt.tight_layout()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-cimice_files/figure-revealjs/cell-32-output-1.png" class="r-stretch"></section>
+
+<section id="lets-retry-automl" class="title-slide slide level1 center">
+<h1>Let’s retry AutoML</h1>
+<div id="cell-74" class="cell" data-execution_count="55">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb53-1"><a href=""></a>automl <span class="op">=</span> AutoML()</span>
+<span id="cb53-2"><a href=""></a>automl_settings <span class="op">=</span> {</span>
+<span id="cb53-3"><a href=""></a>    <span class="st">"time_budget"</span>: <span class="dv">30</span>,  <span class="co"># Time budget in seconds</span></span>
+<span id="cb53-4"><a href=""></a>    <span class="st">"max_iter"</span>: <span class="dv">30</span>,  <span class="co"># Max number of iterations</span></span>
+<span id="cb53-5"><a href=""></a>    <span class="st">"metric"</span>: <span class="st">'rmse'</span>,  <span class="co"># Evaluation metric</span></span>
+<span id="cb53-6"><a href=""></a>    <span class="co"># "estimator_list": ["xgboost"],</span></span>
+<span id="cb53-7"><a href=""></a>    <span class="st">"task"</span>: <span class="st">'regression'</span>,  <span class="co"># Task type</span></span>
+<span id="cb53-8"><a href=""></a>}</span>
+<span id="cb53-9"><a href=""></a>automl.fit(X_train, y_train, <span class="op">**</span>automl_settings)</span>
+<span id="cb53-10"><a href=""></a>y_pred <span class="op">=</span> automl.predict(X_test)</span>
+<span id="cb53-11"><a href=""></a>rmse <span class="op">=</span> root_mean_squared_error(y_test, y_pred)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[flaml.automl.logger: 04-08 20:50:07] {1728} INFO - task = regression
+[flaml.automl.logger: 04-08 20:50:07] {1739} INFO - Evaluation method: holdout
+[flaml.automl.logger: 04-08 20:50:07] {1838} INFO - Minimizing error metric: rmse
+[flaml.automl.logger: 04-08 20:50:07] {1955} INFO - List of ML learners in AutoML Run: ['lgbm', 'rf', 'xgboost', 'extra_tree', 'xgb_limitdepth', 'sgd']
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 0, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2393} INFO - Estimated sufficient time budget=561s. Estimated necessary time budget=4s.
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.2s,   estimator lgbm's best error=13.7019,    best estimator lgbm's best error=13.7019
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 1, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.3s,   estimator lgbm's best error=13.7019,    best estimator lgbm's best error=13.7019
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 2, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.3s,   estimator lgbm's best error=11.1891,    best estimator lgbm's best error=11.1891
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 3, current learner sgd
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.4s,   estimator sgd's best error=18.1963, best estimator lgbm's best error=11.1891
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 4, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.4s,   estimator lgbm's best error=10.0279,    best estimator lgbm's best error=10.0279
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 5, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.5s,   estimator lgbm's best error=10.0279,    best estimator lgbm's best error=10.0279
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 6, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.5s,   estimator lgbm's best error=9.9213, best estimator lgbm's best error=9.9213
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 7, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.6s,   estimator lgbm's best error=9.9213, best estimator lgbm's best error=9.9213
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 8, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.6s,   estimator lgbm's best error=9.9213, best estimator lgbm's best error=9.9213
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 9, current learner sgd
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.7s,   estimator sgd's best error=18.1868, best estimator lgbm's best error=9.9213
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 10, current learner xgboost
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.8s,   estimator xgboost's best error=13.7583, best estimator lgbm's best error=9.9213
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 11, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 0.9s,   estimator lgbm's best error=9.6392, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 12, current learner extra_tree
+[flaml.automl.logger: 04-08 20:50:07] {2442} INFO -  at 1.0s,   estimator extra_tree's best error=11.7083,  best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:07] {2258} INFO - iteration 13, current learner xgboost
+[flaml.automl.logger: 04-08 20:50:08] {2442} INFO -  at 1.1s,   estimator xgboost's best error=13.7583, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:08] {2258} INFO - iteration 14, current learner xgboost
+[flaml.automl.logger: 04-08 20:50:08] {2442} INFO -  at 1.2s,   estimator xgboost's best error=11.2826, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:08] {2258} INFO - iteration 15, current learner extra_tree
+[flaml.automl.logger: 04-08 20:50:08] {2442} INFO -  at 1.3s,   estimator extra_tree's best error=10.0393,  best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:08] {2258} INFO - iteration 16, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:08] {2442} INFO -  at 1.4s,   estimator lgbm's best error=9.6392, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:08] {2258} INFO - iteration 17, current learner extra_tree
+[flaml.automl.logger: 04-08 20:50:08] {2442} INFO -  at 1.5s,   estimator extra_tree's best error=10.0393,  best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:08] {2258} INFO - iteration 18, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:08] {2442} INFO -  at 1.8s,   estimator lgbm's best error=9.6392, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:08] {2258} INFO - iteration 19, current learner extra_tree
+[flaml.automl.logger: 04-08 20:50:08] {2442} INFO -  at 1.9s,   estimator extra_tree's best error=9.8639,   best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:08] {2258} INFO - iteration 20, current learner rf
+[flaml.automl.logger: 04-08 20:50:08] {2442} INFO -  at 2.1s,   estimator rf's best error=11.0011,  best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:08] {2258} INFO - iteration 21, current learner rf
+[flaml.automl.logger: 04-08 20:50:09] {2442} INFO -  at 2.3s,   estimator rf's best error=9.9127,   best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:09] {2258} INFO - iteration 22, current learner xgboost
+[flaml.automl.logger: 04-08 20:50:09] {2442} INFO -  at 2.4s,   estimator xgboost's best error=11.1308, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:09] {2258} INFO - iteration 23, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:09] {2442} INFO -  at 2.5s,   estimator lgbm's best error=9.6392, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:09] {2258} INFO - iteration 24, current learner lgbm
+[flaml.automl.logger: 04-08 20:50:09] {2442} INFO -  at 2.6s,   estimator lgbm's best error=9.6392, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:09] {2258} INFO - iteration 25, current learner xgboost
+[flaml.automl.logger: 04-08 20:50:09] {2442} INFO -  at 2.7s,   estimator xgboost's best error=10.9476, best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:09] {2258} INFO - iteration 26, current learner extra_tree
+[flaml.automl.logger: 04-08 20:50:09] {2442} INFO -  at 2.8s,   estimator extra_tree's best error=9.7118,   best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:09] {2258} INFO - iteration 27, current learner rf
+[flaml.automl.logger: 04-08 20:50:09] {2442} INFO -  at 3.0s,   estimator rf's best error=9.9127,   best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:09] {2258} INFO - iteration 28, current learner extra_tree
+[flaml.automl.logger: 04-08 20:50:10] {2442} INFO -  at 3.2s,   estimator extra_tree's best error=9.7118,   best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:10] {2258} INFO - iteration 29, current learner extra_tree
+[flaml.automl.logger: 04-08 20:50:10] {2442} INFO -  at 3.3s,   estimator extra_tree's best error=9.7118,   best estimator lgbm's best error=9.6392
+[flaml.automl.logger: 04-08 20:50:10] {2685} INFO - retrain lgbm for 0.1s
+[flaml.automl.logger: 04-08 20:50:10] {2688} INFO - retrained model: LGBMRegressor(colsample_bytree=np.float64(0.7610534336273627),
+              learning_rate=np.float64(0.41929025492645006), max_bin=255,
+              min_child_samples=4, n_estimators=34, n_jobs=-1, num_leaves=4,
+              reg_alpha=0.0009765625,
+              reg_lambda=np.float64(0.009280655005879927), verbose=-1)
+[flaml.automl.logger: 04-08 20:50:10] {1985} INFO - fit succeeded
+[flaml.automl.logger: 04-08 20:50:10] {1986} INFO - Time taken to find the best model: 0.9153485298156738</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-10" class="title-slide slide level1 center">
+<h1></h1>
+<div id="cell-76" class="cell" data-execution_count="56">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb55-1"><a href=""></a>automl.best_estimator</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="56">
+<pre><code>'lgbm'</code></pre>
+</div>
+</div>
+<div id="cell-77" class="cell" data-execution_count="57">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb57-1"><a href=""></a>automl.best_config</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="57">
+<pre><code>{'n_estimators': 34,
+ 'num_leaves': 4,
+ 'min_child_samples': 4,
+ 'learning_rate': np.float64(0.41929025492645006),
+ 'log_max_bin': 8,
+ 'colsample_bytree': np.float64(0.7610534336273627),
+ 'reg_alpha': 0.0009765625,
+ 'reg_lambda': np.float64(0.009280655005879927)}</code></pre>
+</div>
+</div>
+<div id="cell-78" class="cell" data-execution_count="58">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb59-1"><a href=""></a><span class="bu">print</span>(<span class="st">"RMSE using AutoML:"</span>, <span class="bu">round</span>(rmse, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE using AutoML: 9.77</code></pre>
+</div>
+</div>
+</section>
+
+<section id="questions" class="title-slide slide level1 center">
+<h1>Questions</h1>
+<ul>
+<li>Can this model generalize to any country? E.g., to Australia</li>
+</ul>
+</section>
+
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-DBLP:journals/cacm/BieRHHSW22" class="csl-entry" role="listitem">
+Bie, Tijl De, Luc De Raedt, José Hernández-Orallo, Holger H. Hoos, Padhraic Smyth, and Christopher K. I. Williams. 2022. <span>“Automating Data Science.”</span> <em>Commun. <span>ACM</span></em> 65 (3): 76–87.
+</div>
+<div id="ref-DBLP:journals/ecoi/ForresiGGMPV24" class="csl-entry" role="listitem">
+Forresi, Chiara, Enrico Gallinucci, Matteo Golfarelli, Lara Maistrello, Michele Preti, and Giacomo Vaccari. 2024. <span>“A Data Platform for Real-Time Monitoring and Analysis of the Brown Marmorated Stink Bug in Northern Italy.”</span> <em>Ecol. Informatics</em> 82: 102713. <a href="https://doi.org/10.1016/J.ECOINF.2024.102713">https://doi.org/10.1016/J.ECOINF.2024.102713</a>.
+</div>
+<div id="ref-DBLP:journals/cacm/WaldoB25" class="csl-entry" role="listitem">
+Waldo, Jim, and Soline Boussard. 2025. <span>“GPTs and Hallucination.”</span> <em>Commun. <span>ACM</span></em> 68 (1): 40–45.
+</div>
+<div id="ref-DBLP:journals/cacm/Welsh23" class="csl-entry" role="listitem">
+Welsh, Matt. 2023. <span>“The End of Programming.”</span> <em>Commun. <span>ACM</span></em> 66 (1): 34–35.
+</div>
+</div>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Matteo Francia - Machine Learning and Data Mining (Module 2) - A.Y. 2025/26</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lab-cimice_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lab-cimice_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lab-cimice_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lab-cimice_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lab-cimice_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lab-cimice_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lab-cimice_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lab-cimice_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lab-cimice_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lab-cimice_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
