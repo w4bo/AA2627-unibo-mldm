@@ -385,12 +385,12 @@ attribute and then perform calculations using that matrix
 # Computing Gini for Continuous Attributes
 
 ::::{.columns}
-:::{.columns width=50%}
+:::{.column width=20%}
 ![Training Data](./img/dt/image1.png)
 
 ![Binary split](./img/dt/image18.png)
 :::
-:::{.columns width=50%}
+:::{.column width=80%}
 
 It requires defining the split point using a binary condition. The number of possible conditions is equal to the number of distinct values of the attribute.
 
@@ -398,11 +398,10 @@ You can calculate a matrix count for each split value. The array will count the 
 
 A naive approach:
 
-- For each split v value, read the DB (with N records) to build the count matrix and calculate the Gini index
-- Computationally inefficient - $O(N^2)$ - since:
-    * Scan DB $O(N)$
-    * Repeat for each value of $v \cdot O(N)$
-
+- For each split $v$ value, read the DB (with $N$ records) to build the count matrix and calculate the Gini index
+- Computationally inefficient $O(N^2)$:
+    - Scan DB: $O(N)$
+    - Repeat for each value of $v$: $v \cdot O(N)$
 :::
 ::::
 
@@ -435,8 +434,8 @@ Selecting the split value that maximizes GAIN tends to determine split criteria 
 To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:
 
 - $N$ = number of child nodes
-- $M$ = record number in father p
-- $m_i$ = number of records in child node i
+- $M$ = record number in father $p$
+- $m_i$ = number of records in child node $i$
 
 $GainRATIO_{split}=\frac{GAIN_{split}}{SplitINFO}$
 
@@ -461,7 +460,7 @@ To avoid the problem of spraying classes, it is preferable to maximize the Gain 
 
 Compute the Gini index and information gain for the following binary problem and comment on the results.
 
-| A | B | Classe | |
+| A | B | Clas | |
 :-: | :-: | :-: | :-: | :-: |
 | T | F | + | |
 | T | T | + | |
@@ -509,11 +508,10 @@ The Confusion Matrix evaluates the ability of a classifier based on the followin
 - $FP$ (false positive): Incorrectly classified records as class Yes
 - $TN$ (true negative) records correctly classified as class No
 
-| | Expected Class | | |
-| :-: | :-: | :-: | :-: |
-| Actual Class | | Class=Yes | Class=No |
-| | Class=Yes | TP | FN |
-| | Class=No | FP | TN |
+| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
+| :-: | :-: | :-: |
+| **Class=+** | TP | FN |
+| **Class=-** | FP | TN |
 
 If the classification uses n classes, the confusion matrix will be $n \cdot n$
 
@@ -534,54 +532,58 @@ Accuracy is not an appropriate metric if the classes contain a very different nu
 - #Record of class 0 = 9990
 - #Record of class 1 = 10
 
-A model that always returns class 0 will have an accuracy of 9990/10000 = 99.9%
+A model that always returns class 0 will have an accuracy of $\frac{9990}{10000}$ = 99.9%
 
-In the case of binary classification problems, the class " rare " is also called a positive class, while the class that includes most of the records is called a negative class.
+In the case of binary classification problems, the class "rare" is also called a positive class, while the class that includes most of the records is called a negative class.
 
 # Precision and Recall
 
 Precision and Recall are two metrics used in applications where _the correct classification of positive class records is more important_
 
-- __Precision__ measures the fraction of record results that are actually positive among all those who were classified as such.
-    - $Precision = \frac{TP}{TP + FP}$
+- __Precision__ ($Precision = \frac{TP}{TP + FP}$) measures the fraction of record results that are actually positive among all those who were classified as such.
     - High values indicate that few negative class records were incorrectly classified as positive.
-- __Recall__ measures the fraction of positive records correctly classified
-    - $Recall = \frac{TP}{TP + FN}$
+- __Recall__ ($Recall = \frac{TP}{TP + FN}$) measures the fraction of positive records correctly classified
     - High values indicate that few records of the positive class were incorrectly classified as negatives.
 
-![](./img/dt/image24.png)
+![Outcome of classification](./img/dt/image24.png)
 
 # Precision and Recall
 
-Precision = 1 if all the positive records were actually detected
+::::{.columns}
+:::{.column width=50%}
+$Precision = 1$ if all the positive records were actually detected
 
-![](./img/dt/image25.png)
+![$Precision = 1$](./img/dt/image25.png)
+:::
+:::{.column width=50%}
+$Recall = 1$ if there are no false negatives
 
-Recall = 1 if there are no false negatives
-
-![](./img/dt/image26.png)
+![$Recall = 1$](./img/dt/image26.png)
+:::
+::::
 
 If both are valid 1, the predetermined classes coincide with the real ones.
 
 # F-measure
 
-A metric that summarizes precision and recall is called the F-measure.
+A metric that summarizes precision and recall is called the F-measure ($\text{F-measure} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$).
 
-$F-measure = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$
+
 
 F-measure represents the harmonic mean of precision and recall.
 
-- The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers. So if the harmonic average is high, it means both precision and recall are.
+- The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers.
+- So if the harmonic average is high, it means both precision and recall are.
 - ... so there have been no false negatives or false positives
 
 # Cost-Based Evaluation
 
-Accuracy, Precision- Recall, and F- F-measure classify an instance as positive if $P(+, i)>P(-, i)$.
+Accuracy, Precision, Recall, and F-measure classify an instance as positive if $P(+, i)>P(-, i)$.
 
 - They assume that FN and FP have the same weight, thus they are Cost-Insensitive
 - In many domains, this is not true!
-    * For a cancer screening test, for example, we may be prepared to put up with a relatively high false positive rate in order to get a high true positive; it is most important to identify possible cancer sufferers
-    * For a follow-up test after treatment, however, a different threshold might be more desirable, since we want to minimize false negatives; we don't want to tell a patient they're clear if this is not actually the case.
+    - For a cancer screening test, for example, we may be prepared to put up with a relatively high false positive rate in order to get a high true positive; it is most important to identify possible cancer sufferers
+    - For a follow-up test after treatment, however, a different threshold might be more desirable, since we want to minimize false negatives; we don't want to tell a patient they're clear if this is not actually the case.
 
 ![](img/dt/3-Decision%20Tree_68.jpg)
 
@@ -591,13 +593,13 @@ The cost matrix encodes the penalty that a classifier incurs in classifying a re
 
 A negative penalty indicates the "prize" that is obtained for a correct classification.
 
-$C(M)=TP xC(+|+) + FP xC(+|- ) + FN xC(- |+) + TN xC(- |- )$
+$C(M)=TP \cdot C(+|+) + FP \cdot C(+|- ) + FN \cdot C(- |+) + TN \cdot C(- |- )$
 
-| | Expected Class j | | |
-| :-: | :-: | :-: | :-: |
-| ActualClass i | C(i\|j) | __Class = +__ | __Class=-__ |
-| | __Class=+__ | C(+\|+) | C(+\|-) |
-| | __Class=-__ | C(-\|+) | C(-\|-) |
+
+| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
+| :-: | :-: | :-: |
+| **Class=+** | C(+\|+) | C(+\|-) |
+| **Class=-** | C(-\|+) | C(-\|-) |
 
 A model constructed by structuring, as a purity function, a cost matrix, will tend to provide a model with a minimum cost over the specified weights.
 
@@ -605,31 +607,43 @@ A model constructed by structuring, as a purity function, a cost matrix, will te
 
 ::::{.columns}
 :::{.column width=33%}
-| Cost Matrix | PREDICTED CLASS | | |
-| :-: | :-: | :-: | :-: |
-| ACTUAL CLASS | C(i\|j) | __+__ | __-__ |
-| | __+__ | -1 | 100 |
-| | __-__ | 1 | 0 |
+
+Costs
+
+| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
+| :-: | :-: | :-: |
+| **Class=+** | -1 | 100 |
+| **Class=-** | 1 | 0 |
 :::
 :::{.column width=33%}
-| Model M 1 | PREDICTED CLASS | | |
-| :-: | :-: | :-: | :-: |
-| ACTUAL CLASS | | __+__ | __-__ |
-| | __+__ | 150 | 40 |
-| | __-__ | 60 | 250 |
 
-Accuracy = 80%
-Cost = 3910
+:::{.fragment}
+Predictions of Model M1
+
+| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
+| :-: | :-: | :-: |
+| **Class=+** | 150 | 40 |
+| **Class=-** | 60 | 250 |
+
+- Accuracy = 80%
+- Cost = 3910
+:::
+
 :::
 :::{.column width=33%}
-| Model M 2 | PREDICTED CLASS | | |
-| :-: | :-: | :-: | :-: |
-| ACTUAL CLASS | | __+__ | __-__ |
-| | __+__ | 250 | 45 |
-| | __-__ | 5 | 200 |
 
-Accuracy = 90%
-Cost = 4255
+:::{.fragment}
+Predictions of Model M2
+
+| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
+| :-: | :-: | :-: |
+| **Class=+** | 250 | 45 |
+| **Class=-** | 5 | 200 |
+
+- Accuracy = 90%
+- Cost = 4255
+:::
+
 :::
 ::::
 
@@ -649,10 +663,10 @@ The ROC curve characterizes a probabilistic classifier, and each point of this c
 
 # ROC Space
 
-A ROC graph for a probabilistic classifier is obtained by varying the threshold (or the probability if available) used to assign an instance _i_ _ _ to a class (+/-).
+A ROC graph for a probabilistic classifier is obtained by varying the threshold (or the probability if available) used to assign an instance $i$ to a class (+/-).
 
-- Instead of $P(+,i) > P(-, i)$ than $i$ is +
-- We have if $P(+,i)> x$ than $i$ is + $x \in [0,..,1]$
+- Instead of: if $P(+,i) > P(-, i)$ than $i$ is $+$
+- We have: if $P(+,i)> x$ than $i$ is $+$ (with $x \in [0, 1]$)
 
 Each $x$ value determines a different TPR and FPR.
 
@@ -660,9 +674,9 @@ Each $x$ value determines a different TPR and FPR.
 
 ::::{.columns}
 :::{.column width=50%}
-![ROC Curve](./img/dt/image28.png)
+![Classification outcome](./img/dt/image28.png)
 :::
-:::{.column width=33%}
+:::{.column width=50%}
 ![ROC Curve](./img/dt/image27.png)
 :::
 ::::
@@ -670,20 +684,21 @@ Each $x$ value determines a different TPR and FPR.
 # Understanding the ROC Space
 
 ::::{.columns}
-:::{.column width=50%}
+:::{.column width=30%}
 ![ROC Curve](./img/dt/image29.png)
 :::
-:::{.column width=33%}
-- A good classifier tends to have performance close to the upper-left corner of the ROC graph, that is: High TPR and Low FPR
+:::{.column width=70%}
+A good classifier tends to have performance close to the upper-left corner of the ROC graph, that is: High TPR and Low FPR
+
 - The __Area Under the Curve__ (AUC) provides an overall rating of the classifier, while segments of the curve provide a rating in specific TPR - FPR settings.
-- The larger the overlap between + and - instances' distributions, the harder it is for the classifier to distinguish between positive and negative instances.
+- The larger the overlap between $+$ and $-$ instances' distributions, the harder it is for the classifier to distinguish between positive and negative instances.
 - A dummy classifier performs on the ROC graph diagonal: the TPR is equal to the FPR since the classifier's answers are random
 :::
 ::::
 
 # Comparison of Classifiers via ROC curve
 
-![](img/dt/3-Decision%20Tree_73.jpg)
+![ROC curve](img/dt/3-Decision%20Tree_73.jpg)
 
 A classifier comparison based on ROC curves or AUC values can be either graphical or numerical.
 
@@ -701,7 +716,7 @@ The class distribution is the relationship of the left (P) column to the right (
 
 ROC graphs are based upon TPR and FPR, in which each dimension is a strict columnar ratio, so they do not depend on class distributions.
 
-![](img/dt/3-Decision%20Tree_74.jpg)
+![Confusion matrix](img/dt/3-Decision%20Tree_74.jpg)
 
 # Where do ROC curves come from?
 
@@ -722,10 +737,10 @@ ROC stands for _Receiver Operator Characteristic_. The term has its roots in Wor
 
 ::::{.columns}
 :::{.column width=50%}
-![](img/dt/3-Decision%20Tree_82.png)
+![Data distribution](img/dt/3-Decision%20Tree_83.png)
 :::
 :::{.column width=50%}
-![](img/dt/3-Decision%20Tree_83.png)
+![Performance of the DT](img/dt/3-Decision%20Tree_82.png)
 :::
 ::::
 
@@ -741,7 +756,7 @@ ROC stands for _Receiver Operator Characteristic_. The term has its roots in Wor
 
 Lack of points at the bottom of the chart makes it difficult to find a proper classification for that portion of the region.
 
-![](img/dt/3-Decision%20Tree_85.png)
+![Overfitting](img/dt/3-Decision%20Tree_85.png)
 
 # How to handle the Overfitting: pre-pruning (Early stopping rule)
 
@@ -792,13 +807,13 @@ Then the real-time data error must be estimated.
 
 The methods for estimating the generalization error are:
 
-- __Optimistic approach:__ e'(t) = e(t)
+- __Optimistic approach:__ $e'(t) = e(t)$
 - __Pessimistic approach__
 - __Minimum Description Length (MDL)__
 - __Using the test set:__ The generalization error is equal to the error on the test set.
 
-    * Normally, the test set is obtained by extracting from the initial training set 1/3 of the records
-    * It offers good results, but the risk is to work with a too small training set
+    - Normally, the test set is obtained by extracting from the initial training set 1/3 of the records
+    - It offers good results, but the risk is to work with a too small training set
 
 # Occam's Razor
 
@@ -814,14 +829,14 @@ Note: The methodological principle was expressed in the 14th century by the Engl
 
 Given two models, choose the one that minimizes the cost to describe a classification. To describe the model, I can:
 
-- Sequentially send class O (n)
+- Sequentially send class $O(n)$
 - Build a classifier, and send the description along with a detailed description of the mistakes it makes
 
 $Cost(model, data)=Cost(model)+Cost(data|model)$
 
 # Minimum Description Length
 
-![](img/dt/3-Decision%20Tree_108.png)
+![Different decision trees](img/dt/3-Decision%20Tree_108.png)
 
 Datasets with n records described by 16 binary attributes and 3 class values
 
@@ -841,8 +856,8 @@ The generalization error is estimated by adding to the error on the training set
 
 - $e(t_i)$: classification errors on leaf $i$
 
-    * $\Sigma(t_i)$: leaf-related penalty $i$
-    * $n(t_i)$ number of records in the training set belonging to leaf $i$
+    - $\Sigma(t_i)$: leaf-related penalty $i$
+    - $n(t_i)$ number of records in the training set belonging to leaf $i$
 
 $E(T)=\frac{\sum_{i=1}^k e(t_i)+\Sigma(t_i)}{\sum_{i=1}^k n(t_i)}$
 
@@ -850,22 +865,23 @@ For binary trees, a penalty equal to 0.5 implies that a node should always be ex
 
 # Post Pruning: an example
 
-- Training error (before split) = $\frac{10}{30}$
-- Pessimistic error = $\frac{10 + 0.5}{30} = \frac{10.5}{30}
-- Training error (after split) = $\frac{9}{30}$
-- Pessimistic error (After splitting) = $\frac{9 + 4 \cdot 0.5}{30} = \frac{11}{30}$
-
 ::::{.columns}
 :::{.column width=50%}
-| Class = Yes | 20 |
+| Class | Instances|
 | :-: | :-: |
+| Class = Yes | 20 |
 | Class = No | 10 |
-| Error = $\frac{10}{30}$ | |
+
 :::
 :::{.column width=50%}
-![](img/dt/image30.png)
+![Should I prune?](img/dt/image30.png)
 :::
 ::::
+
+- Training error (before split) = $\frac{10}{30}$
+- Pessimistic error = $\frac{10 + 0.5}{30} = \frac{10.5}{30}$
+- Training error (after split) = $\frac{9}{30}$
+- Pessimistic error (after splitting) = $\frac{9 + 4 \cdot 0.5}{30} = \frac{11}{30}$
 
 PRUNE!
 
@@ -892,7 +908,7 @@ Pessimistic error (penalty 1)?
 
 __Holdout__
 
-Use 2/3 of the training records and 1/3 for validation.
+Use $\frac{2}{3}$ of the training records and $\frac{1}{3}$ for validation.
 
 Disadvantages:
 
@@ -917,15 +933,15 @@ __Cross validation__
 
 Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of N records, you can create an N-record set in which each record has approximately a 63.2% probability of appearing (with N sufficiently large)
 
-$1 - (1 - 1 / N)^N = 1 - e${-1} = 0.632$
+$1 - (1 - \frac{1}{N})^N = 1 - e^{-1} = 0.632$
 
 - Records that are not used even once in the current training set form the validation set
 
-The procedure is repeated b times. Commonly, the model's accuracy is calculated as:
+The procedure is repeated $b$ times. Commonly, the model's accuracy is calculated as:
 
 $Acc_{boot} = \frac{1}{b} \sum_{i=1}^b 0.632 \cdot Acc_i + 0.368 \cdot Acc_s$
 
-where $Acc_i$ is the accuracy of the i-th bootstrap, $Acc_s$ is the accuracy of the complete dataset
+where $Acc_i$ is the accuracy of the $i$-th bootstrap, $Acc_s$ is the accuracy of the complete dataset
 
 The bootstrap does not create a (new) dataset with more information, but it can stabilize the obtained results of the available dataset. It is therefore particularly useful for small datasets.
 
