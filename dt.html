@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="dt_files/libs/quarto-html/tabby.min.js"></script>
+<script src="dt_files/libs/quarto-html/popper.min.js"></script>
+<script src="dt_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="dt_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="dt_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="dt_files/libs/quarto-html/quarto-syntax-highlighting-cdaacfc258cb6f151192107f105ac881.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.12">
+
+  <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
+  <title>Machine Learning and Data Mining (Module 2)</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="dt_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="dt_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="dt_files/libs/revealjs/dist/theme/quarto-b3aa9dda08c8fde6dffd4aadb76df7d0.css">
+  <link href="dt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="dt_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="dt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="dt_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Machine Learning and Data Mining (Module 2)</h1>
+  <p class="subtitle">Decision Trees</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it 
+</div>
+</div>
+</div>
+
+</section>
+<section id="decision-tree" class="title-slide slide level1 center">
+<h1>Decision Tree</h1>
+<p>It is one of the most widely used classification techniques that allows you to represent a set of classification rules with a tree.</p>
+<p>Tree: a hierarchical structure consisting of a set of nodes, connected by arcs labeled and oriented. There are two types of nodes:</p>
+<ul>
+<li>Leaf nodes identify classes, while the remaining nodes are labeled based on the attribute that partitions the records. The partitioning criterion represents the label of the arcs</li>
+</ul>
+<p>Each root-leaf path represents a classification rule.</p>
+
+<img data-src="./img/dt/image0.png" class="r-stretch quarto-figure-center"><p class="caption">Model: Decision Tree</p></section>
+
+<section id="decision-tree-an-example" class="title-slide slide level1 center">
+<h1>Decision Tree: an Example</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image1.png"></p>
+<figcaption>Training Data</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image2.png"></p>
+<figcaption>Model: Decision Tree</figcaption>
+</figure>
+</div>
+</div></div>
+<p>For each dataset, several decision trees could be defined.</p>
+</section>
+
+<section id="decision-tree-an-example-1" class="title-slide slide level1 center">
+<h1>Decision Tree: an Example</h1>
+
+<img data-src="./img/dt/image3.png" class="r-stretch quarto-figure-center"><p class="caption">Model: Decision Tree</p></section>
+
+<section id="applying-the-model" class="title-slide slide level1 center">
+<h1>Applying the model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Test Data</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Refund</th>
+<th style="text-align: center;">Marital Status</th>
+<th style="text-align: center;">Taxable Income</th>
+<th style="text-align: center;">Cheat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Married</td>
+<td style="text-align: center;">80K</td>
+<td style="text-align: center;"><strong>?</strong></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image4.png"></p>
+<figcaption>Model: Decision Tree</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="applying-the-model-1" class="title-slide slide level1 center">
+<h1>Applying the model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Test Data</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><em>Refund</em></th>
+<th style="text-align: center;">Marital Status</th>
+<th style="text-align: center;">Taxable Income</th>
+<th style="text-align: center;">Cheat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Married</td>
+<td style="text-align: center;">80K</td>
+<td style="text-align: center;"><strong>?</strong></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image5.png"></p>
+<figcaption>Model: Decision Tree</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="applying-the-model-2" class="title-slide slide level1 center">
+<h1>Applying the model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Test Data</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><em>Refund</em></th>
+<th style="text-align: center;">Marital Status</th>
+<th style="text-align: center;">Taxable Income</th>
+<th style="text-align: center;">Cheat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><em>No</em></td>
+<td style="text-align: center;">Married</td>
+<td style="text-align: center;">80K</td>
+<td style="text-align: center;"><strong>?</strong></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image6.png"></p>
+<figcaption>Model: Decision Tree</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="applying-the-model-3" class="title-slide slide level1 center">
+<h1>Applying the model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Test Data</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><em>Refund</em></th>
+<th style="text-align: center;"><em>Marital Status</em></th>
+<th style="text-align: center;">Taxable Income</th>
+<th style="text-align: center;">Cheat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><em>No</em></td>
+<td style="text-align: center;">Married</td>
+<td style="text-align: center;">80K</td>
+<td style="text-align: center;"><strong>?</strong></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image7.png"></p>
+<figcaption>Model: Decision Tree</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="applying-the-model-4" class="title-slide slide level1 center">
+<h1>Applying the model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Test Data</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><em>Refund</em></th>
+<th style="text-align: center;"><em>Marital Status</em></th>
+<th style="text-align: center;">Taxable Income</th>
+<th style="text-align: center;">Cheat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><em>No</em></td>
+<td style="text-align: center;"><em>Married</em></td>
+<td style="text-align: center;">80K</td>
+<td style="text-align: center;"><strong>?</strong></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image8.png"></p>
+<figcaption>Model: Decision Tree</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="applying-the-model-5" class="title-slide slide level1 center">
+<h1>Applying the model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Test Data</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><em>Refund</em></th>
+<th style="text-align: center;"><em>Marital Status</em></th>
+<th style="text-align: center;">Taxable Income</th>
+<th style="text-align: center;">Cheat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><em>No</em></td>
+<td style="text-align: center;"><em>Married</em></td>
+<td style="text-align: center;">80K</td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image8.png"></p>
+<figcaption>Model: Decision Tree</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="learning-the-model" class="title-slide slide level1 center">
+<h1>Learning the model</h1>
+
+<img data-src="img/dt/image10.png" class="r-stretch quarto-figure-center"><p class="caption">Learning the model</p></section>
+
+<section id="learning-the-model-1" class="title-slide slide level1 center">
+<h1>Learning the model</h1>
+<p>The decision tree grows exponentially with the number of attributes. Algorithms generally use greedy techniques that locally make the “best” choice.</p>
+<p>Many algorithms are available:</p>
+<ul>
+<li>Hunt’s Algorithm</li>
+<li>CART</li>
+<li>ID3, <strong>C4.5</strong></li>
+<li>Sliq, SPRINT</li>
+</ul>
+<p>Different issues have to be addressed.</p>
+<ul>
+<li>Data Fragmentation</li>
+<li>Search Criteria</li>
+<li>Expression</li>
+<li>Choice of the split policy</li>
+<li>Choice of the stop policy</li>
+<li>Underfitting/Overfitting</li>
+<li>Replication of trees</li>
+</ul>
+</section>
+
+<section id="the-hunts-algorithm" class="title-slide slide level1 center">
+<h1>The Hunt’s Algorithm</h1>
+<div class="columns">
+<div class="column" style="width:20%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image1.png"></p>
+<figcaption>Training Data</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image11.png"></p>
+<figcaption><span class="math inline">\(D_t\)</span></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:80%;">
+<p>Recursive approach that progressively subdivides a set of <span class="math inline">\(D_t\)</span> records into pure record sets</p>
+<ul>
+<li>Let <span class="math inline">\(D_t\)</span> be the set of records of the training set corresponding to <span class="math inline">\(node_t\)</span> and <span class="math inline">\(y_t = \{y_1, ..., y_k\}\)</span> the possible class labels</li>
+</ul>
+<p>Overall procedure:</p>
+<ul>
+<li>If <span class="math inline">\(D_t\)</span> contains records belonging to the <span class="math inline">\(y_j\)</span> class only, then <span class="math inline">\(node_t\)</span> is a leaf with label <span class="math inline">\(y_j\)</span></li>
+<li>If <span class="math inline">\(D_t\)</span> is an empty set, then <span class="math inline">\(node_t\)</span> is a leaf node to which a parent node class is assigned</li>
+<li>If <span class="math inline">\(D_t\)</span> contains records belonging to several classes, you choose an <em>attribute</em> and a <em>split policy</em> to partition the records into multiple subsets.</li>
+<li>Apply the current procedure for each subset recursively</li>
+</ul>
+</div></div>
+</section>
+
+<section id="pseudocode" class="title-slide slide level1 center">
+<h1>Pseudocode</h1>
+<pre><code>// Let E be the training set and F the attributes
+result=PostPrune(TreeGrowth(E,F));
+TreeGrowth(E,F)
+    if StoppingCond(E,F)= TRUE then
+        leaf=CreateNode();
+        leaf.label=Classify(E);
+        return leaf;
+    else
+        root = CreateNode();
+        root.test_cond  = FindBestSplit(E,F);
+        let V = {v | v is a possible outcome of root.test_cond}
+        for each v $\in$ V do
+            Ev = {e | root.test_cond (e)=v and e  E}
+            child = TreeGrowth(Ev,F);
+            add child as descendants of root and label edge (rootchild) as v
+        end for
+    end if
+    return root;
+end;</code></pre>
+</section>
+
+<section id="further-remarks" class="title-slide slide level1 center">
+<h1>Further Remarks…</h1>
+<p>Finding an optimal decision tree is an NP-Complete problem, but many heuristic algorithms are available and very efficient.</p>
+<ul>
+<li>Most approaches run a top-down recursive partition based on greedy criteria</li>
+</ul>
+<p>Classification using a decision tree is extremely fast and provides easy interpretation of the criteria.</p>
+<ul>
+<li>The worst case is <span class="math inline">\(O(w)\)</span> where <span class="math inline">\(w\)</span> is the depth of the tree</li>
+</ul>
+<p>Decision trees are robust enough to handle strongly correlated attributes.</p>
+<ul>
+<li>One of the two attributes will not be considered</li>
+<li>It is also possible to try to discard one of the preprocessing attributes through appropriate feature selection techniques</li>
+</ul>
+</section>
+
+<section id="further-remarks-1" class="title-slide slide level1 center">
+<h1>Further Remarks…</h1>
+<p>Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.</p>
+<ul>
+<li>Decision boundary parallel to the axes</li>
+</ul>
+
+<img data-src="img/dt/image12.png" class="r-stretch quarto-figure-center"><p class="caption">Decision boundaries</p></section>
+
+<section id="further-remarks-2" class="title-slide slide level1 center">
+<h1>Further Remarks…</h1>
+<p>Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.</p>
+<ul>
+<li>This split is not feasible with traditional decision trees</li>
+</ul>
+
+<img data-src="img/dt/3-Decision%20Tree_19.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(X-Y = 1\)</span></p><p>This split is not feasible with traditional decision trees.</p>
+</section>
+
+<section id="characteristic-features" class="title-slide slide level1 center" data-background-color="#121011">
+<h1>Characteristic features</h1>
+<p>Starting from the basic logic to completely define an algorithm for building decision trees, it is necessary to define:</p>
+<ul>
+<li><strong>The split condition</strong></li>
+<li>The criterion defining the best split</li>
+<li>The criterion for interrupting splitting</li>
+<li>Methods for evaluating the goodness of a decision tree</li>
+</ul>
+</section>
+
+<section id="defining-the-split-condition" class="title-slide slide level1 center">
+<h1>Defining the Split Condition</h1>
+<p>Depends on the type of attribute</p>
+<ul>
+<li>Nominal</li>
+<li>Ordinal</li>
+<li>Continuous</li>
+</ul>
+<p>Depends on the number of splits applicable to attribute values</p>
+<ul>
+<li>Binary splits</li>
+<li>N-ary splits</li>
+</ul>
+</section>
+
+<section id="splitting-nominal-attributes" class="title-slide slide level1 center">
+<h1>Splitting Nominal Attributes</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><em>N-ary split</em>: creates as many partitions as there are attribute values</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image14.png"></p>
+<figcaption>N-ary split</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p><em>Binary split</em>: creates two partitions only. The attribute value that optimally splits the dataset must be found.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image13.png"></p>
+<figcaption>Binary split</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="splitting-ordinal-attributes" class="title-slide slide level1 center">
+<h1>Splitting Ordinal Attributes</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><em>N-ary split</em>: creates as many partitions as there are attribute values</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image15.png"></p>
+<figcaption>N-ary split</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p><em>Binary split</em>: creates two partitions only. The attribute value that optimally splits the dataset must be found.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image16.png"></p>
+<figcaption>Binary split</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="splitting-continuous-attributes" class="title-slide slide level1 center">
+<h1>Splitting Continuous Attributes</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><em>N-ary split</em>: The split condition can be expressed as a Boolean test that results in multiple ranges of values. The algorithm must consider the entire possible range of values as possible split points</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image17.png"></p>
+<figcaption>N-ary split</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p><em>Binary split</em>: The split condition can be expressed as a binary comparison test. The algorithm must consider all values as possible split points</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image18.png"></p>
+<figcaption>Binary split</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="splitting-continuous-attributes-1" class="title-slide slide level1 center">
+<h1>Splitting Continuous Attributes</h1>
+<p>A discretization technique can be used to manage the complexity of the search for optimal split points.</p>
+<ul>
+<li><strong>Static:</strong> discretization takes place only once before applying the algorithm</li>
+<li><strong>Dynamic:</strong> discretization takes place at each recursion step by exploiting information about the distribution of input data to the Dt node.</li>
+</ul>
+</section>
+
+<section id="characteristic-features-1" class="title-slide slide level1 center" data-background-color="#121011">
+<h1>Characteristic features</h1>
+<p>Starting from the basic logic to completely define an algorithm for building decision trees, it is necessary to define:</p>
+<ul>
+<li>The split condition</li>
+<li><strong>The criterion defining the best split</strong></li>
+<li>The criterion for interrupting splitting</li>
+<li>Methods for evaluating the goodness of a decision tree</li>
+</ul>
+</section>
+
+<section id="how-to-determine-the-best-split-value" class="title-slide slide level1 center">
+<h1>How to determine the best split value?</h1>
+<p>Before splitting a single class with 10 records in the C0 class and 10 records in the C1 class</p>
+
+<img data-src="./img/dt/image19.png" class="r-stretch"><p>The split criterion must allow you to determine more pure classes. It needs a measure of purity.</p>
+<ul>
+<li>Gini index</li>
+<li>Entropy</li>
+<li>Misclassification error</li>
+</ul>
+</section>
+
+<section id="how-to-determine-the-best-split-value-1" class="title-slide slide level1 center">
+<h1>How to determine the best split value?</h1>
+
+<img data-src="./img/dt/image20.png" class="r-stretch quarto-figure-center"><p class="caption">Gain = M0 - M12 vs M0 - M34</p></section>
+
+<section id="impurity-measures" class="title-slide slide level1 center">
+<h1>Impurity Measures</h1>
+<p>Given a node <span class="math inline">\(p\)</span> with records belonging to <span class="math inline">\(k\)</span> classes and its partitioning into <span class="math inline">\(n\)</span> child nodes</p>
+<ul>
+<li><span class="math inline">\(M\)</span> = record number in father node <span class="math inline">\(p\)</span></li>
+<li><span class="math inline">\(M_i\)</span> = number of records in son node <span class="math inline">\(i\)</span></li>
+</ul>
+<p><strong>ATTENTION: do not confuse the number of classes (k) and that of child nodes (n)</strong></p>
+<p>Several indices can be adopted.</p>
+<ul>
+<li><span class="math inline">\(GINI (i) = 1 - \sum_{j=1}^k[ p( j | i)]^2\)</span> (adopted in CART, SLIQ, and SPRINT)</li>
+<li><span class="math inline">\(Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))\)</span> (adopted in ID3 e C4.5)</li>
+<li><span class="math inline">\(Misclassification~Error(i) = 1 - max_{j \in K} p(j|i)\)</span></li>
+</ul>
+<p>The total impurity of the split is given by the following formula, where meas () is one of the measures introduced so far.</p>
+<ul>
+<li><span class="math inline">\(Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)\)</span></li>
+</ul>
+</section>
+
+<section id="comparing-impurity-measures" class="title-slide slide level1 center">
+<h1>Comparing Impurity Measures</h1>
+
+<img data-src="img/dt/3-Decision%20Tree_48.png" class="r-stretch quarto-figure-center"><p class="caption">Impurity measures behavior for a two-class problem</p></section>
+
+<section id="computing-gini-for-binary-attributes" class="title-slide slide level1 center">
+<h1>Computing Gini for Binary Attributes</h1>
+
+<img data-src="./img/dt/image21.png" class="r-stretch"><ul>
+<li><span class="math inline">\(Gini(N3) = 1 - (\frac{5}{7})^2 - (\frac{2}{7})^2 = 0.408\)</span></li>
+<li><span class="math inline">\(Gini(N4) = 1 - (\frac{1}{5})^2 - (\frac{4}{5})^2 = 0.320\)</span></li>
+<li><span class="math inline">\(Impurity= \frac{7}{12} \cdot 0.408 + \frac{5}{12} \cdot 0.320= 0.371\)</span></li>
+</ul>
+</section>
+
+<section id="computing-gini-for-categorical-attributes" class="title-slide slide level1 center">
+<h1>Computing Gini for Categorical Attributes</h1>
+<p>It is usually more efficient to create a “count matrix” for each distinct value of the classification attribute and then perform calculations using that matrix</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">CarType</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>{Sports, Luxury}</strong></td>
+<td style="text-align: center;"><strong>{Family}</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>C1</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>C2</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Gini</td>
+<td style="text-align: center;"><strong>0.400</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">CarType</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>{Sports}</strong></td>
+<td style="text-align: center;"><strong>{Family, Luxury}</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>C1</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>C2</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Gini</td>
+<td style="text-align: center;"><strong>0.419</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">CarType</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>Family</strong></td>
+<td style="text-align: center;"><strong>Sports</strong></td>
+<td style="text-align: center;"><strong>Luxury</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>C1</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>C2</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Gini</td>
+<td style="text-align: center;"><strong>0.393</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="computing-gini-for-continuous-attributes" class="title-slide slide level1 center">
+<h1>Computing Gini for Continuous Attributes</h1>
+<div class="columns">
+<div class="columns" width="50%">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image1.png"></p>
+<figcaption>Training Data</figcaption>
+</figure>
+</div><div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image18.png"></p>
+<figcaption>Binary split</figcaption>
+</figure>
+</div>
+</div><div class="columns" width="50%">
+<p>It requires defining the split point using a binary condition. The number of possible conditions is equal to the number of distinct values of the attribute.</p><p>You can calculate a matrix count for each split value. The array will count the elements of each class for attribute values greater than or less than the split value.</p><p>A naive approach:</p><ul>
+<li>For each split v value, read the DB (with N records) to build the count matrix and calculate the Gini index</li>
+<li>Computationally inefficient - <span class="math inline">\(O(N^2)\)</span> - since:
+<ul>
+<li>Scan DB <span class="math inline">\(O(N)\)</span></li>
+<li>Repeat for each value of <span class="math inline">\(v \cdot O(N)\)</span></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="computing-gini-for-continuous-attributes-1" class="title-slide slide level1 center">
+<h1>Computing Gini for Continuous Attributes</h1>
+<p>A more efficient solution is to:</p>
+<ul>
+<li>Sort records by attribute value</li>
+<li>Read the values sorted and update the count matrix, then calculate the Gini index</li>
+<li>Choose as the split point the value that minimizes the index</li>
+</ul>
+
+<img data-src="./img/dt/image22.png" class="r-stretch"><p>Further optimizations?</p>
+</section>
+
+<section id="gain-based-split" class="title-slide slide level1 center">
+<h1>Gain-based Split</h1>
+<p>Using class impurity measures such as Gini and Entropy requires choosing the split value that maximizes the “gain” in terms of reducing the impurity of the classes after the split.</p>
+<p>For example, considering entropy, the gain of partitioning of a node into child nodes is:</p>
+<p><span class="math inline">\(GAIN_{split}=Entropy(p)-(\sum_{i=1}^{n}\frac{m_i}{m}Entropy(i))\)</span></p>
+<p>Selecting the split value that maximizes GAIN tends to determine split criteria that generate a very large number of very pure classes, but with few records.</p>
+<ul>
+<li>Partitioning students according to their enrollment guarantees that all classes (formed by only one student) are totally pure</li>
+</ul>
+</section>
+
+<section id="split-based-on-split-info" class="title-slide slide level1 center">
+<h1>Split based on split info</h1>
+<p>To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:</p>
+<ul>
+<li><span class="math inline">\(N\)</span> = number of child nodes</li>
+<li><span class="math inline">\(M\)</span> = record number in father p</li>
+<li><span class="math inline">\(m_i\)</span> = number of records in child node i</li>
+</ul>
+<p><span class="math inline">\(GainRATIO_{split}=\frac{GAIN_{split}}{SplitINFO}\)</span></p>
+<p><span class="math inline">\(SplitINFO=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}\)</span></p>
+<p>The higher the number of children, the greater the value of SplitInfo, with a consequent reduction in the GainRatio</p>
+<ul>
+<li>For example, assuming that each child node contains the same number of records, SplitInfo = log n.</li>
+<li>C4.5 uses the SplitINFO-based criterion</li>
+</ul>
+</section>
+
+<section id="split-based-on-split-info-1" class="title-slide slide level1 center">
+<h1>Split based on split info</h1>
+<p>To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:</p>
+<ul>
+<li><span class="math inline">\(n \in [2, 64]\)</span></li>
+<li><span class="math inline">\(m = 100\)</span></li>
+<li><span class="math inline">\(m_i = \frac{m}{n}\)</span></li>
+</ul>
+
+<img data-src="./img/dt/image23.png" class="r-stretch quarto-figure-center"><p class="caption">Split info</p></section>
+
+<section id="exercise" class="title-slide slide level1 center">
+<h1>Exercise</h1>
+<p>Compute the Gini index and information gain for the following binary problem and comment on the results.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">Classe</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">+</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">+</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">+</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">+</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="characteristic-features-2" class="title-slide slide level1 center" data-background-color="#121011">
+<h1>Characteristic features</h1>
+<p>Starting from the basic logic to completely define an algorithm for building decision trees, it is necessary to define:</p>
+<ul>
+<li>The split condition</li>
+<li>The criterion defining the best split</li>
+<li><strong>The criterion for interrupting splitting</strong></li>
+<li>Methods for evaluating the goodness of a decision tree</li>
+</ul>
+</section>
+
+<section id="stop-criteria-for-decision-tree-induction" class="title-slide slide level1 center">
+<h1>Stop Criteria for Decision Tree Induction</h1>
+<ul>
+<li>Stop splitting a node when all its records belong to the same class</li>
+<li>Stop splitting a node when all its records have similar values on all attributes
+<ul>
+<li>Classification would be unimportant and dependent on small fluctuations in values</li>
+</ul></li>
+<li>Stop splitting when the number of records in the node is below a certain threshold (data fragmentation)
+<ul>
+<li>The selected criterion would not be statistically relevant</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="characteristic-features-3" class="title-slide slide level1 center" data-background-color="#121011">
+<h1>Characteristic features</h1>
+<p>Starting from the basic logic to completely define an algorithm for building decision trees, it is necessary to define:</p>
+<ul>
+<li>The split condition</li>
+<li>The criterion defining the best split</li>
+<li>The criterion for interrupting splitting</li>
+<li><strong>Methods for evaluating the goodness of a decision tree</strong></li>
+</ul>
+</section>
+
+<section id="metrics-for-model-evaluation" class="title-slide slide level1 center">
+<h1>Metrics for model evaluation</h1>
+<p>The Confusion Matrix evaluates the ability of a classifier based on the following indicators.</p>
+<ul>
+<li><span class="math inline">\(TP\)</span> (true positive): records correctly classified as the Yes class</li>
+<li><span class="math inline">\(FN\)</span> (false negative): Incorrectly classified records as class No</li>
+<li><span class="math inline">\(FP\)</span> (false positive): Incorrectly classified records as class Yes</li>
+<li><span class="math inline">\(TN\)</span> (true negative) records correctly classified as class No</li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Expected Class</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Actual Class</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">Class=Yes</td>
+<td style="text-align: center;">Class=No</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">Class=Yes</td>
+<td style="text-align: center;">TP</td>
+<td style="text-align: center;">FN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">Class=No</td>
+<td style="text-align: center;">FP</td>
+<td style="text-align: center;">TN</td>
+</tr>
+</tbody>
+</table>
+<p>If the classification uses n classes, the confusion matrix will be <span class="math inline">\(n \cdot n\)</span></p>
+</section>
+
+<section id="accuracy" class="title-slide slide level1 center">
+<h1>Accuracy</h1>
+<p>Accuracy is the most widely used metric to synthesize the information of a confusion matrix.</p>
+<p><span class="math inline">\(Accuracy=\frac{TP + TN}{TP + TN + FP + FN}\)</span></p>
+<p>Equally, the frequency of the error could be used.</p>
+<p><span class="math inline">\(Error~rate=\frac{FP + FN}{TP + TN + FP + FN}\)</span></p>
+</section>
+
+<section id="accuracy-limitations" class="title-slide slide level1 center">
+<h1>Accuracy limitations</h1>
+<p>Accuracy is not an appropriate metric if the classes contain a very different number of records. Consider a binary classification problem in which</p>
+<ul>
+<li>#Record of class 0 = 9990</li>
+<li>#Record of class 1 = 10</li>
+</ul>
+<p>A model that always returns class 0 will have an accuracy of 9990/10000 = 99.9%</p>
+<p>In the case of binary classification problems, the class ” rare ” is also called a positive class, while the class that includes most of the records is called a negative class.</p>
+</section>
+
+<section id="precision-and-recall" class="title-slide slide level1 center">
+<h1>Precision and Recall</h1>
+<p>Precision and Recall are two metrics used in applications where <em>the correct classification of positive class records is more important</em></p>
+<ul>
+<li><strong>Precision</strong> measures the fraction of record results that are actually positive among all those who were classified as such.
+<ul>
+<li><span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span></li>
+<li>High values indicate that few negative class records were incorrectly classified as positive.</li>
+</ul></li>
+<li><strong>Recall</strong> measures the fraction of positive records correctly classified
+<ul>
+<li><span class="math inline">\(Recall = \frac{TP}{TP + FN}\)</span></li>
+<li>High values indicate that few records of the positive class were incorrectly classified as negatives.</li>
+</ul></li>
+</ul>
+
+<img data-src="./img/dt/image24.png" class="r-stretch"></section>
+
+<section id="precision-and-recall-1" class="title-slide slide level1 center">
+<h1>Precision and Recall</h1>
+<p>Precision = 1 if all the positive records were actually detected</p>
+<p><img data-src="./img/dt/image25.png"></p>
+<p>Recall = 1 if there are no false negatives</p>
+<p><img data-src="./img/dt/image26.png"></p>
+<p>If both are valid 1, the predetermined classes coincide with the real ones.</p>
+</section>
+
+<section id="f-measure" class="title-slide slide level1 center">
+<h1>F-measure</h1>
+<p>A metric that summarizes precision and recall is called the F-measure.</p>
+<p><span class="math inline">\(F-measure = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}\)</span></p>
+<p>F-measure represents the harmonic mean of precision and recall.</p>
+<ul>
+<li>The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers. So if the harmonic average is high, it means both precision and recall are.</li>
+<li>… so there have been no false negatives or false positives</li>
+</ul>
+</section>
+
+<section id="cost-based-evaluation" class="title-slide slide level1 center">
+<h1>Cost-Based Evaluation</h1>
+<p>Accuracy, Precision- Recall, and F- F-measure classify an instance as positive if <span class="math inline">\(P(+, i)&gt;P(-, i)\)</span>.</p>
+<ul>
+<li>They assume that FN and FP have the same weight, thus they are Cost-Insensitive</li>
+<li>In many domains, this is not true!
+<ul>
+<li>For a cancer screening test, for example, we may be prepared to put up with a relatively high false positive rate in order to get a high true positive; it is most important to identify possible cancer sufferers</li>
+<li>For a follow-up test after treatment, however, a different threshold might be more desirable, since we want to minimize false negatives; we don’t want to tell a patient they’re clear if this is not actually the case.</li>
+</ul></li>
+</ul>
+
+<img data-src="img/dt/3-Decision%20Tree_68.jpg" class="r-stretch"></section>
+
+<section id="the-cost-matrix" class="title-slide slide level1 center">
+<h1>The Cost Matrix</h1>
+<p>The cost matrix encodes the penalty that a classifier incurs in classifying a record in a different class.</p>
+<p>A negative penalty indicates the “prize” that is obtained for a correct classification.</p>
+<p><span class="math inline">\(C(M)=TP xC(+|+) + FP xC(+|- ) + FN xC(- |+) + TN xC(- |- )\)</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Expected Class j</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">ActualClass i</td>
+<td style="text-align: center;">C(i|j)</td>
+<td style="text-align: center;"><strong>Class = +</strong></td>
+<td style="text-align: center;"><strong>Class=-</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>Class=+</strong></td>
+<td style="text-align: center;">C(+|+)</td>
+<td style="text-align: center;">C(+|-)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>Class=-</strong></td>
+<td style="text-align: center;">C(-|+)</td>
+<td style="text-align: center;">C(-|-)</td>
+</tr>
+</tbody>
+</table>
+<p>A model constructed by structuring, as a purity function, a cost matrix, will tend to provide a model with a minimum cost over the specified weights.</p>
+</section>
+
+<section id="computing-the-cost" class="title-slide slide level1 center">
+<h1>Computing the Cost</h1>
+<div class="columns">
+<div class="column" style="width:33%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Cost Matrix</th>
+<th style="text-align: center;">PREDICTED CLASS</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">ACTUAL CLASS</td>
+<td style="text-align: center;">C(i|j)</td>
+<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;"><strong>-</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>-</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:33%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Model M 1</th>
+<th style="text-align: center;">PREDICTED CLASS</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">ACTUAL CLASS</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;"><strong>-</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;">150</td>
+<td style="text-align: center;">40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>-</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">250</td>
+</tr>
+</tbody>
+</table>
+<p>Accuracy = 80% Cost = 3910</p>
+</div><div class="column" style="width:33%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Model M 2</th>
+<th style="text-align: center;">PREDICTED CLASS</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">ACTUAL CLASS</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;"><strong>-</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;">250</td>
+<td style="text-align: center;">45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>-</strong></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">200</td>
+</tr>
+</tbody>
+</table>
+<p>Accuracy = 90% Cost = 4255</p>
+</div></div>
+</section>
+
+<section id="roc-space" class="title-slide slide level1 center">
+<h1>ROC Space</h1>
+<p>ROC graphs are two-dimensional graphs that depict relative tradeoffs between benefits (true positives) and costs (false negatives) induced by a classifier. We distinguish between:</p>
+<p><em>Probabilistic classifiers</em> return a score that is not necessarily a <em>sensu stricto</em> probability but represents the degree to which an object is a member of one particular class rather than another one (e.g., Decision tree, Naïve Bayes)</p>
+<ul>
+<li>In a decision tree, an instance in a leaf is associated with the class + if the number of positive training instances in the leaf (<em>pos</em>) is greater than the number of negative instances (<em>neg</em>). The ratio <em>pos</em>/(<em>pos + neg</em>) can be used as a score showing the likelihood of an instance to be of class + or -</li>
+</ul>
+<p>A <em>discrete classifier</em> predicts only the classes to which a test object belongs (e.g., SVM)</p>
+<p>The ROC curve characterizes a probabilistic classifier, and each point of this curve corresponds to a discrete classifier.</p>
+
+<img data-src="./img/dt/image27.png" class="r-stretch quarto-figure-center"><p class="caption">ROC Curve</p></section>
+
+<section id="roc-space-1" class="title-slide slide level1 center">
+<h1>ROC Space</h1>
+<p>A ROC graph for a probabilistic classifier is obtained by varying the threshold (or the probability if available) used to assign an instance <em>i</em> _ _ to a class (+/-).</p>
+<ul>
+<li>Instead of <span class="math inline">\(P(+,i) &gt; P(-, i)\)</span> than <span class="math inline">\(i\)</span> is +</li>
+<li>We have if <span class="math inline">\(P(+,i)&gt; x\)</span> than <span class="math inline">\(i\)</span> is + <span class="math inline">\(x \in [0,..,1]\)</span></li>
+</ul>
+<p>Each <span class="math inline">\(x\)</span> value determines a different TPR and FPR.</p>
+<ul>
+<li>The ROC curve shape depends both on the classifier capabilities and on the dataset features.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image28.png"></p>
+<figcaption>ROC Curve</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image27.png"></p>
+<figcaption>ROC Curve</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="understanding-the-roc-space" class="title-slide slide level1 center">
+<h1>Understanding the ROC Space</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image29.png"></p>
+<figcaption>ROC Curve</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:33%;">
+<ul>
+<li>A good classifier tends to have performance close to the upper-left corner of the ROC graph, that is: High TPR and Low FPR</li>
+<li>The <strong>Area Under the Curve</strong> (AUC) provides an overall rating of the classifier, while segments of the curve provide a rating in specific TPR - FPR settings.</li>
+<li>The larger the overlap between + and - instances’ distributions, the harder it is for the classifier to distinguish between positive and negative instances.</li>
+<li>A dummy classifier performs on the ROC graph diagonal: the TPR is equal to the FPR since the classifier’s answers are random</li>
+</ul>
+</div></div>
+</section>
+
+<section id="comparison-of-classifiers-via-roc-curve" class="title-slide slide level1 center">
+<h1>Comparison of Classifiers via ROC curve</h1>
+
+<img data-src="img/dt/3-Decision%20Tree_73.jpg" class="r-stretch"><p>A classifier comparison based on ROC curves or AUC values can be either graphical or numerical.</p>
+<ul>
+<li><p>A ROC curve running above another is an indicator of better classifier performance, and by the same token, the bigger the AUC, the better the overall performance of the test.</p></li>
+<li><p>However, this reasoning is meaningful only if the two ROC curves do not cross at any point. If they do, then it makes intuitive sense to point out the region in which one classifier outperforms the other, but the comparison of the complete AUC values is not very informative.</p></li>
+<li><p>DALI is better than SW when a low FP rate is needed</p></li>
+<li><p>BLAST is always worse than DALI &amp; SW</p></li>
+</ul>
+</section>
+
+<section id="roc-space-properties" class="title-slide slide level1 center">
+<h1>ROC space properties</h1>
+<p>ROC curves are insensitive to changes in class distribution. If the proportion of positive to negative instances changes in a test set, the ROC curves will not change.</p>
+<p>The class distribution is the relationship of the left (P) column to the right (N) column. Any performance metric that uses values from <strong>both columns</strong> will be _inherently sensitive to class <em>skews</em>. Metrics such as accuracy, precision, and F-score use values from both columns of the confusion matrix. As a class distribution changes, these measures will change as well, even if the fundamental classifier performance does not.</p>
+<p>ROC graphs are based upon TPR and FPR, in which each dimension is a strict columnar ratio, so they do not depend on class distributions.</p>
+
+<img data-src="img/dt/3-Decision%20Tree_74.jpg" class="r-stretch"></section>
+
+<section id="where-do-roc-curves-come-from" class="title-slide slide level1 center">
+<h1>Where do ROC curves come from?</h1>
+<p>ROC stands for <em>Receiver Operator Characteristic</em>. The term has its roots in World War II. ROC curves were originally developed by the British as part of the “Chain Home” radar system. ROC analysis was used to analyze radar data to differentiate between enemy aircraft and signal noise (e.g., flocks of geese).</p>
+
+<img data-src="img/dt/3-Decision%20Tree_75.jpg" class="r-stretch quarto-figure-center"><p class="caption">Radar Operators were human classifiers!</p></section>
+
+<section id="classification-errors" class="title-slide slide level1 center">
+<h1>Classification Errors</h1>
+<ul>
+<li><p><strong>Training error:</strong> are mistakes that are made on the training set</p></li>
+<li><p><strong>Generalization error:</strong> errors are made on the test set (i.e., records that have not been trained on the system).</p></li>
+<li><p><strong>Underfitting:</strong> The model is too simple and does not allow a good classification of the training set or test set</p></li>
+<li><p><strong>Overfitting:</strong> The model is too complex, it allows a good classification of the training set, but a poor classification of the test set</p>
+<ul>
+<li>The model fails to generalize because it is based on the specific peculiarities of the training set that are not found in the test set (e.g., noise present in the training set)</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="underfitting-and-overfitting" class="title-slide slide level1 center">
+<h1>Underfitting and Overfitting</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="img/dt/3-Decision%20Tree_82.png"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/dt/3-Decision%20Tree_83.png"></p>
+</div></div>
+<ul>
+<li>500 circles and 500 triangles</li>
+<li>Circular points: <span class="math inline">\(0.5 &lt; sqrt(x12+x22) \le 1\)</span></li>
+<li>Triangular points: <span class="math inline">\(sqrt(x12+x22) &gt; 0.5~or~sqrt(x12+x22) &lt; 1\)</span></li>
+</ul>
+</section>
+
+<section id="overfitting-due-to-noise" class="title-slide slide level1 center">
+<h1>Overfitting Due to Noise</h1>
+
+<img data-src="img/dt/3-Decision%20Tree_84.png" class="r-stretch quarto-figure-center"><p class="caption">The boundaries of the areas are distorted due to noise</p></section>
+
+<section id="overfitting-due-to-the-reduced-size-of-the-training-set" class="title-slide slide level1 center">
+<h1>Overfitting due to the reduced size of the training set</h1>
+<p>Lack of points at the bottom of the chart makes it difficult to find a proper classification for that portion of the region.</p>
+
+<img data-src="img/dt/3-Decision%20Tree_85.png" class="r-stretch"></section>
+
+<section id="how-to-handle-the-overfitting-pre-pruning-early-stopping-rule" class="title-slide slide level1 center">
+<h1>How to handle the Overfitting: pre-pruning (Early stopping rule)</h1>
+<p>Stop splitting before you reach a deep tree.</p>
+<p>A node can not be split further if:</p>
+<ul>
+<li>Node does not contain instances</li>
+<li>All instances belong to the same class</li>
+<li>All attributes have the same values</li>
+</ul>
+<p>More restrictive conditions potentially applicable are:</p>
+<ul>
+<li>Stop splitting if the number of instances in the node is less than a fixed amount</li>
+<li>Stop splitting if the distribution of instances between classes is independent of attribute values</li>
+<li>Stop splitting if you do not improve the purity measure (e.g., Gini or information gain).</li>
+</ul>
+</section>
+
+<section id="how-to-handle-the-overfitting-post-pruning-reduced-error-pruning" class="title-slide slide level1 center">
+<h1>How to handle the Overfitting: post-pruning (Reduced Error Pruning)</h1>
+<ul>
+<li>Run all possible splits</li>
+<li>Examine the decision tree nodes obtained with a bottom-up logic</li>
+<li>Collate a sub tree in a leaf node if this allows to reduce the generalization error (i.e., on the validation set)
+<ul>
+<li>Choose to collapse the sub-tree that determines the maximum error reduction (N.B. greedy choice)</li>
+</ul></li>
+</ul>
+<p>Instances in the new leaf can be tagged.</p>
+<ul>
+<li>Based on the label that appears most frequently in the sub-trees</li>
+<li>According to the label that occurs most frequently in the instances of the training set that belong to the sub-tree</li>
+</ul>
+<p>Post-pruning is more effective but involves more computational cost. It is based on the evidence of the result of a complete tree.</p>
+</section>
+
+<section id="notes-on-overfitting" class="title-slide slide level1 center">
+<h1>Notes on Overfitting</h1>
+<p>Overfitting results in more complex decision-making trees than necessary</p>
+<p>The classification error done on the training set does not provide accurate estimates about tree behavior on unknown records.</p>
+<p>It requires new techniques to estimate generalization errors.</p>
+</section>
+
+<section id="estimate-generalization-errors" class="title-slide slide level1 center">
+<h1>Estimate generalization errors</h1>
+<p>A decision tree should minimize the error on the real data set; unfortunately, during construction, only the training set is available.</p>
+<p>Then the real-time data error must be estimated.</p>
+<ul>
+<li><strong>Re-substitution error:</strong> number of errors in the training set</li>
+<li><strong>Generalization error:</strong> number of errors in the real data set</li>
+</ul>
+<p>The methods for estimating the generalization error are:</p>
+<ul>
+<li><p><strong>Optimistic approach:</strong> e’(t) = e(t)</p></li>
+<li><p><strong>Pessimistic approach</strong></p></li>
+<li><p><strong>Minimum Description Length (MDL)</strong></p></li>
+<li><p><strong>Using the test set:</strong> The generalization error is equal to the error on the test set.</p>
+<ul>
+<li>Normally, the test set is obtained by extracting from the initial training set 1/3 of the records</li>
+<li>It offers good results, but the risk is to work with a too small training set</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="occams-razor" class="title-slide slide level1 center">
+<h1>Occam’s Razor</h1>
+<p>Given two models with a similar generalization error, always choose the simplest one.</p>
+<ul>
+<li>For complex models, it is more likely that errors are caused by accidental data conditions</li>
+</ul>
+<p>It is therefore useful to consider the complexity of the model when evaluating the goodness of a decision tree.</p>
+<p>Note: The methodological principle was expressed in the 14th century by the English Franciscan philosopher and friar William of Ockham</p>
+</section>
+
+<section id="minimum-description-length" class="title-slide slide level1 center">
+<h1>Minimum Description Length</h1>
+<p>Given two models, choose the one that minimizes the cost to describe a classification. To describe the model, I can:</p>
+<ul>
+<li>Sequentially send class O (n)</li>
+<li>Build a classifier, and send the description along with a detailed description of the mistakes it makes</li>
+</ul>
+<p><span class="math inline">\(Cost(model, data)=Cost(model)+Cost(data|model)\)</span></p>
+</section>
+
+<section id="minimum-description-length-1" class="title-slide slide level1 center">
+<h1>Minimum Description Length</h1>
+
+<img data-src="img/dt/3-Decision%20Tree_108.png" class="r-stretch"><p>Datasets with n records described by 16 binary attributes and 3 class values</p>
+<ul>
+<li>Each inner node is modeled with the ID of the used attribute: <span class="math inline">\(log_2(16)=4\)</span> bits</li>
+<li>Each leaf is modeled with the ID of the class: <span class="math inline">\(log_2(3)=2\)</span> bits</li>
+<li>Each error is modeled with its position in the training set, considering n record: <span class="math inline">\(log_2(n)\)</span></li>
+</ul>
+<p>Cost:</p>
+<ul>
+<li>Cost(Tree1)= <span class="math inline">\(4 \cdot 2 + 2 \cdot 3 + 7 \cdot log_2(n) = 14 + 7  \cdot log_2(n)\)</span></li>
+<li>Cost(Tree2)= <span class="math inline">\(4 \cdot 4 + 2 \cdot 5 + 4 \cdot log_2(n) = 26 + 4  \cdot log_2(n)\)</span></li>
+<li>Overall: Cost(Tree1) &lt; Cost(Tree2) if n &lt; 16</li>
+</ul>
+</section>
+
+<section id="pessimistic-approach" class="title-slide slide level1 center">
+<h1>Pessimistic approach</h1>
+<p>The generalization error is estimated by adding to the error on the training set a penalty related to the complexity of the model.</p>
+<ul>
+<li><p><span class="math inline">\(e(t_i)\)</span>: classification errors on leaf <span class="math inline">\(i\)</span></p>
+<ul>
+<li><span class="math inline">\(\Sigma(t_i)\)</span>: leaf-related penalty <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(n(t_i)\)</span> number of records in the training set belonging to leaf <span class="math inline">\(i\)</span></li>
+</ul></li>
+</ul>
+<p><span class="math inline">\(E(T)=\frac{\sum_{i=1}^k e(t_i)+\Sigma(t_i)}{\sum_{i=1}^k n(t_i)}\)</span></p>
+<p>For binary trees, a penalty equal to 0.5 implies that a node should always be expanded into the two child nodes if it improves the classification of at least one record.</p>
+</section>
+
+<section id="post-pruning-an-example" class="title-slide slide level1 center">
+<h1>Post Pruning: an example</h1>
+<ul>
+<li>Training error (before split) = <span class="math inline">\(\frac{10}{30}\)</span></li>
+<li>Pessimistic error = $ = </li>
+<li>Training error (after split) = <span class="math inline">\(\frac{9}{30}\)</span></li>
+<li>Pessimistic error (After splitting) = <span class="math inline">\(\frac{9 + 4 \cdot 0.5}{30} = \frac{11}{30}\)</span></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Class = Yes</th>
+<th style="text-align: center;">20</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Class = No</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Error = <span class="math inline">\(\frac{10}{30}\)</span></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/dt/image30.png"></p>
+</div></div>
+<p>PRUNE!</p>
+</section>
+
+<section id="post-pruning-an-example-1" class="title-slide slide level1 center">
+<h1>Post Pruning: an example</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Optimistic error?</p>
+<ul>
+<li>Do not cut in any of the cases</li>
+</ul>
+<p>Pessimistic error (penalty 0.5)?</p>
+<ul>
+<li>Do not cut in case 1, cut in case 2</li>
+</ul>
+<p>Pessimistic error (penalty 1)?</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/dt/image31.png"></p>
+</div></div>
+</section>
+
+<section id="building-the-test-set" class="title-slide slide level1 center">
+<h1>Building the Test Set</h1>
+<p><strong>Holdout</strong></p>
+<p>Use 2/3 of the training records and 1/3 for validation.</p>
+<p>Disadvantages:</p>
+<ul>
+<li>It works with a reduced set of training</li>
+<li>The result depends on the composition of the training set and test set</li>
+</ul>
+<p><strong>Random subsampling</strong></p>
+<p>It consists of a repeated execution of the holdout method, in which the training dataset is randomly selected.</p>
+</section>
+
+<section id="building-the-test-set-1" class="title-slide slide level1 center">
+<h1>Building the Test Set</h1>
+<p><strong>Cross validation</strong></p>
+<ul>
+<li>Partition the records into separate k subdivisions</li>
+<li>Run the training on k-1 partitions and test the remainder</li>
+<li>Repeat the test k times and calculate the average accuracy</li>
+<li>CAUTION: cross-validation creates k different classifiers. Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem</li>
+<li>Built decision trees can have different split attributes and conditions depending on the character of the k-th training set</li>
+</ul>
+</section>
+
+<section id="bootstrap" class="title-slide slide level1 center">
+<h1>Bootstrap</h1>
+<p>Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of N records, you can create an N-record set in which each record has approximately a 63.2% probability of appearing (with N sufficiently large)</p>
+<p><span class="math inline">\(1 - (1 - 1 / N)^N = 1 - e\)</span>{-1} = 0.632$</p>
+<ul>
+<li>Records that are not used even once in the current training set form the validation set</li>
+</ul>
+<p>The procedure is repeated b times. Commonly, the model’s accuracy is calculated as:</p>
+<p><span class="math inline">\(Acc_{boot} = \frac{1}{b} \sum_{i=1}^b 0.632 \cdot Acc_i + 0.368 \cdot Acc_s\)</span></p>
+<p>where <span class="math inline">\(Acc_i\)</span> is the accuracy of the i-th bootstrap, <span class="math inline">\(Acc_s\)</span> is the accuracy of the complete dataset</p>
+<p>The bootstrap does not create a (new) dataset with more information, but it can stabilize the obtained results of the available dataset. It is therefore particularly useful for small datasets.</p>
+</section>
+
+<section id="c4.5" class="title-slide slide level1 center">
+<h1>C4.5</h1>
+<p>Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Use GainRatio as a criterion for determining the split attribute</li>
+<li>It manages the continuous attributes by determining a split point that divides the range of values into two</li>
+<li>It manages data with missing values. Missing attributes are not considered to calculate GainRatio.</li>
+<li>It can handle attributes that are associated with different weights</li>
+<li>Run post-pruning of the created tree</li>
+</ul>
+<p><strong>The tree construction stops when:</strong></p>
+<ul>
+<li>The node contains records belonging to a single class</li>
+<li>No attribute allows for determining a positive GainRatio</li>
+<li>Node does not contain records.</li>
+</ul>
+</section>
+
+<section id="exercise-1" class="title-slide slide level1 center">
+<h1>Exercise</h1>
+<p>Using the classification error as a measure, identify which attribute should be chosen first, and which one per second.</p>
+<ul>
+<li>Compute contingency matrices</li>
+<li>Compute the information gain</li>
+</ul>
+<p>How do the results change if you use the worst attribute as the split attribute?</p>
+<p>Comment on the result.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">C</th>
+<th style="text-align: center;"># instances</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">+</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">25</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Matteo Francia - Machine Learning and Data Mining (Module 2) - A.Y. 2025/26</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="dt_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="dt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="dt_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="dt_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="dt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="dt_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="dt_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="dt_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="dt_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="dt_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
