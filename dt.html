@@ -760,29 +760,32 @@ end;</code></pre>
 <section id="computing-gini-for-continuous-attributes" class="title-slide slide level1 center">
 <h1>Computing Gini for Continuous Attributes</h1>
 <div class="columns">
-<div class="columns" width="50%">
+<div class="column" style="width:20%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image1.png"></p>
 <figcaption>Training Data</figcaption>
 </figure>
-</div><div class="quarto-figure quarto-figure-center">
+</div>
+<div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image18.png"></p>
 <figcaption>Binary split</figcaption>
 </figure>
 </div>
-</div><div class="columns" width="50%">
-<p>It requires defining the split point using a binary condition. The number of possible conditions is equal to the number of distinct values of the attribute.</p><p>You can calculate a matrix count for each split value. The array will count the elements of each class for attribute values greater than or less than the split value.</p><p>A naive approach:</p><ul>
-<li>For each split v value, read the DB (with N records) to build the count matrix and calculate the Gini index</li>
-<li>Computationally inefficient - <span class="math inline">\(O(N^2)\)</span> - since:
+</div><div class="column" style="width:80%;">
+<p>It requires defining the split point using a binary condition. The number of possible conditions is equal to the number of distinct values of the attribute.</p>
+<p>You can calculate a matrix count for each split value. The array will count the elements of each class for attribute values greater than or less than the split value.</p>
+<p>A naive approach:</p>
 <ul>
-<li>Scan DB <span class="math inline">\(O(N)\)</span></li>
-<li>Repeat for each value of <span class="math inline">\(v \cdot O(N)\)</span></li>
+<li>For each split <span class="math inline">\(v\)</span> value, read the DB (with <span class="math inline">\(N\)</span> records) to build the count matrix and calculate the Gini index</li>
+<li>Computationally inefficient <span class="math inline">\(O(N^2)\)</span>:
+<ul>
+<li>Scan DB: <span class="math inline">\(O(N)\)</span></li>
+<li>Repeat for each value of <span class="math inline">\(v\)</span>: <span class="math inline">\(v \cdot O(N)\)</span></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="computing-gini-for-continuous-attributes-1" class="title-slide slide level1 center">
@@ -813,8 +816,8 @@ end;</code></pre>
 <p>To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:</p>
 <ul>
 <li><span class="math inline">\(N\)</span> = number of child nodes</li>
-<li><span class="math inline">\(M\)</span> = record number in father p</li>
-<li><span class="math inline">\(m_i\)</span> = number of records in child node i</li>
+<li><span class="math inline">\(M\)</span> = record number in father <span class="math inline">\(p\)</span></li>
+<li><span class="math inline">\(m_i\)</span> = number of records in child node <span class="math inline">\(i\)</span></li>
 </ul>
 <p><span class="math inline">\(GainRATIO_{split}=\frac{GAIN_{split}}{SplitINFO}\)</span></p>
 <p><span class="math inline">\(SplitINFO=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}\)</span></p>
@@ -844,7 +847,7 @@ end;</code></pre>
 <tr class="header">
 <th style="text-align: center;">A</th>
 <th style="text-align: center;">B</th>
-<th style="text-align: center;">Classe</th>
+<th style="text-align: center;">Clas</th>
 <th style="text-align: center;"></th>
 <th style="text-align: center;"></th>
 </tr>
@@ -971,30 +974,26 @@ end;</code></pre>
 <li><span class="math inline">\(TN\)</span> (true negative) records correctly classified as class No</li>
 </ul>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">Expected Class</th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
+<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
+<th style="text-align: center;"><strong>Class=+</strong></th>
+<th style="text-align: center;"><strong>Class=-</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">Actual Class</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Class=Yes</td>
-<td style="text-align: center;">Class=No</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Class=Yes</td>
+<td style="text-align: center;"><strong>Class=+</strong></td>
 <td style="text-align: center;">TP</td>
 <td style="text-align: center;">FN</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Class=No</td>
+<tr class="even">
+<td style="text-align: center;"><strong>Class=-</strong></td>
 <td style="text-align: center;">FP</td>
 <td style="text-align: center;">TN</td>
 </tr>
@@ -1018,51 +1017,63 @@ end;</code></pre>
 <li>#Record of class 0 = 9990</li>
 <li>#Record of class 1 = 10</li>
 </ul>
-<p>A model that always returns class 0 will have an accuracy of 9990/10000 = 99.9%</p>
-<p>In the case of binary classification problems, the class ” rare ” is also called a positive class, while the class that includes most of the records is called a negative class.</p>
+<p>A model that always returns class 0 will have an accuracy of <span class="math inline">\(\frac{9990}{10000}\)</span> = 99.9%</p>
+<p>In the case of binary classification problems, the class “rare” is also called a positive class, while the class that includes most of the records is called a negative class.</p>
 </section>
 
 <section id="precision-and-recall" class="title-slide slide level1 center">
 <h1>Precision and Recall</h1>
 <p>Precision and Recall are two metrics used in applications where <em>the correct classification of positive class records is more important</em></p>
 <ul>
-<li><strong>Precision</strong> measures the fraction of record results that are actually positive among all those who were classified as such.
+<li><strong>Precision</strong> (<span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span>) measures the fraction of record results that are actually positive among all those who were classified as such.
 <ul>
-<li><span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span></li>
 <li>High values indicate that few negative class records were incorrectly classified as positive.</li>
 </ul></li>
-<li><strong>Recall</strong> measures the fraction of positive records correctly classified
+<li><strong>Recall</strong> (<span class="math inline">\(Recall = \frac{TP}{TP + FN}\)</span>) measures the fraction of positive records correctly classified
 <ul>
-<li><span class="math inline">\(Recall = \frac{TP}{TP + FN}\)</span></li>
 <li>High values indicate that few records of the positive class were incorrectly classified as negatives.</li>
 </ul></li>
 </ul>
 
-<img data-src="./img/dt/image24.png" class="r-stretch"></section>
+<img data-src="./img/dt/image24.png" class="r-stretch quarto-figure-center"><p class="caption">Outcome of classification</p></section>
 
 <section id="precision-and-recall-1" class="title-slide slide level1 center">
 <h1>Precision and Recall</h1>
-<p>Precision = 1 if all the positive records were actually detected</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(Precision = 1\)</span> if all the positive records were actually detected</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
 <p><img data-src="./img/dt/image25.png"></p>
-<p>Recall = 1 if there are no false negatives</p>
+<figcaption><span class="math inline">\(Precision = 1\)</span></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p><span class="math inline">\(Recall = 1\)</span> if there are no false negatives</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
 <p><img data-src="./img/dt/image26.png"></p>
+<figcaption><span class="math inline">\(Recall = 1\)</span></figcaption>
+</figure>
+</div>
+</div></div>
 <p>If both are valid 1, the predetermined classes coincide with the real ones.</p>
 </section>
 
 <section id="f-measure" class="title-slide slide level1 center">
 <h1>F-measure</h1>
-<p>A metric that summarizes precision and recall is called the F-measure.</p>
-<p><span class="math inline">\(F-measure = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}\)</span></p>
+<p>A metric that summarizes precision and recall is called the F-measure (<span class="math inline">\(\text{F-measure} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}\)</span>).</p>
 <p>F-measure represents the harmonic mean of precision and recall.</p>
 <ul>
-<li>The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers. So if the harmonic average is high, it means both precision and recall are.</li>
+<li>The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers.</li>
+<li>So if the harmonic average is high, it means both precision and recall are.</li>
 <li>… so there have been no false negatives or false positives</li>
 </ul>
 </section>
 
 <section id="cost-based-evaluation" class="title-slide slide level1 center">
 <h1>Cost-Based Evaluation</h1>
-<p>Accuracy, Precision- Recall, and F- F-measure classify an instance as positive if <span class="math inline">\(P(+, i)&gt;P(-, i)\)</span>.</p>
+<p>Accuracy, Precision, Recall, and F-measure classify an instance as positive if <span class="math inline">\(P(+, i)&gt;P(-, i)\)</span>.</p>
 <ul>
 <li>They assume that FN and FP have the same weight, thus they are Cost-Insensitive</li>
 <li>In many domains, this is not true!
@@ -1078,31 +1089,27 @@ end;</code></pre>
 <h1>The Cost Matrix</h1>
 <p>The cost matrix encodes the penalty that a classifier incurs in classifying a record in a different class.</p>
 <p>A negative penalty indicates the “prize” that is obtained for a correct classification.</p>
-<p><span class="math inline">\(C(M)=TP xC(+|+) + FP xC(+|- ) + FN xC(- |+) + TN xC(- |- )\)</span></p>
+<p><span class="math inline">\(C(M)=TP \cdot C(+|+) + FP \cdot C(+|- ) + FN \cdot C(- |+) + TN \cdot C(- |- )\)</span></p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">Expected Class j</th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
+<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
+<th style="text-align: center;"><strong>Class=+</strong></th>
+<th style="text-align: center;"><strong>Class=-</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">ActualClass i</td>
-<td style="text-align: center;">C(i|j)</td>
-<td style="text-align: center;"><strong>Class = +</strong></td>
-<td style="text-align: center;"><strong>Class=-</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
 <td style="text-align: center;"><strong>Class=+</strong></td>
 <td style="text-align: center;">C(+|+)</td>
 <td style="text-align: center;">C(+|-)</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"></td>
+<tr class="even">
 <td style="text-align: center;"><strong>Class=-</strong></td>
 <td style="text-align: center;">C(-|+)</td>
 <td style="text-align: center;">C(-|-)</td>
@@ -1116,100 +1123,101 @@ end;</code></pre>
 <h1>Computing the Cost</h1>
 <div class="columns">
 <div class="column" style="width:33%;">
+<p>Costs</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Cost Matrix</th>
-<th style="text-align: center;">PREDICTED CLASS</th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
+<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
+<th style="text-align: center;"><strong>Class=+</strong></th>
+<th style="text-align: center;"><strong>Class=-</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">ACTUAL CLASS</td>
-<td style="text-align: center;">C(i|j)</td>
-<td style="text-align: center;"><strong>+</strong></td>
-<td style="text-align: center;"><strong>-</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;"><strong>Class=+</strong></td>
 <td style="text-align: center;">-1</td>
 <td style="text-align: center;">100</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>-</strong></td>
+<tr class="even">
+<td style="text-align: center;"><strong>Class=-</strong></td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">0</td>
 </tr>
 </tbody>
 </table>
 </div><div class="column" style="width:33%;">
+<div class="fragment">
+<p>Predictions of Model M1</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Model M 1</th>
-<th style="text-align: center;">PREDICTED CLASS</th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
+<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
+<th style="text-align: center;"><strong>Class=+</strong></th>
+<th style="text-align: center;"><strong>Class=-</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">ACTUAL CLASS</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>+</strong></td>
-<td style="text-align: center;"><strong>-</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;"><strong>Class=+</strong></td>
 <td style="text-align: center;">150</td>
 <td style="text-align: center;">40</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>-</strong></td>
+<tr class="even">
+<td style="text-align: center;"><strong>Class=-</strong></td>
 <td style="text-align: center;">60</td>
 <td style="text-align: center;">250</td>
 </tr>
 </tbody>
 </table>
-<p>Accuracy = 80% Cost = 3910</p>
+<ul>
+<li>Accuracy = 80%</li>
+<li>Cost = 3910</li>
+</ul>
+</div>
 </div><div class="column" style="width:33%;">
+<div class="fragment">
+<p>Predictions of Model M2</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Model M 2</th>
-<th style="text-align: center;">PREDICTED CLASS</th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
+<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
+<th style="text-align: center;"><strong>Class=+</strong></th>
+<th style="text-align: center;"><strong>Class=-</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">ACTUAL CLASS</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>+</strong></td>
-<td style="text-align: center;"><strong>-</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>+</strong></td>
+<td style="text-align: center;"><strong>Class=+</strong></td>
 <td style="text-align: center;">250</td>
 <td style="text-align: center;">45</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>-</strong></td>
+<tr class="even">
+<td style="text-align: center;"><strong>Class=-</strong></td>
 <td style="text-align: center;">5</td>
 <td style="text-align: center;">200</td>
 </tr>
 </tbody>
 </table>
-<p>Accuracy = 90% Cost = 4255</p>
+<ul>
+<li>Accuracy = 90%</li>
+<li>Cost = 4255</li>
+</ul>
+</div>
 </div></div>
 </section>
 
@@ -1227,10 +1235,10 @@ end;</code></pre>
 
 <section id="roc-space-1" class="title-slide slide level1 center">
 <h1>ROC Space</h1>
-<p>A ROC graph for a probabilistic classifier is obtained by varying the threshold (or the probability if available) used to assign an instance <em>i</em> _ _ to a class (+/-).</p>
+<p>A ROC graph for a probabilistic classifier is obtained by varying the threshold (or the probability if available) used to assign an instance <span class="math inline">\(i\)</span> to a class (+/-).</p>
 <ul>
-<li>Instead of <span class="math inline">\(P(+,i) &gt; P(-, i)\)</span> than <span class="math inline">\(i\)</span> is +</li>
-<li>We have if <span class="math inline">\(P(+,i)&gt; x\)</span> than <span class="math inline">\(i\)</span> is + <span class="math inline">\(x \in [0,..,1]\)</span></li>
+<li>Instead of: if <span class="math inline">\(P(+,i) &gt; P(-, i)\)</span> than <span class="math inline">\(i\)</span> is <span class="math inline">\(+\)</span></li>
+<li>We have: if <span class="math inline">\(P(+,i)&gt; x\)</span> than <span class="math inline">\(i\)</span> is <span class="math inline">\(+\)</span> (with <span class="math inline">\(x \in [0, 1]\)</span>)</li>
 </ul>
 <p>Each <span class="math inline">\(x\)</span> value determines a different TPR and FPR.</p>
 <ul>
@@ -1241,10 +1249,10 @@ end;</code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image28.png"></p>
-<figcaption>ROC Curve</figcaption>
+<figcaption>Classification outcome</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:33%;">
+</div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image27.png"></p>
@@ -1257,18 +1265,18 @@ end;</code></pre>
 <section id="understanding-the-roc-space" class="title-slide slide level1 center">
 <h1>Understanding the ROC Space</h1>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image29.png"></p>
 <figcaption>ROC Curve</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:33%;">
+</div><div class="column" style="width:70%;">
+<p>A good classifier tends to have performance close to the upper-left corner of the ROC graph, that is: High TPR and Low FPR</p>
 <ul>
-<li>A good classifier tends to have performance close to the upper-left corner of the ROC graph, that is: High TPR and Low FPR</li>
 <li>The <strong>Area Under the Curve</strong> (AUC) provides an overall rating of the classifier, while segments of the curve provide a rating in specific TPR - FPR settings.</li>
-<li>The larger the overlap between + and - instances’ distributions, the harder it is for the classifier to distinguish between positive and negative instances.</li>
+<li>The larger the overlap between <span class="math inline">\(+\)</span> and <span class="math inline">\(-\)</span> instances’ distributions, the harder it is for the classifier to distinguish between positive and negative instances.</li>
 <li>A dummy classifier performs on the ROC graph diagonal: the TPR is equal to the FPR since the classifier’s answers are random</li>
 </ul>
 </div></div>
@@ -1277,7 +1285,7 @@ end;</code></pre>
 <section id="comparison-of-classifiers-via-roc-curve" class="title-slide slide level1 center">
 <h1>Comparison of Classifiers via ROC curve</h1>
 
-<img data-src="img/dt/3-Decision%20Tree_73.jpg" class="r-stretch"><p>A classifier comparison based on ROC curves or AUC values can be either graphical or numerical.</p>
+<img data-src="img/dt/3-Decision%20Tree_73.jpg" class="r-stretch quarto-figure-center"><p class="caption">ROC curve</p><p>A classifier comparison based on ROC curves or AUC values can be either graphical or numerical.</p>
 <ul>
 <li><p>A ROC curve running above another is an indicator of better classifier performance, and by the same token, the bigger the AUC, the better the overall performance of the test.</p></li>
 <li><p>However, this reasoning is meaningful only if the two ROC curves do not cross at any point. If they do, then it makes intuitive sense to point out the region in which one classifier outperforms the other, but the comparison of the complete AUC values is not very informative.</p></li>
@@ -1292,7 +1300,7 @@ end;</code></pre>
 <p>The class distribution is the relationship of the left (P) column to the right (N) column. Any performance metric that uses values from <strong>both columns</strong> will be _inherently sensitive to class <em>skews</em>. Metrics such as accuracy, precision, and F-score use values from both columns of the confusion matrix. As a class distribution changes, these measures will change as well, even if the fundamental classifier performance does not.</p>
 <p>ROC graphs are based upon TPR and FPR, in which each dimension is a strict columnar ratio, so they do not depend on class distributions.</p>
 
-<img data-src="img/dt/3-Decision%20Tree_74.jpg" class="r-stretch"></section>
+<img data-src="img/dt/3-Decision%20Tree_74.jpg" class="r-stretch quarto-figure-center"><p class="caption">Confusion matrix</p></section>
 
 <section id="where-do-roc-curves-come-from" class="title-slide slide level1 center">
 <h1>Where do ROC curves come from?</h1>
@@ -1317,9 +1325,19 @@ end;</code></pre>
 <h1>Underfitting and Overfitting</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><img data-src="img/dt/3-Decision%20Tree_82.png"></p>
-</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
 <p><img data-src="img/dt/3-Decision%20Tree_83.png"></p>
+<figcaption>Data distribution</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/dt/3-Decision%20Tree_82.png"></p>
+<figcaption>Performance of the DT</figcaption>
+</figure>
+</div>
 </div></div>
 <ul>
 <li>500 circles and 500 triangles</li>
@@ -1337,7 +1355,7 @@ end;</code></pre>
 <h1>Overfitting due to the reduced size of the training set</h1>
 <p>Lack of points at the bottom of the chart makes it difficult to find a proper classification for that portion of the region.</p>
 
-<img data-src="img/dt/3-Decision%20Tree_85.png" class="r-stretch"></section>
+<img data-src="img/dt/3-Decision%20Tree_85.png" class="r-stretch quarto-figure-center"><p class="caption">Overfitting</p></section>
 
 <section id="how-to-handle-the-overfitting-pre-pruning-early-stopping-rule" class="title-slide slide level1 center">
 <h1>How to handle the Overfitting: pre-pruning (Early stopping rule)</h1>
@@ -1391,7 +1409,7 @@ end;</code></pre>
 </ul>
 <p>The methods for estimating the generalization error are:</p>
 <ul>
-<li><p><strong>Optimistic approach:</strong> e’(t) = e(t)</p></li>
+<li><p><strong>Optimistic approach:</strong> <span class="math inline">\(e'(t) = e(t)\)</span></p></li>
 <li><p><strong>Pessimistic approach</strong></p></li>
 <li><p><strong>Minimum Description Length (MDL)</strong></p></li>
 <li><p><strong>Using the test set:</strong> The generalization error is equal to the error on the test set.</p>
@@ -1416,7 +1434,7 @@ end;</code></pre>
 <h1>Minimum Description Length</h1>
 <p>Given two models, choose the one that minimizes the cost to describe a classification. To describe the model, I can:</p>
 <ul>
-<li>Sequentially send class O (n)</li>
+<li>Sequentially send class <span class="math inline">\(O(n)\)</span></li>
 <li>Build a classifier, and send the description along with a detailed description of the mistakes it makes</li>
 </ul>
 <p><span class="math inline">\(Cost(model, data)=Cost(model)+Cost(data|model)\)</span></p>
@@ -1425,7 +1443,7 @@ end;</code></pre>
 <section id="minimum-description-length-1" class="title-slide slide level1 center">
 <h1>Minimum Description Length</h1>
 
-<img data-src="img/dt/3-Decision%20Tree_108.png" class="r-stretch"><p>Datasets with n records described by 16 binary attributes and 3 class values</p>
+<img data-src="img/dt/3-Decision%20Tree_108.png" class="r-stretch quarto-figure-center"><p class="caption">Different decision trees</p><p>Datasets with n records described by 16 binary attributes and 3 class values</p>
 <ul>
 <li>Each inner node is modeled with the ID of the used attribute: <span class="math inline">\(log_2(16)=4\)</span> bits</li>
 <li>Each leaf is modeled with the ID of the class: <span class="math inline">\(log_2(3)=2\)</span> bits</li>
@@ -1455,35 +1473,40 @@ end;</code></pre>
 
 <section id="post-pruning-an-example" class="title-slide slide level1 center">
 <h1>Post Pruning: an example</h1>
-<ul>
-<li>Training error (before split) = <span class="math inline">\(\frac{10}{30}\)</span></li>
-<li>Pessimistic error = $ = </li>
-<li>Training error (after split) = <span class="math inline">\(\frac{9}{30}\)</span></li>
-<li>Pessimistic error (After splitting) = <span class="math inline">\(\frac{9 + 4 \cdot 0.5}{30} = \frac{11}{30}\)</span></li>
-</ul>
 <div class="columns">
 <div class="column" style="width:50%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: center;">Class = Yes</th>
-<th style="text-align: center;">20</th>
+<th style="text-align: center;">Class</th>
+<th style="text-align: center;">Instances</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">Class = No</td>
-<td style="text-align: center;">10</td>
+<td style="text-align: center;">Class = Yes</td>
+<td style="text-align: center;">20</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">Error = <span class="math inline">\(\frac{10}{30}\)</span></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">Class = No</td>
+<td style="text-align: center;">10</td>
 </tr>
 </tbody>
 </table>
 </div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
 <p><img data-src="img/dt/image30.png"></p>
+<figcaption>Should I prune?</figcaption>
+</figure>
+</div>
 </div></div>
+<ul>
+<li>Training error (before split) = <span class="math inline">\(\frac{10}{30}\)</span></li>
+<li>Pessimistic error = <span class="math inline">\(\frac{10 + 0.5}{30} = \frac{10.5}{30}\)</span></li>
+<li>Training error (after split) = <span class="math inline">\(\frac{9}{30}\)</span></li>
+<li>Pessimistic error (after splitting) = <span class="math inline">\(\frac{9 + 4 \cdot 0.5}{30} = \frac{11}{30}\)</span></li>
+</ul>
 <p>PRUNE!</p>
 </section>
 
@@ -1508,7 +1531,7 @@ end;</code></pre>
 <section id="building-the-test-set" class="title-slide slide level1 center">
 <h1>Building the Test Set</h1>
 <p><strong>Holdout</strong></p>
-<p>Use 2/3 of the training records and 1/3 for validation.</p>
+<p>Use <span class="math inline">\(\frac{2}{3}\)</span> of the training records and <span class="math inline">\(\frac{1}{3}\)</span> for validation.</p>
 <p>Disadvantages:</p>
 <ul>
 <li>It works with a reduced set of training</li>
@@ -1533,13 +1556,13 @@ end;</code></pre>
 <section id="bootstrap" class="title-slide slide level1 center">
 <h1>Bootstrap</h1>
 <p>Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of N records, you can create an N-record set in which each record has approximately a 63.2% probability of appearing (with N sufficiently large)</p>
-<p><span class="math inline">\(1 - (1 - 1 / N)^N = 1 - e\)</span>{-1} = 0.632$</p>
+<p><span class="math inline">\(1 - (1 - \frac{1}{N})^N = 1 - e^{-1} = 0.632\)</span></p>
 <ul>
 <li>Records that are not used even once in the current training set form the validation set</li>
 </ul>
-<p>The procedure is repeated b times. Commonly, the model’s accuracy is calculated as:</p>
+<p>The procedure is repeated <span class="math inline">\(b\)</span> times. Commonly, the model’s accuracy is calculated as:</p>
 <p><span class="math inline">\(Acc_{boot} = \frac{1}{b} \sum_{i=1}^b 0.632 \cdot Acc_i + 0.368 \cdot Acc_s\)</span></p>
-<p>where <span class="math inline">\(Acc_i\)</span> is the accuracy of the i-th bootstrap, <span class="math inline">\(Acc_s\)</span> is the accuracy of the complete dataset</p>
+<p>where <span class="math inline">\(Acc_i\)</span> is the accuracy of the <span class="math inline">\(i\)</span>-th bootstrap, <span class="math inline">\(Acc_s\)</span> is the accuracy of the complete dataset</p>
 <p>The bootstrap does not create a (new) dataset with more information, but it can stabilize the obtained results of the available dataset. It is therefore particularly useful for small datasets.</p>
 </section>
 
