@@ -4,15 +4,27 @@ subtitle: Decision Trees
 
 # Decision Tree
 
-It is one of the most widely used classification techniques that allows you to represent a set of classification rules with a tree.
 
-Tree: a hierarchical structure consisting of a set of nodes, connected by arcs labeled and oriented. There are two types of nodes:
 
-* Leaf nodes identify classes, while the remaining nodes are labeled based on the attribute that partitions the records. The partitioning criterion represents the label of the arcs
+::::{.columns}
+:::{.column width=60%}
+One of the most widely used classification techniques
+
+- It represents a set of classification rules with a *tree*.
+- A hierarchical structure consisting of *nodes* connected by labeled and oriented *arcs*.
+
+There are two types of nodes:
+
+- *Leaf nodes* (i.e., nodes with no children) identify classes
+- The remaining nodes are labeled based on the attribute that partitions the records.
+    - The partitioning criterion represents the label of the arcs
 
 Each root-leaf path represents a classification rule.
-
+:::
+:::{.column width=40%}
 ![Model: Decision Tree](./img/dt/image0.png)
+:::
+::::
 
 # Decision Tree: an Example
 
