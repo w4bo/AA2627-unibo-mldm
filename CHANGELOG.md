@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.0...1.0.1) (2025-12-15)
+
+### Bug Fixes
+
+* restore images ([6bdaaf8](https://github.com/w4bo/AA2627-unibo-mldm/commit/6bdaaf8f60721f52530bab0882787b78da55c26d))
+
 ## 1.0.0 (2025-12-11)
 
 ### Bug Fixes
