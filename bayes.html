@@ -149,10 +149,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Presence of features of the phenomenon not modeled by the attributes (hidden variables)</li>
 <li>Difficulty in quantifying certain aspects of the phenomenon</li>
 </ul></li>
-<li>For example, predicting whether a person is at heart risk depends heavily on his or her diet and physical activity but, people who have a healthy diet and exercise regularly may still have heart problems
+<li>For example, predicting whether a person is at heart risk depends heavily on his or her diet and physical activity, but people who have a healthy diet and exercise regularly may still have heart problems
 <ul>
-<li>There are other factors such as heritability, alcohol abuse</li>
-<li>It is difficult to say how “healthy” a diet is and whether training is “adequate“</li>
+<li>There are other factors, such as heritability, alcohol abuse</li>
+<li>It is difficult to say how “healthy” a diet is and whether training is “adequate”</li>
 </ul></li>
 <li>All this introduces uncertainty about the outcome of the prediction</li>
 </ul></li>
@@ -162,7 +162,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="recalls-of-statistics" class="title-slide slide level1 center">
 <h1>Recalls of statistics</h1>
-<p><strong>Conditional probability</strong>: probability that event c will occur knowing that event a has occurred</p>
+<p><strong>Conditional probability</strong>: probability that event <span class="math inline">\(c\)</span> will occur knowing that event <span class="math inline">\(a\)</span> has occurred</p>
 <ul>
 <li><span class="math inline">\(P(C|A)=\frac{P(A,C)}{P(A)}\)</span></li>
 <li><span class="math inline">\(P(A|C)=\frac{P(A,C)}{P(C)}\)</span></li>
@@ -180,7 +180,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 
 <section id="bayes-theorem-an-example" class="title-slide slide level1 center">
-<h1>Bayes Theorem: an example</h1>
+<h1>Bayes’ Theorem: an example</h1>
 <p>Let us suppose</p>
 <ul>
 <li>A doctor knows that meningitis causes neck soreness in 50% of cases</li>
@@ -192,16 +192,16 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 
 <section id="bayes-theorem-an-example-1" class="title-slide slide level1 center">
-<h1>Bayes Theorem: an example</h1>
-<p>Let us suppose that in the bachelor degree program, smoking students are 15% while in the master’s program 23%. If 1/5 of the total number of students are enrolled in the master’s program what is the probability that a student who smokes is enrolled in the master’s program?</p>
+<h1>Bayes’ Theorem: an example</h1>
+<p>Let us suppose that in the bachelor’s degree program, smoking students are 15% while in the master’s program 23%. If 1/5 of the total number of students are enrolled in the master’s program, what is the probability that a student who smokes is enrolled in the master’s program?</p>
 </section>
 
 <section id="bayesian-classifiers-principle" class="title-slide slide level1 center">
 <h1>Bayesian Classifiers Principle</h1>
-<p>Let <span class="math inline">\(\boldsymbol{A}=(A_1, A_2,...,A_n)\)</span> be the vector describing the set of attributes, and let <span class="math inline">\(C\)</span> be the class variable.</p>
-<p>If <span class="math inline">\(C\)</span> is non-deterministically related to the values taken by <span class="math inline">\(\boldsymbol{A}\)</span> we can treat the two variables as random variables and capture their probabilistic relationships using <span class="math inline">\(P(C|\boldsymbol{A})\)</span></p>
+<p>Let <span class="math inline">\(\boldsymbol{A}=(A_1, A_2,..., A_n)\)</span> be the vector describing the set of attributes, and let <span class="math inline">\(C\)</span> be the class variable.</p>
+<p>If <span class="math inline">\(C\)</span> is non-deterministically related to the values taken by <span class="math inline">\(\boldsymbol{A}\)</span>, we can treat the two variables as random variables and capture their probabilistic relationships using <span class="math inline">\(P(C|\boldsymbol{A})\)</span></p>
 <p>During the training phase we learn the probabilistic ties <span class="math inline">\(P(C|\boldsymbol{A})\)</span> for each combination of values assumed by <span class="math inline">\(\boldsymbol{A}\)</span> and <span class="math inline">\(C\)</span></p>
-<p>Knowing these probabilities, a test record a can be classified by finding the label of class <span class="math inline">\(c\)</span> that maximizes the a posteriori probability <span class="math inline">\(P(\boldsymbol{C}=c|A_1=a_1,..,A_n=a_n)\)</span></p>
+<p>Knowing these probabilities, a test record can be classified by finding the label of class <span class="math inline">\(c\)</span> that maximizes the a posteriori probability <span class="math inline">\(P(\boldsymbol{C}=c|A_1=a_1,..., A_n=a_n)\)</span></p>
 </section>
 
 <section id="bayesian-classifiers-principle-cont." class="title-slide slide level1 center">
@@ -246,14 +246,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Given three random variables <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>, <span class="math inline">\(X\)</span> is said to be independent of <span class="math inline">\(Y\)</span> given <span class="math inline">\(Z\)</span> if <span class="math inline">\(P(X|Y,Z)=P(X|Z)\)</span></li>
 <li>In other words, if the value taken by <span class="math inline">\(Z\)</span> is known, knowing the value of <span class="math inline">\(Y\)</span> does not affect the value taken by <span class="math inline">\(X\)</span></li>
 </ul>
-<p>Due to stochastic independence we can write:</p>
+<p>Due to stochastic independence, we can write:</p>
 <p><span class="math inline">\(P(X,Y|Z)=\frac{P(X,Y,Z)}{P(Z)}=\frac{P(X,Y,Z)}{P(Y,Z)} \cdot=\frac{P(Y,Z)}{P(Z)}=P(X|Y,Z)\cdot P(Y|Z)=P(X|Z) \cdot P(Y|Z)\)</span></p>
 </section>
 
 <section id="naïve-bayes-cont." class="title-slide slide level1 center">
 <h1>Naïve Bayes (cont.)</h1>
 <p>The assumption of independence between attributes <span class="math inline">\(A_i\)</span> when class <span class="math inline">\(C\)</span> is known allows rewriting:</p>
-<p><span class="math inline">\(P(A_1, A_2, ..., A_n |C) = P(A_1| C) \cdot P(A_2| C) \cdot ...\cdot  P(A_n| C)\)</span></p>
+<p><span class="math inline">\(P(A_1, A_2, ..., A_n |C) = P(A_1| C) \cdot P(A_2| C) \cdot ...\cdot P(A_n| C)\)</span></p>
 <p>Instead of having to calculate the conditional probability for each combination of values of <span class="math inline">\(\boldsymbol{A}\)</span>, it is sufficient to calculate <span class="math inline">\(P(A_k| C)\)</span> for each <span class="math inline">\(A_k\)</span> and <span class="math inline">\(C=c_j\)</span>.</p>
 <p>The new point is classified as <span class="math inline">\(C=c_{j*}\)</span> if:</p>
 <p><span class="math inline">\(j*=argmax_j P(C=c_j) = \Pi_{k=1}^n P(A_k=a_k|C=c_j)\)</span></p>
