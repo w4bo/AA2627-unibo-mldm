@@ -185,12 +185,12 @@ If you need help with coding and labs, *you can ask me and the designated tutor*
 
 Theory (slides are very dynamic)
 
-1. [CRISP-DM](https://w4bo.github.io/AA2526-unibo-mldm/01-crispdm)
-1. [Business Understanding](https://w4bo.github.io/AA2526-unibo-mldm/02-businessunderstanding)
-1. [Data Understanding](https://w4bo.github.io/AA2526-unibo-mldm/03-dataunderstanding)
-1. [Data Preparation](https://w4bo.github.io/AA2526-unibo-mldm/04-datapreparation)
-1. [Neural Networks](https://w4bo.github.io/AA2526-unibo-mldm/05-neuralnetworks)
-1. [Modeling](https://w4bo.github.io/AA2526-unibo-mldm/06-modeling)
+1. [CRISP-DM](https://w4bo.github.io/AA2627-unibo-mldm/01-crispdm)
+1. [Business Understanding](https://w4bo.github.io/AA2627-unibo-mldm/02-businessunderstanding)
+1. [Data Understanding](https://w4bo.github.io/AA2627-unibo-mldm/03-dataunderstanding)
+1. [Data Preparation](https://w4bo.github.io/AA2627-unibo-mldm/04-datapreparation)
+1. [Neural Networks](https://w4bo.github.io/AA2627-unibo-mldm/05-neuralnetworks)
+1. [Modeling](https://w4bo.github.io/AA2627-unibo-mldm/06-modeling)
 
 Laboratories
 

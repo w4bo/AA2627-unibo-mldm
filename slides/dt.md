@@ -4,8 +4,6 @@ subtitle: Decision Trees
 
 # Decision Tree
 
-
-
 ::::{.columns}
 :::{.column width=60%}
 One of the most widely used classification techniques
