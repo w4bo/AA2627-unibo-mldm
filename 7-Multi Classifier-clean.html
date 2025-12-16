@@ -127,7 +127,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Machine Learning and Data Mining (Module 2)</h1>
-  <p class="subtitle">Multi classifier</p>
+  <p class="subtitle">Multi-classifier</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -140,7 +140,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="basics" class="title-slide slide level1 center">
 <h1>Basics</h1>
-<p>Construct multiple base classifiers and predict the class to which a record belongs by aggregating the classifications obtained</p>
+<p>Construct multiple base classifiers and predict the class to which a record belongs by aggregating the classifications obtained.</p>
 <ul>
 <li>The result of the compound classifier is defined by means of a function that, for example, assigns the record to the class that was “voted” by the largest number of classifiers</li>
 </ul>
@@ -148,19 +148,19 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <img data-src="img/multi/Immagine1.png" class="r-stretch"></section>
 
 <section id="bayes-theorem-an-example" class="title-slide slide level1 center">
-<h1>Bayes Theorem: an example</h1>
+<h1>Bayes’ Theorem: an example</h1>
 <p>Suppose we have 25 simple classifiers.</p>
 <ul>
 <li>Each classifier has an error-rate of <span class="math inline">\(\epsilon\)</span> = 0.35</li>
 <li>Assume that the classifiers are independent</li>
 </ul>
-<p>There is no correlation between the error-rates of the classifiers</p>
+<p>There is no correlation between the error rates of the classifiers.</p>
 <p>The probability that the compound classifier gives an incorrect result is:</p>
 <p><span class="math inline">\(\sum_{i=13}^25 = \binom{25}{i} \epsilon^i(1-\epsilon)^(25-i)=0.06\)</span></p>
 <p>Necessary conditions for the compound classifier to give better results than the simple classifiers are:</p>
 <ul>
 <li>That the classifiers are independent</li>
-<li>That the error-rate of the single classifier is less than 0.5</li>
+<li>That the error rate of the single classifier is less than 0.5</li>
 </ul>
 
 <img data-src="img/multi/Immagine5.png" class="r-stretch"></section>
@@ -172,15 +172,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Bagging and Boosting</li>
 </ul>
 <div class="fragment">
-<p><strong>By changing the attributes used: individual classifiers are based on a subset of the attributes</strong></p>
+<p><strong>By changing the attributes used, individual classifiers are based on a subset of the attributes</strong></p>
 <ul>
-<li>Useful when attributes are highly redundant  Random Forest</li>
+<li>Useful when attributes are highly redundant <span class="math inline">\(\rightarrow\)</span> Random Forest</li>
 </ul>
 </div>
 <div class="fragment">
 <p><strong>Changing the classes considered:</strong></p>
 <ul>
-<li>One partitions the classes into two groups A0 and A1 and transforms the given problem into a binary problem. The classes that belong to A0 are classified as 0 the remaining ones as 1.</li>
+<li>One partitions the classes into two groups, A0 and A1, and transforms the given problem into a binary problem. The classes that belong to A0 are classified as 0, the remaining ones as 1.</li>
 <li>The different classifiers are constructed by resubdividing the classes into different subsets</li>
 <li>The classification of the composite classifier is obtained by increasing the score of the classes that belong to the chosen subset by 1.</li>
 <li>The record is finally assigned to the class that obtains the highest score</li>
@@ -198,7 +198,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="error-decomposition-bias-variance-noise" class="title-slide slide level1 center">
 <h1>Error Decomposition: Bias, Variance &amp; Noise</h1>
-<p>A formal model for analyzing the error made by a classifier</p>
+<p>A formal model for analyzing the errors made by a classifier</p>
 <ul>
 <li>Probability of a classifier making a mistake in its prediction</li>
 </ul>
@@ -206,7 +206,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li><strong>BIAS</strong> : ability of the chosen classifier in modeling events and extending the prediction to events not in the training set
 <ul>
-<li>Different types of classifiers have different capabilities in defining decision boundary between classes</li>
+<li>Different types of classifiers have different capabilities in defining the decision boundary between classes</li>
 <li>For example, different decision trees may have different capabilities</li>
 </ul></li>
 </ul>
@@ -219,7 +219,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li><strong>VARIANCE</strong> : capability of the training set in representing the actual data set
 <ul>
-<li>Different training sets may result in different decision boundary</li>
+<li>Different training sets may result in different decision boundaries</li>
 </ul></li>
 <li><strong>NOISE</strong> : non-determinism of the classes to be determined
 <ul>
@@ -230,12 +230,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="error-decomposition-bias-variance-noise-1" class="title-slide slide level1 center">
 <h1>Error Decomposition: Bias, Variance &amp; Noise</h1>
-<p>Different types of classifiers have inherently different capabilities in modeling the edges of regions</p>
+<p>Different types of classifiers have inherently different capabilities in modeling the edges of regions.</p>
 <ul>
-<li>100 training sets each containing 100 examples obtained from a predefined region partition (dashed line)</li>
+<li>100 training sets, each containing 100 examples obtained from a predefined region partition (dashed line)</li>
 <li>The black line represents the average true line of separation obtained from the 100 classifiers</li>
 </ul>
-<p>The difference between the true separation line and the average separation line represents the classifier bias</p>
+<p>The difference between the true separation line and the average separation line represents the classifier bias.</p>
 <ul>
 <li>The bias of the 1-NN is lower</li>
 <li>However, k-NNs are more sensitive to the composition of the training set and therefore will exhibit greater variance</li>
@@ -245,16 +245,16 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="multi-classifier" class="title-slide slide level1 center">
 <h1>Multi classifier</h1>
-<p>Different classifiers (e.g., Decision trees + k-nearest neighbor) are used to reduce error bias</p>
+<p>Different classifiers (e.g., Decision trees + k-nearest neighbor) are used to reduce error bias.</p>
 <ul>
-<li>Classifiers must be independent: no (or little) correlation between errors made between two classifiers</li>
+<li>Classifiers must be independent: no (or little) correlation between errors made by two classifiers</li>
 <li>Different classifiers can operate on distinct subsets of <em>attributes </em> on which they have ideal performance</li>
 </ul>
-<p>Class membership is decided by a voting mechanism</p>
+<p>Class membership is decided by a voting mechanism.</p>
 <ul>
 <li>Class voted on by the largest number of classifiers</li>
 <li>Voting can be weighted according to the confidence of the classifier in case the classifier provides it</li>
-<li>Ex. C1 classifier votes for class X. In training C1 made 25 out of 100 errors for class X. Classifier C2 votes for class Y. In training phase C2 committed 10 out of 100 errors for class Y.
+<li>Ex. C1 classifier votes for class X. In training, C1 made 25 out of 100 errors for class X. Classifier C2 votes for class Y. In the training phase, C2 committed 10 out of 100 errors for class Y.
 <ul>
 <li><strong>The record is assigned to class Y</strong></li>
 </ul></li>
@@ -264,19 +264,19 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="bagging" class="title-slide slide level1 center">
 <h1>Bagging</h1>
 <p>Allows the construction of compound classifiers that associate an event with the highest rated class from the base classifiers</p>
-<p>Each classifier is constructed by <strong>bootstrapping</strong> the same training set</p>
+<p>Each classifier is constructed by <strong>bootstrapping</strong> the same training set.</p>
 <ul>
 <li>In statistics: any test or metric that uses random sampling with replacement</li>
 </ul>
 <pre><code>// k = number of boostrap cycles N = training set cardinality
-    // \sigma()=1 if the argument is TRUE, 0 otherwise
+ // \sigma()=1 if the argument is TRUE, 0 otherwise
 
-    for i=1 to k do
-     Create a training set Di such that |Di|=N
-     Train a classifier Ci using Di
-    end for</code></pre>
+ for i=1 to k do
+ Create a training set Di such that |Di|=N
+ Train a classifier Ci using Di
+ end for</code></pre>
 <p><span class="math inline">\(C^*(\boldsymbol{x})=argmax_y \sum_i \sigma(C_i(\boldsymbol{x})=y)\)</span></p>
-<p>Bagging improves generalization error by reducing the <strong>variance</strong> component</p>
+<p>Bagging improves generalization error by reducing the <strong>variance</strong> component.</p>
 <ul>
 <li>Thus, bagging will be particularly useful for those types of classifiers that are sensitive to changes in the training set</li>
 </ul>
@@ -321,7 +321,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Accuracy of the basic classifier cannot exceed 70%</p>
+<p>The accuracy of the basic classifier cannot exceed 70%</p>
 <ul>
 <li>$x $, $ x&gt;0.3$</li>
 <li><span class="math inline">\(x \le 0.7 \rightarrow -1\)</span>, <span class="math inline">\(x&gt;0.7 \rightarrow 1\)</span></li>
@@ -335,7 +335,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="bagging-result" class="title-slide slide level1 center">
 <h1>Bagging result</h1>
-<p>Bagging determines the behavior of a two-level decision tree</p>
+<p>Bagging determines the behavior of a two-level decision tree.</p>
 
 <img data-src="img/multi/7-Multi%20Classifier_5.png" class="r-stretch"><ul>
 <li>Exercise: Draw the two-level decision tree corresponding to the result of bagging</li>
@@ -344,35 +344,35 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="random-forest" class="title-slide slide level1 center">
 <h1>Random Forest</h1>
-<p>It is a bagging method</p>
+<p>It is a bagging method.</p>
 <ul>
 <li>Random sampling with replacement of the training set <span class="math inline">\(D_i\)</span></li>
 <li>Train of the classifier <span class="math inline">\(C_i\)</span> on the training set <span class="math inline">\(D_i\)</span></li>
 <li>Combine classifiers through majority voting</li>
 </ul>
-<p>Random forest base classifiers are Decision Trees</p>
+<p>Random forest base classifiers are Decision Trees.</p>
 <ul>
-<li>For each node in the decision tree, the split attribute is chosen on a random subset of <span class="math inline">\(d'\)</span> features rather than on the entire set of d features (pattern dimensionality). Typical value of <span class="math inline">\(d' =\sqrt{d}\)</span></li>
-<li>In the absence of this expedient (known as feature bagging) many trees would choose with high probability the same (most discriminating) features</li>
+<li>For each node in the decision tree, the split attribute is chosen on a random subset of <span class="math inline">\(d'\)</span> features rather than on the entire set of <span class="math inline">\(d\)</span> features (pattern dimensionality). Typical value of <span class="math inline">\(d' =\sqrt{d}\)</span></li>
+<li>In the absence of this expedient (known as feature bagging), many trees would choose with high probability the same (most discriminating) features</li>
 </ul>
-<p>Random forest performs two types of bagging: that on the training set and one on the feature set</p>
+<p>Random forest performs two types of bagging: one on the training set and one on the feature set.</p>
 </section>
 
 <section id="boosting" class="title-slide slide level1 center">
 <h1>Boosting</h1>
-<p>An iterative approach to progressively adjust the composition of the training set in order to focus on incorrectly classified records</p>
+<p>An iterative approach to progressively adjust the composition of the training set to focus on incorrectly classified records</p>
 <ul>
 <li>Initially, all <span class="math inline">\(N\)</span> records have the same weight (<span class="math inline">\(1/N\)</span>)</li>
-<li>Unlike bagging, the weights can change at the end of the boosting round in order to increase the probability of the record being selected in the training set
+<li>Unlike bagging, the weights can change at the end of the boosting round to increase the probability of the record being selected in the training set
 <ul>
-<li>The probability of records that are difficult to classify i.e., that were classified incorrectly in the previous boosting round are increased</li>
+<li>The probability of records that are difficult to classify, i.e.&nbsp;that were classified incorrectly in the previous boosting round, is increased</li>
 </ul></li>
 </ul>
-<p>The final result is obtained by combining the predictions made by the different classifiers</p>
+<p>The final result is obtained by combining the predictions made by the different classifiers.</p>
 <p>Boosting techniques differ based on how:</p>
 <ul>
-<li>the weights of the training set records are updated</li>
-<li>the predictions of the classifiers are combined</li>
+<li>The weights of the training set records are updated</li>
+<li>The predictions of the classifiers are combined</li>
 </ul>
 </section>
 
@@ -399,8 +399,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p><span class="math inline">\(w_i^{(j+1)}\frac{w_i^j}{Z_j}\begin{cases}e^{-\alpha_j} if C_i(x_i)=y_i\\ e^{\alpha_j} else \end{cases}\)</span></p>
 <ul>
 <li><p><span class="math inline">\(Z_j\)</span> is a normalization factor to ensure that <span class="math inline">\(\sum_i w_i^{j+1}=1\)</span></p></li>
-<li><p>The weight of correctly classified records is reduced, that of weights classified incorrectly increases</p></li>
-<li><p>If a boost cycle produces a classifier with error rate greater than 50%, the weights are reported 1/n</p></li>
+<li><p>The weight of correctly classified records is reduced, and that of weights classified incorrectly increases</p></li>
+<li><p>If a boost cycle produces a classifier with an error rate greater than 50%, the weights are reported 1/n</p></li>
 <li><p>The record is assigned to the class that maximizes the weighted sum: <span class="math inline">\(C^*(x)=argmax_y \sum_{j=1}^T \alpha_j sign (C_i(x)=y)\)</span></p></li>
 </ul>
 
@@ -410,16 +410,16 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>AdaBoost</h1>
 <pre><code>w={wi=1/N i=1..N}
 for j=1 to T do // boost cycle number
-   Build a training set Dj by sampling with replacement based on w
-   Train a classifier Cj on Dj
-   Apply Cj to D
-   j=1/N iwi(Cj(xi)yi)  // compute the weighted error
-    if j &gt; 0.5 then
-        w={wi=1/N|i=1,2,…,N};  // reset!
-    else
-        j=1/2 ln((1-j)/j);
-        Update the weight w;
-    end if;
+ Build a training set Dj by sampling with replacement based on w
+ Train a classifier Cj on Dj
+ Apply Cj to D
+ j=1/N iwi(Cj(xi)yi)  // compute the weighted error
+ if j &gt; 0.5 then
+ w={wi=1/N|i=1,2,…,N};  // reset!
+ else
+ j=1/2 ln((1-j)/j);
+ Update the weight w;
+ end if;
 end for;
 $C^*(x)=argmax_y \sum_{j=1}^T \alpha_j sign (C_i(x)=y)$ // sign return 1/-1 if the classification is correct/wrong</code></pre>
 </section>
@@ -463,7 +463,7 @@ $C^*(x)=argmax_y \sum_{j=1}^T \alpha_j sign (C_i(x)=y)$ // sign return 1/-1 if t
 </tr>
 </tbody>
 </table>
-<p>Accuracy of the basic classifier cannot exceed 70%</p>
+<p>The accuracy of the basic classifier cannot exceed 70%</p>
 <ul>
 <li>$x $, $ x&gt;0.3$</li>
 <li><span class="math inline">\(x \le 0.7 \rightarrow -1\)</span>, <span class="math inline">\(x&gt;0.7 \rightarrow 1\)</span></li>
@@ -537,7 +537,7 @@ $C^*(x)=argmax_y \sum_{j=1}^T \alpha_j sign (C_i(x)=y)$ // sign return 1/-1 if t
 
 <img data-src="img/multi/7-Multi%20Classifier_10.png" class="r-stretch"><ul>
 <li>5.16 = -1.738 + 2.7784 + 4.1195</li>
-<li>The classifier does not make errors adopting a behvior compatible with a two-level decision tree</li>
+<li>The classifier does not make errors adopting a behavior compatible with a two-level decision tree</li>
 <li><span class="math inline">\(\alpha_1=1.738\)</span></li>
 <li><span class="math inline">\(\alpha_2=2.7784\)</span></li>
 <li><span class="math inline">\(\alpha_3=4.1195\)</span></li>
