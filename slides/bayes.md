@@ -9,16 +9,16 @@ subtitle: Bayesian classifier
     * Noise in data
     * Presence of features of the phenomenon not modeled by the attributes (hidden variables)
     * Difficulty in quantifying certain aspects of the phenomenon
-  * For example, predicting whether a person is at heart risk depends heavily on his or her diet and physical activity but, people who have a healthy diet and exercise regularly may still have heart problems
-    * There are other factors such as heritability, alcohol abuse
-    * It is difficult to say how "healthy" a diet is and whether training is "adequate“
+  * For example, predicting whether a person is at heart risk depends heavily on his or her diet and physical activity, but people who have a healthy diet and exercise regularly may still have heart problems
+    * There are other factors, such as heritability, alcohol abuse
+    * It is difficult to say how "healthy" a diet is and whether training is "adequate"
   * All this introduces uncertainty about the outcome of the prediction
 * Bayesian classifiers model probabilistic relationships between attributes and the classification attribute
 
 
 # Recalls of statistics
 
-**Conditional probability**: probability that event c will occur knowing that event a has occurred
+**Conditional probability**: probability that event $c$ will occur knowing that event $a$ has occurred
 
 - $P(C|A)=\frac{P(A,C)}{P(A)}$
 - $P(A|C)=\frac{P(A,C)}{P(C)}$
@@ -34,7 +34,7 @@ subtitle: Bayesian classifier
 - $b_i$ denotes one of the $n$ values that can be taken by $B$
 
 
-# Bayes Theorem: an example
+# Bayes' Theorem: an example
 
 Let us suppose
 
@@ -46,19 +46,19 @@ If a patient reports neck soreness, what is the probability that he or she has m
 
 $P(M|S)=\frac{P(S|M)\cdot P(M)}{P(S)} = \frac{0.5 \cdot \frac{1}{50000}}{\frac{1}{20}}=2\cdot 10^4=\frac{1}{5000}$
 
-# Bayes Theorem: an example
+# Bayes' Theorem: an example
 
-Let us suppose that in the bachelor degree program, smoking students are 15% while in the master's program 23%. If 1/5 of the total number of students are enrolled in the master's program what is the probability that a student who smokes is enrolled in the master's program?
+Let us suppose that in the bachelor's degree program, smoking students are 15% while in the master's program 23%. If 1/5 of the total number of students are enrolled in the master's program, what is the probability that a student who smokes is enrolled in the master's program?
 
 # Bayesian Classifiers Principle
 
-Let $\boldsymbol{A}=(A_1, A_2,...,A_n)$ be the vector describing the set of attributes, and let $C$ be the class variable.
+Let $\boldsymbol{A}=(A_1, A_2,..., A_n)$ be the vector describing the set of attributes, and let $C$ be the class variable.
 
-If $C$ is non-deterministically related to the values taken by $\boldsymbol{A}$ we can treat the two variables as random variables and capture their probabilistic relationships using $P(C|\boldsymbol{A})$
+If $C$ is non-deterministically related to the values taken by $\boldsymbol{A}$, we can treat the two variables as random variables and capture their probabilistic relationships using $P(C|\boldsymbol{A})$
 
 During the training phase we learn the probabilistic ties $P(C|\boldsymbol{A})$ for each combination of values assumed by $\boldsymbol{A}$ and $C$
 
-Knowing these probabilities, a test record a can be classified by finding the label of class $c$ that maximizes the a posteriori probability $P(\boldsymbol{C}=c|A_1=a_1,..,A_n=a_n)$
+Knowing these probabilities, a test record can be classified by finding the label of class $c$ that maximizes the a posteriori probability $P(\boldsymbol{C}=c|A_1=a_1,..., A_n=a_n)$
 
 # Bayesian Classifiers Principle (cont.)
 
@@ -99,7 +99,7 @@ Assume independence between $A_i$ attributes when the class is known (__conditio
 * Given three random variables $X$, $Y$ and $Z$, $X$ is said to be independent of $Y$ given $Z$ if $P(X|Y,Z)=P(X|Z)$
 * In other words, if the value taken by $Z$ is known, knowing the value of $Y$ does not affect the value taken by $X$
 
-Due to stochastic independence we can write:
+Due to stochastic independence, we can write:
 
 $P(X,Y|Z)=\frac{P(X,Y,Z)}{P(Z)}=\frac{P(X,Y,Z)}{P(Y,Z)} \cdot=\frac{P(Y,Z)}{P(Z)}=P(X|Y,Z)\cdot P(Y|Z)=P(X|Z) \cdot P(Y|Z)$
 
@@ -107,7 +107,7 @@ $P(X,Y|Z)=\frac{P(X,Y,Z)}{P(Z)}=\frac{P(X,Y,Z)}{P(Y,Z)} \cdot=\frac{P(Y,Z)}{P(Z)
 
 The assumption of independence between attributes $A_i$ when class $C$ is known allows rewriting:
 
-$P(A_1, A_2, ..., A_n |C) = P(A_1| C) \cdot P(A_2| C) \cdot ...\cdot  P(A_n| C)$
+$P(A_1, A_2, ..., A_n |C) = P(A_1| C) \cdot P(A_2| C) \cdot ...\cdot P(A_n| C)$
 
 Instead of having to calculate the conditional probability for each combination of values of $\boldsymbol{A}$, it is sufficient to calculate $P(A_k| C)$ for each $A_k$ and $C=c_j$.
 

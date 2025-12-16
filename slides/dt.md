@@ -232,7 +232,7 @@ Decision tree expressivity is limited to the possibility of performing search sp
 
 - This split is not feasible with traditional decision trees
 
-![$X-Y = 1$](img/dt/3-Decision%20Tree_19.png)
+![$X-Y = 1$](img/dt/3-Decision Tree_19.png)
 
 This split is not feasible with traditional decision trees.
 
@@ -356,7 +356,7 @@ The total impurity of the split is given by the following formula, where meas ()
 
 # Comparing Impurity Measures
 
-![Impurity measures behavior for a two-class problem](img/dt/3-Decision%20Tree_48.png)
+![Impurity measures behavior for a two-class problem](img/dt/3-Decision Tree_48.png)
 
 # Computing Gini for Binary Attributes
 
@@ -595,7 +595,7 @@ Accuracy, Precision, Recall, and F-measure classify an instance as positive if $
     - For a cancer screening test, for example, we may be prepared to put up with a relatively high false positive rate in order to get a high true positive; it is most important to identify possible cancer sufferers
     - For a follow-up test after treatment, however, a different threshold might be more desirable, since we want to minimize false negatives; we don't want to tell a patient they're clear if this is not actually the case.
 
-![](img/dt/3-Decision%20Tree_68.jpg)
+![](img/dt/3-Decision Tree_68.jpg)
 
 # The Cost Matrix
 
@@ -708,7 +708,7 @@ A good classifier tends to have performance close to the upper-left corner of th
 
 # Comparison of Classifiers via ROC curve
 
-![ROC curve](img/dt/3-Decision%20Tree_73.jpg)
+![ROC curve](img/dt/3-Decision Tree_73.jpg)
 
 A classifier comparison based on ROC curves or AUC values can be either graphical or numerical.
 
@@ -726,13 +726,13 @@ The class distribution is the relationship of the left (P) column to the right (
 
 ROC graphs are based upon TPR and FPR, in which each dimension is a strict columnar ratio, so they do not depend on class distributions.
 
-![Confusion matrix](img/dt/3-Decision%20Tree_74.jpg)
+![Confusion matrix](img/dt/3-Decision Tree_74.jpg)
 
 # Where do ROC curves come from?
 
 ROC stands for _Receiver Operator Characteristic_. The term has its roots in World War II. ROC curves were originally developed by the British as part of the “Chain Home” radar system. ROC analysis was used to analyze radar data to differentiate between enemy aircraft and signal noise (e.g., flocks of geese).
 
-![Radar Operators were human classifiers!](img/dt/3-Decision%20Tree_75.jpg)
+![Radar Operators were human classifiers!](img/dt/3-Decision Tree_75.jpg)
 
 # Classification Errors
 
@@ -747,10 +747,10 @@ ROC stands for _Receiver Operator Characteristic_. The term has its roots in Wor
 
 ::::{.columns}
 :::{.column width=50%}
-![Data distribution](img/dt/3-Decision%20Tree_83.png)
+![Data distribution](img/dt/3-Decision Tree_83.png)
 :::
 :::{.column width=50%}
-![Performance of the DT](img/dt/3-Decision%20Tree_82.png)
+![Performance of the DT](img/dt/3-Decision Tree_82.png)
 :::
 ::::
 
@@ -760,13 +760,13 @@ ROC stands for _Receiver Operator Characteristic_. The term has its roots in Wor
 
 # Overfitting Due to Noise
 
-![The boundaries of the areas are distorted due to noise](img/dt/3-Decision%20Tree_84.png)
+![The boundaries of the areas are distorted due to noise](img/dt/3-Decision Tree_84.png)
 
 # Overfitting due to the reduced size of the training set
 
 Lack of points at the bottom of the chart makes it difficult to find a proper classification for that portion of the region.
 
-![Overfitting](img/dt/3-Decision%20Tree_85.png)
+![Overfitting](img/dt/3-Decision Tree_85.png)
 
 # How to handle the Overfitting: pre-pruning (Early stopping rule)
 
@@ -846,7 +846,7 @@ $Cost(model, data)=Cost(model)+Cost(data|model)$
 
 # Minimum Description Length
 
-![Different decision trees](img/dt/3-Decision%20Tree_108.png)
+![Different decision trees](img/dt/3-Decision Tree_108.png)
 
 Datasets with n records described by 16 binary attributes and 3 class values
 
