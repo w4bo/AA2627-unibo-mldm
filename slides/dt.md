@@ -170,12 +170,13 @@ Recursive approach that progressively subdivides a set of $D_t$ records into pur
 
 - Let $D_t$ be the set of records of the training set corresponding to $node_t$ and $y_t = \{y_1, ..., y_k\}$ the possible class labels
 
-Overall procedure:
+Overall procedure, if $D_t$
 
-- If $D_t$ contains records belonging to the $y_j$ class only, then $node_t$ is a leaf with label $y_j$
-- If $D_t$ is an empty set, then $node_t$ is a leaf node to which a parent node class is assigned
-- If $D_t$ contains records belonging to several classes, you choose an _attribute_ and a _split policy_ to partition the records into multiple subsets.
-- Apply the current procedure for each subset recursively
+- contains records belonging to the $y_j$ class only, then $node_t$ is a leaf with label $y_j$
+- is an empty set, then $node_t$ is a leaf node to which a parent node class is assigned
+- contains records belonging to several classes, we need an _attribute_ and a _split policy_ to partition the records into multiple subsets.
+
+Apply the current procedure for each subset recursively
 :::
 ::::
 
@@ -256,7 +257,7 @@ Depends on the type of attribute
 Depends on the number of splits applicable to attribute values
 
 - Binary splits
-- N-ary splits
+- $N$-ary splits
 
 # Splitting Nominal Attributes
 
@@ -308,7 +309,7 @@ Depends on the number of splits applicable to attribute values
 A discretization technique can be used to manage the complexity of the search for optimal split points.
 
 - __Static:__ discretization takes place only once before applying the algorithm
-- __Dynamic:__ discretization takes place at each recursion step by exploiting information about the distribution of input data to the Dt node.
+- __Dynamic:__ discretization takes place at each recursion step by exploiting information about the distribution of input data to the $D_t$ node.
 
 # Characteristic features {background-color="#121011"}
 
@@ -339,14 +340,14 @@ The split criterion must allow you to determine more pure classes. It needs a me
 
 Given a node $p$ with records belonging to $k$ classes and its partitioning into $n$ child nodes
 
-* $M$ = record number in father node $p$
-* $M_i$ = number of records in son node $i$
+* $M$ = record number in parent node $p$
+* $M_i$ = number of records in child node $i$
 
-__ATTENTION: do not confuse the number of classes (k) and that of child nodes (n)__
+__ATTENTION: do not confuse the number of classes ($k$) and of the child nodes ($n$)__
 
 Several indices can be adopted.
 
-* $GINI (i) = 1 - \sum_{j=1}^k[ p( j | i)]^2$ (adopted in CART, SLIQ, and SPRINT)
+* $GINI(i) = 1 - \sum_{j=1}^kp( j | i)^2$ (adopted in CART, SLIQ, and SPRINT)
 * $Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))$ (adopted in ID3 e C4.5)
 * $Misclassification~Error(i) = 1 - max_{j \in K} p(j|i)$
 
@@ -523,7 +524,7 @@ The Confusion Matrix evaluates the ability of a classifier based on the followin
 | **Class=+** | TP | FN |
 | **Class=-** | FP | TN |
 
-If the classification uses n classes, the confusion matrix will be $n \cdot n$
+If the classification uses $n$ classes, the confusion matrix will be $n \cdot n$
 
 # Accuracy
 
@@ -848,17 +849,17 @@ $Cost(model, data)=Cost(model)+Cost(data|model)$
 
 ![Different decision trees](img/dt/3-Decision Tree_108.png)
 
-Datasets with n records described by 16 binary attributes and 3 class values
+Datasets with $n$ records described by 16 binary attributes and 3 class values
 
 - Each inner node is modeled with the ID of the used attribute: $log_2(16)=4$ bits
 - Each leaf is modeled with the ID of the class: $log_2(3)=2$ bits
-- Each error is modeled with its position in the training set, considering n record: $log_2(n)$
+- Each error is modeled with its position in the training set, considering $n$ record: $log_2(n)$
 
 Cost:
 
-- Cost(Tree1)= $4 \cdot 2 + 2 \cdot 3 + 7 \cdot log_2(n) = 14 + 7  \cdot log_2(n)$
-- Cost(Tree2)= $4 \cdot 4 + 2 \cdot 5 + 4 \cdot log_2(n) = 26 + 4  \cdot log_2(n)$
-- Overall: Cost(Tree1) < Cost(Tree2) if n < 16
+- Cost(Tree1)= $4 \cdot 2 + 2 \cdot 3 + 7 \cdot log_2(n) = 14 + 7 \cdot log_2(n)$
+- Cost(Tree2)= $4 \cdot 4 + 2 \cdot 5 + 4 \cdot log_2(n) = 26 + 4 \cdot log_2(n)$
+- Overall: Cost(Tree1) < Cost(Tree2) if $n$ < 16
 
 # Pessimistic approach
 
@@ -933,15 +934,15 @@ It consists of a repeated execution of the holdout method, in which the training
 
 __Cross validation__
 
-- Partition the records into separate k subdivisions
-- Run the training on k-1 partitions and test the remainder
-- Repeat the test k times and calculate the average accuracy
-- CAUTION: cross-validation creates k different classifiers. Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem
-- Built decision trees can have different split attributes and conditions depending on the character of the k-th training set
+- Partition the records into separate $k$ subdivisions
+- Run the training on $k-1$ partitions and test the remainder
+- Repeat the test $k$ times and calculate the average accuracy
+- CAUTION: cross-validation creates $k$ different classifiers. Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem
+- Built decision trees can have different split attributes and conditions depending on the character of the $k$-th training set
 
 # Bootstrap
 
-Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of N records, you can create an N-record set in which each record has approximately a 63.2% probability of appearing (with N sufficiently large)
+Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of $N$records, you can create an $N$-record set in which each record has approximately a 63.2% probability of appearing (with $N$sufficiently large)
 
 $1 - (1 - \frac{1}{N})^N = 1 - e^{-1} = 0.632$
 

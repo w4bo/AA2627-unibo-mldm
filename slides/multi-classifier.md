@@ -30,7 +30,6 @@ Necessary conditions for the compound classifier to give better results than the
 
 ![](img/multi/Immagine5.png)
 
-
 # How to build a composite classifier
 
 __Changing the training set: building more training sets from the given data set__
@@ -96,16 +95,16 @@ Different types of classifiers have inherently different capabilities in modelin
 The difference between the true separation line and the average separation line represents the classifier bias.
 
 * The bias of the 1-NN is lower
-* However, k-NNs are more sensitive to the composition of the training set and therefore will exhibit greater variance
+* However, $k$-NNs are more sensitive to the composition of the training set and therefore will exhibit greater variance
 
-![DT (left) vs 1-nn (right)](img/multi/7-Multi%20Classifier_3.png)
+![DT (left) vs 1-NN (right)](img/multi/7-Multi%20Classifier_3.png)
 
 # Multi classifier
 
-Different classifiers (e.g., Decision trees + k-nearest neighbor) are used to reduce error bias.
+Different classifiers (e.g., Decision trees + $k$-NN) are used to reduce error bias.
 
 * Classifiers must be independent: no (or little) correlation between errors made by two classifiers
-* Different classifiers can operate on distinct subsets of  _attributes _ on which they have ideal performance
+* Different classifiers can operate on distinct subsets of  _attributes_ on which they have ideal performance
 
 Class membership is decided by a voting mechanism.
 
@@ -124,7 +123,7 @@ Each classifier is constructed by __bootstrapping__ the same training set.
 
 
 ```
-// k = number of boostrap cycles N = training set cardinality
+// k = number of boostrap cycles $N$= training set cardinality
  // \sigma()=1 if the argument is TRUE, 0 otherwise
 
  for i=1 to k do

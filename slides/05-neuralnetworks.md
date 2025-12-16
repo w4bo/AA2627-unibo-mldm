@@ -415,7 +415,7 @@ The *cost function* is a mathematical formulation of the learning goal
 
 # Softmax
 
-The *softmax* layer transforms an n-dimensional vector of real numbers into a vector of real numbers $\in [0, 1]$ which adds up to 1
+The *softmax* layer transforms an $n$-dimensional vector of real numbers into a vector of real numbers $\in [0, 1]$ which adds up to 1
 
 - The Softmax activation function determines the final probability value of each class $p_i = \frac{e^{a_k}}{\sum_{k=1}^n e^{a_k}}$
 - Softmax is a continuously differentiable function.
