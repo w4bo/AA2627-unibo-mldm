@@ -438,13 +438,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li>Let <span class="math inline">\(D_t\)</span> be the set of records of the training set corresponding to <span class="math inline">\(node_t\)</span> and <span class="math inline">\(y_t = \{y_1, ..., y_k\}\)</span> the possible class labels</li>
 </ul>
-<p>Overall procedure:</p>
+<p>Overall procedure, if <span class="math inline">\(D_t\)</span></p>
 <ul>
-<li>If <span class="math inline">\(D_t\)</span> contains records belonging to the <span class="math inline">\(y_j\)</span> class only, then <span class="math inline">\(node_t\)</span> is a leaf with label <span class="math inline">\(y_j\)</span></li>
-<li>If <span class="math inline">\(D_t\)</span> is an empty set, then <span class="math inline">\(node_t\)</span> is a leaf node to which a parent node class is assigned</li>
-<li>If <span class="math inline">\(D_t\)</span> contains records belonging to several classes, you choose an <em>attribute</em> and a <em>split policy</em> to partition the records into multiple subsets.</li>
-<li>Apply the current procedure for each subset recursively</li>
+<li>contains records belonging to the <span class="math inline">\(y_j\)</span> class only, then <span class="math inline">\(node_t\)</span> is a leaf with label <span class="math inline">\(y_j\)</span></li>
+<li>is an empty set, then <span class="math inline">\(node_t\)</span> is a leaf node to which a parent node class is assigned</li>
+<li>contains records belonging to several classes, we need an <em>attribute</em> and a <em>split policy</em> to partition the records into multiple subsets.</li>
 </ul>
+<p>Apply the current procedure for each subset recursively</p>
 </div></div>
 </section>
 
@@ -529,7 +529,7 @@ end;</code></pre>
 <p>Depends on the number of splits applicable to attribute values</p>
 <ul>
 <li>Binary splits</li>
-<li>N-ary splits</li>
+<li><span class="math inline">\(N\)</span>-ary splits</li>
 </ul>
 </section>
 
@@ -604,7 +604,7 @@ end;</code></pre>
 <p>A discretization technique can be used to manage the complexity of the search for optimal split points.</p>
 <ul>
 <li><strong>Static:</strong> discretization takes place only once before applying the algorithm</li>
-<li><strong>Dynamic:</strong> discretization takes place at each recursion step by exploiting information about the distribution of input data to the Dt node.</li>
+<li><strong>Dynamic:</strong> discretization takes place at each recursion step by exploiting information about the distribution of input data to the <span class="math inline">\(D_t\)</span> node.</li>
 </ul>
 </section>
 
@@ -640,13 +640,13 @@ end;</code></pre>
 <h1>Impurity Measures</h1>
 <p>Given a node <span class="math inline">\(p\)</span> with records belonging to <span class="math inline">\(k\)</span> classes and its partitioning into <span class="math inline">\(n\)</span> child nodes</p>
 <ul>
-<li><span class="math inline">\(M\)</span> = record number in father node <span class="math inline">\(p\)</span></li>
-<li><span class="math inline">\(M_i\)</span> = number of records in son node <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(M\)</span> = record number in parent node <span class="math inline">\(p\)</span></li>
+<li><span class="math inline">\(M_i\)</span> = number of records in child node <span class="math inline">\(i\)</span></li>
 </ul>
-<p><strong>ATTENTION: do not confuse the number of classes (k) and that of child nodes (n)</strong></p>
+<p><strong>ATTENTION: do not confuse the number of classes (<span class="math inline">\(k\)</span>) and of the child nodes (<span class="math inline">\(n\)</span>)</strong></p>
 <p>Several indices can be adopted.</p>
 <ul>
-<li><span class="math inline">\(GINI (i) = 1 - \sum_{j=1}^k[ p( j | i)]^2\)</span> (adopted in CART, SLIQ, and SPRINT)</li>
+<li><span class="math inline">\(GINI(i) = 1 - \sum_{j=1}^kp( j | i)^2\)</span> (adopted in CART, SLIQ, and SPRINT)</li>
 <li><span class="math inline">\(Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))\)</span> (adopted in ID3 e C4.5)</li>
 <li><span class="math inline">\(Misclassification~Error(i) = 1 - max_{j \in K} p(j|i)\)</span></li>
 </ul>
@@ -1016,7 +1016,7 @@ end;</code></pre>
 </tr>
 </tbody>
 </table>
-<p>If the classification uses n classes, the confusion matrix will be <span class="math inline">\(n \cdot n\)</span></p>
+<p>If the classification uses <span class="math inline">\(n\)</span> classes, the confusion matrix will be <span class="math inline">\(n \cdot n\)</span></p>
 </section>
 
 <section id="accuracy" class="title-slide slide level1 center">
@@ -1460,17 +1460,17 @@ end;</code></pre>
 <section id="minimum-description-length-1" class="title-slide slide level1 center">
 <h1>Minimum Description Length</h1>
 
-<img data-src="img/dt/3-Decision%20Tree_108.png" class="r-stretch quarto-figure-center"><p class="caption">Different decision trees</p><p>Datasets with n records described by 16 binary attributes and 3 class values</p>
+<img data-src="img/dt/3-Decision%20Tree_108.png" class="r-stretch quarto-figure-center"><p class="caption">Different decision trees</p><p>Datasets with <span class="math inline">\(n\)</span> records described by 16 binary attributes and 3 class values</p>
 <ul>
 <li>Each inner node is modeled with the ID of the used attribute: <span class="math inline">\(log_2(16)=4\)</span> bits</li>
 <li>Each leaf is modeled with the ID of the class: <span class="math inline">\(log_2(3)=2\)</span> bits</li>
-<li>Each error is modeled with its position in the training set, considering n record: <span class="math inline">\(log_2(n)\)</span></li>
+<li>Each error is modeled with its position in the training set, considering <span class="math inline">\(n\)</span> record: <span class="math inline">\(log_2(n)\)</span></li>
 </ul>
 <p>Cost:</p>
 <ul>
-<li>Cost(Tree1)= <span class="math inline">\(4 \cdot 2 + 2 \cdot 3 + 7 \cdot log_2(n) = 14 + 7  \cdot log_2(n)\)</span></li>
-<li>Cost(Tree2)= <span class="math inline">\(4 \cdot 4 + 2 \cdot 5 + 4 \cdot log_2(n) = 26 + 4  \cdot log_2(n)\)</span></li>
-<li>Overall: Cost(Tree1) &lt; Cost(Tree2) if n &lt; 16</li>
+<li>Cost(Tree1)= <span class="math inline">\(4 \cdot 2 + 2 \cdot 3 + 7 \cdot log_2(n) = 14 + 7 \cdot log_2(n)\)</span></li>
+<li>Cost(Tree2)= <span class="math inline">\(4 \cdot 4 + 2 \cdot 5 + 4 \cdot log_2(n) = 26 + 4 \cdot log_2(n)\)</span></li>
+<li>Overall: Cost(Tree1) &lt; Cost(Tree2) if <span class="math inline">\(n\)</span> &lt; 16</li>
 </ul>
 </section>
 
@@ -1562,17 +1562,17 @@ end;</code></pre>
 <h1>Building the Test Set</h1>
 <p><strong>Cross validation</strong></p>
 <ul>
-<li>Partition the records into separate k subdivisions</li>
-<li>Run the training on k-1 partitions and test the remainder</li>
-<li>Repeat the test k times and calculate the average accuracy</li>
-<li>CAUTION: cross-validation creates k different classifiers. Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem</li>
-<li>Built decision trees can have different split attributes and conditions depending on the character of the k-th training set</li>
+<li>Partition the records into separate <span class="math inline">\(k\)</span> subdivisions</li>
+<li>Run the training on <span class="math inline">\(k-1\)</span> partitions and test the remainder</li>
+<li>Repeat the test <span class="math inline">\(k\)</span> times and calculate the average accuracy</li>
+<li>CAUTION: cross-validation creates <span class="math inline">\(k\)</span> different classifiers. Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem</li>
+<li>Built decision trees can have different split attributes and conditions depending on the character of the <span class="math inline">\(k\)</span>-th training set</li>
 </ul>
 </section>
 
 <section id="bootstrap" class="title-slide slide level1 center">
 <h1>Bootstrap</h1>
-<p>Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of N records, you can create an N-record set in which each record has approximately a 63.2% probability of appearing (with N sufficiently large)</p>
+<p>Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of <span class="math inline">\(N\)</span>records, you can create an <span class="math inline">\(N\)</span>-record set in which each record has approximately a 63.2% probability of appearing (with <span class="math inline">\(N\)</span>sufficiently large)</p>
 <p><span class="math inline">\(1 - (1 - \frac{1}{N})^N = 1 - e^{-1} = 0.632\)</span></p>
 <ul>
 <li>Records that are not used even once in the current training set form the validation set</li>

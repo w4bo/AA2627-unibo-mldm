@@ -142,12 +142,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section class="slide level2">
 
-<div class="quarto-embed-nb-cell" data-notebook="/data/lab-02-housing.ipynb" data-notebook-title="The [`California Housing`](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/) case study" data-notebook-cellid="f2c63306">
+<div class="quarto-embed-nb-cell" data-notebook="/data/lab-02-housing.ipynb" data-notebook-title="The [`California Housing`](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/) case study" data-notebook-cellid="ddc0a54d">
 <p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-mldm/blob/main/slides/lab-02-housing.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
 <section id="the-california-housing-case-study" class="title-slide slide level1 center">
 <h1>The <a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/"><code>California Housing</code></a> case study</h1>
 <p>Our task is to use California census data to forecast housing prices given the population, median income, and median housing price for each block group in California. Block groups are the smallest geographical unit for which the US Census Bureau publishes sample data (a block group typically has a population of 600 to 3,000 people). We will just call them “districts” for short.</p>
-<div id="80970f2e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T11:34:29.811849Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T11:34:29.811652Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T11:34:30.319327Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T11:34:30.318722Z&quot;}}" data-outputid="587cfb9c-3001-4d5a-8aa5-819ce7247549" data-execution_count="1">
+<div id="80970f2e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T14:58:16.673161Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T14:58:16.672971Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T14:58:17.162138Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T14:58:17.161688Z&quot;}}" data-outputid="587cfb9c-3001-4d5a-8aa5-819ce7247549" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 <style scoped="">
@@ -344,7 +344,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Which attributes (i.e., columns) are contained in the dataset?</li>
 <li>Which is their semantics?</li>
 </ul>
-<div id="9817e68c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T11:34:30.321355Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T11:34:30.321049Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T11:34:30.324978Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T11:34:30.324431Z&quot;}}" data-outputid="7a505de0-d4f0-42d0-f781-bb4abd8f8fce" data-execution_count="2">
+<div id="9817e68c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T14:58:17.164276Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T14:58:17.163906Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T14:58:17.167674Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T14:58:17.167237Z&quot;}}" data-outputid="7a505de0-d4f0-42d0-f781-bb4abd8f8fce" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>Index(['longitude', 'latitude', 'housing_median_age', 'total_rooms',
        'total_bedrooms', 'population', 'households', 'median_income',
@@ -369,7 +369,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="data-profiling" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="85441c0b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T11:34:30.326843Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T11:34:30.326543Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T11:34:30.333981Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T11:34:30.333476Z&quot;}}" data-outputid="2f22dd7b-0b6b-4f6f-ef8c-b317a0b6c28c" data-execution_count="3">
+<div id="85441c0b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T14:58:17.169578Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T14:58:17.169206Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T14:58:17.176891Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T14:58:17.176312Z&quot;}}" data-outputid="2f22dd7b-0b6b-4f6f-ef8c-b317a0b6c28c" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 20640 entries, 0 to 20639
@@ -394,7 +394,7 @@ memory usage: 1.6+ MB</code></pre>
 
 <section id="data-profiling-1" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="e6a24b3a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T11:34:30.335662Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T11:34:30.335496Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T11:34:30.362488Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T11:34:30.362043Z&quot;}}" data-outputid="14d781ec-eb1f-4e59-d475-cc3a39f7e5cb" data-execution_count="4">
+<div id="e6a24b3a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T14:58:17.178818Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T14:58:17.178447Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T14:58:17.206124Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T14:58:17.205596Z&quot;}}" data-outputid="14d781ec-eb1f-4e59-d475-cc3a39f7e5cb" data-execution_count="4">
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <style scoped="">
@@ -611,7 +611,7 @@ memory usage: 1.6+ MB</code></pre>
 <section id="memory-usage" class="title-slide slide level1 center">
 <h1>Memory usage</h1>
 <p>What if I change float64 to float32?</p>
-<div id="8f1e7c90" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T11:34:31.396129Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T11:34:31.395703Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T11:34:31.406764Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T11:34:31.406195Z&quot;}}" data-outputid="42de86f8-33bc-4b32-ba59-df1d5f761ac8" data-execution_count="6">
+<div id="8f1e7c90" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T14:58:18.254394Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T14:58:18.253978Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T14:58:18.264668Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T14:58:18.264219Z&quot;}}" data-outputid="42de86f8-33bc-4b32-ba59-df1d5f761ac8" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 20640 entries, 0 to 20639
@@ -643,7 +643,7 @@ memory usage: 887.0+ KB</code></pre>
 <section id="non-numeric-attributes" class="title-slide slide level1 center">
 <h1>Non-numeric attributes</h1>
 <p><code>ocean_proximity</code> is a text attribute, but not all machine libraries can manipulated textual data types.</p>
-<div id="3297de8e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T11:34:31.408661Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T11:34:31.408471Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T11:34:31.413796Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T11:34:31.413256Z&quot;}}" data-outputid="3e206562-51ff-44be-d06d-d1f44a268887" data-execution_count="7">
+<div id="3297de8e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2025-12-16T14:58:18.266678Z&quot;,&quot;iopub.status.busy&quot;:&quot;2025-12-16T14:58:18.266309Z&quot;,&quot;iopub.status.idle&quot;:&quot;2025-12-16T14:58:18.271296Z&quot;,&quot;shell.execute_reply&quot;:&quot;2025-12-16T14:58:18.270869Z&quot;}}" data-outputid="3e206562-51ff-44be-d06d-d1f44a268887" data-execution_count="7">
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>ocean_proximity
 &lt;1H OCEAN     9136

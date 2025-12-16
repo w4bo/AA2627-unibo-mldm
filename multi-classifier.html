@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="7-Multi Classifier-clean_files/libs/quarto-html/tabby.min.js"></script>
-<script src="7-Multi Classifier-clean_files/libs/quarto-html/popper.min.js"></script>
-<script src="7-Multi Classifier-clean_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="7-Multi Classifier-clean_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="7-Multi Classifier-clean_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="7-Multi Classifier-clean_files/libs/quarto-html/quarto-syntax-highlighting-cdaacfc258cb6f151192107f105ac881.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="multi-classifier_files/libs/quarto-html/tabby.min.js"></script>
+<script src="multi-classifier_files/libs/quarto-html/popper.min.js"></script>
+<script src="multi-classifier_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="multi-classifier_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="multi-classifier_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="multi-classifier_files/libs/quarto-html/quarto-syntax-highlighting-cdaacfc258cb6f151192107f105ac881.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.12">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
@@ -13,8 +13,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="7-Multi Classifier-clean_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="7-Multi Classifier-clean_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="multi-classifier_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="multi-classifier_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -28,11 +28,11 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="7-Multi Classifier-clean_files/libs/revealjs/dist/theme/quarto-b3aa9dda08c8fde6dffd4aadb76df7d0.css">
-  <link href="7-Multi Classifier-clean_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="7-Multi Classifier-clean_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="7-Multi Classifier-clean_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="7-Multi Classifier-clean_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="multi-classifier_files/libs/revealjs/dist/theme/quarto-b3aa9dda08c8fde6dffd4aadb76df7d0.css">
+  <link href="multi-classifier_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="multi-classifier_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="multi-classifier_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="multi-classifier_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -238,17 +238,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The difference between the true separation line and the average separation line represents the classifier bias.</p>
 <ul>
 <li>The bias of the 1-NN is lower</li>
-<li>However, k-NNs are more sensitive to the composition of the training set and therefore will exhibit greater variance</li>
+<li>However, <span class="math inline">\(k\)</span>-NNs are more sensitive to the composition of the training set and therefore will exhibit greater variance</li>
 </ul>
 
-<img data-src="img/multi/7-Multi%20Classifier_3.png" class="r-stretch quarto-figure-center"><p class="caption">DT (left) vs 1-nn (right)</p></section>
+<img data-src="img/multi/7-Multi%20Classifier_3.png" class="r-stretch quarto-figure-center"><p class="caption">DT (left) vs 1-NN (right)</p></section>
 
 <section id="multi-classifier" class="title-slide slide level1 center">
 <h1>Multi classifier</h1>
-<p>Different classifiers (e.g., Decision trees + k-nearest neighbor) are used to reduce error bias.</p>
+<p>Different classifiers (e.g., Decision trees + <span class="math inline">\(k\)</span>-NN) are used to reduce error bias.</p>
 <ul>
 <li>Classifiers must be independent: no (or little) correlation between errors made by two classifiers</li>
-<li>Different classifiers can operate on distinct subsets of <em>attributes </em> on which they have ideal performance</li>
+<li>Different classifiers can operate on distinct subsets of <em>attributes</em> on which they have ideal performance</li>
 </ul>
 <p>Class membership is decided by a voting mechanism.</p>
 <ul>
@@ -268,7 +268,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li>In statistics: any test or metric that uses random sampling with replacement</li>
 </ul>
-<pre><code>// k = number of boostrap cycles N = training set cardinality
+<pre><code>// k = number of boostrap cycles $N$= training set cardinality
  // \sigma()=1 if the argument is TRUE, 0 otherwise
 
  for i=1 to k do
@@ -552,19 +552,19 @@ $C^*(x)=argmax_y \sum_{j=1}^T \alpha_j sign (C_i(x)=y)$ // sign return 1/-1 if t
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="7-Multi Classifier-clean_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="multi-classifier_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
