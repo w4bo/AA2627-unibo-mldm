@@ -2,46 +2,55 @@
 subtitle: Decision Trees
 ---
 
-# Dataset
+# Learn by doing!
+
+**Customer churn** is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.
+
+- Let us assume that this is our dataset to train a decision tree for predicting customer churn
+- This is a *supervised learning* task since the dataset contains a *label* (or *class*) to predict (**`churn`**)
+- ... as a function of *other* customer suscriptions' attributes (`months_subscribed`, ..., `auto_pay`)
+- Each *row* (or *data item/record*) is customer subscription, each *column* is an *attribute* (or *feature*)
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
-| 2                 | 3                   | 2               | basic     | no       | yes   |
-| 4                 | 6                   | 1               | basic     | no       | yes   |
-| 6                 | 15                  | 0               | standard  | yes      | no    |
-| 12                | 22                  | 0               | premium   | yes      | no    |
-| 3                 | 4                   | 3               | basic     | no       | yes   |
-| 8                 | 18                  | 0               | standard  | yes      | no    |
-| 5                 | 7                   | 1               | basic     | yes      | no    |
-| 1                 | 2                   | 2               | basic     | no       | yes   |
-| 10                | 20                  | 0               | premium   | yes      | no    |
-| 7                 | 12                  | 1               | standard  | yes      | no    |
-| 2                 | 5                   | 2               | basic     | no       | yes   |
-| 9                 | 16                  | 0               | premium   | yes      | no    |
+| 2                 | 3                   | 2               | basic     | no       | *yes*   |
+| 4                 | 6                   | 1               | basic     | no       | *yes*   |
+| 6                 | 15                  | 0               | standard  | yes      | *no*    |
+| 12                | 22                  | 0               | premium   | yes      | *no*    |
+| 3                 | 4                   | 3               | basic     | no       | *yes*   |
+| 8                 | 18                  | 0               | standard  | yes      | *no*    |
+| 5                 | 7                   | 1               | basic     | yes      | *no*    |
+| 1                 | 2                   | 2               | basic     | no       | *yes*   |
+| 10                | 20                  | 0               | premium   | yes      | *no*    |
+| 7                 | 12                  | 1               | standard  | yes      | *no*    |
+| 2                 | 5                   | 2               | basic     | no       | *yes*   |
+| 9                 | 16                  | 0               | premium   | yes      | *no*    |
 
 # Training and test sets
 
-Training test
+First we need to split the dataset
+
+*Training test*: used for training the model
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
-| 2                 | 3                   | 2               | basic     | no       | yes   |
-| 4                 | 6                   | 1               | basic     | no       | yes   |
-| 6                 | 15                  | 0               | standard  | yes      | no    |
-| 12                | 22                  | 0               | premium   | yes      | no    |
-| 3                 | 4                   | 3               | basic     | no       | yes   |
-| 8                 | 18                  | 0               | standard  | yes      | no    |
-| 5                 | 7                   | 1               | basic     | yes      | no    |
-| 1                 | 2                   | 2               | basic     | no       | yes   |
-| 10                | 20                  | 0               | premium   | yes      | no    |
+| 2                 | 3                   | 2               | basic     | no       | *yes*   |
+| 4                 | 6                   | 1               | basic     | no       | *yes*   |
+| 6                 | 15                  | 0               | standard  | yes      | *no*    |
+| 12                | 22                  | 0               | premium   | yes      | *no*    |
+| 3                 | 4                   | 3               | basic     | no       | *yes*   |
+| 8                 | 18                  | 0               | standard  | yes      | *no*    |
+| 5                 | 7                   | 1               | basic     | yes      | *no*    |
+| 1                 | 2                   | 2               | basic     | no       | *yes*   |
+| 10                | 20                  | 0               | premium   | yes      | *no*    |
 
-Test test
+*Test test*: used for testing the generalization capability of the model
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
-| 7                 | 12                  | 1               | standard  | yes      | no    |
-| 2                 | 5                   | 2               | basic     | no       | yes   |
-| 9                 | 16                  | 0               | premium   | yes      | no    |
+| 7                 | 12                  | 1               | standard  | yes      | *no*    |
+| 2                 | 5                   | 2               | basic     | no       | *yes*   |
+| 9                 | 16                  | 0               | premium   | yes      | *no*    |
 
 # Decision Tree
 
@@ -85,7 +94,7 @@ flowchart TD
 # Decision Tree: an Example
 
 ::::{.columns}
-:::{.column width=60%}
+:::{.column width=70%}
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
 | 2                 | 3                   | 2               | basic     | no       | yes   |
@@ -98,7 +107,7 @@ flowchart TD
 | 1                 | 2                   | 2               | basic     | no       | yes   |
 | 10                | 20                  | 0               | premium   | yes      | no    |
 :::
-:::{.column width=40%}
+:::{.column width=30%}
 ```{mermaid}
 %%| echo: false
 flowchart TD
@@ -120,7 +129,7 @@ flowchart TD
 
 For each dataset, several decision trees could be defined.
 
-# Decision Tree: an Example
+# Decision Tree: an example
 
 ```{mermaid}
 %%| echo: false
@@ -155,106 +164,116 @@ Predicted class
 | no    |
 </pre>")]
     A -->|Induction| B[Learn Model]
-    C[DT Algorithm] --> B
+    C(DT Algorithm) --> B
     B --> D[Model Tree]
-    D --> E[Apply model]
+    D --> E(Apply model)
     E -->|Deduction| F
     G --> E[("Apply Model")]
 ```
 
 # Applying the model
 
-::::{.columns}
-:::{.column width=50%}
 Test Data
 
-| Refund | Marital Status | Taxable Income | Cheat |
-| :-: | :-: | :-: | :-: |
-| No | Married | 80K | __?__ |
-:::
-:::{.column width=50%}
-![Model: Decision Tree](./img/dt/image4.png)
-:::
-::::
+| `months_subscribed` | **`monthly_watch_hours`** | `tickets` | `type` | `auto_pay` | **`churn`** |
+| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| 1                 | **2**                   | 2               | basic     | no       | ?   |
+
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A[monthly_watch_hours] -->|<= 8| B[auto_pay]
+    A -->|>8| C((no))
+
+    B -->|no| D((yes))
+    B -->|yes| E[tickets]
+
+    E -->|>= 2| F((yes))
+    E -->|< 2| G((no))
+
+    style A stroke:#ff0000,stroke-width:3px
+    linkStyle 0 stroke:#ff0000,stroke-width:3px
+
+    style C fill:#a3f7a3,stroke:#000
+    style D fill:#f78c8c,stroke:#000
+    style F fill:#f78c8c,stroke:#000
+    style G fill:#a3f7a3,stroke:#000
+```
 
 # Applying the model
 
-::::{.columns}
-:::{.column width=50%}
 Test Data
 
-| _Refund_ | Marital Status | Taxable Income | Cheat |
-| :-: | :-: | :-: | :-: |
-| No | Married | 80K | __?__ |
-:::
-:::{.column width=50%}
-![Model: Decision Tree](./img/dt/image5.png)
-:::
-::::
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | **`auto_pay`** | **`churn`** |
+| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| 1                 | 2                   | 2               | basic     | **no**       | ?   |
+
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A[monthly_watch_hours] -->|<= 8| B[auto_pay]
+    A -->|>8| C((no))
+
+    B -->|no| D((yes))
+    B -->|yes| E[tickets]
+
+    E -->|>= 2| F((yes))
+    E -->|< 2| G((no))
+
+    style B stroke:#ff0000,stroke-width:3px
+    linkStyle 2 stroke:#ff0000,stroke-width:3px
+
+    style C fill:#a3f7a3,stroke:#000
+    style D fill:#f78c8c,stroke:#000
+    style F fill:#f78c8c,stroke:#000
+    style G fill:#a3f7a3,stroke:#000
+```
 
 # Applying the model
 
-::::{.columns}
-:::{.column width=50%}
 Test Data
 
-| _Refund_ | Marital Status | Taxable Income | Cheat |
-| :-: | :-: | :-: | :-: |
-| _No_ | Married | 80K | __?__ |
-:::
-:::{.column width=50%}
-![Model: Decision Tree](./img/dt/image6.png)
-:::
-::::
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
+| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| 1                 | 2                   | 2               | basic     | no       | **yes**   |
 
-# Applying the model
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A[monthly_watch_hours] -->|<= 8| B[auto_pay]
+    A -->|>8| C((no))
 
-::::{.columns}
-:::{.column width=50%}
-Test Data
+    B -->|no| D((yes))
+    B -->|yes| E[tickets]
 
-| _Refund_ | _Marital Status_ | Taxable Income | Cheat |
-| :-: | :-: | :-: | :-: |
-| _No_ | Married | 80K | __?__ |
-:::
-:::{.column width=50%}
-![Model: Decision Tree](./img/dt/image7.png)
-:::
-::::
+    E -->|>= 2| F((yes))
+    E -->|< 2| G((no))
 
-# Applying the model
+    style D stroke:#ff0000,stroke-width:3px
+    style C fill:#a3f7a3,stroke:#000
+    style D fill:#f78c8c,stroke:#000
+    style F fill:#f78c8c,stroke:#000
+    style G fill:#a3f7a3,stroke:#000
+```
 
-::::{.columns}
-:::{.column width=50%}
-Test Data
+# Learning the model {background-color="#121011"}
 
-| _Refund_ | _Marital Status_ | Taxable Income | Cheat |
-| :-: | :-: | :-: | :-: |
-| _No_ | _Married_ | 80K | __?__ |
-:::
-:::{.column width=50%}
-![Model: Decision Tree](./img/dt/image8.png)
-:::
-::::
+```{mermaid}
+%%| echo: false
+flowchart LR
+    A[("Training set")]
+    G[("Test set")]
+    F[("Predicted class")]
+    A -->|Induction| B[Learn Model]
+    C(DT Algorithm) --> B
+    B --> D[Model Tree]
+    D --> E(Apply model)
+    E -->|Deduction| F
+    G --> E[("Apply Model")]
 
-# Applying the model
-
-::::{.columns}
-:::{.column width=50%}
-Test Data
-
-| _Refund_ | _Marital Status_ | Taxable Income | Cheat |
-| :-: | :-: | :-: | :-: |
-| _No_ | _Married_ | 80K | **No** |
-:::
-:::{.column width=50%}
-![Model: Decision Tree](./img/dt/image8.png)
-:::
-::::
-
-# Learning the model
-
-![Learning the model](img/dt/image10.png)
+    style B fill:#f78c8c,stroke:#000
+    style C fill:#f78c8c,stroke:#000
+```
 
 # Learning the model
 
