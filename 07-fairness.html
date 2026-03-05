@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="07-fairness_files/libs/quarto-html/tabby.min.js"></script>
+<script src="07-fairness_files/libs/quarto-html/popper.min.js"></script>
+<script src="07-fairness_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="07-fairness_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="07-fairness_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="07-fairness_files/libs/quarto-html/quarto-syntax-highlighting-cdaacfc258cb6f151192107f105ac881.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.12">
+
+  <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
+  <title>Machine Learning and Data Mining (Module 2)</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="07-fairness_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="07-fairness_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="07-fairness_files/libs/revealjs/dist/theme/quarto-b3aa9dda08c8fde6dffd4aadb76df7d0.css">
+  <link href="07-fairness_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="07-fairness_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="07-fairness_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="07-fairness_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Machine Learning and Data Mining (Module 2)</h1>
+  <p class="subtitle">Fairness</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it 
+</div>
+</div>
+</div>
+
+</section>
+<section id="what-is-fairness" class="title-slide slide level1 center">
+<h1>What is fairness?</h1>
+
+</section>
+
+<section id="section" class="title-slide slide level1 center">
+<h1></h1>
+<div class="columns">
+<div class="column" style="width:25%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/inequality.png"></p>
+<figcaption>Inequality</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:25%;">
+<div class="fragment" data-fragment-index="2">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/equality.png"></p>
+<figcaption>Equality</figcaption>
+</figure>
+</div>
+</div>
+</div><div class="column" style="width:25%;">
+<div class="fragment" data-fragment-index="3">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/equity.png"></p>
+<figcaption>Equity</figcaption>
+</figure>
+</div>
+</div>
+</div><div class="column" style="width:25%;">
+<div class="fragment" data-fragment-index="4">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/justice.png"></p>
+<figcaption>Justice</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+
+<section id="section-1" class="title-slide slide level1 center">
+<h1></h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><em>Equality</em>: the state of being equal, especially in status, rights, or opportunities.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/equality.png"></p>
+<figcaption>Equality</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p><em>Equity</em>: the state of having exact resources and opportunities needed to reach an equal outcome.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/equity.png"></p>
+<figcaption>Equity</figcaption>
+</figure>
+</div>
+</div></div>
+<p><strong>Fairness</strong>: <em>impartial</em> and <em>just</em> treatment or behaviour without favouritism or discrimination.</p>
+</section>
+
+<section id="how-does-fairness-impact-data-driven-decision-making" class="title-slide slide level1 center">
+<h1>How does fairness impact data-driven decision making?</h1>
+
+</section>
+
+<section id="data-driven-decision-making" class="title-slide slide level1 center">
+<h1>Data-driven decision making</h1>
+<p>When making (institutional) decisions, we <em>must avoid arbitrarity</em></p>
+<ul>
+<li><em>Arbitrary decisions</em> are based on individual discretion rather than a fair application of regulations.</li>
+</ul>
+<blockquote>
+<p>A bank must decide whether to loan money.</p>
+<ul>
+<li>(Legitimacy) Is it legitimate if the bank’s employees loan money only to customers with red shoes?</li>
+<li>(Inconsistency) Is it legitimate if the bank’s employees loan money based on whether they are happy day by day?</li>
+</ul>
+</blockquote>
+<div class="fragment">
+<p><em>Institutions</em> (firms to governments) usually represent populations as <em>tables</em> (<em>rows</em>: individuals, <em>columns</em>: measurements about them).</p>
+<blockquote>
+<p>Over the years, the bank has collected data about customers (<a href="https://archive.ics.uci.edu/dataset/2/adult">Adult</a> dataset: predicting <code>income</code> based on personal data).</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 20%">
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;"><code>age</code></th>
+<th style="text-align: left;"><code>education</code></th>
+<th style="text-align: left;"><code>occupation</code></th>
+<th style="text-align: left;"><code>relationship</code></th>
+<th style="text-align: left;"><code>race</code></th>
+<th style="text-align: left;"><code>sex</code></th>
+<th style="text-align: right;">…</th>
+<th style="text-align: left;"><code>country</code></th>
+<th style="text-align: left;"><code>income</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">39</td>
+<td style="text-align: left;">Bachelors</td>
+<td style="text-align: left;">Adm-clerical</td>
+<td style="text-align: left;">Not-in-family</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">&lt;=50K</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50</td>
+<td style="text-align: left;">Bachelors</td>
+<td style="text-align: left;">Exec-managerial</td>
+<td style="text-align: left;">Husband</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">&lt;=50K</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">HS-grad</td>
+<td style="text-align: left;">Handlers-cleaners</td>
+<td style="text-align: left;">Not-in-family</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">&lt;=50K</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">53</td>
+<td style="text-align: left;">11th</td>
+<td style="text-align: left;">Handlers-cleaners</td>
+<td style="text-align: left;">Husband</td>
+<td style="text-align: left;">Black</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">&lt;=50K</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">28</td>
+<td style="text-align: left;">Bachelors</td>
+<td style="text-align: left;">Prof-specialty</td>
+<td style="text-align: left;">Wife</td>
+<td style="text-align: left;">Black</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: left;">Cuba</td>
+<td style="text-align: left;">&lt;=50K</td>
+</tr>
+</tbody>
+</table>
+<p>Can we systematically use the <code>income</code> prediction to decide whether to loan money? What are the risks?</p>
+</blockquote>
+</div>
+</section>
+
+<section id="data-driven-decision-making-1" class="title-slide slide level1 center">
+<h1>Data-driven decision making</h1>
+<p>To avoid arbitrary decisions, <em>institutional decision making</em> has long been formalized via <em>bureaucratic</em> procedures.</p>
+<ul>
+<li>Bureaucracy arose in part <em>as a response to the subjectivity, arbitrariness, and inconsistency</em> of human decision making.</li>
+<li>Institutionalized rules and procedures aim to minimize the effects of humans’ frailties as individual decision makers [52].
+<ul>
+<li><em>Procedural protections</em> ensure that decisions are made transparently, on the basis of the <em>right and relevant information</em>.</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>The fully developed bureaucratic apparatus compares with other organisations exactly as does the machine with the non-mechanical modes of production.</p>
+<p>Max Weber <span class="citation" data-cites="waters2015weber">(<a href="#/references" role="doc-biblioref" onclick="">Waters et al. 2015</a>)</span></p>
+</blockquote>
+<p>Weber’s <em>ideal-typical bureaucracy</em> is characterized by several factors, including</p>
+<ul>
+<li><em>all decisions</em> and powers <em>specified and restricted by regulations</em></li>
+<li><em>officials with expert training</em> in their fields</li>
+</ul>
+<p><strong>Question</strong>: which role can ML play in decision making?</p>
+</section>
+
+<section id="machine-learning" class="title-slide slide level1 center">
+<h1>Machine learning</h1>
+<p>Do humans always take optimal decisions?</p>
+<div class="fragment">
+<p>A body of research <em>compared the accuracy of statistical models to the judgments of humans</em>, even with years of experience.</p>
+<ul>
+<li>In many head-to-head comparisons, <em>data-driven decisions are more accurate than those based on intuition or expertise</em>.</li>
+<li>A 2002 study shows that <strong>automated</strong> underwriting of loans was both more accurate and less racially disparate.
+<ul>
+<li>These results have been welcomed as a way to ensure that high-stakes decisions that shape our lifes are <em>accurate</em> and <em>fair</em>.</li>
+</ul></li>
+</ul>
+<p><em>Entire disciplines have embraced mathematical models of optimal decision making</em> in their theoretical foundations.</p>
+<ul>
+<li>We can label deviations from mathematical optimality as “bias” that requires attention.</li>
+</ul>
+</div>
+</section>
+
+<section id="machine-learning-1" class="title-slide slide level1 center">
+<h1>Machine learning</h1>
+<p>Which factors (<em>among all that we have observed</em>) bear a statistical relationship to the outcome?</p>
+<p><strong>Machine learning</strong> adds a repertoire of heuristics that <em>learns decision rules from sufficiently large datasets</em></p>
+<ul>
+<li>Techniques for fitting huge statistical models on large datasets have led to impressive achievements.</li>
+</ul>
+<p><strong>ML is a way to learn and make decisions about individuals directly from the data</strong>.</p>
+<ul>
+<li>Rather than <em>manually formalizing</em> the relationship between <em>relevant factors</em> and an <em>outcome</em>, <em>ML learns the relevance from data</em></li>
+</ul>
+<blockquote>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/b/b1/MNIST_dataset_example.png"></p>
+<figcaption>MNIST dataset</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<p>Many applications: image classification, speech recognition, and natural language processing etc.</p>
+<p>We may be able to effortlessly identify objects in a scene, but we are unable to specify the full set of rules that we rely on to make these determinations. We cannot hand-code a program that exhaustively enumerates all the relevant factors that allow us to recognize objects from every possible perspective or visual configurations.</p>
+</div></div>
+</blockquote>
+<p>Interrogating ML is a way of interrogating institutional decision making in society today and for the foreseeable future.</p>
+<ul>
+<li>We do not compare ML models to the subjective judgments of individual humans but instead to institutional decision making.</li>
+</ul>
+</section>
+
+<section id="machine-learning-2" class="title-slide slide level1 center">
+<h1>Machine Learning</h1>
+<p><em>Learning</em> is not a process of simply committing examples to memory.</p>
+<ul>
+<li><em>Induction</em>: drawing rules (from past examples) that effectively account for past cases, but that also apply to new/unseen cases.</li>
+</ul>
+<blockquote>
+<p>Homing in on those details that are characteristic of “2” in general, not just the “2”s that appear in the examples.</p>
+</blockquote>
+<p>When learning, ML turns <em>data into a model</em> that</p>
+<ul>
+<li>summarizes the patterns in the training data; <em>it makes generalizations</em>.</li>
+<li>could take many forms: a hyperplane, or a set of distributions, a set of weights, etc.</li>
+</ul>
+<p>There are reasons to be <em>cautiously optimistic about fairness and ML</em>.</p>
+<ul>
+<li>Data-driven decision making has the potential to be more transparent compared to human decision making.</li>
+<li>It forces to articulate our decision-making objectives and enables to clearly understand the trade-offs between desiderata.</li>
+</ul>
+<p>Challenges:</p>
+<ul>
+<li>Improving the interpretability and explainability of ML methods.</li>
+<li>Proprietary nature of datasets and systems that are crucial to an informed public debate on this topic.</li>
+</ul>
+</section>
+
+<section id="machine-learning-3" class="title-slide slide level1 center">
+<h1>Machine Learning</h1>
+<p>Supervised ML (e.g., <em>classification</em>) is a form of inductive reasoning.</p>
+<ul>
+<li><em>Draw general rules from individual examples</em>, identifying the features and values that co-occur with an outcome of interest.</li>
+<li>However, <em>insufficiently-individualized decisions are an unavoidable</em> part of inductive reasoning.
+<ul>
+<li>“Statistically sound but nonuniversal generalizations”: an individual fulfills all the criteria for inclusion in a particular group but fails to possess the quality that these criteria are expected to predict [82].</li>
+<li>Even if we accept that decisions can never be fully individualized, we might still expect that decision makers take into account the full range of relevant information at their potential disposal.</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>A car insurance company had an obligation to consider the applicants’ driving skills, not just the model and color of their car, even if doing so still meant that they were being assessed according to how often other people with similar driving skills Collecting and considering all of this information can be expensive, intrusive, and impractical. In fact, the cost of doing so could easily outweigh the perceived benefits that come from more granular decision making—not just to the decision maker but to the subjects of the decisions as well. For instance, if developing a much more detailed assessment of applicants for car insurance increases the operating costs of the insurer, the insurer is likely to charge applicants a higher price to offset these additional costs.</p>
+</blockquote>
+<p>Limits to inductive reasoning.</p>
+<ul>
+<li>Overfitting [84]</li>
+<li>“Distribution shifts,” of which there are many different kinds.</li>
+</ul>
+</section>
+
+<section id="machine-learning-classification" class="title-slide slide level1 center">
+<h1>Machine Learning: Classification</h1>
+<p><strong>Classification</strong> is possible due to patterns that connect the outcome of interest in a population to features we can observe.</p>
+<p>We formalize classification in two steps.</p>
+<ol type="1">
+<li>Represent a population as a probability distribution.</li>
+<li>Apply statistics, specifically statistical decision theory, to the probability distribution that represents the population.</li>
+</ol>
+<p>The goal of classification is to determine a plausible value for an unknown target <span class="math inline">\(Y\)</span> given observed covariates <span class="math inline">\(X\)</span>.</p>
+<ul>
+<li>Covariates are represented as an an array of continuous or discrete variables, while the target is a discrete, often binary, value.</li>
+<li>The covariates X and target Y are jointly distributed random variables.</li>
+</ul>
+<p>At the time of classification, the value <span class="math inline">\(Y\)</span> of the target variable is unknown</p>
+<ul>
+<li>We observe the covariates <span class="math inline">\(X\)</span> and make a guess <span class="math inline">\(\hat{Y} = f(X)\)</span> based on what we observed.</li>
+<li>The function <span class="math inline">\(f\)</span> that maps our covariates into our guess <span class="math inline">\(\hat{Y}\)</span> is called a classifier, or predictor.</li>
+<li>The output of the classifier is called label or prediction.</li>
+<li>The performance of the classifier is usually measured in terms of <em>accuracy</em></li>
+</ul>
+<blockquote>
+<p>A classifier that always predicts no traffic fatality in the next year might have high accuracy on any given individual, simply because fatal accidents are unlikely. However, it’s a constant function that has no value in assessing the risk of a traffic fatality.</p>
+</blockquote>
+</section>
+
+<section id="machine-learning-classification-1" class="title-slide slide level1 center">
+<h1>Machine Learning: Classification</h1>
+<p>In many classification tasks, the features <span class="math inline">\(X\)</span> implicitly or explicitly encode an individual’s status in a protected category.</p>
+<ul>
+<li>The letter <span class="math inline">\(A \subseteq X\)</span> (sensitive attribute) designates a discrete random variable that captures one or multiple sensitive characteristics.</li>
+<li>Different settings of the random variable A correspond to different mutually disjoint groups of the population.</li>
+</ul>
+<blockquote>
+<p>We can always represent any number of discrete protected categories as a single discrete attribute whose support corresponds to each of the possible settings of the original attributes. Consequently, our formal treatment in this chapter does apply to the case of multiple protected categories. This formal maneuver, however, does not address the important concept of intersectionality, which refers to the particular forms of disadvantage that members of multiple protected categories may experience [105].</p>
+</blockquote>
+<p><strong>Question</strong>: How can we prevent a ML model to learn relationships based on the attribute <span class="math inline">\(A\)</span>?</p>
+</section>
+
+<section id="machine-learning-classification-2" class="title-slide slide level1 center">
+<h1>Machine Learning: Classification</h1>
+<p>Imagine that we have the following dataset</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(X_0\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(X_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(X_2\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(A\)</span></th>
+<th style="text-align: right;">Class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3.68657</td>
+<td style="text-align: right;">6.53609</td>
+<td style="text-align: right;">6.18556</td>
+<td style="text-align: left;">Square</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2.9258</td>
+<td style="text-align: right;">5.88879</td>
+<td style="text-align: right;">5.51008</td>
+<td style="text-align: left;">Square</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7.38927</td>
+<td style="text-align: right;">7.16754</td>
+<td style="text-align: right;">6.85592</td>
+<td style="text-align: left;">Triangle</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8.86412</td>
+<td style="text-align: right;">5.17322</td>
+<td style="text-align: right;">7.45228</td>
+<td style="text-align: left;">Triangle</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: right;">…</td>
+</tr>
+</tbody>
+</table>
+<p>Where <span class="math inline">\(A\)</span> is the sensitive attribute and the <span class="math inline">\(Class\)</span> to predict depends on <span class="math inline">\(A\)</span>.</p>
+<p><strong>Question</strong>: if we apply a ML model (e.g., random forest) what is the accuracy of the prediction if we include <span class="math inline">\(A\)</span> in the features?</p>
+</section>
+
+<section id="machine-learning-classification-3" class="title-slide slide level1 center">
+<h1>Machine Learning: Classification</h1>
+<p>Suppose that we drop <span class="math inline">\(A\)</span>, but the remaining features are slightly correlated with it</p>
+<ul>
+<li>In both groups (triangles and squares) the feature follows a normal distribution.</li>
+<li>Only the means are slightly different in each group.</li>
+</ul>
+
+<img data-src="./img/fairness/A_dist.svg" class="r-stretch quarto-figure-center"><p class="caption">Distribution of three features correlated with <span class="math inline">\(A\)</span></p><p><strong>Question</strong>: if we apply a ML model (e.g., random forest) what is the accuracy of the prediction if we drop <span class="math inline">\(A\)</span> from the features?</p>
+</section>
+
+<section id="machine-learning-classification-4" class="title-slide slide level1 center">
+<h1>Machine Learning: Classification</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/A_dist.svg"></p>
+<figcaption>Distribution of three features correlated with <span class="math inline">\(A\)</span></figcaption>
+</figure>
+</div>
+<p><strong>Question</strong>: if we apply a ML model (e.g., random forest) what is the accuracy of the prediction if we drop <span class="math inline">\(A\)</span> from the features?</p>
+<div class="columns">
+<div class="column" style="width:70%;">
+<p>Multiple features can be used to build a highly accurate group membership classifier.</p>
+<ul>
+<li>On the right, how accuracy grows as more and more features become available.</li>
+<li>In large feature spaces <span class="math inline">\(A\)</span> is generally redundant given the other features.</li>
+<li>If we remove <span class="math inline">\(A\)</span>, the classifier will find a redundant encoding of the other features.</li>
+<li>This results in an essentially equivalent classifier.</li>
+</ul>
+</div><div class="column" style="width:30%;">
+<p><img data-src="./img/fairness/A_accuracy.svg"></p>
+</div></div>
+<p><strong>Take away</strong>: What we learn from this is that machine learning can wind up building classifiers for sensitive attributes without explicitly being asked to, simply because it is an available route to improving accuracy.</p>
+<ul>
+<li>That does not mean that removing it is a good idea.</li>
+</ul>
+<blockquote>
+<p>Medication, for example, sometimes depends on race in legitimate ways if these correlate with underlying causal factors [21]. Forcing medications to be uncorrelated with race in such cases can harm the individual.</p>
+</blockquote>
+</section>
+
+<section id="fairness-in-machine-learning" class="title-slide slide level1 center">
+<h1>Fairness in Machine Learning</h1>
+<p>Discussions of <em>discrimination</em> in ML seem odd since ML aims to differentiate between individuals—to discriminate between them.</p>
+<p>However, discrimination here refers to treatment that systematically disadvantages one social group over others.</p>
+<ul>
+<li>Certain groups face barriers to entering some occupations, often due to perceptions of unfitness despite true capabilities.</li>
+<li>Personal characteristics may structure society, excluding specific groups from opportunities systematically.
+<ul>
+<li>Race and gender are prominent because they have perpetuated systemic disadvantages.</li>
+<li>These traits can underpin strict social hierarchies, assigning groups to more or less desirable societal positions.</li>
+<li>Such conditions may create a caste-like system [141], confining certain groups to lasting disadvantage.</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>Children are often assumed to belong to the same racial group as their biological parents, making the relative disadvantage that people may experience due to their race especially systematic: children born into families that have been unfairly deprived of resources and opportunities will have less access to these resources and opportunities, thereby limiting from the start of their lives how effectively they might realize their potential.</p>
+</blockquote>
+</section>
+
+<section id="fairness-in-machine-learning-1" class="title-slide slide level1 center">
+<h1>Fairness in Machine Learning</h1>
+<p>When we learn a model from data, are disparities preserved, mitigated, or exacerbated?</p>
+<ul>
+<li>By default, we should expect our models to faithfully reflect disparities found in the input data.
+<ul>
+<li>However, some patterns in the training data are knowledge that we wish to mine (smoking is associated with cancer),</li>
+<li>… while others (girls like pink and boys like blue) represent stereotypes that we might wish to avoid learning.</li>
+</ul></li>
+<li>Learning algorithms have no general way to distinguish between these two types of patterns
+<ul>
+<li>Some patterns are the result of social norms and moral judgments.</li>
+<li>Absent specific intervention, ML will extract stereotypes in the same way that it extracts knowledge.</li>
+</ul></li>
+</ul>
+<p>Another common reason why ML might perform worse for some groups than others is sample size disparity.</p>
+<ul>
+<li>If we uniformly sample the training data, then by definition we’ll have fewer data points about minorities.</li>
+<li>A “5 percent error” statistic might hide the fact that a model performs terribly for a minority group.</li>
+</ul>
+<p>Learning tend to generalize based on the majority culture, leading to a high error rate for minority groups.</p>
+<ul>
+<li>Attempting to avoid this by making the model more complex runs into a different problem: overfitting.</li>
+<li>Understanding the properties of a prediction requires understanding not just the model but also the population differences.</li>
+</ul>
+</section>
+
+<section id="fairness-in-machine-learning-2" class="title-slide slide level1 center">
+<h1>Fairness in Machine Learning</h1>
+<p><em>Relevance</em>: groups are treated differently based on characteristics that bear little to no relevance to the outcome [141, 142].</p>
+<blockquote>
+<p>One reason why it might be wrong to base employment decisions on characteristics like race or gender is that these characteristics bear no relevance to determinations about job applicants’ capacity to perform the job.</p>
+</blockquote>
+<p><em>Generalizations</em>: members are grouped by traits and not treated as individuals, even if these trains can be shown to possess some statistical relevance to the decision at hand [82].</p>
+<ul>
+<li>People deserved to be treated as individuals and assessed on their unique merits.</li>
+<li>Perfectly individualized assessment is unattainable.
+<ul>
+<li>Any form of judgment based on individual characteristics must draw on some generalizations and past experience.</li>
+</ul></li>
+</ul>
+<p><em>Prejudice</em>: groups are presumed to be of inferior status.</p>
+<ul>
+<li>This is not a problem of granularity but a problem of beliefs.</li>
+</ul>
+<p><em>Immutability</em>: members of certain groups are treated differently according to characteristics over which they possess no control.</p>
+</section>
+
+<section id="example-fairness-as-blindness" class="title-slide slide level1 center">
+<h1>Example: Fairness as Blindness</h1>
+<p>You are on a hiring committee to hire applicants based on their college GPA and their interview score</p>
+<p>Assumptions:</p>
+<ul>
+<li><em>We have data from past candidates to train a ML model</em> to predict performance scores based on GPA and interview score</li>
+<li><em>An applicant’s worth can be reduced to a single number</em> and that we know how to measure that number.
+<ul>
+<li><strong>NOTE: This is a valid criticism</strong> and applies to most applications of data-driven decision making today.</li>
+<li>Big advantage: <em>once we formulate the decision as a prediction problem, statistical methods tend to do better than humans</em>.</li>
+</ul></li>
+<li><em>Applicants fall into two demographic groups</em>, represented by triangles and squares.
+<ul>
+<li><strong>NOTE</strong>: when building real systems, enforcing rigid categories of people can be ethically questionable.</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="example-fairness-as-blindness-1" class="title-slide slide level1 center">
+<h1>Example: Fairness as Blindness</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/AB.svg"></p>
+<figcaption>Classified data</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p>We have a dataset with 3 columns, and <span class="math inline">\(C\)</span> is the (sensitive) group</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">GPA</th>
+<th style="text-align: right;">Interview Score</th>
+<th style="text-align: left;">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3.75</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: left;">square</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9.51</td>
+<td style="text-align: right;">6.36</td>
+<td style="text-align: left;">triangle</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: left;">…</td>
+</tr>
+</tbody>
+</table>
+<p>Somehow, we have the following classifier</p>
+<p><span class="math inline">\(\text{Hired} = \begin{cases}
+1, \text{ if } -\text{GPA} + \epsilon &gt; \text{Interview Score} \\
+0, otherwise
+\end{cases}\)</span></p>
+<p><strong>Question</strong>: Is the classifier fair?</p>
+</div></div>
+<div class="fragment">
+<ul>
+<li><em>Fairness-as-blindness</em>: the classifier didn’t take into account <span class="math inline">\(C\)</span> (i.e,. the group of the candidate).</li>
+<li>In this view, the model is fair; a model that gives different scores to identical members of different groups is discriminatory.</li>
+</ul>
+</div>
+</section>
+
+<section id="example-fairness-as-blindness-2" class="title-slide slide level1 center">
+<h1>Example: Fairness as Blindness</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/fairness/AB.svg"></p>
+<figcaption>Classified data</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="columns">
+<div class="column" style="width:49%;">
+<p>Predicted Class = 1: <span class="math inline">\(-\text{GPA} + \epsilon &gt; \text{Score}\)</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">C</th>
+<th style="text-align: right;">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">square</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">triangle</td>
+<td style="text-align: right;">19</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:49%;">
+<p>Predicted Class = 0: <span class="math inline">\(-\text{GPA} + \epsilon \le \text{Score}\)</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">C</th>
+<th style="text-align: right;">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">square</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">triangle</td>
+<td style="text-align: right;">25</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</div></div>
+<p><strong>Question</strong>: are candidates from the two groups equally likely to be positively classified?</p>
+<div class="fragment">
+<ul>
+<li>No triangles are more likely to be selected than the squares.</li>
+<li>Guidelines from the US Equal Employment Opportunity Commission: if the probability of selection for two groups differs by more than 20 percent, it might constitute a sufficient impact to initiate a lawsuit.</li>
+</ul>
+</div>
+</section>
+
+<section id="example-fairness-as-blindness-3" class="title-slide slide level1 center">
+<h1>Example: Fairness as Blindness</h1>
+<p>The disparity <em>might originate from before the candidates were hired</em>.</p>
+<ul>
+<li>For example, it might arise from disparities in educational institutions attended by the two groups.
+<ul>
+<li>GPA is correlated with the demographic sensitive attribute—it’s a proxy.</li>
+</ul></li>
+<li>Perhaps we could simply omit that variable as a predictor?
+<ul>
+<li>In real datasets, most attributes tend to be proxies for demographic variables, and dropping them may not be reasonable.</li>
+</ul></li>
+</ul>
+<p>Another approach would be to <em>pick different cutoffs so that candidates from both groups have the same probability of being hired</em>.</p>
+<ul>
+<li>The different-thresholds approach is unsatisfying since it uses the group attribute as the sole criterion for redistribution.</li>
+<li>It does not account for the reasons why 2 candidates with the same attributes (except for group) deserve different treatment.</li>
+</ul>
+<p><em>Why</em> the company wants to decrease the demographic disparity in hiring?</p>
+<ul>
+<li><em>One answer is rooted in justice to individuals</em> and the specific social groups to which they belong.</li>
+<li>But a different answer comes from <em>the firm’s selfish interests: diverse teams work better</em> [33, 34].
+<ul>
+<li>From this perspective, increasing the diversity of the cohort that is hired would benefit the firm and everyone in the cohort.</li>
+<li>As an analogy with football, picking 11 goalkeepers, even if individually excellent, would make for a poor soccer team.</li>
+</ul></li>
+</ul>
+<p>More generally, there are many possible algorithmic interventions beyond picking different thresholds for different groups.</p>
+</section>
+
+<section id="how-can-we-quantify-the-fairness-of-a-model" class="title-slide slide level1 center">
+<h1>How can we quantify the fairness of a model?</h1>
+
+</section>
+
+<section id="computational-fairness" class="title-slide slide level1 center">
+<h1>Computational fairness</h1>
+<p>Discrimination, different treatments of groups of people</p>
+<ul>
+<li><em>Direct</em> discrimination</li>
+<li><em>Indirect</em> discrimination: something that seems neutral but applies discrimination</li>
+<li><em>Intersectional</em> discrimination</li>
+</ul>
+<p><em>Computational fairness</em>: algorithms should not perform any discrimination.</p>
+<ul>
+<li>We need to quantify the level of (un)fairness</li>
+</ul>
+<p><em>Multidisciplinary</em> approach is a must, at least three perspectives: legal, social, and technical</p>
+<ul>
+<li>Legal: we have a lot of regulations such as AI acts, article 21, national and sectorial regulations</li>
+<li>How do we move this into something quantifiable?
+<ul>
+<li>Which metrics should we use?</li>
+<li>Metrics should be legally sound in terms of laws.</li>
+<li>Metrics conflict with each other</li>
+<li>Metrics are threshold-based: who defines the thresholds?</li>
+</ul></li>
+</ul>
+<p>Fairness is contextual to the application, an application is FAIR inside some boundaries but not others.</p>
+<ul>
+<li>How do we define the application-specific boundaries?
+<ul>
+<li>Participative design (see: holistic social-legal-technical methodology for AI fairness)</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="metrics-for-fairness" class="title-slide slide level1 center">
+<h1>Metrics for fairness</h1>
+<p>Statistical nondiscrimination criteria are properties of the joint distribution of</p>
+<ul>
+<li>the sensitive attribute <span class="math inline">\(A\)</span> and in some cases also features <span class="math inline">\(X\)</span></li>
+<li>the target variable <span class="math inline">\(Y\)</span>, the classifier <span class="math inline">\(\hat{Y}\)</span> or score <span class="math inline">\(R\)</span>, and</li>
+</ul>
+<p>We can unambiguously decide whether a criterion is satisfied by looking at the joint distribution of these variables.</p>
+<ul>
+<li>Acceptance rate <span class="math inline">\(P\{\hat{Y} = 1\}\)</span> of a classifier <span class="math inline">\(\hat{Y}\)</span>;</li>
+<li>Error rates <span class="math inline">\(P\{\hat{Y} = 0 | Y= 1\}\)</span> and <span class="math inline">\(P\{\hat{Y} = 1 | Y= 0\}\)</span> of a classifier <span class="math inline">\(\hat{Y}\)</span>;</li>
+<li>Outcome frequency given score value <span class="math inline">\(P\{Y= 1 | R = r\}\)</span> of a score <span class="math inline">\(R\)</span>.</li>
+</ul>
+</section>
+
+<section id="metrics-for-fairness-independence" class="title-slide slide level1 center">
+<h1>Metrics for fairness: Independence</h1>
+<p>When applied to a binary classifier <span class="math inline">\(\hat{Y} \in \{0, 1\}\)</span>, <em>independence</em> is often referred to as demographic parity or group fairness.</p>
+<ul>
+<li><span class="math inline">\(P\{\hat{Y}=1|A=a\}=P\{\hat{Y}=1|A=b\}\)</span></li>
+<li>We can determine if acceptance rates are equal in the two groups by knowing the three probabilities <span class="math inline">\(P\{\hat{Y} = 1, A = a\}\)</span>, <span class="math inline">\(P\{\hat{Y} = 1, A = b\}\)</span>, and <span class="math inline">\(P\{A = a\}\)</span> that fully specify the joint distribution of <span class="math inline">\(\hat{Y}\)</span> and <span class="math inline">\(A\)</span>.</li>
+</ul>
+<p>A relaxation of the constraint is the following</p>
+<ul>
+<li><span class="math inline">\(P\{\hat{Y}=1|A=a\} \ge P\{\hat{Y}=1|A=b\} - \epsilon\)</span> which transforms into <span class="math inline">\(\frac{P\{\hat{Y}=1|A=a\}}{P\{\hat{Y}=1|A=b\}} \ge 1 - \epsilon\)</span>
+<ul>
+<li>For <span class="math inline">\(\epsilon = 0.2\)</span>, this condition relates to the 80% rule that appears in discussions around disparate impact law [107].</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>Imagine a company that in group a hires diligently selected applicants at some rate <span class="math inline">\(p &gt; 0\)</span>. In group <span class="math inline">\(b\)</span>, the company hires carelessly selected applicants at the same rate <span class="math inline">\(p\)</span>. Even though the acceptance rates in both groups are identical, it is far more likely that unqualified applicants are selected in one group than in the other. As a result, it will appear in hindsight that members of group <span class="math inline">\(b\)</span> performed worse than members of group <span class="math inline">\(a\)</span>, thus establishing <span class="math inline">\(a\)</span> negative track record for group <span class="math inline">\(b\)</span>.</p>
+</blockquote>
+<ul>
+<li>Another way to state the independence condition in full generality is to require that <span class="math inline">\(A\)</span> and <span class="math inline">\(R\)</span> must have zero mutual information <span class="math inline">\(I(A; R) = 0\)</span>.</li>
+</ul>
+</section>
+
+<section id="metrics-for-fairness-separation" class="title-slide slide level1 center">
+<h1>Metrics for fairness: Separation</h1>
+<p>The target <span class="math inline">\(Y\)</span> suggests one way of partitioning the population into strata of equal claim to acceptance, it gives us a sense of merit.</p>
+<ul>
+<li>A particular demographic group (<span class="math inline">\(A = a\)</span>) may be more or less well represented in these different strata.</li>
+</ul>
+<p><em>Who bears the cost of misclassification?</em></p>
+<p><span class="math display">\[\begin{align}
+P\{\hat{Y}=1|Y=1,A=a\}=P\{\hat{Y}=1|Y=1,A=b\}\\
+P\{\hat{Y}=1|Y=0,A=a\}=P\{\hat{Y}=1|Y=0,A=b\}
+\end{align}\]</span></p>
+<p>Where</p>
+<ul>
+<li><span class="math inline">\(P\{\hat{Y}=1|Y=1\}\)</span> is the TP rate at which the classifier correctly recognizes positive instances.
+<ul>
+<li>The TP rate equals 1 - FN rate.</li>
+</ul></li>
+<li><span class="math inline">\(P\{\hat{Y}=1|Y=0\}\)</span> is the FP rate at which the classifier mistakenly assigns positive outcomes to negative instances.
+<ul>
+<li>When identifying high-risk individuals (e.g., for loan default prediction), the undesirable outcome is the “positive” class.</li>
+<li>A FN, intuitively speaking, corresponds to a denied opportunity in scenarios where acceptance is desirable, such as in hiring.</li>
+<li>This inverts the meaning of FP and FN, and is a frequent source of terminological confusion.</li>
+</ul></li>
+</ul>
+<p>Intuitively,</p>
+<ul>
+<li>Separation requires that all groups experience the same FN and FP rates (the definition asks for <em>error rate parity</em>)</li>
+<li>A violation of separation highlights the fact that different groups experience different costs of misclassification.</li>
+</ul>
+</section>
+
+<section id="metrics-for-fairness-separation-1" class="title-slide slide level1 center">
+<h1>Metrics for fairness: Separation</h1>
+<p>Measuring group-specific error rates can create an incentive for decision makers to work toward improving error rates through collecting better datasets and building better models.</p>
+<ul>
+<li>If there is no way to improve error rates, this raises questions about the legitimate use of ML in such cases.</li>
+<li>It’s important not to interpret the score as an <em>individual probability</em>.
+<ul>
+<li>Calibration does not tell us anything about the outcome of a specific individual that receives a particular value.</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="how-to-satisfy-a-nondiscrimination-criterion" class="title-slide slide level1 center">
+<h1>How to Satisfy a Nondiscrimination Criterion?</h1>
+<p>We distinguish between three different techniques.</p>
+<ul>
+<li><em>Preprocessing</em>: Adjust the feature space to be uncorrelated with the sensitive attribute.</li>
+<li><em>In-training</em>: Work the constraint into the optimization process that constructs a classifier from training data.</li>
+<li><em>Post-processing</em>: Adjust a learned classifier so as to be uncorrelated with the sensitive attribute.</li>
+</ul>
+<p>Let us focus on <em>indepedence</em> for now.</p>
+</section>
+
+<section id="how-to-satisfy-a-nondiscrimination-criterion-1" class="title-slide slide level1 center">
+<h1>How to Satisfy a Nondiscrimination Criterion?</h1>
+<p><strong>Preprocessing</strong> transforms a feature space <span class="math inline">\(X\)</span> into a representation that as a whole is independent of the sensitive attribute.</p>
+<ul>
+<li>This approach is generally agnostic to what we do with the new feature space in downstream applications.</li>
+<li>After preprocessing ensures independence, any deterministic training process on the new space will also satisfy independence.</li>
+<li>This is a formal consequence of the well-known data-processing inequality from information theory. [113]</li>
+</ul>
+</section>
+
+<section id="how-to-satisfy-a-nondiscrimination-criterion-2" class="title-slide slide level1 center">
+<h1>How to Satisfy a Nondiscrimination Criterion?</h1>
+<p>Achieving independence <strong>in-training</strong> can lead to the highest utility since we get to optimize the classifier with this criterion in mind.</p>
+<ul>
+<li>The disadvantage is that we need access to the raw data and training pipeline.</li>
+<li>We also give up a fair bit of generality as this approach typically applies to specific model classes or optimization problems.</li>
+</ul>
+<p>For instance, the <strong>abstention</strong> option is an additional function for classifiers to abstain the model from making a prediction when it is not sure enough.</p>
+<ul>
+<li>You have a confidence function (such as softmax layer)</li>
+<li>We can select coverage (how much of input data I want to cover)</li>
+</ul>
+</section>
+
+<section id="how-to-satisfy-a-nondiscrimination-criterion-3" class="title-slide slide level1 center">
+<h1>How to Satisfy a Nondiscrimination Criterion?</h1>
+<p><strong>Postprocessing</strong> refers to the process of taking a trained classifier and adjusting it possibly depending on the sensitive attribute and additional randomness in such a way that independence is achieved.</p>
+<ul>
+<li>A derived classifier <span class="math inline">\(\hat{Y} = F(R, A)\)</span> is a possibly randomized function of a given score <span class="math inline">\(R\)</span> and the sensitive attribute <span class="math inline">\(A\)</span>.</li>
+<li>Given a cost for FN and FP, we can find the derived classifier that minimizes the expected cost of FP and FN subject to the fairness constraint at hand.</li>
+</ul>
+<p>Many systems usually add bias to the final result.</p>
+<ul>
+<li>Minority classes have reduced performance, and classification is rejected</li>
+<li>We can inject an interpretable model to understand when this problem occurs
+<ul>
+<li>Interpretable rejection policy to avoid opaque rejection</li>
+<li>We can do situation testing instance by instance</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="how-to-test-a-nondiscrimination-criterion" class="title-slide slide level1 center">
+<h1>How to Test a Nondiscrimination Criterion?</h1>
+<p>There is no single test for fairness, that is, there is no single criterion that is both necessary and sufficient for fairness.</p>
+<ul>
+<li>If a system passes a fairness test, we should not interpret it as a certificate that the system is fair.</li>
+<li>There are many criteria that can be used to diagnose potential unfairness or discrimination.
+<ul>
+<li>We need moral reasoning and domain-specific considerations to determine which test(s) are appropriate, how to apply them, determine whether the findings indicate wrongful discrimination, and whether an intervention is called for.</li>
+</ul></li>
+<li>There’s often a gap between moral notions of fairness and what is measurable by available observational methods.</li>
+</ul>
+<blockquote>
+<p>Historical college data show that 12763 applicants were considered for admission to one of 101 departments.</p>
+<ul>
+<li>Of the 4321 women who applied, 35% were admitted</li>
+<li>Of the 8442 men who applied, 44% were admitted</li>
+</ul>
+<p><strong>Question</strong>: is the admission committee biased by gender?</p>
+</blockquote>
+</section>
+
+<section id="how-to-test-a-nondiscrimination-criterion-1" class="title-slide slide level1 center">
+<h1>How to Test a Nondiscrimination Criterion?</h1>
+<blockquote>
+<p>Standard statistical significance tests suggest that the observed difference would be unlikely to be the outcome of sample fluctuation if there were no difference in underlying acceptance rates.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Department</th>
+<th>Applied (Men)</th>
+<th>Applied (Women)</th>
+<th>Admitted (Men)</th>
+<th>Admitted (Women)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>825</td>
+<td>108</td>
+<td>512</td>
+<td>89</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>520</td>
+<td>25</td>
+<td>312</td>
+<td>17</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>325</td>
+<td>593</td>
+<td>120</td>
+<td>202</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>417</td>
+<td>375</td>
+<td>138</td>
+<td>131</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>191</td>
+<td>393</td>
+<td>53</td>
+<td>94</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>373</td>
+<td>341</td>
+<td>22</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>2651</td>
+<td>1835</td>
+<td>1157</td>
+<td>557</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A similar pattern exists if we look at the aggregate admission decisions of the six largest departments.</li>
+<li>The acceptance rate across all six departments is <span class="math inline">\(\frac{1157}{2651}=44\%\)</span> for men, while only <span class="math inline">\(\frac{1835}{557}=30\%\)</span> percent for women.</li>
+</ul>
+</blockquote>
+</section>
+
+<section id="how-to-test-a-nondiscrimination-criterion-2" class="title-slide slide level1 center">
+<h1>How to Test a Nondiscrimination Criterion?</h1>
+<blockquote>
+<p>However, if we check the statistics of the single departments</p>
+<ul>
+<li>We can see from the table that four of the six largest departments show a higher acceptance ratio for women, while two show a higher acceptance rate for men.</li>
+<li>So, it appears that the higher acceptance rate for men that we observed in aggregate seems to have reversed at the department level.</li>
+</ul>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 21%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Department</th>
+<th>Applied (Men)</th>
+<th>Applied (Women)</th>
+<th>Admitted % (Men)</th>
+<th>Admitted % (Women)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>825</td>
+<td>108</td>
+<td>62</td>
+<td><strong>82</strong></td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>520</td>
+<td>25</td>
+<td>60</td>
+<td><strong>68</strong></td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>325</td>
+<td>593</td>
+<td><strong>37</strong></td>
+<td>34</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>417</td>
+<td>375</td>
+<td>33</td>
+<td><strong>35</strong></td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>191</td>
+<td>393</td>
+<td><strong>28</strong></td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>373</td>
+<td>341</td>
+<td>6</td>
+<td><strong>7</strong></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>Such reversals demonstrate what is sometimes called Simpson’s paradox</p>
+<ul>
+<li><span class="math inline">\(P\{Y| A\} &lt; P\{Y | ¬A\}\)</span></li>
+<li><span class="math inline">\(P\{Y| A, Z = z\} &gt; P\{Y | ¬A, Z = z\}\)</span> for all values <span class="math inline">\(z\)</span> that the random variable <span class="math inline">\(Z\)</span> assumes.</li>
+</ul>
+<p>The Simpson’s paradox is relevant to our discussion since we tend to misinterpret conditional probabilities.</p>
+</section>
+
+<section id="how-to-test-a-nondiscrimination-criterion-3" class="title-slide slide level1 center">
+<h1>How to Test a Nondiscrimination Criterion?</h1>
+<p>What we see here is a snapshot of the normal behavior of women and men applying to graduate school at UC Berkeley in 1973.</p>
+<blockquote>
+
+<ul>
+<li>What is evident from the data is that gender seems to influence department choice.</li>
+<li>Women and men appear to have different preferences for different fields of study.</li>
+<li>Different departments have different admission criteria. Some have lower acceptance rates, some higher.</li>
+<li>Therefore, one explanation for the data we see is that women chose to apply to more competitive departments, and hence were rejected at a higher rate than men.</li>
+<li>The bias in the aggregated data stems not from any pattern of discrimination on the part of admissions committees, quite fair on the whole, but apparently from prior screening at earlier levels of the educational system. [175]</li>
+</ul>
+
+</blockquote>
+<p>There are multiple possible scenarios with different interpretations that we cannot distinguish from the data at hand.</p>
+<ul>
+<li>One is to design a new study and collect more data in a manner that might lead to a more conclusive outcome.</li>
+<li>The other is to argue over which scenario is more likely, based on our beliefs and plausible assumptions about the world.</li>
+</ul>
+</section>
+
+<section id="how-to-test-a-nondiscrimination-criterion-4" class="title-slide slide level1 center">
+<h1>How to Test a Nondiscrimination Criterion?</h1>
+<p><strong>Audit study</strong> is a popular technique for diagnosing discrimination in a <em>field</em> experiment.</p>
+<ul>
+<li>Field experiments study decision-making in real contexts, avoiding lab artifacts.</li>
+<li>Carefully controlled experiments reveal treatment effects rather than mere correlations.</li>
+<li>Experiments on real systems are challenging to execute.</li>
+</ul>
+<p>Most audit studies are best seen as attempts to test blindness: whether a decision maker directly uses a sensitive attribute.</p>
+<blockquote>
+<p>The researchers recruited 38 testers to visit about 150 car dealerships to bargain for cars, and record the price they were offered at the end of bargaining [293]. Testers visited dealerships in pairs; testers in a pair differed in terms of race or gender. Both testers in a pair bargained for the same model of car, at the same dealership, usually within a few days of each other. The researchers went to great lengths to minimize any differences between the testers that might correlate with race or gender. In particular, all testers were between 28 and 32 years old, had 3 our 4 years of postsecondary education, and “were subjectively chosen to have average attractiveness.” Further, to minimize the risk of testers’ interaction with dealers being correlated with race or gender, every aspect of their verbal or nonverbal behavior was governed by a script. For example, all testers “wore similar ‘yuppie’ sportswear and drove to the dealership in similar rented cars.” They also had to memorize responses to a long list of questions they were likely to encounter. All of this required extensive training and regular debriefs. The paper’s main finding was a large and statistically significant price penalty in the offers received by Black testers. For example, Black males received final offers that were about $1,100 more than White males, which represents a threefold difference in dealer profits based on data about dealer costs.</p>
+</blockquote>
+</section>
+
+<section id="how-to-test-a-nondiscrimination-criterion-5" class="title-slide slide level1 center">
+<h1>How to Test a Nondiscrimination Criterion?</h1>
+<p>The design and interpretation of audit studies requires taking positions on contested social questions.</p>
+<blockquote>
+<p>A tempting interpretation of this study is that if two people were identical except for race, with one being White and the other being Black, then the offers they should expect to receive would differ by about $1,100.</p>
+<ul>
+<li>Arguably, this study yields lower bounds on the amount of discrimination since it incorporates a thin conception of race (all testers were behaving “the same”).</li>
+<li>What does it mean for two people to be identical except for race?</li>
+<li>Which attributes about them would be the same, and which would be different?</li>
+</ul>
+</blockquote>
+</section>
+
+<section id="how-to-test-a-nondiscrimination-criterion-6" class="title-slide slide level1 center">
+<h1>How to Test a Nondiscrimination Criterion?</h1>
+<blockquote>
+<p>Another famous audit study by Marianne Bertrand and Sendhil Mullainathan tested discrimination in the labor market [295]. Instead of sending testers in person, the researchers sent in fictitious résumés in response to job ads. Their goal was to test if an applicant’s race had an impact on the likelihood of an employer inviting them for an interview. They signaled race in the résumés by using White-sounding names (Emily, Greg) or Black-sounding names (Lakisha, Jamal). White names were 50 percent more likely to result in a callback than Black names. The magnitude of the effect was equivalent to an additional eight years of experience on a résumé.</p>
+</blockquote>
+</section>
+
+<section id="how-to-test-a-nondiscrimination-criterion-7" class="title-slide slide level1 center">
+<h1>How to Test a Nondiscrimination Criterion?</h1>
+<blockquote>
+<p>A study looked at decisions made by judges in Louisiana juvenile courts, including sentence lengths [304]. It found that in the week following an upset loss suffered by the Louisiana State University (LSU) football team, judges imposed sentences that were 7 percent longer on average. The impact was greater for Black defendants. The effect was driven entirely by judges who got their undergraduate degrees at LSU, suggesting that the effect is due to the emotional impact of the loss. For readers unfamiliar with the culture of college football in the United States, the paper helpfully notes that “Describing LSU football just as an event would be a huge understatement for the residents of the state of Louisiana”</p>
+</blockquote>
+<blockquote>
+<p>A study tested the relationship between the order in which parole cases are heard by judges and the outcomes of those cases [305]. It found that the percentage of favorable rulings started out at about 65 percent early in the day before gradually dropping to nearly zero Right before the judges’ food break, returned to around 65 percent after the break, with the same pattern repeated for the following food break! The authors suggested that judges’ mental resources are depleted over the course of a session, leading to poorer decisions. It quickly became known as the “hungry judges” study and has been widely cited as an example of the fallibility of human decision makers (figure 7.1). A follow-up investigation revealed multiple confounders and potential confounders, including the fact that prisoners without an attorney are presented last within each session, and tend to prevail at a much lower rate [307]. This invalidates the conclusion of the original study.</p>
+</blockquote>
+</section>
+
+<section id="automation-taking-actions-based-on-machine-learning" class="title-slide slide level1 center">
+<h1>Automation: taking actions based on machine learning</h1>
+
+</section>
+
+<section id="taking-actions-based-on-machine-learning" class="title-slide slide level1 center">
+<h1>Taking actions based on machine learning</h1>
+<p>Implicit in the formal setup of classification is a major assumption.</p>
+<ul>
+<li>Our prediction <span class="math inline">\(\hat{Y}\)</span>, on the basis of the covariates <span class="math inline">\(X\)</span>, cannot influence the outcome <span class="math inline">\(Y\)</span>.</li>
+<li>This assumption is often violated when predictions motivate actions that influence the outcome.</li>
+</ul>
+<p>After learning, we make <em>predictions</em> and take <em>action</em>s based on the model’s predictions to new, unseen inputs.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/mlloop.svg"></p>
+<figcaption>Closed loop of ML</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p>A typical model deployed in practice may have an accuracy (more precisely, AUC) of between 0.7 and 0.8 [91].</p>
+<ul>
+<li>That’s better than a coin toss but still results in a substantial number of false positives and false negatives.</li>
+<li>If the model’s outputs were random, we would clearly consider it arbitrary and illegitimate (and even cruel).</li>
+<li>What is the accuracy threshold for legitimacy? How high must accuracy be to justify the predictive system at all [92]?</li>
+</ul>
+</div></div>
+</section>
+
+<section id="automation-when-is-automated-decision-making-legitimate" class="title-slide slide level1 center">
+<h1>Automation: When Is Automated Decision Making Legitimate?</h1>
+
+<img data-src="./img/analytics.svg" class="r-stretch quarto-figure-center"><p class="caption">Analytics and increasing automation</p><p>When building a data-driven system, there are several levels of analytics and automation</p>
+<ul>
+<li>We mainly refer to <em>predictive</em> and <em>prescriptive</em> analytics</li>
+</ul>
+</section>
+
+<section id="automation-when-is-automated-decision-making-legitimate-1" class="title-slide slide level1 center">
+<h1>Automation: When Is Automated Decision Making Legitimate?</h1>
+<p>Is it fair/legitimate to deploy automated decisions at all?</p>
+<ul>
+<li>Decision making about people involves exercising power over them, so it is important to ensure legitimacy.</li>
+<li>The more power a firm (e.g., Facebook) has over individuals, the more that power needs to be perceived as legitimate.</li>
+</ul>
+<blockquote>
+<p>Apple made it harder for Facebook to track users on iOS, putting a dent in its revenue [49]. This move enjoyed public support despite Facebook’s vociferous protests, arguably because the underlying business model had lost legitimacy.</p>
+</blockquote>
+<blockquote>
+<p>Improving facial analysis technology to decrease the disparity in error rates between racial groups is not a useful response to concerns about the use of such technologies for oppressive purposes [50].</p>
+</blockquote>
+</section>
+
+<section id="automation-when-is-automated-decision-making-legitimate-2" class="title-slide slide level1 center">
+<h1>Automation: When Is Automated Decision Making Legitimate?</h1>
+<blockquote>
+<p>Hiring, credit, and admissions decisions are rarely left to one person to make on their own as they see fit. Instead, these decisions are guided by formal rules and procedures, involving many actors with prescribed roles and responsibilities.</p>
+</blockquote>
+<p>Strawman view: decisions based on ML are analogous to decision making by humans, and so ML doesn’t warrant special attention.</p>
+<div class="fragment">
+<ul>
+<li>While it’s true that ML models might be difficult for people to understand, humans are black boxes, too.</li>
+<li>While there can be systematic bias in ML models, they are often demonstrably less biased and arbitrary than humans.
+<ul>
+<li>E.g., arbitrariness might refer to decisions made on an inconsistent or ad hoc basis.</li>
+<li>E.g., arbitrariness might refer to lacking reasoning, even if the decisions are made consistently on that basis.</li>
+</ul></li>
+</ul>
+<p>We discuss two main issues about automation:</p>
+<ul>
+<li>The criteria of automation</li>
+<li>How we achieve automation</li>
+</ul>
+</div>
+</section>
+
+<section id="automation-the-criteria-of-automation" class="title-slide slide level1 center">
+<h1>Automation: The criteria of automation</h1>
+<ol type="1">
+<li><p><em>Procedural regularity</em> [55]: whether a decision making scheme is executed <em>consistently</em> and <em>correctly</em>.</p>
+<ul>
+<li>In inconsistent decision making, individuals receive different decisions simply because they happen to go through the decision-making process at different times.</li>
+<li>However, people should be entitled to similar decisions unless there are reasons to treat them differently.</li>
+</ul></li>
+<li><p>Existance of <em>good (or any) reasons</em> explaining why the decision-making scheme looks the way that it does</p>
+<blockquote>
+<p>A coach consistently picks a track team based on the color of runners’ sneakers. However, the color of shoes does not help advance the decision maker’s goals.</p>
+</blockquote>
+<ul>
+<li>In the context of government decision making, there is often a legal requirement that there be a rational basis for decision making—that is, that there be good reasons for making decisions in the way that they are [54]</li>
+</ul></li>
+</ol>
+</section>
+
+<section id="automation-how-do-we-achieve-automation" class="title-slide slide level1 center">
+<h1>Automation: How do we achieve automation?</h1>
+<p>How can we formalize decision making to enable automation via computing?</p>
+<blockquote>
+<p>The nature of computing is such that it requires explicit choices about inputs, objectives, constraints, and assumptions in a system” [73]</p>
+</blockquote>
+<div class="fragment">
+<p>There are (at least) three different types of automation via computing</p>
+<ol type="1">
+<li>Translating decision-making rules that have worked out through a traditional policy-making process into software [56].</li>
+<li>Learning how to replicate the informal judgements of humans.</li>
+<li>Learning decision-making rules from data.</li>
+</ol>
+</div>
+</section>
+
+<section id="automation-how-do-we-achieve-automation-1" class="title-slide slide level1 center">
+<h1>Automation: How do we achieve automation?</h1>
+<p>1) Translating decision-making rules that have worked out through a traditional policy-making process into software [56].</p>
+<ul>
+<li>The rules are set by humans, but their application is automated by a computer (ML has no role here).</li>
+<li>This is a response to arbitrariness as inconsistency, but it does not ensure that the policy itself is a reasoned one.</li>
+<li>Automating the execution of a preexisting decision-making scheme requires translating such a scheme into code.
+<ul>
+<li>Programmers might make errors in that process, leading to automated decisions that diverge from the original policy.</li>
+<li>In the face of ambiguity, programmers might take it upon themselves to make their own judgment.</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>Hundreds of British postmasters were convicted for theft or fraud over a twenty-year period based on flawed software in what has been called the biggest miscarriage of justice in British history [57]</p>
+</blockquote>
+</section>
+
+<section id="automation-how-do-we-achieve-automation-2" class="title-slide slide level1 center">
+<h1>Automation: How do we achieve automation?</h1>
+<p>2) Learning how to replicate the informal judgements of humans.</p>
+<ul>
+<li>Learn a decision-making scheme that produces the same decisions as humans have made in the past</li>
+<li>… implements this scheme in software to replace the humans who had been making these decisions</li>
+</ul>
+<blockquote>
+<p>An educational institution may want to automate the process of grading essays, and it may attempt to do that by relying on ML to learn to mimic the grades teachers have assigned to similar work in the past.</p>
+</blockquote>
+<p>A few decades ago, expert-systems relied on explicitly encoding the reasoning that humans relied on to make decisions [66]</p>
+<ul>
+<li>“Expert” systems failed for many reasons, including the fact that people aren’t always able to explain their own reasoning [67].</li>
+<li>Expert systems eventually gave way to the approach of simply asking people to label examples and having learning algorithms discover how to best predict the label that humans would assign.</li>
+</ul>
+<p>ML can learn how a human would make a decision, given a preexisting but informal process for making decisions.</p>
+<ul>
+<li>The goal isn’t to perfectly recover the specific weight that past decision makers had implicitly assigned to different criteria,</li>
+<li>… but to ensure that the model produces a similar set of decisions as humans.</li>
+<li>Risk of replicating and exaggerating any objectionable qualities of human decision making by learning from the bad examples</li>
+<li>Relying on past human decisions does not guarantee that automated decision making will reflect reasoned judgments.</li>
+</ul>
+</section>
+
+<section id="automation-how-do-we-achieve-automation-3" class="title-slide slide level1 center">
+<h1>Automation: How do we achieve automation?</h1>
+<p>3) Learning decision-making rules <em>only from data</em> (predictive optimization; not necessarily applying them).</p>
+<ul>
+<li>It does not rely on an existing bureaucratic decision-making scheme or human judgment where decision makers have some (amorphous and hard to specify) goal and would like to develop an explicit decision-making scheme to help realize their goal
+<ul>
+<li>They engage in discussion to come to some agreement about the criteria (and weight) that are relevant to the decision</li>
+</ul></li>
+</ul>
+<p>Use ML to uncover patterns in a dataset that predict an outcome of interest and then bases decisions on those predictions.</p>
+<ul>
+<li>The relevant point of automation, in this case, is in the process of <em>learning</em> the rules, not necessarily applying them.</li>
+<li>It requires a <em>clear target</em> that is aligned with the <em>goals</em> that decision makers have in mind.
+<ul>
+<li>“Good” decisions are those that accurately predict the target.
+<ul>
+<li>Decision-making can be “good” for reasons beyond the goal, such as enabling understanding or contesting the policy.</li>
+</ul></li>
+<li>Identifying a target of prediction aligned with the goals is rarely straightforward.
+<ul>
+<li>Decision makers often don’t have a preexisting, clear, and discrete goal in mind [75].</li>
+<li>When they do, the goal can be far more complex and multifaceted than one discrete and easily measurable outcome [76].</li>
+<li>You can have multiple conflicting goals, perhaps involving some trade-offs between them.</li>
+</ul></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>The decision-making schemes adopted by college admission officers often encode a range of different goals. They do not simply rank applicants by their predicted GPA and then admit the top candidates to fill the physical capacity of the school. Aside from the obvious fact that this would favor candidates who take “easy” classes, admissions officers aim to recruit a student body with diverse interests and a capacity to contribute to the broader community.</p>
+</blockquote>
+</section>
+
+<section id="automation-summing-up" class="title-slide slide level1 center">
+<h1>Automation: Summing up</h1>
+<p>Automation</p>
+<ul>
+<li>Requires to determine in advance all of the criteria that a decision-making scheme will take into account.
+<ul>
+<li>It does not details that have not been contemplated at the time that the software was developed.</li>
+<li>It limits the opportunity for decision subjects to introduce information into the decision-making process.</li>
+</ul></li>
+<li>Can restrict people’s ability to point out errors or to challenge the ultimate decision [62]</li>
+<li>Limits accountability and exacerbating the dehumanizing effects of dealing with bureaucracies.
+<ul>
+<li>It makes more difficult to identify the agent responsible for a decision;</li>
+<li>Software often disperses the locus of accountability because the decision seems to be made by no one [64].</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>Consider an algorithm employed by a health care system to predict which patients would benefit most from a “high-risk care management” program [81]. The algorithm exhibited racial bias—specifically, that it underestimated the degree to which Black patients’ health would benefit from enrollment in the program. That’s because the developers adopted health care costs as the target of prediction, on the apparent belief that it would serve as a reasonable proxy for health care needs. The common recounting of this story suggests that decision makers simply failed to recognize the fact that there are racial disparities in both care seeking and the provision of health care that cause Black patients of equivalently poor health to be less expensive than non-Black patients.</p>
+</blockquote>
+</section>
+
+<section id="can-automated-actions-cause-disparities" class="title-slide slide level1 center">
+<h1>Can <em>automated actions</em> cause disparities?</h1>
+<p>Two key questions to ask: are disparities <em>justified</em> and <em>harmful</em>?</p>
+<p>With that in mind, we might want to check whether any decision-making process leads to disparate outcomes for different groups.</p>
+<ul>
+<li>If we discover disparities, we check whether the decision-making process was purposefully orchestrated</li>
+</ul>
+</section>
+
+<section id="find-the-disparities" class="title-slide slide level1 center">
+<h1>Find the disparities</h1>
+<blockquote>
+<p><strong>Example</strong>: Amazon uses a data-driven system to determine the neighborhoods in which to offer free same-day delivery to improve efficiency and cost of product distribution.</p>
+<div class="fragment">
+<p>A 2016 investigation found stark <em>disparities in the demographic makeup of these neighborhoods</em>: in many US cities, <em>White residents were more than twice as likely as Black residents to live in one of the qualifying neighborhoods</em> [3]. Amazon argued that its system was justified because it was designed based on efficiency and cost considerations and that <code>race</code> wasn’t an explicit factor. Nonetheless, it provides different opportunities to consumers at racially disparate rates. The concern is that this might contribute to the perpetuation of long-lasting cycles of inequality. If, instead, the system had been found to be partial to ZIP codes ending in an odd digit, it would not have triggered a similar outcry.</p>
+</div>
+</blockquote>
+</section>
+
+<section id="find-the-disparities-1" class="title-slide slide level1 center">
+<h1>Find the disparities</h1>
+<blockquote>
+<p><strong>Example</strong>: Street Bump was an app to crowdsource data on potholes in Boston. The smartphone app automatically detects potholes using data from the smartphone’s sensors and sends the data to the city.</p>
+<div class="fragment">
+<p>Infrastructure seems like a comfortably boring application of data-driven decision making, far removed from the ethical quandaries we’ve been discussing. <em>The data are collected by people, and hence reflect demographic disparities</em>; besides, <em>the reason we’re interested in improving infrastructure in the first place is its effect on people’s lives</em>. The data reflect the patterns of smartphone ownership, which are higher in <code>wealthier</code> parts of the city compared to lower-income areas and areas with large <code>elderly</code> populations [4].</p>
+</div>
+</blockquote>
+</section>
+
+<section id="find-the-disparities-2" class="title-slide slide level1 center">
+<h1>Find the disparities</h1>
+<blockquote>
+<p><strong>Example</strong>: Many occupations have stark <code>gender</code> imbalances.</p>
+<div class="fragment">
+<p>If we’re building a ML system that screens job candidates, we should be keenly aware that this is the baseline we’re starting from. It doesn’t necessarily mean that the outputs of our system will be inaccurate or discriminatory, but we need to pay attention.</p>
+</div>
+</blockquote>
+</section>
+
+<section id="find-the-disparities-3" class="title-slide slide level1 center">
+<h1>Find the disparities</h1>
+<p><strong>Question</strong>: should we always avoid bias?</p>
+<div class="fragment">
+<blockquote>
+<p>Diagnoses and treatments are sometimes personalized by <code>race</code> or <code>gender</code>.</p>
+<p><code>Race</code> is often used as a crude proxy for ancestry and genetics, and sometimes environmental and behavioral factors [21, 22]. If we can measure the factors that are medically relevant and incorporate them—instead of race—into statistical models of disease and drug response, we can increase the accuracy of diagnoses and treatments while mitigating racial disparities.</p>
+</blockquote>
+</div>
+</section>
+
+<section id="interpretability" class="title-slide slide level1 center">
+<h1>Interpretability</h1>
+<p>An ethical decision-making process might require to explain a decision, which might not be feasible with black box models.</p>
+<ul>
+<li>A major limitation of ML is that it reveals correlations, but we often use its predictions as if they reveal causation.</li>
+<li>The prediction affects the outcome (because of the actions taken on the basis of the prediction), and thus invalidates itself.</li>
+</ul>
+<blockquote>
+<p>The same principle is also seen in the use of ML for predicting traffic congestion: if sufficiently many people choose their routes based on the prediction, then the route predicted to be clear will in fact be congested.</p>
+</blockquote>
+<p>The prediction might reinforce the outcome.</p>
+<blockquote>
+<p>If a user clicked on the first link on a page of search results, is that simply because it was first, or because it was in fact the most relevant? This is again a case of the action (the ordering of search results) affecting the outcome (the link(s) the user clicks on).</p>
+</blockquote>
+<p>Bias in feedback might also reflect cultural prejudices, which are of course much harder to characterize.</p>
+<blockquote>
+<p>A 2016 paper by Kristian Lum and William Isaac analyzed a predictive policing algorithm by PredPol. This is one of the few predictive policing algorithms to be published in a peer-reviewed journal, for which the company deserves praise. By applying the algorithm to data derived from Oakland police records, the authors found that Black people would be targeted for predictive policing of drug crimes at roughly twice the rate of White people, even though the two groups have roughly equal rates of drug use [30]. Their simulation showed that this initial bias would be amplified by a feedback loop, with policing increasingly concentrated on targeted areas. This is despite the fact that the PredPol algorithm does not explicitly take demographics into account.</p>
+</blockquote>
+</section>
+
+<section id="interpretability-1" class="title-slide slide level1 center">
+<h1>Interpretability</h1>
+<p>Decisions based on immutable characteristics can be cause for concern because they threaten people’s agency.</p>
+<ul>
+<li>By definition, there is nothing anyone can do to change immutable characteristics (such as one’s country of birth).</li>
+<li>By extension, there is nothing anyone can do to change decisions made on the basis of immutable characteristics.</li>
+</ul>
+<p>Recourse is a related idea about the degree to which people have the capacity to change results in different decisions [93].</p>
+<ul>
+<li>Immutable characteristics cannot be changed, but people can change the mutable ones can [94, 95].</li>
+<li>Some may need significantly more resources to achieve their desired outcomes.</li>
+<li>In some cases, insufficient resources make success unattainable, repeating the earlier situation.</li>
+</ul>
+<blockquote>
+<p>One applicant for credit might be well positioned to move to a new neighborhood so as to make herself a more attractive candidate for a new loan, assuming that the decision-making scheme uses location as an important criterion. But another applicant might not be able to do so, for financial, cultural, or many other reasons.</p>
+</blockquote>
+<p>We might view certain decision-making schemes as unfair if they hold people accountable for characteristics outside their control (people should be judged only on the basis of factors for which they are morally culpable).</p>
+<blockquote>
+<p>Laws in many US states limit the degree to which car insurance providers can take into account “extraordinary life circumstances” when making underwriting or pricing decisions. These laws forbid insurers from considering a range of factors over which people cannot exercise any control—like a death in the family—but which may nevertheless contribute to someone experiencing financial hardship and thus to increasing the likelihood of making a claim against their car insurance policy in the event of even a minor accident.</p>
+</blockquote>
+</section>
+
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-waters2015weber" class="csl-entry" role="listitem">
+Waters, Tony, Dagmar Waters, Dagmar Waters, and Dagmar Waters. 2015. <em>Weber’s Rationalism and Modern Society: New Translations on Politics, Bureaucracy, and Social Stratification</em>. Springer.
+</div>
+</div>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Matteo Francia - Machine Learning and Data Mining (Module 2) - A.Y. 2025/26</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="07-fairness_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="07-fairness_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="07-fairness_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="07-fairness_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="07-fairness_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="07-fairness_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="07-fairness_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="07-fairness_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="07-fairness_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="07-fairness_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
