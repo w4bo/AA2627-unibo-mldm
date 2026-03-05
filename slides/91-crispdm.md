@@ -2,10 +2,6 @@
 subtitle: Data Mining, Machine Learning, and CRISP-DM
 ---
 
-{{< include _00-ml.md >}}
-
-#
-
 ![Here to Help](https://imgs.xkcd.com/comics/here_to_help.png)
 
 # CRISP-DM
