@@ -152,7 +152,7 @@ However, **keeping up the pace with machine learning and data mining is hard**
 - Books are easily outdated with respect to cutting-edge services and technologies
 - Research papers (often) describe solutions that are not commercial yet
 - (IRL) You will need to deal with a lot of (bad) documentation, online articles, etc.
- 
+
 Rule of thumb
 
 - Understand the general concepts and fundamentals
@@ -206,3 +206,36 @@ If you need help with coding and labs, *you can ask me and the designated tutor*
 
 ![Overview](img/context.svg)
 
+# Tentative outline
+
+:::: {.columns}
+::: {.column width="60%"}
+
+Theory (slides are very dynamic)
+
+1. [Business Understanding](https://w4bo.github.io/AA2627-unibo-mldm/02-businessunderstanding)
+1. [Data Understanding](https://w4bo.github.io/AA2627-unibo-mldm/03-dataunderstanding)
+1. [Data Preparation](https://w4bo.github.io/AA2627-unibo-mldm/04-datapreparation)
+1. [Neural Networks](https://w4bo.github.io/AA2627-unibo-mldm/05-neuralnetworks)
+1. [Modeling](https://w4bo.github.io/AA2627-unibo-mldm/06-modeling)
+
+
+
+Laboratories
+
+1. (Lab) Introduction to Google Colab
+1. (Lab) Data Understanding
+1. (Lab) Housing (understanding)
+1. (Lab) Data Preparation
+1. (Lab) Housing (preparation)
+1. (Lab) Housing (modeling)
+1. (Lab) Titanic
+1. (Lab) Breast cancer
+
+:::
+::: {.column width="40%"}
+
+![CRISP-DM](./img/crispdm.png)
+
+:::
+::::
