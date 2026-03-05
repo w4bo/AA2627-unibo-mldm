@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.1...1.0.2) (2026-03-05)
+
+### Bug Fixes
+
+* working on the introduction ([efd16d8](https://github.com/w4bo/AA2627-unibo-mldm/commit/efd16d8df10ca9908086d89ae803f5320c98fc36))
+* working on the introduction ([d420c6f](https://github.com/w4bo/AA2627-unibo-mldm/commit/d420c6ff27ef8a3777b464d8150087a7705f3965))
+
 ## [1.0.1](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.0...1.0.1) (2025-12-15)
 
 ### Bug Fixes
