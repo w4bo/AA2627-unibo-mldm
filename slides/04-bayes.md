@@ -84,13 +84,13 @@ Calculating $P(C|A)$ for every possible value of $C$ and $\boldsymbol{A}$ requir
 
 - Bayes' theorem is useful here because it allows the a posteriori probability $P(C|\boldsymbol{A})$ to be expressed in terms of $P(\boldsymbol{A}|C)$, $P(C)$, and $P(\boldsymbol{A})$
 
-$P(C|A_1A_2...A_n)=\frac{P(A_1A_2...A_n|C)\cdot P(C)}{P(A_1A_2...A_n)}$
+$P(C|A_1, A_2, ..., A_n)=\frac{P(A_1, A_2, ..., A_n|C)\cdot P(C)}{P(A_1, A_2, ..., A_n)}$
 
 - Since $P(\boldsymbol{A})$ is constant in this formula, the problem of maximizing the a posteriori probability is equivalent to choosing the value of $C$ that maximizes
 
-$P(A_1A_2...A_n|C)\cdot P(C)$
+$P(A_1, A_2, ..., A_n|C)\cdot P(C)$
 
-How to estimate $P(A_1A_2...A_n|C) \rightarrow$ __Naïve Bayes__
+How to estimate $P(A_1, A_2, ..., A_n|C) \rightarrow$ __Naïve Bayes__
 
 # Naïve Bayes
 
@@ -210,6 +210,7 @@ Compute the conditional probabilities
 | _10_ | 1 | 1 | 1 | + |
 
 :::
+::::
 
 # Exercise (cont.)
 
