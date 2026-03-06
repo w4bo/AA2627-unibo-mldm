@@ -365,22 +365,22 @@ flowchart TD
 | result = **PostPrune**(*TreeGrowth*(E, F));
 |
 | *TreeGrowth*(E, F)
-|     if **StoppingCond**(E, F) = TRUE then
+|     `if` **StoppingCond**(E, F) = TRUE `then`
 |         leaf = CreateNode();
 |         leaf.label = **Classify**(E);
-|         return leaf;
-|     else
+|         `return` leaf;
+|     `else`
 |         root = CreateNode();
-|         root.test_cond  = **FindBestSplit**(E, F);
-|         let V = {v | v is a possible outcome of root.test_cond}
-|         for each v $\in$ V do
+|         root.test_cond = **FindBestSplit**(E, F);
+|         `let` V = {v | v is a possible outcome of root.test_cond}
+|         `for each` v $\in$ V `do`
 |             Ev = {e | root.test_cond (e) = v and e $\in$ E}
-|             child = TreeGrowth(Ev,F);
+|             child = *TreeGrowth*(Ev, F);
 |             add child as descendants of root and label edge (root $\rightarrow$ child) as v
-|         end for
-|     end if
-|     return root;
-| end;
+|         `end for`
+|     `end if`
+|     `return` root;
+| `end`;
 
 # Further Remarks...
 
