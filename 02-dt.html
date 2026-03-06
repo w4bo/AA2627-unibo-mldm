@@ -998,22 +998,22 @@ Predicted class
 result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <br>
 <em>TreeGrowth</em>(E, F)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if <strong>StoppingCond</strong>(E, F) = TRUE then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code>if</code> <strong>StoppingCond</strong>(E, F) = TRUE <code>then</code><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leaf = CreateNode();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leaf.label = <strong>Classify</strong>(E);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return leaf;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>return</code> leaf;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code>else</code><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root = CreateNode();<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root.test_cond = <strong>FindBestSplit</strong>(E, F);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let V = {v | v is a possible outcome of root.test_cond}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for each v <span class="math inline">\(\in\)</span> V do<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>let</code> V = {v | v is a possible outcome of root.test_cond}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>for each</code> v <span class="math inline">\(\in\)</span> V <code>do</code><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ev = {e | root.test_cond (e) = v and e <span class="math inline">\(\in\)</span> E}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child = TreeGrowth(Ev,F);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child = <em>TreeGrowth</em>(Ev, F);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add child as descendants of root and label edge (root <span class="math inline">\(\rightarrow\)</span> child) as v<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end for<br>
-&nbsp;&nbsp;&nbsp;&nbsp;end if<br>
-&nbsp;&nbsp;&nbsp;&nbsp;return root;<br>
-end;</div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>end for</code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code>end if</code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code>return</code> root;<br>
+<code>end</code>;</div>
 </section>
 
 <section id="further-remarks" class="title-slide slide level1 center">
