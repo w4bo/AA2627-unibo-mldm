@@ -127,8 +127,6 @@ flowchart TD
 :::
 ::::
 
-For each dataset, several decision trees could be defined.
-
 # Decision Tree: an example
 
 ```{mermaid}
@@ -173,7 +171,15 @@ Predicted class
 
 # Applying the model
 
-Test Data
+What is the predicted class for the following test data?
+
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
+| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| 1                 | 2                   | 2               | basic     | no       | ?   |
+
+# Applying the model
+
+What is the predicted class for the following test data?
 
 | `months_subscribed` | **`monthly_watch_hours`** | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
@@ -202,7 +208,7 @@ flowchart TD
 
 # Applying the model
 
-Test Data
+What is the predicted class for the following test data?
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | **`auto_pay`** | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
@@ -220,6 +226,8 @@ flowchart TD
     E -->|>= 2| F((yes))
     E -->|< 2| G((no))
 
+    style A stroke:#ff0000,stroke-width:3px
+    linkStyle 0 stroke:#ff0000,stroke-width:3px
     style B stroke:#ff0000,stroke-width:3px
     linkStyle 2 stroke:#ff0000,stroke-width:3px
 
@@ -231,7 +239,7 @@ flowchart TD
 
 # Applying the model
 
-Test Data
+What is the predicted class for the following test data?
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
@@ -248,6 +256,11 @@ flowchart TD
 
     E -->|>= 2| F((yes))
     E -->|< 2| G((no))
+
+    style A stroke:#ff0000,stroke-width:3px
+    linkStyle 0 stroke:#ff0000,stroke-width:3px
+    style B stroke:#ff0000,stroke-width:3px
+    linkStyle 2 stroke:#ff0000,stroke-width:3px
 
     style D stroke:#ff0000,stroke-width:3px
     style C fill:#a3f7a3,stroke:#000
@@ -299,52 +312,77 @@ Different issues have to be addressed.
 # The Hunt's Algorithm
 
 ::::{.columns}
-:::{.column width=20%}
-![Training Data](./img/dt/image1.png)
-
-![$D_t$](./img/dt/image11.png)
-:::
-:::{.column width=80%}
-
+:::{.column width=85%}
 Recursive approach that progressively subdivides a set of $D_t$ records into pure record sets
 
 - Let $D_t$ be the set of records of the training set corresponding to $node_t$ and $y_t = \{y_1, ..., y_k\}$ the possible class labels
+- If $D_t$
+    - Contains records of the $y_j$ class only, then $node_t$ is a leaf with label $y_j$
+    - Is an empty set, then $node_t$ is a leaf node to which a parent node class is assigned
+    - Contains records of several classes, we need an _attribute_ and a _split policy_ to partition them
+- Apply the current procedure for each subset recursively
+:::
+:::{.column width=15%}
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["Parent"]-->B
+    B["D_t"]
 
-Overall procedure, if $D_t$
+    style B stroke:#ff0000,stroke-width:3px
+```
+:::
+::::
 
-- contains records belonging to the $y_j$ class only, then $node_t$ is a leaf with label $y_j$
-- is an empty set, then $node_t$ is a leaf node to which a parent node class is assigned
-- contains records belonging to several classes, we need an _attribute_ and a _split policy_ to partition the records into multiple subsets.
-
-Apply the current procedure for each subset recursively
+::::{.columns}
+:::{.column width=50%}
+:::{.fragment}
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["Parent"]-->B
+    B(("node_t"))
+```
+:::
+:::
+:::{.column width=50%}
+:::{.fragment}
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["Parent"]-->B
+    B["node_t"]-->C
+    B-->D
+    B-->E
+```
+:::
 :::
 ::::
 
 # Pseudocode
 
-```
-// Let E be the training set and F the attributes
-result=PostPrune(TreeGrowth(E,F));
-TreeGrowth(E,F)
-    if StoppingCond(E,F)= TRUE then
-        leaf=CreateNode();
-        leaf.label=Classify(E);
-        return leaf;
-    else
-        root = CreateNode();
-        root.test_cond  = FindBestSplit(E,F);
-        let V = {v | v is a possible outcome of root.test_cond}
-        for each v $\in$ V do
-            Ev = {e | root.test_cond (e)=v and e  E}
-            child = TreeGrowth(Ev,F);
-            add child as descendants of root and label edge (rootchild) as v
-        end for
-    end if
-    return root;
-end;
-```
+| // Let E be the training set and F the attributes
+| result = **PostPrune**(*TreeGrowth*(E, F));
+|
+| *TreeGrowth*(E, F)
+|     if **StoppingCond**(E, F) = TRUE then
+|         leaf = CreateNode();
+|         leaf.label = **Classify**(E);
+|         return leaf;
+|     else
+|         root = CreateNode();
+|         root.test_cond  = **FindBestSplit**(E, F);
+|         let V = {v | v is a possible outcome of root.test_cond}
+|         for each v $\in$ V do
+|             Ev = {e | root.test_cond (e) = v and e $\in$ E}
+|             child = TreeGrowth(Ev,F);
+|             add child as descendants of root and label edge (root $\rightarrow$ child) as v
+|         end for
+|     end if
+|     return root;
+| end;
 
-# Further Remarks…
+# Further Remarks...
 
 Finding an optimal decision tree is an NP-Complete problem, but many heuristic algorithms are available and very efficient.
 
@@ -359,23 +397,17 @@ Decision trees are robust enough to handle strongly correlated attributes.
 - One of the two attributes will not be considered
 - It is also possible to try to discard one of the preprocessing attributes through appropriate feature selection techniques
 
-# Further Remarks…
+# Further Remarks...
 
 Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.
 
-- Decision boundary parallel to the axes
+![Decision boundary parallel to the axes](img/dt/image12.png)
 
-![Decision boundaries](img/dt/image12.png)
+# Further Remarks...
 
-# Further Remarks…
-
-Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.
-
-- This split is not feasible with traditional decision trees
+This split is not feasible with traditional decision trees
 
 ![$X-Y = 1$](img/dt/3-Decision Tree_19.png)
-
-This split is not feasible with traditional decision trees.
 
 # Characteristic features {background-color="#121011"}
 
@@ -399,33 +431,90 @@ Depends on the number of splits applicable to attribute values
 - Binary splits
 - $N$-ary splits
 
-# Splitting Nominal Attributes
+# Splitting *Nominal* Attributes
 
 ::::{.columns}
 :::{.column width=50%}
 *N-ary split*: creates as many partitions as there are attribute values
 
-![N-ary split](./img/dt/image14.png)
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["CarType"]-->|Family| B[" "]
+    A-->|Sport| C[" "]
+    A-->|Luxury| D[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+    style D stroke:#fff,stroke-width:0px,fill:#fff
+```
+
 :::
 :::{.column width=50%}
 *Binary split*: creates two partitions only. The attribute value that optimally splits the dataset must be found.
 
-![Binary split](./img/dt/image13.png)
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["CarType"]-->|"{Family}"| B[" "]
+    A-->|"{Sport, Luxury}"| C[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+```
+
+```{mermaid}
+%%| echo: false
+flowchart TD
+    X["CarType"]-->|"{Sport}"| Y[" "]
+    X-->|"{Family, Luxury}"| Z[" "]
+
+    style Y stroke:#fff,stroke-width:0px,fill:#fff
+    style Z stroke:#fff,stroke-width:0px,fill:#fff
+```
 :::
 ::::
 
-# Splitting Ordinal Attributes
+# Splitting *Ordinal* Attributes
 
 ::::{.columns}
 :::{.column width=50%}
 *N-ary split*: creates as many partitions as there are attribute values
 
-![N-ary split](./img/dt/image15.png)
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["Size"]-->|Small| B[" "]
+    A-->|Medium| C[" "]
+    A-->|Large| D[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+    style D stroke:#fff,stroke-width:0px,fill:#fff
+```
 :::
 :::{.column width=50%}
 *Binary split*: creates two partitions only. The attribute value that optimally splits the dataset must be found.
 
-![Binary split](./img/dt/image16.png)
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["Size"]-->|"{Small, Medium}"| B[" "]
+    A-->|"{Large}"| C[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+```
+
+```{mermaid}
+%%| echo: false
+flowchart TD
+    X["Size"]-->|"{Small}"| Y[" "]
+    X-->|"{Medium, Large}"| Z[" "]
+
+    style Y stroke:#fff,stroke-width:0px,fill:#fff
+    style Z stroke:#fff,stroke-width:0px,fill:#fff
+```
 :::
 ::::
 
@@ -435,16 +524,34 @@ Depends on the number of splits applicable to attribute values
 :::{.column width=50%}
 *N-ary split*: The split condition can be expressed as a Boolean test that results in multiple ranges of values. The algorithm must consider the entire possible range of values as possible split points
 
-![N-ary split](./img/dt/image17.png)
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["Taxable income"]-->|< 10K| B[" "]
+    A-->|"[10K, 25K)]"| C[" "]
+    A-->|> 25K| D[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+    style D stroke:#fff,stroke-width:0px,fill:#fff
+```
 :::
 :::{.column width=50%}
 *Binary split*: The split condition can be expressed as a binary comparison test. The algorithm must consider all values as possible split points
 
-![Binary split](./img/dt/image18.png)
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["Taxable income"]-->|"<= 20K"| B[" "]
+    A-->|"> 20K"| C[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+```
 :::
 ::::
 
-# Splitting Continuous Attributes
+# Splitting *Continuous* Attributes
 
 A discretization technique can be used to manage the complexity of the search for optimal split points.
 
@@ -499,7 +606,7 @@ The total impurity of the split is given by the following formula, where meas ()
 
 ![Impurity measures behavior for a two-class problem](img/dt/3-Decision Tree_48.png)
 
-# Computing Gini for Binary Attributes
+# Computing Gini for *Binary* Attributes
 
 ![](./img/dt/image21.png)
 
@@ -507,56 +614,54 @@ The total impurity of the split is given by the following formula, where meas ()
 - $Gini(N4) = 1 - (\frac{1}{5})^2 - (\frac{4}{5})^2 = 0.320$
 - $Impurity= \frac{7}{12} \cdot 0.408 + \frac{5}{12} \cdot 0.320= 0.371$
 
-# Computing Gini for Categorical Attributes
+# Computing Gini for *Categorical* Attributes
 
 It is usually more efficient to create a "count matrix" for each distinct value of the classification
 attribute and then perform calculations using that matrix
 
+::::{.columns}
+:::{.column width=33%}
 | | CarType | |
 | :-: | :-: | :-: |
 | | __{Sports, Luxury}__ | __{Family}__ |
 | __C1__ | 3 | 1 |
 | __C2__ | 2 | 4 |
 | Gini | __0.400__ | |
-
+:::
+:::{.column width=33%}
 | | CarType | |
 | :-: | :-: | :-: |
 | | __{Sports}__ | __{Family, Luxury}__ |
 | __C1__ | 2 | 2 |
 | __C2__ | 1 | 5 |
 | Gini | __0.419__ | |
-
+:::
+:::{.column width=33%}
 | | CarType | | |
 | :-: | :-: | :-: | :-: |
 | | __Family__ | __Sports__ | __Luxury__ |
 | __C1__ | 1 | 2 | 1 |
 | __C2__ | 4 | 1 | 1 |
 | Gini | __0.393__ | | |
-
-# Computing Gini for Continuous Attributes
-
-::::{.columns}
-:::{.column width=20%}
-![Training Data](./img/dt/image1.png)
-
-![Binary split](./img/dt/image18.png)
 :::
-:::{.column width=80%}
+::::
 
-It requires defining the split point using a binary condition. The number of possible conditions is equal to the number of distinct values of the attribute.
+# Computing Gini for *Continuous* Attributes
 
-You can calculate a matrix count for each split value. The array will count the elements of each class for attribute values greater than or less than the split value.
+It requires defining the split point using a binary condition.
+
+- The number of possible conditions is equal to the number of distinct values of the attribute.
+- Can calculate a matrix count for each split value.
+    - The matrix will count the elements of each class for attribute values greater than or less than the split value.
 
 A naive approach:
 
 - For each split $v$ value, read the DB (with $N$ records) to build the count matrix and calculate the Gini index
 - Computationally inefficient $O(N^2)$:
     - Scan DB: $O(N)$
-    - Repeat for each value of $v$: $v \cdot O(N)$
-:::
-::::
+    - Repeat for each value of $v$ (i.e., $v \cdot O(N)$)
 
-# Computing Gini for Continuous Attributes
+# Computing Gini for *Continuous* Attributes
 
 A more efficient solution is to:
 
@@ -564,7 +669,7 @@ A more efficient solution is to:
 - Read the values sorted and update the count matrix, then calculate the Gini index
 - Choose as the split point the value that minimizes the index
 
-![](./img/dt/image22.png)
+![Optimizing the split](./img/dt/image22.png)
 
 Further optimizations?
 
@@ -606,23 +711,6 @@ To avoid the problem of spraying classes, it is preferable to maximize the Gain 
 - $m_i = \frac{m}{n}$
 
 ![Split info](./img/dt/image23.png)
-
-# Exercise
-
-Compute the Gini index and information gain for the following binary problem and comment on the results.
-
-| A | B | Clas | |
-:-: | :-: | :-: | :-: | :-: |
-| T | F | + | |
-| T | T | + | |
-| T | T | + | |
-| T | F | - | |
-| T | T | + | |
-| F | F | - | |
-| F | F | - | |
-| F | F | - | |
-| T | T | - | |
-| T | F | - | |
 
 # Characteristic features {background-color="#121011"}
 
@@ -875,7 +963,7 @@ ROC stands for _Receiver Operator Characteristic_. The term has its roots in Wor
 
 ![Radar Operators were human classifiers!](img/dt/3-Decision Tree_75.jpg)
 
-# Classification Errors
+# Classification Errors {background-color="#121011"}
 
 - __Training error:__ are mistakes that are made on the training set
 - __Generalization error:__ errors are made on the test set (i.e., records that have not been trained on the system).
@@ -1113,26 +1201,3 @@ __The tree construction stops when:__
 - The node contains records belonging to a single class
 - No attribute allows for determining a positive GainRatio
 - Node does not contain records.
-
-# Exercise
-
-Using the classification error as a measure, identify which attribute should be chosen first, and which one per second.
-
-- Compute contingency matrices
-- Compute the information gain
-
-How do the results change if you use the worst attribute as the split attribute?
-
-Comment on the result.
-
-| A | B | C | \# instances | |
-| :-: | :-: | :-: | :-: | :-: |
-| | | | + | - |
-| T | T | T | 5 | 0 |
-| F | T | T | 0 | 20 |
-| T | F | T | 20 | 0 |
-| F | F | T | 0 | 5 |
-| T | T | F | 0 | 0 |
-| F | T | F | 25 | 0 |
-| T | F | F | 0 | 0 |
-| F | F | F | 0 | 25 |
