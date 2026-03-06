@@ -28,7 +28,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="02-dt_files/libs/revealjs/dist/theme/quarto-b3aa9dda08c8fde6dffd4aadb76df7d0.css">
+  <link rel="stylesheet" href="02-dt_files/libs/revealjs/dist/theme/quarto-872a8a23ddcbbde76b8aafaa8fe61ee1.css">
   <link href="02-dt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02-dt_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02-dt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -141,8 +141,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section id="dataset" class="title-slide slide level1 center">
-<h1>Dataset</h1>
+<section id="learn-by-doing" class="title-slide slide level1 center">
+<h1>Learn by doing!</h1>
+<p><strong>Customer churn</strong> is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.</p>
+<ul>
+<li>Let us assume that this is our dataset to train a decision tree for predicting customer churn</li>
+<li>This is a <em>supervised learning</em> task since the dataset contains a <em>label</em> (or <em>class</em>) to predict (<strong><code>churn</code></strong>)</li>
+<li>… as a function of <em>other</em> customer suscriptions’ attributes (<code>months_subscribed</code>, …, <code>auto_pay</code>)</li>
+<li>Each <em>row</em> (or <em>data item/record</em>) is customer subscription, each <em>column</em> is an <em>attribute</em> (or <em>feature</em>)</li>
+</ul>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -169,7 +176,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>2</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="even">
 <td>4</td>
@@ -177,7 +184,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>1</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="odd">
 <td>6</td>
@@ -185,7 +192,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>standard</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="even">
 <td>12</td>
@@ -193,7 +200,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>premium</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="odd">
 <td>3</td>
@@ -201,7 +208,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>3</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="even">
 <td>8</td>
@@ -209,7 +216,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>standard</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="odd">
 <td>5</td>
@@ -217,7 +224,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>1</td>
 <td>basic</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="even">
 <td>1</td>
@@ -225,7 +232,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>2</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="odd">
 <td>10</td>
@@ -233,7 +240,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>premium</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="even">
 <td>7</td>
@@ -241,7 +248,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>1</td>
 <td>standard</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="odd">
 <td>2</td>
@@ -249,7 +256,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>2</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="even">
 <td>9</td>
@@ -257,7 +264,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>premium</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 </tbody>
 </table>
@@ -265,7 +272,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="training-and-test-sets" class="title-slide slide level1 center">
 <h1>Training and test sets</h1>
-<p>Training test</p>
+<p>First we need to split the dataset</p>
+<p><em>Training test</em>: used for training the model</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -292,7 +300,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>2</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="even">
 <td>4</td>
@@ -300,7 +308,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>1</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="odd">
 <td>6</td>
@@ -308,7 +316,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>standard</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="even">
 <td>12</td>
@@ -316,7 +324,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>premium</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="odd">
 <td>3</td>
@@ -324,7 +332,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>3</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="even">
 <td>8</td>
@@ -332,7 +340,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>standard</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="odd">
 <td>5</td>
@@ -340,7 +348,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>1</td>
 <td>basic</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="even">
 <td>1</td>
@@ -348,7 +356,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>2</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="odd">
 <td>10</td>
@@ -356,11 +364,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>premium</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 </tbody>
 </table>
-<p>Test test</p>
+<p><em>Test test</em>: used for testing the generalization capability of the model</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -387,7 +395,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>1</td>
 <td>standard</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 <tr class="even">
 <td>2</td>
@@ -395,7 +403,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>2</td>
 <td>basic</td>
 <td>no</td>
-<td>yes</td>
+<td><em>yes</em></td>
 </tr>
 <tr class="odd">
 <td>9</td>
@@ -403,7 +411,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>0</td>
 <td>premium</td>
 <td>yes</td>
-<td>no</td>
+<td><em>no</em></td>
 </tr>
 </tbody>
 </table>
@@ -458,7 +466,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="decision-tree-an-example" class="title-slide slide level1 center">
 <h1>Decision Tree: an Example</h1>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:70%;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -553,7 +561,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:30%;">
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -579,11 +587,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div></div>
-<p>For each dataset, several decision trees could be defined.</p>
 </section>
 
 <section id="decision-tree-an-example-1" class="title-slide slide level1 center">
-<h1>Decision Tree: an Example</h1>
+<h1>Decision Tree: an example</h1>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -620,9 +627,9 @@ Predicted class
 | no    |
 &lt;/pre&gt;")]
     A --&gt;|Induction| B[Learn Model]
-    C[DT Algorithm] --&gt; B
+    C(DT Algorithm) --&gt; B
     B --&gt; D[Model Tree]
-    D --&gt; E[Apply model]
+    D --&gt; E(Apply model)
     E --&gt;|Deduction| F
     G --&gt; E[("Apply Model")]
 </pre>
@@ -635,206 +642,260 @@ Predicted class
 
 <section id="applying-the-model" class="title-slide slide level1 center">
 <h1>Applying the model</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Test Data</p>
+<p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 6%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Refund</th>
-<th style="text-align: center;">Marital Status</th>
-<th style="text-align: center;">Taxable Income</th>
-<th style="text-align: center;">Cheat</th>
+<th><code>months_subscribed</code></th>
+<th><code>monthly_watch_hours</code></th>
+<th><code>tickets</code></th>
+<th><code>type</code></th>
+<th><code>auto_pay</code></th>
+<th><code>churn</code></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">No</td>
-<td style="text-align: center;">Married</td>
-<td style="text-align: center;">80K</td>
-<td style="text-align: center;"><strong>?</strong></td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>basic</td>
+<td>no</td>
+<td>?</td>
 </tr>
 </tbody>
 </table>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image4.png"></p>
-<figcaption>Model: Decision Tree</figcaption>
-</figure>
-</div>
-</div></div>
 </section>
 
 <section id="applying-the-model-1" class="title-slide slide level1 center">
 <h1>Applying the model</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Test Data</p>
+<p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 6%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;"><em>Refund</em></th>
-<th style="text-align: center;">Marital Status</th>
-<th style="text-align: center;">Taxable Income</th>
-<th style="text-align: center;">Cheat</th>
+<th><code>months_subscribed</code></th>
+<th><strong><code>monthly_watch_hours</code></strong></th>
+<th><code>tickets</code></th>
+<th><code>type</code></th>
+<th><code>auto_pay</code></th>
+<th><strong><code>churn</code></strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">No</td>
-<td style="text-align: center;">Married</td>
-<td style="text-align: center;">80K</td>
-<td style="text-align: center;"><strong>?</strong></td>
+<td>1</td>
+<td><strong>2</strong></td>
+<td>2</td>
+<td>basic</td>
+<td>no</td>
+<td>?</td>
 </tr>
 </tbody>
 </table>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image5.png"></p>
-<figcaption>Model: Decision Tree</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[monthly_watch_hours] --&gt;|&lt;= 8| B[auto_pay]
+    A --&gt;|&gt;8| C((no))
+
+    B --&gt;|no| D((yes))
+    B --&gt;|yes| E[tickets]
+
+    E --&gt;|&gt;= 2| F((yes))
+    E --&gt;|&lt; 2| G((no))
+
+    style A stroke:#ff0000,stroke-width:3px
+    linkStyle 0 stroke:#ff0000,stroke-width:3px
+
+    style C fill:#a3f7a3,stroke:#000
+    style D fill:#f78c8c,stroke:#000
+    style F fill:#f78c8c,stroke:#000
+    style G fill:#a3f7a3,stroke:#000
+</pre>
 </div>
-</div></div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 
 <section id="applying-the-model-2" class="title-slide slide level1 center">
 <h1>Applying the model</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Test Data</p>
+<p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 6%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;"><em>Refund</em></th>
-<th style="text-align: center;">Marital Status</th>
-<th style="text-align: center;">Taxable Income</th>
-<th style="text-align: center;">Cheat</th>
+<th><code>months_subscribed</code></th>
+<th><code>monthly_watch_hours</code></th>
+<th><code>tickets</code></th>
+<th><code>type</code></th>
+<th><strong><code>auto_pay</code></strong></th>
+<th><strong><code>churn</code></strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><em>No</em></td>
-<td style="text-align: center;">Married</td>
-<td style="text-align: center;">80K</td>
-<td style="text-align: center;"><strong>?</strong></td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>basic</td>
+<td><strong>no</strong></td>
+<td>?</td>
 </tr>
 </tbody>
 </table>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image6.png"></p>
-<figcaption>Model: Decision Tree</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[monthly_watch_hours] --&gt;|&lt;= 8| B[auto_pay]
+    A --&gt;|&gt;8| C((no))
+
+    B --&gt;|no| D((yes))
+    B --&gt;|yes| E[tickets]
+
+    E --&gt;|&gt;= 2| F((yes))
+    E --&gt;|&lt; 2| G((no))
+
+    style A stroke:#ff0000,stroke-width:3px
+    linkStyle 0 stroke:#ff0000,stroke-width:3px
+    style B stroke:#ff0000,stroke-width:3px
+    linkStyle 2 stroke:#ff0000,stroke-width:3px
+
+    style C fill:#a3f7a3,stroke:#000
+    style D fill:#f78c8c,stroke:#000
+    style F fill:#f78c8c,stroke:#000
+    style G fill:#a3f7a3,stroke:#000
+</pre>
 </div>
-</div></div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 
 <section id="applying-the-model-3" class="title-slide slide level1 center">
 <h1>Applying the model</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Test Data</p>
+<p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 6%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;"><em>Refund</em></th>
-<th style="text-align: center;"><em>Marital Status</em></th>
-<th style="text-align: center;">Taxable Income</th>
-<th style="text-align: center;">Cheat</th>
+<th><code>months_subscribed</code></th>
+<th><code>monthly_watch_hours</code></th>
+<th><code>tickets</code></th>
+<th><code>type</code></th>
+<th><code>auto_pay</code></th>
+<th><strong><code>churn</code></strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><em>No</em></td>
-<td style="text-align: center;">Married</td>
-<td style="text-align: center;">80K</td>
-<td style="text-align: center;"><strong>?</strong></td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>basic</td>
+<td>no</td>
+<td><strong>yes</strong></td>
 </tr>
 </tbody>
 </table>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image7.png"></p>
-<figcaption>Model: Decision Tree</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[monthly_watch_hours] --&gt;|&lt;= 8| B[auto_pay]
+    A --&gt;|&gt;8| C((no))
+
+    B --&gt;|no| D((yes))
+    B --&gt;|yes| E[tickets]
+
+    E --&gt;|&gt;= 2| F((yes))
+    E --&gt;|&lt; 2| G((no))
+
+    style A stroke:#ff0000,stroke-width:3px
+    linkStyle 0 stroke:#ff0000,stroke-width:3px
+    style B stroke:#ff0000,stroke-width:3px
+    linkStyle 2 stroke:#ff0000,stroke-width:3px
+
+    style D stroke:#ff0000,stroke-width:3px
+    style C fill:#a3f7a3,stroke:#000
+    style D fill:#f78c8c,stroke:#000
+    style F fill:#f78c8c,stroke:#000
+    style G fill:#a3f7a3,stroke:#000
+</pre>
 </div>
-</div></div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 
-<section id="applying-the-model-4" class="title-slide slide level1 center">
-<h1>Applying the model</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Test Data</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><em>Refund</em></th>
-<th style="text-align: center;"><em>Marital Status</em></th>
-<th style="text-align: center;">Taxable Income</th>
-<th style="text-align: center;">Cheat</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><em>No</em></td>
-<td style="text-align: center;"><em>Married</em></td>
-<td style="text-align: center;">80K</td>
-<td style="text-align: center;"><strong>?</strong></td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image8.png"></p>
-<figcaption>Model: Decision Tree</figcaption>
-</figure>
-</div>
-</div></div>
-</section>
-
-<section id="applying-the-model-5" class="title-slide slide level1 center">
-<h1>Applying the model</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Test Data</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><em>Refund</em></th>
-<th style="text-align: center;"><em>Marital Status</em></th>
-<th style="text-align: center;">Taxable Income</th>
-<th style="text-align: center;">Cheat</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><em>No</em></td>
-<td style="text-align: center;"><em>Married</em></td>
-<td style="text-align: center;">80K</td>
-<td style="text-align: center;"><strong>No</strong></td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image8.png"></p>
-<figcaption>Model: Decision Tree</figcaption>
-</figure>
-</div>
-</div></div>
-</section>
-
-<section id="learning-the-model" class="title-slide slide level1 center">
+<section id="learning-the-model" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Learning the model</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[("Training set")]
+    G[("Test set")]
+    F[("Predicted class")]
+    A --&gt;|Induction| B[Learn Model]
+    C(DT Algorithm) --&gt; B
+    B --&gt; D[Model Tree]
+    D --&gt; E(Apply model)
+    E --&gt;|Deduction| F
+    G --&gt; E[("Apply Model")]
 
-<img data-src="img/dt/image10.png" class="r-stretch quarto-figure-center"><p class="caption">Learning the model</p></section>
+    style B fill:#f78c8c,stroke:#000
+    style C fill:#f78c8c,stroke:#000
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
 
 <section id="learning-the-model-1" class="title-slide slide level1 center">
 <h1>Learning the model</h1>
@@ -861,55 +922,98 @@ Predicted class
 <section id="the-hunts-algorithm" class="title-slide slide level1 center">
 <h1>The Hunt’s Algorithm</h1>
 <div class="columns">
-<div class="column" style="width:20%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image1.png"></p>
-<figcaption>Training Data</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image11.png"></p>
-<figcaption><span class="math inline">\(D_t\)</span></figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:80%;">
+<div class="column" style="width:85%;">
 <p>Recursive approach that progressively subdivides a set of <span class="math inline">\(D_t\)</span> records into pure record sets</p>
 <ul>
 <li>Let <span class="math inline">\(D_t\)</span> be the set of records of the training set corresponding to <span class="math inline">\(node_t\)</span> and <span class="math inline">\(y_t = \{y_1, ..., y_k\}\)</span> the possible class labels</li>
-</ul>
-<p>Overall procedure, if <span class="math inline">\(D_t\)</span></p>
+<li>If <span class="math inline">\(D_t\)</span>
 <ul>
-<li>contains records belonging to the <span class="math inline">\(y_j\)</span> class only, then <span class="math inline">\(node_t\)</span> is a leaf with label <span class="math inline">\(y_j\)</span></li>
-<li>is an empty set, then <span class="math inline">\(node_t\)</span> is a leaf node to which a parent node class is assigned</li>
-<li>contains records belonging to several classes, we need an <em>attribute</em> and a <em>split policy</em> to partition the records into multiple subsets.</li>
+<li>Contains records of the <span class="math inline">\(y_j\)</span> class only, then <span class="math inline">\(node_t\)</span> is a leaf with label <span class="math inline">\(y_j\)</span></li>
+<li>Is an empty set, then <span class="math inline">\(node_t\)</span> is a leaf node to which a parent node class is assigned</li>
+<li>Contains records of several classes, we need an <em>attribute</em> and a <em>split policy</em> to partition them</li>
+</ul></li>
+<li>Apply the current procedure for each subset recursively</li>
 </ul>
-<p>Apply the current procedure for each subset recursively</p>
+</div><div class="column" style="width:15%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Parent"]--&gt;B
+    B["D_t"]
+
+    style B stroke:#ff0000,stroke-width:3px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Parent"]--&gt;B
+    B(("node_t"))
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Parent"]--&gt;B
+    B["node_t"]--&gt;C
+    B--&gt;D
+    B--&gt;E
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
 </div></div>
 </section>
 
 <section id="pseudocode" class="title-slide slide level1 center">
 <h1>Pseudocode</h1>
-<pre><code>// Let E be the training set and F the attributes
-result=PostPrune(TreeGrowth(E,F));
-TreeGrowth(E,F)
-    if StoppingCond(E,F)= TRUE then
-        leaf=CreateNode();
-        leaf.label=Classify(E);
-        return leaf;
-    else
-        root = CreateNode();
-        root.test_cond  = FindBestSplit(E,F);
-        let V = {v | v is a possible outcome of root.test_cond}
-        for each v $\in$ V do
-            Ev = {e | root.test_cond (e)=v and e  E}
-            child = TreeGrowth(Ev,F);
-            add child as descendants of root and label edge (rootchild) as v
-        end for
-    end if
-    return root;
-end;</code></pre>
+<div class="line-block">// Let E be the training set and F the attributes<br>
+result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
+<br>
+<em>TreeGrowth</em>(E, F)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if <strong>StoppingCond</strong>(E, F) = TRUE then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leaf = CreateNode();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leaf.label = <strong>Classify</strong>(E);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return leaf;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root = CreateNode();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root.test_cond = <strong>FindBestSplit</strong>(E, F);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let V = {v | v is a possible outcome of root.test_cond}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for each v <span class="math inline">\(\in\)</span> V do<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ev = {e | root.test_cond (e) = v and e <span class="math inline">\(\in\)</span> E}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child = TreeGrowth(Ev,F);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add child as descendants of root and label edge (root <span class="math inline">\(\rightarrow\)</span> child) as v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end if<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return root;<br>
+end;</div>
 </section>
 
 <section id="further-remarks" class="title-slide slide level1 center">
@@ -932,21 +1036,14 @@ end;</code></pre>
 <section id="further-remarks-1" class="title-slide slide level1 center">
 <h1>Further Remarks…</h1>
 <p>Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.</p>
-<ul>
-<li>Decision boundary parallel to the axes</li>
-</ul>
 
-<img data-src="img/dt/image12.png" class="r-stretch quarto-figure-center"><p class="caption">Decision boundaries</p></section>
+<img data-src="img/dt/image12.png" class="r-stretch quarto-figure-center"><p class="caption">Decision boundary parallel to the axes</p></section>
 
 <section id="further-remarks-2" class="title-slide slide level1 center">
 <h1>Further Remarks…</h1>
-<p>Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.</p>
-<ul>
-<li>This split is not feasible with traditional decision trees</li>
-</ul>
+<p>This split is not feasible with traditional decision trees</p>
 
-<img data-src="img/dt/3-Decision%20Tree_19.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(X-Y = 1\)</span></p><p>This split is not feasible with traditional decision trees.</p>
-</section>
+<img data-src="img/dt/3-Decision%20Tree_19.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(X-Y = 1\)</span></p></section>
 
 <section id="characteristic-features" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Characteristic features</h1>
@@ -975,45 +1072,127 @@ end;</code></pre>
 </section>
 
 <section id="splitting-nominal-attributes" class="title-slide slide level1 center">
-<h1>Splitting Nominal Attributes</h1>
+<h1>Splitting <em>Nominal</em> Attributes</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><em>N-ary split</em>: creates as many partitions as there are attribute values</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image14.png"></p>
-<figcaption>N-ary split</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["CarType"]--&gt;|Family| B[" "]
+    A--&gt;|Sport| C[" "]
+    A--&gt;|Luxury| D[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+    style D stroke:#fff,stroke-width:0px,fill:#fff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </div><div class="column" style="width:50%;">
 <p><em>Binary split</em>: creates two partitions only. The attribute value that optimally splits the dataset must be found.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image13.png"></p>
-<figcaption>Binary split</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["CarType"]--&gt;|"{Family}"| B[" "]
+    A--&gt;|"{Sport, Luxury}"| C[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    X["CarType"]--&gt;|"{Sport}"| Y[" "]
+    X--&gt;|"{Family, Luxury}"| Z[" "]
+
+    style Y stroke:#fff,stroke-width:0px,fill:#fff
+    style Z stroke:#fff,stroke-width:0px,fill:#fff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </div></div>
 </section>
 
 <section id="splitting-ordinal-attributes" class="title-slide slide level1 center">
-<h1>Splitting Ordinal Attributes</h1>
+<h1>Splitting <em>Ordinal</em> Attributes</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><em>N-ary split</em>: creates as many partitions as there are attribute values</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image15.png"></p>
-<figcaption>N-ary split</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Size"]--&gt;|Small| B[" "]
+    A--&gt;|Medium| C[" "]
+    A--&gt;|Large| D[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+    style D stroke:#fff,stroke-width:0px,fill:#fff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </div><div class="column" style="width:50%;">
 <p><em>Binary split</em>: creates two partitions only. The attribute value that optimally splits the dataset must be found.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image16.png"></p>
-<figcaption>Binary split</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Size"]--&gt;|"{Small, Medium}"| B[" "]
+    A--&gt;|"{Large}"| C[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    X["Size"]--&gt;|"{Small}"| Y[" "]
+    X--&gt;|"{Medium, Large}"| Z[" "]
+
+    style Y stroke:#fff,stroke-width:0px,fill:#fff
+    style Z stroke:#fff,stroke-width:0px,fill:#fff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </div></div>
 </section>
@@ -1023,25 +1202,49 @@ end;</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><em>N-ary split</em>: The split condition can be expressed as a Boolean test that results in multiple ranges of values. The algorithm must consider the entire possible range of values as possible split points</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image17.png"></p>
-<figcaption>N-ary split</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Taxable income"]--&gt;|&lt; 10K| B[" "]
+    A--&gt;|"[10K, 25K)]"| C[" "]
+    A--&gt;|&gt; 25K| D[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+    style D stroke:#fff,stroke-width:0px,fill:#fff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </div><div class="column" style="width:50%;">
 <p><em>Binary split</em>: The split condition can be expressed as a binary comparison test. The algorithm must consider all values as possible split points</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image18.png"></p>
-<figcaption>Binary split</figcaption>
-</figure>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Taxable income"]--&gt;|"&lt;= 20K"| B[" "]
+    A--&gt;|"&gt; 20K"| C[" "]
+
+    style B stroke:#fff,stroke-width:0px,fill:#fff
+    style C stroke:#fff,stroke-width:0px,fill:#fff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </div></div>
 </section>
 
 <section id="splitting-continuous-attributes-1" class="title-slide slide level1 center">
-<h1>Splitting Continuous Attributes</h1>
+<h1>Splitting <em>Continuous</em> Attributes</h1>
 <p>A discretization technique can be used to manage the complexity of the search for optimal split points.</p>
 <ul>
 <li><strong>Static:</strong> discretization takes place only once before applying the algorithm</li>
@@ -1103,7 +1306,7 @@ end;</code></pre>
 <img data-src="img/dt/3-Decision%20Tree_48.png" class="r-stretch quarto-figure-center"><p class="caption">Impurity measures behavior for a two-class problem</p></section>
 
 <section id="computing-gini-for-binary-attributes" class="title-slide slide level1 center">
-<h1>Computing Gini for Binary Attributes</h1>
+<h1>Computing Gini for <em>Binary</em> Attributes</h1>
 
 <img data-src="./img/dt/image21.png" class="r-stretch"><ul>
 <li><span class="math inline">\(Gini(N3) = 1 - (\frac{5}{7})^2 - (\frac{2}{7})^2 = 0.408\)</span></li>
@@ -1113,8 +1316,10 @@ end;</code></pre>
 </section>
 
 <section id="computing-gini-for-categorical-attributes" class="title-slide slide level1 center">
-<h1>Computing Gini for Categorical Attributes</h1>
+<h1>Computing Gini for <em>Categorical</em> Attributes</h1>
 <p>It is usually more efficient to create a “count matrix” for each distinct value of the classification attribute and then perform calculations using that matrix</p>
+<div class="columns">
+<div class="column" style="width:33%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1146,6 +1351,7 @@ end;</code></pre>
 </tr>
 </tbody>
 </table>
+</div><div class="column" style="width:33%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1177,6 +1383,7 @@ end;</code></pre>
 </tr>
 </tbody>
 </table>
+</div><div class="column" style="width:33%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1213,41 +1420,32 @@ end;</code></pre>
 </tr>
 </tbody>
 </table>
+</div></div>
 </section>
 
 <section id="computing-gini-for-continuous-attributes" class="title-slide slide level1 center">
-<h1>Computing Gini for Continuous Attributes</h1>
-<div class="columns">
-<div class="column" style="width:20%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image1.png"></p>
-<figcaption>Training Data</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image18.png"></p>
-<figcaption>Binary split</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:80%;">
-<p>It requires defining the split point using a binary condition. The number of possible conditions is equal to the number of distinct values of the attribute.</p>
-<p>You can calculate a matrix count for each split value. The array will count the elements of each class for attribute values greater than or less than the split value.</p>
+<h1>Computing Gini for <em>Continuous</em> Attributes</h1>
+<p>It requires defining the split point using a binary condition.</p>
+<ul>
+<li>The number of possible conditions is equal to the number of distinct values of the attribute.</li>
+<li>Can calculate a matrix count for each split value.
+<ul>
+<li>The matrix will count the elements of each class for attribute values greater than or less than the split value.</li>
+</ul></li>
+</ul>
 <p>A naive approach:</p>
 <ul>
 <li>For each split <span class="math inline">\(v\)</span> value, read the DB (with <span class="math inline">\(N\)</span> records) to build the count matrix and calculate the Gini index</li>
 <li>Computationally inefficient <span class="math inline">\(O(N^2)\)</span>:
 <ul>
 <li>Scan DB: <span class="math inline">\(O(N)\)</span></li>
-<li>Repeat for each value of <span class="math inline">\(v\)</span>: <span class="math inline">\(v \cdot O(N)\)</span></li>
+<li>Repeat for each value of <span class="math inline">\(v\)</span> (i.e., <span class="math inline">\(v \cdot O(N)\)</span>)</li>
 </ul></li>
 </ul>
-</div></div>
 </section>
 
 <section id="computing-gini-for-continuous-attributes-1" class="title-slide slide level1 center">
-<h1>Computing Gini for Continuous Attributes</h1>
+<h1>Computing Gini for <em>Continuous</em> Attributes</h1>
 <p>A more efficient solution is to:</p>
 <ul>
 <li>Sort records by attribute value</li>
@@ -1255,7 +1453,7 @@ end;</code></pre>
 <li>Choose as the split point the value that minimizes the index</li>
 </ul>
 
-<img data-src="./img/dt/image22.png" class="r-stretch"><p>Further optimizations?</p>
+<img data-src="./img/dt/image22.png" class="r-stretch quarto-figure-center"><p class="caption">Optimizing the split</p><p>Further optimizations?</p>
 </section>
 
 <section id="gain-based-split" class="title-slide slide level1 center">
@@ -1296,94 +1494,6 @@ end;</code></pre>
 </ul>
 
 <img data-src="./img/dt/image23.png" class="r-stretch quarto-figure-center"><p class="caption">Split info</p></section>
-
-<section id="exercise" class="title-slide slide level1 center">
-<h1>Exercise</h1>
-<p>Compute the Gini index and information gain for the following binary problem and comment on the results.</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">A</th>
-<th style="text-align: center;">B</th>
-<th style="text-align: center;">Clas</th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">+</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">+</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">+</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">+</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-</tbody>
-</table>
-</section>
 
 <section id="characteristic-features-2" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Characteristic features</h1>
@@ -1766,7 +1876,7 @@ end;</code></pre>
 
 <img data-src="img/dt/3-Decision%20Tree_75.jpg" class="r-stretch quarto-figure-center"><p class="caption">Radar Operators were human classifiers!</p></section>
 
-<section id="classification-errors" class="title-slide slide level1 center">
+<section id="classification-errors" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Classification Errors</h1>
 <ul>
 <li><p><strong>Training error:</strong> are mistakes that are made on the training set</p></li>
@@ -2041,93 +2151,6 @@ end;</code></pre>
 <li>No attribute allows for determining a positive GainRatio</li>
 <li>Node does not contain records.</li>
 </ul>
-</section>
-
-<section id="exercise-1" class="title-slide slide level1 center">
-<h1>Exercise</h1>
-<p>Using the classification error as a measure, identify which attribute should be chosen first, and which one per second.</p>
-<ul>
-<li>Compute contingency matrices</li>
-<li>Compute the information gain</li>
-</ul>
-<p>How do the results change if you use the worst attribute as the split attribute?</p>
-<p>Comment on the result.</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">A</th>
-<th style="text-align: center;">B</th>
-<th style="text-align: center;">C</th>
-<th style="text-align: center;"># instances</th>
-<th style="text-align: center;"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">+</td>
-<td style="text-align: center;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">20</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">25</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">T</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">F</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">25</td>
-</tr>
-</tbody>
-</table>
 
 </section>
     </div>
