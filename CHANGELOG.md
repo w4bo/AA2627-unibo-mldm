@@ -1,3 +1,20 @@
+## [1.0.3](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.2...1.0.3) (2026-03-06)
+
+### Bug Fixes
+
+* update slides ([35d9686](https://github.com/w4bo/AA2627-unibo-mldm/commit/35d96861a91b2b191d07a7a67ac75bf21794efed))
+* update slides ([80806dc](https://github.com/w4bo/AA2627-unibo-mldm/commit/80806dcf3b8d7360f573e71f180a42bfe49470f0))
+* working on the charts ([8302def](https://github.com/w4bo/AA2627-unibo-mldm/commit/8302defd890a36c2a7372f0d5bd4a6d9125402e8))
+* working on the charts ([4583509](https://github.com/w4bo/AA2627-unibo-mldm/commit/45835090fd08262cbf2444a1fa7c52ebca054c72))
+* working on the slides ([9cbc603](https://github.com/w4bo/AA2627-unibo-mldm/commit/9cbc603a2a54ba1c453278f51064df6a6373778c))
+
+## [1.0.2](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.1...1.0.2) (2026-03-05)
+
+### Bug Fixes
+
+* working on the introduction ([efd16d8](https://github.com/w4bo/AA2627-unibo-mldm/commit/efd16d8df10ca9908086d89ae803f5320c98fc36))
+* working on the introduction ([d420c6f](https://github.com/w4bo/AA2627-unibo-mldm/commit/d420c6ff27ef8a3777b464d8150087a7705f3965))
+
 ## [1.0.1](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.0...1.0.1) (2025-12-15)
 
 ### Bug Fixes

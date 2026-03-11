@@ -76,7 +76,7 @@ This course is orthogonal to:
 - A data scientist must understand the data and the domain before trying any model
 - Machine learning is not a simple copy and paste of code
     - *Code generation can be easily automated and outperform you*!
-    - The added value of a data scientist is the understanding of the problem and the data
+    - The added value of a data scientist is the problem and data understanding
 - Data mining/Machine learning is not a course on `scikit-learn`
 
 :::
