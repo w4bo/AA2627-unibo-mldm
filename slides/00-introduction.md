@@ -213,6 +213,7 @@ If you need help with coding and labs, *you can ask me and the designated tutor*
 
 Theory (slides are very dynamic)
 
+Supervised learning > Classification
 1. [Business Understanding](https://w4bo.github.io/AA2627-unibo-mldm/02-businessunderstanding)
 1. [Data Understanding](https://w4bo.github.io/AA2627-unibo-mldm/03-dataunderstanding)
 1. [Data Preparation](https://w4bo.github.io/AA2627-unibo-mldm/04-datapreparation)
