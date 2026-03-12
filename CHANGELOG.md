@@ -1,3 +1,18 @@
+## [1.0.5](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.4...1.0.5) (2026-03-12)
+
+### Dependency updates
+
+* **deps:** update node.js to 24.14 ([#7](https://github.com/w4bo/AA2627-unibo-mldm/issues/7)) ([fa42183](https://github.com/w4bo/AA2627-unibo-mldm/commit/fa42183b5bea06d956df197ded4b7689f13e2b98))
+* **deps:** update w4bo/quarto-slides docker tag to v1.0.28 ([#11](https://github.com/w4bo/AA2627-unibo-mldm/issues/11)) ([e423ef0](https://github.com/w4bo/AA2627-unibo-mldm/commit/e423ef0dd17efb1396bffe327e012bc0d4b800c9))
+
+### Bug Fixes
+
+* update slides ([0b0288c](https://github.com/w4bo/AA2627-unibo-mldm/commit/0b0288c1ae9c7a382f41c12191fa1637303e29bf))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v6.3.0 ([#8](https://github.com/w4bo/AA2627-unibo-mldm/issues/8)) ([e2f2f03](https://github.com/w4bo/AA2627-unibo-mldm/commit/e2f2f0365a9367fd3529883d7b07a03547987383))
+
 ## [1.0.4](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.3...1.0.4) (2026-03-11)
 
 ### Dependency updates
