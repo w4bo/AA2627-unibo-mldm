@@ -1,5 +1,5 @@
 ---
-subtitle: Decision Trees
+subtitle: Clustering
 ---
 
 # What is Clustering analysis?
