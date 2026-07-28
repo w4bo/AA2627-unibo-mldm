@@ -141,8 +141,41 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section id="what-is-an-anomaly" class="title-slide slide level1 center">
-<h1>What is an Anomaly?</h1>
+<section id="motivating-problem-which-transactions-deserve-attention" class="title-slide slide level1 center">
+<h1>Motivating problem: which transactions deserve attention?</h1>
+<p>A payment platform processes millions of legitimate transactions and a few fraudulent ones.</p>
+<ul>
+<li>Fraud labels arrive late and are incomplete</li>
+<li>Normal behavior varies across customers and time</li>
+<li>Investigators can inspect only a limited number of alerts</li>
+</ul>
+<p>The useful output is therefore often a <strong>ranked anomaly score</strong>, not just a normal/anomalous label.</p>
+</section>
+
+<section id="learning-objectives" class="title-slide slide level1 center">
+<h1>Learning objectives</h1>
+<p>By the end of this lecture, you will be able to:</p>
+<ul>
+<li><strong>Distinguish</strong> point, contextual, and collective anomalies</li>
+<li><strong>Compute and interpret</strong> distance- and density-based anomaly scores</li>
+<li><strong>Explain</strong> how Isolation Forest isolates unusual observations</li>
+<li><strong>Choose and evaluate</strong> an approach under rare, delayed, or missing labels</li>
+</ul>
+</section>
+
+<section id="intuition-learn-normality-then-look-for-deviations" class="title-slide slide level1 center">
+<h1>Intuition: learn normality, then look for deviations</h1>
+<p>An anomaly is unusual <strong>with respect to a reference</strong>:</p>
+<ul>
+<li>Globally unusual compared with the whole dataset</li>
+<li>Locally unusual compared with nearby observations</li>
+<li>Unusual only in a particular time, place, or other context</li>
+</ul>
+<p>Anomaly detection therefore requires both a score and a decision about what “normal” means.</p>
+</section>
+
+<section id="formal-definition-anomaly-detection" class="title-slide slide level1 center">
+<h1>Formal definition: anomaly detection</h1>
 <p>An <strong>anomaly</strong> is a pattern in the data that does not conform to expected behavior.</p>
 <ul>
 <li>It is also referred to as exceptions, peculiarities, surprises, etc.</li>
@@ -271,6 +304,47 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
+<section id="worked-example-score-rank-and-threshold" class="title-slide slide level1 center">
+<h1>Worked example: score, rank, and threshold</h1>
+<p>Suppose five transactions receive anomaly scores:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Transaction</th>
+<th style="text-align: right;">Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: right;">0.08</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: right;">0.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: right;">0.91</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: right;">0.44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: right;">0.76</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A top-2 policy sends <strong>C and E</strong> to investigators</li>
+<li>A threshold of 0.80 sends only <strong>C</strong></li>
+<li>Neither policy proves fraud: the score prioritizes investigation</li>
+</ul>
+<p>The operating policy should reflect review capacity and the relative costs of masking and swamping.</p>
+</section>
+
 <section id="statistical-based-approaches" class="title-slide slide level1 center">
 <h1>Statistical-based Approaches</h1>
 <p>Assume the existence of a parametric model that describes the distribution of the data (e.g., Gaussian Distribution)</p>
@@ -362,8 +436,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="distance-based-approaches-considerations" class="title-slide slide level1 center">
-<h1>Distance-based Approaches: considerations</h1>
+<section id="failure-case-global-distance-in-variable-density-data" class="title-slide slide level1 center">
+<h1>Failure case: global distance in variable-density data</h1>
 <p>Have <span class="math inline">\(O(N^2)\)</span> complexity where <span class="math inline">\(N\)</span> is the dataset cardinality</p>
 <ul>
 <li>Are sensible to the <span class="math inline">\(k\)</span> value</li>
@@ -371,6 +445,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 
 <img data-src="img/anomaly/16%20Outlier%20detection_16.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(k\)</span>=5</p><p><span class="math inline">\(C\)</span> is properly identified, but what about <span class="math inline">\(D\)</span>?</p>
+</section>
+
+<section id="check-your-understanding" class="title-slide slide level1 center">
+<h1>Check your understanding</h1>
+<p>For each situation, identify the anomaly type and a plausible method:</p>
+<ol type="1">
+<li>One unusually large bank transfer</li>
+<li>Normal electricity usage occurring at an unusual time of day</li>
+<li>A suspicious sequence of individually ordinary login events</li>
+<li>A point that is normal globally but sparse relative to its local neighborhood</li>
+</ol>
+<p>Then ask: what labels or domain feedback would you use to evaluate the alerts?</p>
 </section>
 
 <section id="density-based-approaches" class="title-slide slide level1 center">
@@ -483,6 +569,19 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/anomaly/16%20Outlier%20detection_83.png"></p>
 </div></div>
+</section>
+
+<section id="summary-when-should-i-use-anomaly-detection" class="title-slide slide level1 center">
+<h1>Summary: when should I use anomaly detection?</h1>
+<p><strong>Choose the approach from the available supervision and data geometry:</strong></p>
+<ul>
+<li><strong>Supervised classifier:</strong> reliable anomaly labels are available</li>
+<li><strong>Statistical model:</strong> the normal distribution is simple and defensible</li>
+<li><strong>Distance-based score:</strong> global distances remain meaningful</li>
+<li><strong>Density-based or LOF:</strong> local density varies across the dataset</li>
+<li><strong>Isolation Forest:</strong> scalable unsupervised detection is needed</li>
+</ul>
+<p><strong>Remember:</strong> anomalies are not automatically errors or fraud. Define the reference population, preserve context, tune the operating threshold, and include human or domain feedback in evaluation.</p>
 
 </section>
     </div>

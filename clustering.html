@@ -141,8 +141,30 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section id="what-is-clustering-analysis" class="title-slide slide level1 center">
-<h1>What is Clustering analysis?</h1>
+<section id="motivating-problem-discover-customer-segments" class="title-slide slide level1 center">
+<h1>Motivating problem: discover customer segments</h1>
+<p>A company has customer behavior data but no segment labels.</p>
+<ul>
+<li>Some customers buy frequently but spend little</li>
+<li>Others purchase rarely but place large orders</li>
+<li>Some may not fit any stable segment</li>
+</ul>
+<p>Can we discover useful groups without being told the correct answer in advance?</p>
+</section>
+
+<section id="learning-objectives" class="title-slide slide level1 center">
+<h1>Learning objectives</h1>
+<p>By the end of this lecture, you will be able to:</p>
+<ul>
+<li><strong>Explain</strong> why different notions of a cluster can produce different answers</li>
+<li><strong>Execute</strong> the main steps of k-means, hierarchical clustering, and DBSCAN</li>
+<li><strong>Select</strong> an algorithm based on cluster shape, density, noise, and interpretability</li>
+<li><strong>Evaluate</strong> clustering results without assuming that every partition is meaningful</li>
+</ul>
+</section>
+
+<section id="intuition-similar-objects-form-groups" class="title-slide slide level1 center">
+<h1>Intuition: similar objects form groups</h1>
 <p>Finding groups of objects such that objects that belong to the same group are more “similar” to each other than objects belonging to different groups.</p>
 <ul>
 <li>Inter-cluster distances are maximized</li>
@@ -150,6 +172,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 
 <img data-src="img/clustering/Immagine7.png" class="r-stretch quarto-figure-center"><p class="caption">Clustering (or Clustering Analysis)</p></section>
+
+<section id="formal-definition-clustering" class="title-slide slide level1 center">
+<h1>Formal definition: clustering</h1>
+<p>Given observations <span class="math inline">\(X=\{x_1,\ldots,x_n\}\)</span> and a notion of similarity, clustering seeks a structure <span class="math inline">\(\mathcal{C}\)</span> that groups related observations.</p>
+<p>For a partitioning clustering:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{C}=\{C_1,\ldots,C_K\}\)</span></li>
+<li><span class="math inline">\(C_i \cap C_j=\emptyset\)</span> for <span class="math inline">\(i\neq j\)</span></li>
+<li><span class="math inline">\(\bigcup_{i=1}^{K}C_i=X\)</span></li>
+</ul>
+<p>The definition does <strong>not</strong> determine the right similarity, number of clusters, or cluster shape. Those are modeling choices.</p>
+</section>
 
 <section id="what-is-not-clustering-analysis" class="title-slide slide level1 center">
 <h1>What is NOT Clustering analysis?</h1>
@@ -331,6 +365,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
             centroids ← newCentroids
 
     return clusters</code></pre>
+</section>
+
+<section id="worked-example-one-k-means-iteration" class="title-slide slide level1 center">
+<h1>Worked example: one k-means iteration</h1>
+<p>Let the one-dimensional observations be <span class="math inline">\(\{1,2,3,8,9\}\)</span>, with <span class="math inline">\(K=2\)</span> and initial centroids <span class="math inline">\(m_1=2\)</span>, <span class="math inline">\(m_2=8\)</span>.</p>
+<ol type="1">
+<li><strong>Assign:</strong> <span class="math inline">\(\{1,2,3\}\rightarrow C_1\)</span> and <span class="math inline">\(\{8,9\}\rightarrow C_2\)</span></li>
+<li><strong>Update:</strong> <span class="math inline">\(m_1=(1+2+3)/3=2\)</span> and <span class="math inline">\(m_2=(8+9)/2=8.5\)</span></li>
+<li><strong>Repeat</strong> assignment and update until assignments stop changing</li>
+</ol>
+<p>K-means monotonically reduces its objective, but the final solution can still depend on the initial centroids.</p>
 </section>
 
 <section id="convergence-and-optimality" class="title-slide slide level1 center">
@@ -556,8 +601,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="k-means-limits-non-globular-shape" class="title-slide slide level1 center">
-<h1>K-means limits: non-globular shape</h1>
+<section id="failure-case-non-globular-clusters" class="title-slide slide level1 center">
+<h1>Failure case: non-globular clusters</h1>
 <p>SSE is based on an Euclidean distance that does not take into account the shape of objects</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -655,8 +700,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img data-src="img/clustering/14-Clustering_54.png" class="r-stretch quarto-figure-center"><p class="caption">The elbow method</p></section>
 
-<section id="exercise" class="title-slide slide level1 center">
-<h1>Exercise</h1>
+<section id="check-your-understanding" class="title-slide slide level1 center">
+<h1>Check your understanding</h1>
 <p>Draw the cluster partitioning and the approximate position of the centroids chosen by the k-means algorithm, assuming that:</p>
 <ul>
 <li>The points are equally distributed</li>
@@ -1464,7 +1509,7 @@ Until only a single cluster remains</code></pre>
 </div>
 </section>
 
-<section id="exercise-1" class="title-slide slide level1 center">
+<section id="exercise" class="title-slide slide level1 center">
 <h1>Exercise</h1>
 <p>Associate similarity matrices with the data set</p>
 <div class="columns">
@@ -1686,6 +1731,39 @@ Until only a single cluster remains</code></pre>
 <p>” _The validation of clustering structures is the most difficult and frustrating part of cluster analysis. Without a strong effort in this direction, cluster analysis will remain a black art accessible only to those true believers who have experience and great courage.”</p>
 <p>cit. Algorithms for Clustering Data, Jain and Dubes</p>
 </blockquote>
+</section>
+
+<section id="summary-when-should-i-use-each-method" class="title-slide slide level1 center">
+<h1>Summary: when should I use each method?</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Useful starting point</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Compact, roughly spherical groups</td>
+<td><strong>k-means</strong></td>
+</tr>
+<tr class="even">
+<td>A hierarchy or dendrogram is useful</td>
+<td><strong>Hierarchical clustering</strong></td>
+</tr>
+<tr class="odd">
+<td>Irregular shapes, noise, and unknown <span class="math inline">\(K\)</span></td>
+<td><strong>DBSCAN</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Before trusting any result:</p>
+<ul>
+<li>Scale features and justify the distance or similarity measure</li>
+<li>Compare stability across parameters, samples, and initializations</li>
+<li>Inspect whether the groups answer a meaningful domain question</li>
+<li>Remember that every clustering algorithm can find structure in random data</li>
+</ul>
 
 </section>
     </div>
