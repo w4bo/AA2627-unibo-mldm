@@ -2,7 +2,7 @@
 subtitle: Decision Trees
 ---
 
-# Learn by doing!
+# Motivating problem: who will churn?
 
 **Customer churn** is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.
 
@@ -25,6 +25,15 @@ subtitle: Decision Trees
 | 7                 | 12                  | 1               | standard  | yes      | *no*    |
 | 2                 | 5                   | 2               | basic     | no       | *yes*   |
 | 9                 | 16                  | 0               | premium   | yes      | *no*    |
+
+# Learning objectives
+
+By the end of this lecture, you will be able to:
+
+- **Explain** how a decision tree turns feature tests into a prediction
+- **Build** a small classification tree by selecting and evaluating candidate splits
+- **Compute and interpret** impurity, gain, and classification metrics
+- **Diagnose** overfitting and choose an appropriate validation or pruning strategy
 
 # Training and test sets
 
@@ -62,7 +71,18 @@ __Holdout__
 | 2                 | 5                   | 2               | basic     | no       | *yes*   |
 | 9                 | 16                  | 0               | premium   | yes      | *no*    |
 
-# Decision Tree
+# Intuition: divide the feature space
+
+A decision tree solves a difficult classification problem through a sequence of simpler questions.
+
+- Each internal node asks one question about one feature
+- Each answer restricts the set of possible records
+- A root-to-leaf path behaves like an **if–then rule**
+- Training searches for questions that make the resulting groups as pure as possible
+
+> At each node: which question best separates customers who churn from those who stay?
+
+# Formal definition: Decision Tree
 
 ::::{.columns}
 :::{.column width=60%}
@@ -101,7 +121,7 @@ flowchart TD
 :::
 ::::
 
-# Decision Tree: an Example
+# Worked example: reading a decision tree
 
 ::::{.columns}
 :::{.column width=70%}
@@ -179,7 +199,7 @@ Predicted class
     G --> E[("Apply Model")]
 ```
 
-# Applying the model
+# Check your understanding: apply the model
 
 What is the predicted class for the following test data?
 
@@ -997,7 +1017,7 @@ ROC stands for _Receiver Operator Characteristic_. The term has its roots in Wor
 - Circular points: $0.5 < sqrt(x12+x22) \le 1$
 - Triangular points: $sqrt(x12+x22) > 0.5~or~sqrt(x12+x22) < 1$
 
-# Overfitting Due to Noise
+# Failure case: overfitting to noise
 
 ![The boundaries of the areas are distorted due to noise](img/dt/3-Decision Tree_84.png)
 
@@ -1211,3 +1231,19 @@ __The tree construction stops when:__
 - The node contains records belonging to a single class
 - No attribute allows for determining a positive GainRatio
 - Node does not contain records.
+
+# Summary: when should I use a decision tree?
+
+**Use a decision tree when:**
+
+- You need an interpretable model expressed as rules
+- Your data mix numerical and categorical features
+- Non-linear interactions are likely, but extensive preprocessing is undesirable
+
+**Be careful when:**
+
+- Small data changes produce very different trees
+- The tree grows deep enough to memorize noise
+- Accuracy hides class imbalance or unequal error costs
+
+**Remember:** choose splits on training data, tune and prune with validation data, and report performance only on untouched test data.

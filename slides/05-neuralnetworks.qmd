@@ -6,6 +6,25 @@ subtitle: "Modeling: Neural Networks"
 
 <img src="./img/crispdm_me.svg" class="center-img">
 
+# Motivating problem: learn useful features
+
+Suppose we want to recognize handwritten digits from raw pixels.
+
+- A single pixel rarely determines the class
+- Useful evidence is distributed across strokes, edges, and shapes
+- The relationship between pixels and labels is highly non-linear
+
+Can a model learn intermediate representations instead of requiring us to design every feature?
+
+# Learning objectives
+
+By the end of this lecture, you will be able to:
+
+- **Compute** the output of a neuron and a small feed-forward network
+- **Explain** how layers and non-linear activations create expressive models
+- **Relate** loss, gradient descent, and backpropagation during training
+- **Diagnose** common training failures using learning curves
+
 # Recalling the Machine Learning pipeline
 
 We now focus on the model, the "heart" of the AI in our system.
@@ -31,7 +50,7 @@ Neural networks are **mathematically intensive**!
 
 ![Mathematical Symbol Fight](https://imgs.xkcd.com/comics/mathematical_symbol_fight.png)
 
-# Neural Networks
+# Intuition: compose simple computational units
 
 *Neural Networks* (NN): the key idea is to imitate, as far as possible, the neurons of the human brain
 
@@ -44,7 +63,7 @@ Neural networks are **mathematically intensive**!
 - The *cell body* is where signals are aggregated and processed
 - The *dendrites* collect the inputs from other neurons
 
-# Artificial Neuron (perceptron)
+# Formal definition: artificial neuron
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -67,7 +86,7 @@ The first Artificial Neuron (AN) was introduced by *Rosenblatt* in 1957
 :::
 ::::
 
-# An example of a working AN
+# Worked example: will I pass the exam?
 
 Will I pass the Machine Learning exam?
 
@@ -75,7 +94,7 @@ Will I pass the Machine Learning exam?
 
 $y' = \begin{cases}1, ~if~ 0.3\cdot x_1 + 0.8 \cdot x_2 + 0.5 \cdot x_3 \ge 3\\0, otherwise\end{cases}$
 
-# Examples of working ANs: Boolean functions
+# Check your understanding: Boolean functions
 
 How can we implement the following operators?
 
@@ -173,7 +192,7 @@ What about **xor**?
     </tr>
 </table>
 
-# Linear vs Non-linear problems
+# Failure case: XOR is not linearly separable
 
 A single AN *can solve only linear problems*!
 
@@ -865,5 +884,21 @@ Examples:
 
 :::
 ::::
+
+# Summary: when should I use a neural network?
+
+**Use a neural network when:**
+
+- The relationship between inputs and outputs is highly non-linear
+- Useful representations should be learned from images, text, audio, or other complex data
+- You have enough representative data and computation to train and validate the model
+
+**Be careful when:**
+
+- A simpler model already meets the objective
+- Data are scarce, biased, or not representative of deployment
+- Training and validation losses indicate underfitting, overfitting, or unstable optimization
+
+**Remember:** architecture defines the hypothesis space; loss defines the objective; backpropagation computes gradients; the optimizer updates parameters.
 
 # References
