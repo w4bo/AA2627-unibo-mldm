@@ -141,8 +141,30 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section id="k-nearest-neighbors" class="title-slide slide level1 center">
-<h1>K-nearest neighbors</h1>
+<section id="motivating-problem-classify-by-similar-cases" class="title-slide slide level1 center">
+<h1>Motivating problem: classify by similar cases</h1>
+<p>A streaming service receives a new customer with no churn label.</p>
+<ul>
+<li>We already know the behavior and outcome of many previous customers</li>
+<li>Customers with similar usage patterns often have similar outcomes</li>
+<li>Can we predict the new customer’s class without learning an explicit model?</li>
+</ul>
+<p><strong>k-NN answer:</strong> find the most similar known customers and let their labels vote.</p>
+</section>
+
+<section id="learning-objectives" class="title-slide slide level1 center">
+<h1>Learning objectives</h1>
+<p>By the end of this lecture, you will be able to:</p>
+<ul>
+<li><strong>Explain</strong> instance-based learning and the role of a distance metric</li>
+<li><strong>Compute</strong> a k-NN prediction, with and without distance weighting</li>
+<li><strong>Select</strong> a suitable value of <span class="math inline">\(k\)</span> using validation data</li>
+<li><strong>Recognize</strong> when scaling, irrelevant features, or dimensionality make k-NN unreliable</li>
+</ul>
+</section>
+
+<section id="intuition-nearby-points-tend-to-behave-alike" class="title-slide slide level1 center">
+<h1>Intuition: nearby points tend to behave alike</h1>
 <p>K-nearest neighbors do not build models but classify new records based on their similarity to the examples in the training set.</p>
 <p>They are called lazy-diligent learners as opposed to eager-diligent, impatient learners (rule-based, decision trees, neural networks, etc.).</p>
 <ul>
@@ -169,8 +191,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="formal-definition" class="title-slide slide level1 center">
-<h1>Formal Definition</h1>
+<section id="formal-definition-k-nearest-neighbors" class="title-slide slide level1 center">
+<h1>Formal definition: k-nearest neighbors</h1>
 <p>A record <span class="math inline">\(z\)</span> is classified according a <em>majority voting process</em> using the <span class="math inline">\(k\)</span> elements <span class="math inline">\(D_z\)</span> of the training set <span class="math inline">\(D\)</span> that are closest/most similar to <span class="math inline">\(z\)</span></p>
 <p><span class="math inline">\(\hat{y}=argmax_{y \in Y}\sum_{(x_i, y_i) \in D_z} I(y_i=y)\)</span></p>
 <ul>
@@ -182,6 +204,43 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>The algorithm is very sensitive to the value of <span class="math inline">\(k\)</span></li>
 <li>This risk can be reduced by weighing the contribution of neighbors by distance <span class="math inline">\(w = \frac{1}{d(z,x_i)}\)</span></li>
 </ul>
+</section>
+
+<section id="worked-example-majority-vote" class="title-slide slide level1 center">
+<h1>Worked example: majority vote</h1>
+<p>Suppose the three nearest training records to a new point <span class="math inline">\(z\)</span> are:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Neighbor</th>
+<th style="text-align: right;">Distance from <span class="math inline">\(z\)</span></th>
+<th style="text-align: center;">Class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(x_1\)</span></td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: center;">churn</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(x_2\)</span></td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: center;">stay</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(x_3\)</span></td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: center;">churn</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>With <span class="math inline">\(k=1\)</span>, predict <strong>churn</strong></li>
+<li>With <span class="math inline">\(k=3\)</span>, predict <strong>churn</strong> by a 2-to-1 majority</li>
+<li>With distance weighting, compare <span class="math inline">\(\sum 1/d(z,x_i)\)</span> separately for each class</li>
+</ul>
+<p>The prediction is local: a different neighborhood may follow a different rule.</p>
 </section>
 
 <section id="the-k-value" class="title-slide slide level1 center">
@@ -200,6 +259,34 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>A person’s salary ranges from 10K€ to 1M€.</li>
 </ul></li>
 </ul>
+</section>
+
+<section id="failure-case-distance-can-be-misleading" class="title-slide slide level1 center">
+<h1>Failure case: distance can be misleading</h1>
+<p>Consider two features:</p>
+<ul>
+<li><code>age</code>, ranging from 18 to 80</li>
+<li><code>annual_income</code>, ranging from €10,000 to €1,000,000</li>
+</ul>
+<p>Without scaling, income dominates Euclidean distance even if age is more predictive.</p>
+<p>Other failure modes:</p>
+<ul>
+<li>Irrelevant features make unrelated points appear far apart</li>
+<li>In high dimensions, distances become less informative</li>
+<li>A small <span class="math inline">\(k\)</span> follows noise; a large <span class="math inline">\(k\)</span> erases local structure</li>
+</ul>
+</section>
+
+<section id="check-your-understanding" class="title-slide slide level1 center">
+<h1>Check your understanding</h1>
+<p>A query point has five nearest-neighbor labels:</p>
+<p><code>A, A, B, B, B</code></p>
+<ol type="1">
+<li>What is the prediction for <span class="math inline">\(k=3\)</span>? What about <span class="math inline">\(k=5\)</span>?</li>
+<li>Could distance weighting change either answer?</li>
+<li>Which dataset split should you use to choose <span class="math inline">\(k\)</span>?</li>
+<li>What preprocessing must be fitted on the training set before computing distances?</li>
+</ol>
 </section>
 
 <section id="k-nearest-neighbor-pro-cons" class="title-slide slide level1 center">
@@ -243,8 +330,25 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>The 2-D range query must check objects in G/H/L MBRs only</li>
 </ul>
 
-
 <img data-src="img/knn/Immagine3.png" class="r-stretch quarto-figure-center"><p class="caption">R-tree</p></section>
+
+<section id="summary-when-should-i-use-k-nn" class="title-slide slide level1 center">
+<h1>Summary: when should I use k-NN?</h1>
+<p><strong>Use k-NN when:</strong></p>
+<ul>
+<li>Similar cases are expected to have similar outputs</li>
+<li>The dataset is not too large or an efficient neighbor index is available</li>
+<li>You want a flexible, non-linear baseline with almost no training time</li>
+</ul>
+<p><strong>Be careful when:</strong></p>
+<ul>
+<li>Features use different scales or include irrelevant dimensions</li>
+<li>Prediction latency matters</li>
+<li>The data are sparse or high-dimensional</li>
+</ul>
+<p><strong>Remember:</strong> scale features, select the metric and <span class="math inline">\(k\)</span> with validation data, and keep the test set untouched.</p>
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

@@ -144,8 +144,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section id="learn-by-doing" class="title-slide slide level1 center">
-<h1>Learn by doing!</h1>
+<section id="motivating-problem-who-will-churn" class="title-slide slide level1 center">
+<h1>Motivating problem: who will churn?</h1>
 <p><strong>Customer churn</strong> is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.</p>
 <ul>
 <li>Let us assume that this is our dataset to train a decision tree for predicting customer churn</li>
@@ -271,6 +271,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
+</section>
+
+<section id="learning-objectives" class="title-slide slide level1 center">
+<h1>Learning objectives</h1>
+<p>By the end of this lecture, you will be able to:</p>
+<ul>
+<li><strong>Explain</strong> how a decision tree turns feature tests into a prediction</li>
+<li><strong>Build</strong> a small classification tree by selecting and evaluating candidate splits</li>
+<li><strong>Compute and interpret</strong> impurity, gain, and classification metrics</li>
+<li><strong>Diagnose</strong> overfitting and choose an appropriate validation or pruning strategy</li>
+</ul>
 </section>
 
 <section id="training-and-test-sets" class="title-slide slide level1 center">
@@ -434,8 +445,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </table>
 </section>
 
-<section id="decision-tree" class="title-slide slide level1 center">
-<h1>Decision Tree</h1>
+<section id="intuition-divide-the-feature-space" class="title-slide slide level1 center">
+<h1>Intuition: divide the feature space</h1>
+<p>A decision tree solves a difficult classification problem through a sequence of simpler questions.</p>
+<ul>
+<li>Each internal node asks one question about one feature</li>
+<li>Each answer restricts the set of possible records</li>
+<li>A root-to-leaf path behaves like an <strong>if–then rule</strong></li>
+<li>Training searches for questions that make the resulting groups as pure as possible</li>
+</ul>
+<blockquote>
+<p>At each node: which question best separates customers who churn from those who stay?</p>
+</blockquote>
+</section>
+
+<section id="formal-definition-decision-tree" class="title-slide slide level1 center">
+<h1>Formal definition: Decision Tree</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
 <p>One of the most widely used classification techniques</p>
@@ -480,8 +505,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="decision-tree-an-example" class="title-slide slide level1 center">
-<h1>Decision Tree: an Example</h1>
+<section id="worked-example-reading-a-decision-tree" class="title-slide slide level1 center">
+<h1>Worked example: reading a decision tree</h1>
 <div class="columns">
 <div class="column" style="width:70%;">
 <table class="caption-top">
@@ -606,7 +631,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="decision-tree-an-example-1" class="title-slide slide level1 center">
+<section id="decision-tree-an-example" class="title-slide slide level1 center">
 <h1>Decision Tree: an example</h1>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -657,8 +682,8 @@ Predicted class
 </div>
 </section>
 
-<section id="applying-the-model" class="title-slide slide level1 center">
-<h1>Applying the model</h1>
+<section id="check-your-understanding-apply-the-model" class="title-slide slide level1 center">
+<h1>Check your understanding: apply the model</h1>
 <p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
 <colgroup>
@@ -692,7 +717,7 @@ Predicted class
 </table>
 </section>
 
-<section id="applying-the-model-1" class="title-slide slide level1 center">
+<section id="applying-the-model" class="title-slide slide level1 center">
 <h1>Applying the model</h1>
 <p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
@@ -755,7 +780,7 @@ Predicted class
 </div>
 </section>
 
-<section id="applying-the-model-2" class="title-slide slide level1 center">
+<section id="applying-the-model-1" class="title-slide slide level1 center">
 <h1>Applying the model</h1>
 <p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
@@ -820,7 +845,7 @@ Predicted class
 </div>
 </section>
 
-<section id="applying-the-model-3" class="title-slide slide level1 center">
+<section id="applying-the-model-2" class="title-slide slide level1 center">
 <h1>Applying the model</h1>
 <p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
@@ -1931,8 +1956,8 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="overfitting-due-to-noise" class="title-slide slide level1 center">
-<h1>Overfitting Due to Noise</h1>
+<section id="failure-case-overfitting-to-noise" class="title-slide slide level1 center">
+<h1>Failure case: overfitting to noise</h1>
 
 <img data-src="img/dt/3-Decision%20Tree_84.png" class="r-stretch quarto-figure-center"><p class="caption">The boundaries of the areas are distorted due to noise</p></section>
 
@@ -2168,6 +2193,23 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li>No attribute allows for determining a positive GainRatio</li>
 <li>Node does not contain records.</li>
 </ul>
+</section>
+
+<section id="summary-when-should-i-use-a-decision-tree" class="title-slide slide level1 center">
+<h1>Summary: when should I use a decision tree?</h1>
+<p><strong>Use a decision tree when:</strong></p>
+<ul>
+<li>You need an interpretable model expressed as rules</li>
+<li>Your data mix numerical and categorical features</li>
+<li>Non-linear interactions are likely, but extensive preprocessing is undesirable</li>
+</ul>
+<p><strong>Be careful when:</strong></p>
+<ul>
+<li>Small data changes produce very different trees</li>
+<li>The tree grows deep enough to memorize noise</li>
+<li>Accuracy hides class imbalance or unequal error costs</li>
+</ul>
+<p><strong>Remember:</strong> choose splits on training data, tune and prune with validation data, and report performance only on untouched test data.</p>
 
 </section>
     </div>
