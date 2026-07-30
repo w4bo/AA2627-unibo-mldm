@@ -1,3 +1,9 @@
+## [1.0.9](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.8...1.0.9) (2026-07-30)
+
+### Bug Fixes
+
+* update the labs ([ad81a7a](https://github.com/w4bo/AA2627-unibo-mldm/commit/ad81a7a9203ca47cecfbb8c5ac4a26d205d36bf9))
+
 ## [1.0.8](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.7...1.0.8) (2026-07-30)
 
 ### Bug Fixes
