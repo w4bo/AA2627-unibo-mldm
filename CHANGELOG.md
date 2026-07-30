@@ -1,3 +1,9 @@
+## [1.0.7](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.6...1.0.7) (2026-07-30)
+
+### Bug Fixes
+
+* update the charts ([41ef8a1](https://github.com/w4bo/AA2627-unibo-mldm/commit/41ef8a1db343a334128b0e1849c1b66125316307))
+
 ## [1.0.6](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.5...1.0.6) (2026-07-30)
 
 ### Dependency updates
