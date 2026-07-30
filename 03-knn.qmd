@@ -1,0 +1,174 @@
+---
+subtitle: K-nearest neighbors
+---
+
+# Motivating problem: classify by similar cases
+
+A streaming service receives a new customer with no churn label.
+
+- We already know the behavior and outcome of many previous customers
+- Customers with similar usage patterns often have similar outcomes
+- Can we predict the new customer's class without learning an explicit model?
+
+**k-NN answer:** find the most similar known customers and let their labels vote.
+
+# Learning objectives
+
+By the end of this lecture, you will be able to:
+
+- **Explain** instance-based learning and the role of a distance metric
+- **Compute** a k-NN prediction, with and without distance weighting
+- **Select** a suitable value of $k$ using validation data
+- **Recognize** when scaling, irrelevant features, or dimensionality make k-NN unreliable
+
+# Intuition: nearby points tend to behave alike
+
+K-nearest neighbors do not build models but classify new records based on their similarity to the examples in the training set.
+
+They are called lazy-diligent learners as opposed to eager-diligent, impatient learners (rule-based, decision trees, neural networks, etc.).
+
+* Nearest-Neighbor: ranks the record based on the most similar ones in the training set
+* _If it walks like a duck, quacks like a duck, then it's probably a duck_
+
+![K-nearest neighbors](img/knn/Immagine1.png)
+
+# Nearest Neighbor Classifier
+
+![K-nearest neighbors](img/knn/Immagine2.png)
+
+Requirement:
+
+* A training set
+* A metric to calculate the distance between records
+* The value of $k$, i.e., the number of neighbors to be used
+
+The classification process:
+
+* Calculates the distance to the records in the training set
+* Identifies $k$ nearest neighbors
+* Uses nearest neighbor class labels to determine the class of the unknown record (e.g., choosing the one that appears most frequently)
+
+# Formal definition: k-nearest neighbors
+
+A record $z$ is classified according a _majority voting process_ using the $k$ elements $D_z$ of the training set $D$ that are closest/most similar to $z$
+
+$\hat{y}=argmax_{y \in Y}\sum_{(x_i, y_i) \in D_z} I(y_i=y)$
+
+* $Y$ is the set of class labels
+* $I()$ returns 1 if its argument is TRUE, 0 otherwise
+
+All the neighbors have the same weight.
+
+* The algorithm is very sensitive to the value of $k$
+* This risk can be reduced by weighing the contribution of neighbors by distance $w = \frac{1}{d(z,x_i)}$
+
+# Worked example: majority vote
+
+Suppose the three nearest training records to a new point $z$ are:
+
+| Neighbor | Distance from $z$ | Class |
+|---:|---:|:---:|
+| $x_1$ | 0.8 | churn |
+| $x_2$ | 1.1 | stay |
+| $x_3$ | 1.3 | churn |
+
+- With $k=1$, predict **churn**
+- With $k=3$, predict **churn** by a 2-to-1 majority
+- With distance weighting, compare $\sum 1/d(z,x_i)$ separately for each class
+
+The prediction is local: a different neighborhood may follow a different rule.
+
+# The $k$ value
+
+The choice of $k$ is important because:
+
+* If $k$ is too small, the approach is sensitive to noise
+* If $k$ is too large, the surround may include examples belonging to other classes
+
+Remember that to operate correctly, the attributes must have the same scale of values and thus must be normalized in pre-processing.
+
+* Example: on which attribute is a difference of 0.5 worth more?
+  * The height of an adult ranges from 1.5m to 2.1m
+  * The weight of an adult varies from 40kg to 150kg
+  * A person's salary ranges from 10K€ to 1M€.
+
+# Failure case: distance can be misleading
+
+Consider two features:
+
+- `age`, ranging from 18 to 80
+- `annual_income`, ranging from €10,000 to €1,000,000
+
+Without scaling, income dominates Euclidean distance even if age is more predictive.
+
+Other failure modes:
+
+- Irrelevant features make unrelated points appear far apart
+- In high dimensions, distances become less informative
+- A small $k$ follows noise; a large $k$ erases local structure
+
+# Check your understanding
+
+A query point has five nearest-neighbor labels:
+
+`A, A, B, B, B`
+
+1. What is the prediction for $k=3$? What about $k=5$?
+2. Could distance weighting change either answer?
+3. Which dataset split should you use to choose $k$?
+4. What preprocessing must be fitted on the training set before computing distances?
+
+# K-Nearest Neighbor: Pro & Cons
+
+Pro
+
+* Do not require the construction of a model
+* Compared with rule-based or decision tree systems, they allow the construction of nonlinear class "contours" and are therefore more flexible
+
+Cons
+
+* Require a similarity or distance measure to assess closeness
+* Require a pre-processing step to normalize the range of variation of attributes
+* Class is locally determined and therefore susceptible to data noise
+* Are very sensitive to the presence of irrelevant or related attributes that will distort distances between objects
+* Classification cost can be high and depends linearly on the size of the training set in the absence of appropriate __index structures__
+
+# The R-Tree Index Structure (Guttman, 1984)
+
+R-trees are extensions of B+-trees to multi-dimensional spaces.
+
+B+-trees organize objects into
+
+* A set of nonoverlapping one-dimensional intervals
+* They apply this principle recursively from the leaves to the root
+
+R-trees organize objects into
+
+* A set of overlapping multi-dimensional intervals (hyper-rectangles)
+* They apply this principle recursively from the leaves to the root
+
+R-trees are available in many commercial DBMSs, such as Oracle DMMS, since version 9
+
+# R-Tree basic idea
+
+- Recursive aggregation of objects based on minimum bounding rectangle - MBR
+- Regions can overlap
+- The 2-D range query must check objects in G/H/L MBRs only
+
+![R-tree](img/knn/Immagine3.png)
+
+# Summary: when should I use k-NN?
+
+**Use k-NN when:**
+
+- Similar cases are expected to have similar outputs
+- The dataset is not too large or an efficient neighbor index is available
+- You want a flexible, non-linear baseline with almost no training time
+
+**Be careful when:**
+
+- Features use different scales or include irrelevant dimensions
+- Prediction latency matters
+- The data are sparse or high-dimensional
+
+**Remember:** scale features, select the metric and $k$ with validation data, and keep the test set untouched.
