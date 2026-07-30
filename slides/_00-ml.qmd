@@ -1,4 +1,4 @@
-#
+# AI is already changing technology, work, and society
 
 - [(Mar 2, 2026) Anthropic's AI model Claude gets popularity boost after US military feud](https://www.theguardian.com/technology/2026/mar/02/claude-anthropic-ai-pentagon)
 - [(May 29, 2025) IA e Lavoro Gen-Z](https://www.ilsole24ore.com/art/l-intelligenza-artificiale-gia-ruba-lavoro-giovani-gen-z-AHgfnmz)
@@ -12,6 +12,11 @@
 - [(Sep 11, 2023) These Prisoners Are Training AI](https://www.wired.com/story/prisoners-training-ai-finland/)
 - [(Aug 31, 2023) The Tropical Island With the Hot Domain Name](https://www.bloomberg.com/news/articles/2023-08-31/ai-startups-create-digital-demand-for-anguilla-s-website-domain-name)
 - ... and many others
+- [(Oct 15, 2024) Google turns to nuclear to power AI data centres](https://www.bbc.com/news/articles/c748gn94k95o)
+
+#
+
+The headlines change; the recurring questions do not: **what can AI do, how does it learn, and where does value come from?**
 
 #
 
@@ -20,72 +25,80 @@
 # What is Artificial Intelligence?
 
 Artificial intelligence (AI) is the capability of *computational systems* to perform tasks typically associated with *human intelligence*, such as learning, reasoning, problem-solving, perception, and decision-making.
-​
 
 ::::{.columns}
 :::{.column width=50%}
-AI refers to a broad field of science encompassing _not only_ computer science but _also psychology_, _philosophy_, _linguistics_ and other areas.
+AI is an interdisciplinary field involving computer science, statistics, psychology, philosophy, linguistics, and other areas.
 
 Applications:
 
-- Computer Vision  ​
-- Natural language processing (NLP)  ​
-- Robotics & Motion  ​
-- Planning and optimization  ​
-- Knowledge capture
+- Computer vision
+- Natural language processing
+- Robotics and motion
+- Planning and optimization
+- Knowledge representation
 :::
 :::{.column width=50%}
 ![AI Agent](img/orig_148.jpg)
 :::
 ::::
 
-# AI: definition and types
+::: {.notes}
+[Sources]
 
-According to the Computer Science view: __"Intelligent (software) agents"__ perceiving their environment and taking __actions__ to achieve a __goal__.
+- [OECD.AI - updated definition of an AI system](https://oecd.ai/en/wonk/definition-)
+:::
 
-_Narrow or Weak AI_ performs some __traditional goals__
+# AI capabilities range from narrow to general
 
-* Reasoning, planning, learning, natural language processing, image recognition...
+**Narrow AI** is designed for a bounded capability, such as:
 
-_Artificial general intelligence (AGI)_, also _called Strong AI_ performs a full range of human abilities
+- Image recognition
+- Language processing
+- Recommendation
+- Planning and optimization
 
-* Some predict it will be 2050 before we can achieve this
-* _We are not sure if we will ever understand consciousness_
+**Artificial general intelligence (AGI)** refers to a hypothetical system able to perform a broad range of intellectual tasks at a human level.
 
-# Artificial Intelligence (AI)
+The distinction concerns the **scope of capabilities**, not one specific algorithm.
+
+# A foundational question: can machines think?
 
 ![Alan Turing (23 June 1912 - 7 June 1954)](img/orig_149.jpg)
 
-> "AI is the science and engineering of making intelligent machines, especially intelligent computer programs."
-
-# Data Mining
-
-> **Data mining** [@chakrabarti2006data]
+> “Can machines think?”
 >
-> - Is the process of extracting and discovering *patterns* in large datasets
-> - ... Involving methods at the intersection of machine learning, statistics, and database systems.
-> - It is an interdisciplinary field, including computer science and statistics
+> - Alan Turing, 1950
 
-![AI, Data Mining, and Machine Learning](./img/00-ml/data-mining-Venn-diagram.png)
+::: {.notes}
+[Sources]
 
-# Pattern
+- [Alan Turing, *Computing Machinery and Intelligence* (1950)](https://academic.oup.com/mind/article/LIX/236/433/986238)
+- John McCarthy later defined AI as “the science and engineering of making intelligent machines”: [Stanford HAI](https://hai.stanford.edu/ai-definitions/what-is-artificial-intelligence-ai)
+:::
 
-A *pattern* is a synthetic representation rich in semantics of a subset of data.
+# Data mining turns large datasets into useful patterns
 
-- Something recurring in the data that can be described in a compact way
-- ... or an anomaly!
+**Data mining** is the process of discovering useful **patterns** in large datasets [@chakrabarti2006data].
 
-A pattern must be:
+- It combines machine learning, statistics, and database systems
+- It includes the preparation, analysis, interpretation, and communication of data
+- Its goal is not only to find patterns, but to turn them into useful knowledge
 
-* Valid on data with a certain degree of confidence
-* Understood from the syntax and semantic point of view, so that the user can interpret it
-* Previously unknown and potentially useful, so that the user can take actions accordingly
+# Useful patterns support understanding and action
 
-# Pattern: Example
+A **pattern** is a compact, meaningful description of something recurring-or unexpectedly absent-in the data.
+
+- **Valid:** supported by the data with sufficient confidence
+- **Interpretable:** understandable to the intended user
+- **Novel:** not already obvious or known
+- **Actionable:** capable of informing a decision or action
+
+# A decision rule is a compact pattern
 
 ![Pattern: `IF income < k THEN reject ELSE accept`](img/00-ml/loan.svg)
 
-# What Data Mining is/is not? {visibility="hidden"}
+# Which tasks actually require data mining? {visibility="hidden"}
 
 Look for a number in the phone book.
 
@@ -111,22 +124,20 @@ Group documents based on context information (e.g., "Amazon rainforest", "Amazon
 - Requires a semantic understanding of the text through NLP and ontologies
 :::
 
-# Why Mining Data?
+# More data creates more analysis work
 
-The amount of **data** stored on computers is constantly increasing.
+The amount of stored **data** continues to grow:
 
-* Digitalization of business processes
-    * Purchases, tax receipts, banking, and credit card transactions, etc.
-* IoT data
-* Social data
+- Digital business processes and transactions
+- Internet of Things devices
+- Social and communication platforms
 
-**Hardware** becomes more powerful and "cheaper" each day
+At the same time:
 
-**Competitive pressure** is constantly growing:
+- Computing and storage make large-scale analysis feasible
+- Organizations compete on how effectively they use information
 
-* The information resource is a precious asset in overcoming competitors
-
-# Why Mining Data?
+# Data does not become information by itself
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -134,34 +145,36 @@ The amount of **data** stored on computers is constantly increasing.
 :::
 ::: {.column width="50%"}
 - Information is not directly accessible from data
-- Human analysis can take weeks to find useful information
-- Most of the data has never been analyzed
+- Manual analysis does not scale with data volume and variety (most of the data has never been analyzed)
+- Automated methods help prioritize patterns for human interpretation
 :::
 ::::
 
-# Machine Learning
+# Machine learning learns patterns that generalize
 
 Machine learning (ML) is a field of study in artificial intelligence.
 
-- The development and study of statistical algorithms that can learn from data
-- ... and generalize to unseen data and thus perform tasks without explicit (coding) instructions
+- ML algorithms learn patterns from data
+- The learned patterns are used to make predictions or decisions on unseen data
+- Performance on new data-not memorization of training examples-is the central goal (i.e., generalize to unseen dat)
 
 ![Overview](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/AI-ML-DL.svg/1280px-AI-ML-DL.svg.png)
 
-# Machine Learning
+# Learning connects task, experience, and performance
 
 > **Machine Learning** [@mitchell1997machine] is the study of algorithms that
 >
 > - Improve their performance $P$
 > - At some task $T$
 > - With experience $E$
-> - A well-defined learning task is given by $<P, T, E>$
+>
+> A well-defined learning problem is therefore described by $\langle T, E, P \rangle$.
 
-# AI, Machine Learning & Data Mining
+# Machine learning is one tool within data mining
 
 :::: {.columns}
 ::: {.column width="50%"}
-*Machine learning* is a subset of AI and is distinct from *data mining*"*
+**Machine learning** is a subset of AI and is distinct from **data mining**.
 
 - Data mining is pattern discovery in large datasets using ML, AI, statistics, and databases.
 - Apart from the actual analysis phase, it covers:
@@ -175,59 +188,59 @@ Machine learning (ML) is a field of study in artificial intelligence.
 :::
 ::::
 
-# AI, Machine Learning & Data Mining
+# Machine learning is only one part of a real project
 
 ![The role of Machine Learning in a real project. The larger the size, the longer the time taken by an activity](img/intro/1-Introduction_8.png)
 
-# Before Machine Learning: Classical Programming
+# Classical programs (without ML) apply rules written by people
 
 ![Classical Programming](./img/00-ml/ml1.svg)
 
-# A Simple Example: Calculator
+# Classical programming works when the rules are known
 
 Create a calculator that computes the sum of two numbers.
 
 **T**ask: $Z = X + Y$
 
-# Classical Programming
+# The programmer supplies the decision logic
 
 <img src="./img/00-ml/ml3.svg" class="center-img">
 
-# Machine Learning
+# Machine learning derives decision logic from examples
 
-(Supervised) Machine learning is usually divided into two steps:
+Supervised machine learning has two distinct phases:
 
-- Train with **E**xperience (training set)
-- Generalize to unseen data (test set) and evaluate the **P**erformance
-- Training and test sets are not overlapping (they do not share the same data)
+- **Training:** learn from experience in the training set
+- **Testing:** estimate performance on unseen examples
+- The training and test sets must not contain the same records (they must not share data)
 
 ![Machine Learning](./img/00-ml/ml2.svg)
 
-# Training the model
+# Training fits the model to examples
 
 **E**xperience: training data
 
 <img src="./img/00-ml/ml4.svg" class="center-img">
 
-# Testing the Model
+# Testing checks generalization
 
-**P**erformance: checking accurate predictions
+**P**erformance: measure prediction quality on unseen data
 
 <img src="./img/00-ml/ml5.svg" class="center-img">
 
-#
+# Machine learning is powerful-not magic
 
 ![What is machine learning?](https://imgs.xkcd.com/comics/machine_learning.png)
 
-# Depending (also) on the task, there are many types of machine learning algorithms!
+# The task determines the learning setup
 
-# Taxonomy of Machine Learning {background-color="#121011"}
+# Three learning setups organize the field {background-color="#121011"}
 
 - **Supervised Learning**: models are trained using labeled data to learn a mapping from inputs to labels
 - **Unsupervised Learning**: algorithms find patterns, structures, and insights in unlabeled data without predefined answers
-- **Reinforcement Learning**: an agent learns to make optimal decisions by interacting with a dynamic environment through trial-and-error
+- **Reinforcement Learning**: an agent improves its decisions by interacting with an environment and learning from feedback
 
-# Taxonomy of Machine Learning
+# Supervised learning learns from labeled examples
 
 - *Supervised Learning*: models are trained using labeled data to learn a mapping from inputs to *labels*
     - **Classification**: the label is nominal; spam detection (`yes`/`no`), diagnosis (`healthy`/`sick`)
@@ -235,19 +248,19 @@ Create a calculator that computes the sum of two numbers.
 - Unsupervised Learning
 - Reinforcement Learning
 
-# Real-world applications of supervised learning
+# Supervised learning recognizes visual patterns
 
 ![Computer vision](img/00-ml/computervision.png)
 
-# Real-world applications of supervised learning
+# Supervised learning filters unwanted messages
 
 ![Spam detection](https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2023/07/02/image001-2.png)
 
-# Real-world applications of supervised learning
+# Supervised learning predicts customer behavior
 
 ![Customer churn prediction](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*WZdoYPpmiIk1AcPQ1YHWug.png)
 
-# Taxonomy of Machine Learning
+# Classification predicts a categorical label
 
 - *Supervised Learning*
     - *Classification*: the label is nominal; spam detection (`yes`/`no`), diagnosis (`healthy`/`sick`)
@@ -262,30 +275,26 @@ Create a calculator that computes the sum of two numbers.
 - Unsupervised Learning
 - Reinforcement Learning
 
-# Classification > Model-Based Methods
+# Model-based classifiers learn a decision function
 
-Given a *dataset* (i.e., a collection of data points/records)
+Given a **dataset**, i.e. a collection of records:
 
-* Each record is composed of a set of _attributes_ (aka features), where one ot them represents the _class_ (aka label) of the record.
+- Each record has a set of **features**
+- During training, one attribute provides the known **class** or **label**
 
 Goal:
 
-* Find a  _model_ to express the class attribute as a function of the other attributes
-    * A [model](https://en.wikipedia.org/wiki/Model) is an informative, simplified representation of an object or system.
-* ... so that new unseen records can be assigned to the right class in the most accurate way
+- Learn a **model** that maps features to a class
+  - * A [model](https://en.wikipedia.org/wiki/Model) is an informative, simplified representation of an object or system.
+- Use that model to predict the class of unseen records accurately
 
-# Classification > Model-Based Methods
+# Training and testing serve different purposes
 
-How?
+1. Split the original dataset into non-overlapping training and test sets
+1. Learn the model from the training set
+1. Use the test set only to evaluate performance on unseen records
 
-1. The original dataset is split into two subsets: the training set and the test set.
-    * A _training set_ is used to learn the model.
-    * A _test set_ is used to determine the model accuracy when generalizing on unseen data.
-    * They are not overlapping! (they do not share the same data)
-2. Learn the model on the training set
-3. Evaluate the model performance on the test set.
-
-# Classification > Model-Based Methods
+# Training learns a model from labeled examples
 
 *Training*: learn a model to generalize from training data
 
@@ -295,25 +304,8 @@ flowchart LR
     A[(Training Data)] --> B[Training / Model Learning]
     B --> C[Trained Model]
 ```
-```{mermaid}
-%%| echo: false
-flowchart LR
-    JSx-->J2APd
-    JDx-->J2APr
-    J2APd-->AAPd
-    J2APr-->AAPr
-```
 
-```{mermaid}
-%%| echo: false
-flowchart LR
-    JSx-->J2APd
-    JSx-->J2APr
-    J2APd-->AAPd
-    J2APr-->AAPr
-    JDx
-```
-# Classification > Model-Based Methods
+# Testing estimates performance on unseen examples
 
 *Testing*: verify the generalization of the model on unseen data
 
@@ -330,21 +322,21 @@ flowchart LR
     D --> F(Performance Metric)
 ```
 
-# Classification > Model-Based Methods > Decision Trees
+# Decision trees learn explicit decision rules
 
 <img src="./img/00-ml/ml7.svg" class="center-img">
 
-# Classification > Model-Based Methods > Decision Trees
+# A tree predicts by following one decision path
 
 <img src="./img/00-ml/ml6.svg" class="center-img">
 
-# Classification > Model-Based Methods > Neural Networks
+# Neural networks compose learned transformations
 
 ![Neural networks](http://neuralnetworksanddeeplearning.com/images/tikz36.png)
 
-# Classification > Instance-Based Methods
+# Instance-based methods predict from similar examples
 
-Instance-based methods: store training examples and compare new inputs to known cases
+Instance-based methods store training examples and compare new inputs with known cases.
 
 * No explicit training phase
 * Rely on similarity or distance measures
@@ -361,64 +353,61 @@ flowchart LR
     E --> G(Performance Metric)
 ```
 
-# Classification > Instance-Based Methods > k-Nearest Neighbors
+# k-NN predicts from nearby training examples
 
 ![k-nearest neighbors](https://upload.wikimedia.org/wikipedia/commons/7/78/KNN_decision_surface_animation.gif)
 
-# Classification > Ensemble Methods {visibility="hidden"}
+# Ensembles combine multiple models {visibility="hidden"}
 
-Ensemble Methods: combine multiple models to improve performance
+Ensemble methods combine multiple models to improve predictive performance.
 
-![Ensamble Methods](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ensemble_Aggregation.png/1280px-Ensemble_Aggregation.png)
+![Ensemble methods](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ensemble_Aggregation.png/1280px-Ensemble_Aggregation.png)
 
-# Taxonomy of Machine Learning {background-color="#121011"}
+# Unsupervised learning finds structure without labels {background-color="#121011"}
 
 - Supervised Learning
 - *Unsupervised Learning*: algorithms to find patterns and insights in unlabeled data
     - **Clustering**: group similar data points together (e.g., customer segmentation)
-    - **Association Rule**: discover relationships between attributes (e.g., market basket analysis)
+    - **Association rules**: discover relationships between attributes (e.g., market basket analysis)
 - Reinforcement Learning
 
-# Real-world applications of unsupervised learning
+# Unsupervised learning segments customers
 
 ![Customer segmentation](img/datapreprocessing/clustering.svg)
 
-# Real-world applications of unsupervised learning
+# Unsupervised learning reveals communities
 
 ![Community detection](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*skhjgApyDIPbJNolIZCF5w.png)
 
-# Real-world applications of unsupervised learning
+# Unsupervised learning discovers co-occurrence
 
 ![Market basket analysis](https://upload.wikimedia.org/wikipedia/commons/4/4a/AffinityAnalysis.png)
 
-# Clustering
+# Clustering groups points by similarity
 
-Given a dataset, a *similarity measure* between data points, and a *cluster model*, find subsets (aka clusters) of points such that:
+Given a dataset, a **similarity measure**, and a **cluster model**, find groups such that:
 
 - Points belonging to a cluster are more similar to each other
-- ... than those belonging to other clusters
+- Points in different clusters are less similar
 
-Similarity measures
+The choices depend on the data:
 
-- Euclidean distance is applicable if point attributes assume continuous values
-- Many other measures are available or can be defined for each specific domain
+- **Similarity measure:** Euclidean distance is one option for continuous features (but many other exist)
+- **Cluster model:**
+  - *partitioning* creates separate groups;
+  - *hierarchical* creates nested groups
 
-Cluster models
-
-- Partitioning: divide data points into non-overlapping groups (clusters)
-- Hierarchical: build a tree of nested clusters
-
-# Taxonomy of Machine Learning
+# Clustering can be partitioning or hierarchical
 
 - Supervised Learning
 - *Unsupervised Learning*
     - *Clustering*: group similar data points together (e.g., customer segmentation)
         - **Partitioning**: divide data points into non-overlapping groups (clusters)
         - **Hierarchical**: build a tree of nested clusters, showing relationships between data points at different levels
-    - Association Rule
+    - Association rules
 - Reinforcement Learning
 
-# Taxonomy of Machine Learning
+# Partitioning can use centers or density
 
 - Supervised Learning
 - *Unsupervised Learning*
@@ -429,10 +418,10 @@ Cluster models
             - **Density-Based**: group data points that are closely packed together and mark outliers as noise based on their density
                 - DBSCAN
         - Hierarchical
-    - Association Rule
+    - Association rules
 - Reinforcement Learning
 
-# Clustering > Partitioning
+# Centers and density produce different cluster shapes
 
 ::::{.columns}
 ::: {.column width="50%"}
@@ -450,7 +439,7 @@ Cluster models
 :::
 ::::
 
-# Taxonomy of Machine Learning
+# Hierarchical clustering builds nested groups
 
 - Supervised Learning
 - *Unsupervised Learning*
@@ -458,10 +447,10 @@ Cluster models
         - Partitioning
         - *Hierarchical*: build a tree of nested clusters, showing relationships between data points at different levels
             - **Agglomerative clustering** (bottom-up approach)
-    - Association Rule
+    - Association rules
 - Reinforcement Learning
 
-# Clustering > Hierarchical > Agglomerative
+# Agglomerative clustering merges the closest groups
 
 *Agglomerative clustering* ("bottom-up" approach)
 
@@ -470,17 +459,17 @@ Cluster models
 
 ![Hierarchical Clustering](https://upload.wikimedia.org/wikipedia/commons/1/12/Iris_dendrogram.png)
 
-# Taxonomy of Machine Learning
+# Association rules describe co-occurrence patterns
 
 - Supervised Learning
 - *Unsupervised Learning*
     - Clustering
         - Partitioning
         - Hierarchical
-    - **Association Rule**: discover relationships between attributes (e.g., market basket analysis)
+    - **Association rules**: discover relationships between attributes (e.g., market basket analysis)
 - Reinforcement Learning
 
-# Association Rule Mining
+# Association rules start from transaction data
 
 |ID| milk| bread| butter| beer| diapers| eggs| fruit|
 |--| --| --| --| --| --| --| --|
@@ -490,43 +479,68 @@ Cluster models
 |4| 1| 1| 1| 0| 0| 1| 1|
 |5| 0| 1| 0| 0| 0| 0| 0|
 
-:::{.fragment}
-$\text{support}(A)=P(A)={\frac {({\text{number of transactions containing }}A)}{\text{ (total number of transactions)}}}$
+Which items occur together often enough to form a useful rule?
 
-$\mathrm {conf} (X\Rightarrow Y)=P(Y|X)={\frac {\mathrm {supp} (X\cup Y)}{\mathrm {supp} (X)}}={\frac {{\text{number of transactions containing }}X{\text{ and }}Y}{{\text{number of transactions containing }}X}}$
-:::
+# Support measures how often an itemset occurs
 
-:::{.fragment}
-|if Antecedent then Consequent|support |support $\cdot$ confidence|
-|--| --| --|
-|if buy milk, then buy bread |$\frac{2}{5}= 0.4$ |$0.4\cdot1.0= 0.4$|
-|if buy milk, then buy eggs |$\frac{1}{5}= 0.2$ |$0.2\cdot0.5= 0.1$|
-|if buy bread, then buy fruit |$\frac{2}{5}= 0.4$ | $0.4\cdot0.66= 0.264$|
-|if buy milk and bread, then buy fruit| $\frac{2}{5}= 0.4$| $0.4\cdot1.0= 0.4$ |
-:::
+For an itemset $A$:
 
+$$
+\operatorname{support}(A)
+=P(A)
+=\frac{\text{transactions containing }A}
+{\text{total transactions}}
+$$
 
-# Taxonomy of Machine Learning {background-color="#121011"}
+Example:
+
+$$
+\operatorname{support}(\{\text{milk, bread}\})=\frac{2}{5}=0.40
+$$
+
+# Confidence measures how reliably a rule holds
+
+For the rule $X\Rightarrow Y$:
+
+$$
+\operatorname{confidence}(X\Rightarrow Y)
+=P(Y\mid X)
+=\frac{\operatorname{support}(X\cup Y)}
+{\operatorname{support}(X)}
+$$
+
+| Rule | Support | Confidence |
+|---|---:|---:|
+| milk $\Rightarrow$ bread | $2/5=0.40$ | $2/2=1.00$ |
+| milk $\Rightarrow$ eggs | $1/5=0.20$ | $1/2=0.50$ |
+| bread $\Rightarrow$ fruit | $2/5=0.40$ | $2/3=0.67$ |
+| milk, bread $\Rightarrow$ fruit | $2/5=0.40$ | $2/2=1.00$ |
+
+# Reinforcement learning improves decisions with feedback {background-color="#121011"}
 
 - Supervised Learning
 - Unsupervised Learning
 - **Reinforcement Learning**: an agent learns to make optimal decisions by interacting with a dynamic environment through trial-and-error
 
-# Reinforcement Learning
+# An agent learns by acting and observing rewards
 
 ![Reinforcement Learning](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Reinforcement_learning_diagram.svg/1920px-Reinforcement_learning_diagram.svg.png)
 
-# Agentic AI {background-color="#121011"}
+# Agentic AI connects models to goals and tools {background-color="#121011"}
 
-*Agentic AI* builds on *generative AI* (gen AI) techniques by using large language models (LLMs) to function in dynamic environments.
+An **agentic AI system** can plan multi-step work, call tools, observe results, and adapt its next action toward a goal.
 
-- The term "agentic" refers to these models' agency, or their capacity to act independently and purposefully.
-- Generative models focus on creating content based on learned patterns
-    - A generative AI model like OpenAI's ChatGPT might produce text, images, or code
-- Agentic AI extends this capability by applying generative outputs toward specific goals
-    - An agentic AI system can use that generated content to complete complex tasks autonomously by calling external tools.
+- **Generative model:** produces content from learned patterns
+- **Agentic system:** uses models and tools to complete a workflow
+- More autonomy increases the importance of evaluation, oversight, and traceability
 
-# {background-color="#121011"}
+::: {.notes}
+[Sources]
+
+- [NIST - Building Evaluation Probes into Agentic AI](https://www.nist.gov/programs-projects/building-evaluation-probes-agentic-ai)
+:::
+
+# Computer science is about ideas, not machines {background-color="#121011"}
 
 > Computer science is no more about computers than astronomy is about telescopes.
 >
