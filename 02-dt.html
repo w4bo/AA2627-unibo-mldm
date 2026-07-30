@@ -445,22 +445,102 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </table>
 </section>
 
+<section id="supervised-learning-decision-trees" class="title-slide slide level1 center">
+<h1>Supervised learning: decision trees</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[("Training set
+&lt;pre&gt;
++-----+----------+-------+
+| ... | type     | churn |
++-----+----------+-------+
+| ... | basic    | yes   |
+| ... | basic    | yes   |
+| ... | standard | no    |
+| ... | ...      | ...   |
+&lt;/pre&gt;")]
+G[("Test set
+&lt;pre&gt;
++-----+---------+-------+
+| ... | type    | churn |
++-----+---------+-------+
+| ... | basic   | ?     |
+| ... | basic   | ?     |
+| ... | premium | ?     |
+&lt;/pre&gt;")]
+F[("
+Predicted class
+&lt;pre&gt;
++-------+
+| churn |
++-------+
+| yes   |
+| yes   |
+| no    |
+&lt;/pre&gt;")]
+    A --&gt;|Induction| B[Learn Model]
+    C(DT Algorithm) --&gt; B
+    B --&gt; D[DT Model]
+    D --&gt;|Deduction| F
+    G --&gt; D
+
+    style D fill:#f78c8c,stroke:#000
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+
 <section id="intuition-divide-the-feature-space" class="title-slide slide level1 center">
 <h1>Intuition: divide the feature space</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
 <p>A decision tree solves a difficult classification problem through a sequence of simpler questions.</p>
 <ul>
-<li>Each internal node asks one question about one feature</li>
+<li>Each internal node asks one question about one feature:
+<ul>
+<li>Which question best separates customers who churn from those who stay?</li>
+</ul></li>
 <li>Each answer restricts the set of possible records</li>
 <li>A root-to-leaf path behaves like an <strong>if–then rule</strong></li>
 <li>Training searches for questions that make the resulting groups as pure as possible</li>
 </ul>
-<blockquote>
-<p>At each node: which question best separates customers who churn from those who stay?</p>
-</blockquote>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[monthly_watch_hours] --&gt;|&lt;= 8| B[auto_pay]
+    A --&gt;|&gt;8| C((no))
+    style C fill:#a3f7a3,stroke:#000,stroke-width:1px
+
+    B --&gt;|no| D((yes))
+    B --&gt;|yes| E[tickets]
+    style D fill:#f78c8c,stroke:#000,stroke-width:1px
+
+    E --&gt;|&gt;= 2| F((yes))
+    E --&gt;|&lt; 2| G((no))
+    style F fill:#f78c8c,stroke:#000,stroke-width:1px
+    style G fill:#a3f7a3,stroke:#000,stroke-width:1px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
 </section>
 
 <section id="formal-definition-decision-tree" class="title-slide slide level1 center">
-<h1>Formal definition: Decision Tree</h1>
+<h1>Formal definition: decision tree</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
 <p>One of the most widely used classification techniques</p>
@@ -505,8 +585,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="worked-example-reading-a-decision-tree" class="title-slide slide level1 center">
-<h1>Worked example: reading a decision tree</h1>
+<section id="tree-learned-from-the-training-data" class="title-slide slide level1 center">
+<h1>Tree learned from the training data</h1>
 <div class="columns">
 <div class="column" style="width:70%;">
 <table class="caption-top">
@@ -631,59 +711,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="decision-tree-an-example" class="title-slide slide level1 center">
-<h1>Decision Tree: an example</h1>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A[("Training set
-&lt;pre&gt;
-+-----+----------+-------+
-| ... | type     | churn |
-+-----+----------+-------+
-| ... | basic    | yes   |
-| ... | basic    | yes   |
-| ... | standard | no    |
-| ... | ...      | ...   |
-&lt;/pre&gt;")]
-G[("Test set
-&lt;pre&gt;
-+-----+---------+-------+
-| ... | type    | churn |
-+-----+---------+-------+
-| ... | basic   | ?     |
-| ... | basic   | ?     |
-| ... | premium | ?     |
-&lt;/pre&gt;")]
-F[("
-Predicted class
-&lt;pre&gt;
-+-------+
-| churn |
-+-------+
-| yes   |
-| yes   |
-| no    |
-&lt;/pre&gt;")]
-    A --&gt;|Induction| B[Learn Model]
-    C(DT Algorithm) --&gt; B
-    B --&gt; D[Model Tree]
-    D --&gt; E(Apply model)
-    E --&gt;|Deduction| F
-    G --&gt; E[("Apply Model")]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-
-<section id="check-your-understanding-apply-the-model" class="title-slide slide level1 center">
-<h1>Check your understanding: apply the model</h1>
+<section id="reading-a-decision-tree-and-predicting-the-class" class="title-slide slide level1 center">
+<h1>Reading a decision tree and predicting the class</h1>
 <p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
 <colgroup>
@@ -717,8 +746,8 @@ Predicted class
 </table>
 </section>
 
-<section id="applying-the-model" class="title-slide slide level1 center">
-<h1>Applying the model</h1>
+<section id="reading-a-decision-tree-and-predicting-the-class-1" class="title-slide slide level1 center">
+<h1>Reading a decision tree and predicting the class</h1>
 <p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
 <colgroup>
@@ -780,8 +809,8 @@ Predicted class
 </div>
 </section>
 
-<section id="applying-the-model-1" class="title-slide slide level1 center">
-<h1>Applying the model</h1>
+<section id="reading-a-decision-tree-and-predicting-the-class-2" class="title-slide slide level1 center">
+<h1>Reading a decision tree and predicting the class</h1>
 <p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
 <colgroup>
@@ -845,8 +874,8 @@ Predicted class
 </div>
 </section>
 
-<section id="applying-the-model-2" class="title-slide slide level1 center">
-<h1>Applying the model</h1>
+<section id="reading-a-decision-tree-and-predicting-the-class-3" class="title-slide slide level1 center">
+<h1>Reading a decision tree and predicting the class</h1>
 <p>What is the predicted class for the following test data?</p>
 <table class="caption-top">
 <colgroup>
@@ -911,8 +940,8 @@ Predicted class
 </div>
 </section>
 
-<section id="learning-the-model" class="title-slide slide level1 center" data-background-color="#121011">
-<h1>Learning the model</h1>
+<section id="supervised-learning-decision-trees-1" class="title-slide slide level1 center">
+<h1>Supervised learning: decision trees</h1>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -922,12 +951,12 @@ Predicted class
     A[("Training set")]
     G[("Test set")]
     F[("Predicted class")]
+
     A --&gt;|Induction| B[Learn Model]
     C(DT Algorithm) --&gt; B
-    B --&gt; D[Model Tree]
-    D --&gt; E(Apply model)
-    E --&gt;|Deduction| F
-    G --&gt; E[("Apply Model")]
+    B --&gt; D[DT Model]
+    D --&gt;|Deduction| F
+    G --&gt; D
 
     style B fill:#f78c8c,stroke:#000
     style C fill:#f78c8c,stroke:#000
@@ -939,7 +968,7 @@ Predicted class
 </div>
 </section>
 
-<section id="learning-the-model-1" class="title-slide slide level1 center">
+<section id="learning-the-model" class="title-slide slide level1 center">
 <h1>Learning the model</h1>
 <p>The decision tree grows exponentially with the number of attributes. Algorithms generally use greedy techniques that locally make the “best” choice.</p>
 <p>Many algorithms are available:</p>
@@ -961,8 +990,8 @@ Predicted class
 </ul>
 </section>
 
-<section id="the-hunts-algorithm" class="title-slide slide level1 center">
-<h1>The Hunt’s Algorithm</h1>
+<section id="hunts-algorithm" class="title-slide slide level1 center">
+<h1>Hunt’s algorithm</h1>
 <div class="columns">
 <div class="column" style="width:85%;">
 <p>Recursive approach that progressively subdivides a set of <span class="math inline">\(D_t\)</span> records into pure record sets</p>
@@ -1059,7 +1088,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="further-remarks" class="title-slide slide level1 center">
-<h1>Further Remarks…</h1>
+<h1>Further remarks…</h1>
 <p>Finding an optimal decision tree is an NP-Complete problem, but many heuristic algorithms are available and very efficient.</p>
 <ul>
 <li>Most approaches run a top-down recursive partition based on greedy criteria</li>
@@ -1076,13 +1105,13 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="further-remarks-1" class="title-slide slide level1 center">
-<h1>Further Remarks…</h1>
+<h1>Further remarks…</h1>
 <p>Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.</p>
 
 <img data-src="img/dt/image12.png" class="r-stretch quarto-figure-center"><p class="caption">Decision boundary parallel to the axes</p></section>
 
 <section id="further-remarks-2" class="title-slide slide level1 center">
-<h1>Further Remarks…</h1>
+<h1>Further remarks…</h1>
 <p>This split is not feasible with traditional decision trees</p>
 
 <img data-src="img/dt/3-Decision%20Tree_19.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(X-Y = 1\)</span></p></section>
@@ -1093,13 +1122,8 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <ul>
 <li><strong>The split condition</strong></li>
 <li>The criterion defining the best split</li>
-<li>The criterion for interrupting splitting</li>
-<li>Methods for evaluating the goodness of a decision tree</li>
+<li>The criterion for interrupting splitting # Defining the split condition</li>
 </ul>
-</section>
-
-<section id="defining-the-split-condition" class="title-slide slide level1 center">
-<h1>Defining the Split Condition</h1>
 <p>Depends on the type of attribute</p>
 <ul>
 <li>Nominal</li>
@@ -1114,7 +1138,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="splitting-nominal-attributes" class="title-slide slide level1 center">
-<h1>Splitting <em>Nominal</em> Attributes</h1>
+<h1>Splitting <em>nominal</em> attributes</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><em>N-ary split</em>: creates as many partitions as there are attribute values</p>
@@ -1177,7 +1201,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="splitting-ordinal-attributes" class="title-slide slide level1 center">
-<h1>Splitting <em>Ordinal</em> Attributes</h1>
+<h1>Splitting <em>ordinal</em> attributes</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><em>N-ary split</em>: creates as many partitions as there are attribute values</p>
@@ -1240,7 +1264,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="splitting-continuous-attributes" class="title-slide slide level1 center">
-<h1>Splitting Continuous Attributes</h1>
+<h1>Splitting continuous attributes</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><em>N-ary split</em>: The split condition can be expressed as a Boolean test that results in multiple ranges of values. The algorithm must consider the entire possible range of values as possible split points</p>
@@ -1286,7 +1310,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="splitting-continuous-attributes-1" class="title-slide slide level1 center">
-<h1>Splitting <em>Continuous</em> Attributes</h1>
+<h1>Splitting <em>continuous</em> attributes</h1>
 <p>A discretization technique can be used to manage the complexity of the search for optimal split points.</p>
 <ul>
 <li><strong>Static:</strong> discretization takes place only once before applying the algorithm</li>
@@ -1301,12 +1325,11 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li>The split condition</li>
 <li><strong>The criterion defining the best split</strong></li>
 <li>The criterion for interrupting splitting</li>
-<li>Methods for evaluating the goodness of a decision tree</li>
 </ul>
 </section>
 
-<section id="how-to-determine-the-best-split-value" class="title-slide slide level1 center">
-<h1>How to determine the best split value?</h1>
+<section id="how-do-we-determine-the-best-split-value" class="title-slide slide level1 center">
+<h1>How do we determine the best split value?</h1>
 <p>Before splitting a single class with 10 records in the C0 class and 10 records in the C1 class</p>
 
 <img data-src="./img/dt/image19.png" class="r-stretch"><p>The split criterion must allow you to determine more pure classes. It needs a measure of purity.</p>
@@ -1317,13 +1340,13 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="how-to-determine-the-best-split-value-1" class="title-slide slide level1 center">
-<h1>How to determine the best split value?</h1>
+<section id="how-do-we-determine-the-best-split-value-1" class="title-slide slide level1 center">
+<h1>How do we determine the best split value?</h1>
 
 <img data-src="./img/dt/image20.png" class="r-stretch quarto-figure-center"><p class="caption">Gain = M0 - M12 vs M0 - M34</p></section>
 
 <section id="impurity-measures" class="title-slide slide level1 center">
-<h1>Impurity Measures</h1>
+<h1>Impurity measures</h1>
 <p>Given a node <span class="math inline">\(p\)</span> with records belonging to <span class="math inline">\(k\)</span> classes and its partitioning into <span class="math inline">\(n\)</span> child nodes</p>
 <ul>
 <li><span class="math inline">\(M\)</span> = record number in parent node <span class="math inline">\(p\)</span></li>
@@ -1343,12 +1366,12 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="comparing-impurity-measures" class="title-slide slide level1 center">
-<h1>Comparing Impurity Measures</h1>
+<h1>Comparing impurity measures</h1>
 
 <img data-src="img/dt/3-Decision%20Tree_48.png" class="r-stretch quarto-figure-center"><p class="caption">Impurity measures behavior for a two-class problem</p></section>
 
 <section id="computing-gini-for-binary-attributes" class="title-slide slide level1 center">
-<h1>Computing Gini for <em>Binary</em> Attributes</h1>
+<h1>Computing Gini for <em>binary</em> attributes</h1>
 
 <img data-src="./img/dt/image21.png" class="r-stretch"><ul>
 <li><span class="math inline">\(Gini(N3) = 1 - (\frac{5}{7})^2 - (\frac{2}{7})^2 = 0.408\)</span></li>
@@ -1358,7 +1381,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="computing-gini-for-categorical-attributes" class="title-slide slide level1 center">
-<h1>Computing Gini for <em>Categorical</em> Attributes</h1>
+<h1>Computing Gini for <em>categorical</em> attributes</h1>
 <p>It is usually more efficient to create a “count matrix” for each distinct value of the classification attribute and then perform calculations using that matrix</p>
 <div class="columns">
 <div class="column" style="width:33%;">
@@ -1466,7 +1489,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="computing-gini-for-continuous-attributes" class="title-slide slide level1 center">
-<h1>Computing Gini for <em>Continuous</em> Attributes</h1>
+<h1>Computing Gini for <em>continuous</em> attributes</h1>
 <p>It requires defining the split point using a binary condition.</p>
 <ul>
 <li>The number of possible conditions is equal to the number of distinct values of the attribute.</li>
@@ -1487,7 +1510,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="computing-gini-for-continuous-attributes-1" class="title-slide slide level1 center">
-<h1>Computing Gini for <em>Continuous</em> Attributes</h1>
+<h1>Computing Gini for <em>continuous</em> attributes</h1>
 <p>A more efficient solution is to:</p>
 <ul>
 <li>Sort records by attribute value</li>
@@ -1499,7 +1522,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="gain-based-split" class="title-slide slide level1 center">
-<h1>Gain-based Split</h1>
+<h1>Gain-based split</h1>
 <p>Using class impurity measures such as Gini and Entropy requires choosing the split value that maximizes the “gain” in terms of reducing the impurity of the classes after the split.</p>
 <p>For example, considering entropy, the gain of partitioning of a node into child nodes is:</p>
 <p><span class="math inline">\(GAIN_{split}=Entropy(p)-(\sum_{i=1}^{n}\frac{m_i}{m}Entropy(i))\)</span></p>
@@ -1509,8 +1532,8 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="split-based-on-split-info" class="title-slide slide level1 center">
-<h1>Split based on split info</h1>
+<section id="split-based-on-split-infor" class="title-slide slide level1 center">
+<h1>Split based on split infor</h1>
 <p>To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:</p>
 <ul>
 <li><span class="math inline">\(N\)</span> = number of child nodes</li>
@@ -1526,7 +1549,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="split-based-on-split-info-1" class="title-slide slide level1 center">
+<section id="split-based-on-split-info" class="title-slide slide level1 center">
 <h1>Split based on split info</h1>
 <p>To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:</p>
 <ul>
@@ -1544,12 +1567,11 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li>The split condition</li>
 <li>The criterion defining the best split</li>
 <li><strong>The criterion for interrupting splitting</strong></li>
-<li>Methods for evaluating the goodness of a decision tree</li>
 </ul>
 </section>
 
-<section id="stop-criteria-for-decision-tree-induction" class="title-slide slide level1 center">
-<h1>Stop Criteria for Decision Tree Induction</h1>
+<section id="stopping-criteria-for-decision-tree-induction" class="title-slide slide level1 center">
+<h1>Stopping criteria for decision-tree induction</h1>
 <ul>
 <li>Stop splitting a node when all its records belong to the same class</li>
 <li>Stop splitting a node when all its records have similar values on all attributes
@@ -1563,15 +1585,35 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="characteristic-features-3" class="title-slide slide level1 center" data-background-color="#121011">
-<h1>Characteristic features</h1>
-<p>Starting from the basic logic to completely define an algorithm for building decision trees, it is necessary to define:</p>
-<ul>
-<li>The split condition</li>
-<li>The criterion defining the best split</li>
-<li>The criterion for interrupting splitting</li>
-<li><strong>Methods for evaluating the goodness of a decision tree</strong></li>
-</ul>
+<section id="model-evaluation" class="title-slide slide level1 center">
+<h1>Model evaluation</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[("Training set")]
+    G[("Test set")]
+    F[("Predicted class")]
+    A --&gt;|Induction| B[Learn Model]
+    C(DT Algorithm) --&gt; B
+    B --&gt; D[DT Model]
+
+    G --&gt;D
+    D --&gt;|Deduction| F
+    F --&gt; I[Evaluation]
+    H[(Real Class)] --&gt; I
+    I --&gt; J((Performance))
+
+    style I fill:#f78c8c,stroke:#000
+    style J fill:#f78c8c,stroke:#000
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 
 <section id="metrics-for-model-evaluation" class="title-slide slide level1 center">
@@ -1628,11 +1670,11 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li>#Record of class 1 = 10</li>
 </ul>
 <p>A model that always returns class 0 will have an accuracy of <span class="math inline">\(\frac{9990}{10000}\)</span> = 99.9%</p>
-<p>In the case of binary classification problems, the class “rare” is also called a positive class, while the class that includes most of the records is called a negative class.</p>
+<p>In the case of binary classification problems, the class “rare” is also called a positive class.</p>
 </section>
 
 <section id="precision-and-recall" class="title-slide slide level1 center">
-<h1>Precision and Recall</h1>
+<h1>Precision and recall</h1>
 <p>Precision and Recall are two metrics used in applications where <em>the correct classification of positive class records is more important</em></p>
 <ul>
 <li><strong>Precision</strong> (<span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span>) measures the fraction of record results that are actually positive among all those who were classified as such.
@@ -1648,7 +1690,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <img data-src="./img/dt/image24.png" class="r-stretch quarto-figure-center"><p class="caption">Outcome of classification</p></section>
 
 <section id="precision-and-recall-1" class="title-slide slide level1 center">
-<h1>Precision and Recall</h1>
+<h1>Precision and recall</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><span class="math inline">\(Precision = 1\)</span> if all the positive records were actually detected</p>
@@ -1682,7 +1724,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="cost-based-evaluation" class="title-slide slide level1 center">
-<h1>Cost-Based Evaluation</h1>
+<h1>Cost-based evaluation</h1>
 <p>Accuracy, Precision, Recall, and F-measure classify an instance as positive if <span class="math inline">\(P(+, i)&gt;P(-, i)\)</span>.</p>
 <ul>
 <li>They assume that FN and FP have the same weight, thus they are Cost-Insensitive</li>
@@ -1696,7 +1738,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <img data-src="img/dt/3-Decision%20Tree_68.jpg" class="r-stretch"></section>
 
 <section id="the-cost-matrix" class="title-slide slide level1 center">
-<h1>The Cost Matrix</h1>
+<h1>The cost matrix</h1>
 <p>The cost matrix encodes the penalty that a classifier incurs in classifying a record in a different class.</p>
 <p>A negative penalty indicates the “prize” that is obtained for a correct classification.</p>
 <p><span class="math inline">\(C(M)=TP \cdot C(+|+) + FP \cdot C(+|- ) + FN \cdot C(- |+) + TN \cdot C(- |- )\)</span></p>
@@ -1730,7 +1772,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="computing-the-cost" class="title-slide slide level1 center">
-<h1>Computing the Cost</h1>
+<h1>Computing the cost</h1>
 <div class="columns">
 <div class="column" style="width:33%;">
 <p>Costs</p>
@@ -1831,95 +1873,92 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </div></div>
 </section>
 
-<section id="roc-space" class="title-slide slide level1 center">
-<h1>ROC Space</h1>
-<p>ROC graphs are two-dimensional graphs that depict relative tradeoffs between benefits (true positives) and costs (false negatives) induced by a classifier. We distinguish between:</p>
-<p><em>Probabilistic classifiers</em> return a score that is not necessarily a <em>sensu stricto</em> probability but represents the degree to which an object is a member of one particular class rather than another one (e.g., Decision tree, Naïve Bayes)</p>
-<ul>
-<li>In a decision tree, an instance in a leaf is associated with the class + if the number of positive training instances in the leaf (<em>pos</em>) is greater than the number of negative instances (<em>neg</em>). The ratio <em>pos</em>/(<em>pos + neg</em>) can be used as a score showing the likelihood of an instance to be of class + or -</li>
-</ul>
-<p>A <em>discrete classifier</em> predicts only the classes to which a test object belongs (e.g., SVM)</p>
-<p>The ROC curve characterizes a probabilistic classifier, and each point of this curve corresponds to a discrete classifier.</p>
-
-<img data-src="./img/dt/image27.png" class="r-stretch quarto-figure-center"><p class="caption">ROC Curve</p></section>
-
-<section id="roc-space-1" class="title-slide slide level1 center">
-<h1>ROC Space</h1>
-<p>A ROC graph for a probabilistic classifier is obtained by varying the threshold (or the probability if available) used to assign an instance <span class="math inline">\(i\)</span> to a class (+/-).</p>
-<ul>
-<li>Instead of: if <span class="math inline">\(P(+,i) &gt; P(-, i)\)</span> than <span class="math inline">\(i\)</span> is <span class="math inline">\(+\)</span></li>
-<li>We have: if <span class="math inline">\(P(+,i)&gt; x\)</span> than <span class="math inline">\(i\)</span> is <span class="math inline">\(+\)</span> (with <span class="math inline">\(x \in [0, 1]\)</span>)</li>
-</ul>
-<p>Each <span class="math inline">\(x\)</span> value determines a different TPR and FPR.</p>
-<ul>
-<li>The ROC curve shape depends both on the classifier capabilities and on the dataset features.</li>
-</ul>
+<section id="roc-curves-compare-sensitivity-with-false-alarms" class="title-slide slide level1 center">
+<h1>ROC curves compare sensitivity with false alarms</h1>
 <div class="columns">
-<div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image28.png"></p>
-<figcaption>Classification outcome</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
+<div class="column" style="width:55%;">
+<p>A ROC curve plots:</p>
+<p><span class="math display">\[
+\mathrm{TPR}=\frac{TP}{TP+FN}
+\qquad
+\mathrm{FPR}=\frac{FP}{FP+TN}
+\]</span></p>
+<ul>
+<li><strong>True-positive rate (TPR):</strong> fraction of positives correctly detected</li>
+<li><strong>False-positive rate (FPR):</strong> fraction of negatives incorrectly classified as positive</li>
+<li>One classifier threshold produces one point <span class="math inline">\((\mathrm{FPR},\mathrm{TPR})\)</span></li>
+</ul>
+</div><div class="column" style="width:45%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image27.png"></p>
-<figcaption>ROC Curve</figcaption>
+<figcaption>ROC curve</figcaption>
 </figure>
 </div>
 </div></div>
 </section>
 
-<section id="understanding-the-roc-space" class="title-slide slide level1 center">
-<h1>Understanding the ROC Space</h1>
+<section id="changing-the-threshold-traces-the-roc-curve" class="title-slide slide level1 center">
+<h1>Changing the threshold traces the ROC curve</h1>
+<p>Many classifiers output a <strong>score</strong> rather than only a class.</p>
+<p>Predict positive when:</p>
+<p><span class="math display">\[
+\operatorname{score}(i)\geq x
+\]</span></p>
+<ul>
+<li>Lowering <span class="math inline">\(x\)</span> usually detects more positives but also creates more false alarms</li>
+<li>Raising <span class="math inline">\(x\)</span> usually reduces both true positives and false positives</li>
+<li>Varying <span class="math inline">\(x\)</span> traces the complete ROC curve</li>
+</ul>
+
+<img data-src="./img/dt/image28.png" class="r-stretch quarto-figure-center"><p class="caption">Changing the classification threshold</p></section>
+
+<section id="better-curves-approach-the-upper-left-corner" class="title-slide slide level1 center">
+<h1>Better curves approach the upper-left corner</h1>
 <div class="columns">
-<div class="column" style="width:30%;">
+<div class="column" style="width:45%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image29.png"></p>
-<figcaption>ROC Curve</figcaption>
+<figcaption>Class overlap and ROC curves</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:70%;">
-<p>A good classifier tends to have performance close to the upper-left corner of the ROC graph, that is: High TPR and Low FPR</p>
+</div><div class="column" style="width:55%;">
 <ul>
-<li>The <strong>Area Under the Curve</strong> (AUC) provides an overall rating of the classifier, while segments of the curve provide a rating in specific TPR - FPR settings.</li>
-<li>The larger the overlap between <span class="math inline">\(+\)</span> and <span class="math inline">\(-\)</span> instances’ distributions, the harder it is for the classifier to distinguish between positive and negative instances.</li>
-<li>A dummy classifier performs on the ROC graph diagonal: the TPR is equal to the FPR since the classifier’s answers are random</li>
+<li><span class="math inline">\((0,1)\)</span> represents perfect classification</li>
+<li>The diagonal represents random ranking: <span class="math inline">\(\mathrm{TPR}=\mathrm{FPR}\)</span></li>
+<li><strong>AUC</strong> summarizes performance across all thresholds
+<ul>
+<li><span class="math inline">\(1.0\)</span>: perfect ranking</li>
+<li><span class="math inline">\(0.5\)</span>: random ranking</li>
+</ul></li>
+<li>Greater class overlap makes discrimination harder</li>
 </ul>
 </div></div>
 </section>
 
-<section id="comparison-of-classifiers-via-roc-curve" class="title-slide slide level1 center">
-<h1>Comparison of Classifiers via ROC curve</h1>
-
-<img data-src="img/dt/3-Decision%20Tree_73.jpg" class="r-stretch quarto-figure-center"><p class="caption">ROC curve</p><p>A classifier comparison based on ROC curves or AUC values can be either graphical or numerical.</p>
+<section id="compare-models-where-the-operating-point-matters" class="title-slide slide level1 center">
+<h1>Compare models where the operating point matters</h1>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/dt/3-Decision%20Tree_73.jpg"></p>
+<figcaption>Comparison of ROC curves</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:45%;">
 <ul>
-<li><p>A ROC curve running above another is an indicator of better classifier performance, and by the same token, the bigger the AUC, the better the overall performance of the test.</p></li>
-<li><p>However, this reasoning is meaningful only if the two ROC curves do not cross at any point. If they do, then it makes intuitive sense to point out the region in which one classifier outperforms the other, but the comparison of the complete AUC values is not very informative.</p></li>
-<li><p>DALI is better than SW when a low FP rate is needed</p></li>
-<li><p>BLAST is always worse than DALI &amp; SW</p></li>
+<li>A curve above another performs better across those thresholds</li>
+<li>If curves cross, the best model depends on the tolerated FPR and required TPR</li>
+<li>AUC is useful as a summary, but it does not select the operating threshold</li>
+<li>ROC rates are normalized within each class; precision and cost can still change with class prevalence</li>
 </ul>
+</div></div>
 </section>
 
-<section id="roc-space-properties" class="title-slide slide level1 center">
-<h1>ROC space properties</h1>
-<p>ROC curves are insensitive to changes in class distribution. If the proportion of positive to negative instances changes in a test set, the ROC curves will not change.</p>
-<p>The class distribution is the relationship of the left (P) column to the right (N) column. Any performance metric that uses values from <strong>both columns</strong> will be _inherently sensitive to class <em>skews</em>. Metrics such as accuracy, precision, and F-score use values from both columns of the confusion matrix. As a class distribution changes, these measures will change as well, even if the fundamental classifier performance does not.</p>
-<p>ROC graphs are based upon TPR and FPR, in which each dimension is a strict columnar ratio, so they do not depend on class distributions.</p>
-
-<img data-src="img/dt/3-Decision%20Tree_74.jpg" class="r-stretch quarto-figure-center"><p class="caption">Confusion matrix</p></section>
-
-<section id="where-do-roc-curves-come-from" class="title-slide slide level1 center">
-<h1>Where do ROC curves come from?</h1>
-<p>ROC stands for <em>Receiver Operator Characteristic</em>. The term has its roots in World War II. ROC curves were originally developed by the British as part of the “Chain Home” radar system. ROC analysis was used to analyze radar data to differentiate between enemy aircraft and signal noise (e.g., flocks of geese).</p>
-
-<img data-src="img/dt/3-Decision%20Tree_75.jpg" class="r-stretch quarto-figure-center"><p class="caption">Radar Operators were human classifiers!</p></section>
-
 <section id="classification-errors" class="title-slide slide level1 center" data-background-color="#121011">
-<h1>Classification Errors</h1>
+<h1>Classification errors</h1>
 <ul>
 <li><p><strong>Training error:</strong> are mistakes that are made on the training set</p></li>
 <li><p><strong>Generalization error:</strong> errors are made on the test set (i.e., records that have not been trained on the system).</p></li>
@@ -1932,7 +1971,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="underfitting-and-overfitting" class="title-slide slide level1 center">
-<h1>Underfitting and Overfitting</h1>
+<h1>Underfitting and overfitting</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
@@ -1967,8 +2006,8 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <img data-src="img/dt/3-Decision%20Tree_85.png" class="r-stretch quarto-figure-center"><p class="caption">Overfitting</p></section>
 
-<section id="how-to-handle-the-overfitting-pre-pruning-early-stopping-rule" class="title-slide slide level1 center">
-<h1>How to handle the Overfitting: pre-pruning (Early stopping rule)</h1>
+<section id="handling-overfitting-pre-pruning-early-stopping" class="title-slide slide level1 center">
+<h1>Handling overfitting: pre-pruning (early stopping)</h1>
 <p>Stop splitting before you reach a deep tree.</p>
 <p>A node can not be split further if:</p>
 <ul>
@@ -1984,8 +2023,8 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="how-to-handle-the-overfitting-post-pruning-reduced-error-pruning" class="title-slide slide level1 center">
-<h1>How to handle the Overfitting: post-pruning (Reduced Error Pruning)</h1>
+<section id="handling-overfitting-post-pruning-reduced-error-pruning" class="title-slide slide level1 center">
+<h1>Handling overfitting: post-pruning (reduced-error pruning)</h1>
 <ul>
 <li>Run all possible splits</li>
 <li>Examine the decision tree nodes obtained with a bottom-up logic</li>
@@ -2003,14 +2042,14 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="notes-on-overfitting" class="title-slide slide level1 center">
-<h1>Notes on Overfitting</h1>
+<h1>Notes on overfitting</h1>
 <p>Overfitting results in more complex decision-making trees than necessary</p>
 <p>The classification error done on the training set does not provide accurate estimates about tree behavior on unknown records.</p>
 <p>It requires new techniques to estimate generalization errors.</p>
 </section>
 
-<section id="estimate-generalization-errors" class="title-slide slide level1 center">
-<h1>Estimate generalization errors</h1>
+<section id="estimating-generalization-error" class="title-slide slide level1 center">
+<h1>Estimating generalization error</h1>
 <p>A decision tree should minimize the error on the real data set; unfortunately, during construction, only the training set is available.</p>
 <p>Then the real-time data error must be estimated.</p>
 <ul>
@@ -2031,7 +2070,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="occams-razor" class="title-slide slide level1 center">
-<h1>Occam’s Razor</h1>
+<h1>Occam’s razor</h1>
 <p>Given two models with a similar generalization error, always choose the simplest one.</p>
 <ul>
 <li>For complex models, it is more likely that errors are caused by accidental data conditions</li>
@@ -2041,7 +2080,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="minimum-description-length" class="title-slide slide level1 center">
-<h1>Minimum Description Length</h1>
+<h1>Minimum description length</h1>
 <p>Given two models, choose the one that minimizes the cost to describe a classification. To describe the model, I can:</p>
 <ul>
 <li>Sequentially send class <span class="math inline">\(O(n)\)</span></li>
@@ -2051,7 +2090,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="minimum-description-length-1" class="title-slide slide level1 center">
-<h1>Minimum Description Length</h1>
+<h1>Minimum description length</h1>
 
 <img data-src="img/dt/3-Decision%20Tree_108.png" class="r-stretch quarto-figure-center"><p class="caption">Different decision trees</p><p>Datasets with <span class="math inline">\(n\)</span> records described by 16 binary attributes and 3 class values</p>
 <ul>
@@ -2081,8 +2120,8 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p>For binary trees, a penalty equal to 0.5 implies that a node should always be expanded into the two child nodes if it improves the classification of at least one record.</p>
 </section>
 
-<section id="post-pruning-an-example" class="title-slide slide level1 center">
-<h1>Post Pruning: an example</h1>
+<section id="post-pruning-example" class="title-slide slide level1 center">
+<h1>Post-pruning example</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <table class="caption-top">
@@ -2120,8 +2159,8 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p>PRUNE!</p>
 </section>
 
-<section id="post-pruning-an-example-1" class="title-slide slide level1 center">
-<h1>Post Pruning: an example</h1>
+<section id="post-pruning-example-1" class="title-slide slide level1 center">
+<h1>Post-pruning example</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Optimistic error?</p>
@@ -2139,7 +2178,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="building-the-test-set" class="title-slide slide level1 center">
-<h1>Building the Test Set</h1>
+<h1>Building the test set</h1>
 <p><strong>Holdout</strong></p>
 <p>Use <span class="math inline">\(\frac{2}{3}\)</span> of the training records and <span class="math inline">\(\frac{1}{3}\)</span> for validation.</p>
 <p>Disadvantages:</p>
@@ -2152,7 +2191,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="building-the-test-set-1" class="title-slide slide level1 center">
-<h1>Building the Test Set</h1>
+<h1>Building the test set</h1>
 <p><strong>Cross validation</strong></p>
 <ul>
 <li>Partition the records into separate <span class="math inline">\(k\)</span> subdivisions</li>
@@ -2200,7 +2239,6 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p><strong>Use a decision tree when:</strong></p>
 <ul>
 <li>You need an interpretable model expressed as rules</li>
-<li>Your data mix numerical and categorical features</li>
 <li>Non-linear interactions are likely, but extensive preprocessing is undesirable</li>
 </ul>
 <p><strong>Be careful when:</strong></p>
