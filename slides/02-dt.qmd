@@ -6,10 +6,18 @@ subtitle: Decision Trees
 
 **Customer churn** is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.
 
-- Let us assume that this is our dataset to train a decision tree for predicting customer churn
-- This is a *supervised learning* task since the dataset contains a *label* (or *class*) to predict (**`churn`**)
+![Customer churn](img/00-ml/churn.png)
+
+# Learn by doing!
+
+![Customer churn](img/00-ml/churn1.png)
+
+# Learn by doing!
+
+- This is a *supervised learning* task since the *dataset* contains a *label* (or *class*) to predict (**`churn`**)
 - ... as a function of *other* customer suscriptions' attributes (`months_subscribed`, ..., `auto_pay`)
-- Each *row* (or *data item/record*) is customer subscription, each *column* is an *attribute* (or *feature*)
+
+Each *row* (or *data item/record*) is customer subscription, each *column* is an *attribute* (or *feature*)
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
@@ -30,13 +38,17 @@ subtitle: Decision Trees
 
 First we need to split the dataset into *training* and *test sets*
 
+# Training and test sets
+
 __Holdout__
 
 - Randomly use $\frac{2}{3}$ (or $\frac{4}{5}$) of training and $\frac{1}{3}$ (or $\frac{1}{5}$) for testing.
-- They are not overlapping
-- Disadvantages:
-    - It works with a reduced set of training
-    - The result depends on the composition of the training set and test set
+- Training and test sets are not overlapping
+
+Disadvantages:
+
+- It works with a reduced set of training
+- The result depends on the composition of the training set and test set
 
 # Training and test sets
 
@@ -74,8 +86,8 @@ One of the most widely used classification techniques
 
 There are two types of nodes:
 
-- *Leaf nodes* (i.e., nodes with no children) identify the predicted classes
-- The other nodes are attribute-based split conditions that that partitions the records.
+- *Leaves* (i.e., nodes with no children) identify the predicted classes
+- *Split conditions* that partitions the records based on attribute values
     - The partitioning criterion represents the label of the arcs
 
 
@@ -101,43 +113,7 @@ flowchart TD
 :::
 ::::
 
-# Decision Tree: an Example
-
-::::{.columns}
-:::{.column width=70%}
-| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
-| 2                 | 3                   | 2               | basic     | no       | yes   |
-| 4                 | 6                   | 1               | basic     | no       | yes   |
-| 6                 | 15                  | 0               | standard  | yes      | no    |
-| 12                | 22                  | 0               | premium   | yes      | no    |
-| 3                 | 4                   | 3               | basic     | no       | yes   |
-| 8                 | 18                  | 0               | standard  | yes      | no    |
-| 5                 | 7                   | 1               | basic     | yes      | no    |
-| 1                 | 2                   | 2               | basic     | no       | yes   |
-| 10                | 20                  | 0               | premium   | yes      | no    |
-:::
-:::{.column width=30%}
-```{mermaid}
-%%| echo: false
-flowchart TD
-    A[monthly_watch_hours] -->|<= 8| B[auto_pay]
-    A -->|>8| C((no))
-    style C fill:#a3f7a3,stroke:#000,stroke-width:1px
-
-    B -->|no| D((yes))
-    B -->|yes| E[tickets]
-    style D fill:#f78c8c,stroke:#000,stroke-width:1px
-
-    E -->|>= 2| F((yes))
-    E -->|< 2| G((no))
-    style F fill:#f78c8c,stroke:#000,stroke-width:1px
-    style G fill:#a3f7a3,stroke:#000,stroke-width:1px
-```
-:::
-::::
-
-# Decision Tree: an example
+# Learning the tree (in the next slides)
 
 ```{mermaid}
 %%| echo: false
@@ -179,7 +155,43 @@ Predicted class
     G --> E[("Apply Model")]
 ```
 
-# Applying the model
+# Learning the tree
+
+::::{.columns}
+:::{.column width=70%}
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
+| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| 2                 | 3                   | 2               | basic     | no       | yes   |
+| 4                 | 6                   | 1               | basic     | no       | yes   |
+| 6                 | 15                  | 0               | standard  | yes      | no    |
+| 12                | 22                  | 0               | premium   | yes      | no    |
+| 3                 | 4                   | 3               | basic     | no       | yes   |
+| 8                 | 18                  | 0               | standard  | yes      | no    |
+| 5                 | 7                   | 1               | basic     | yes      | no    |
+| 1                 | 2                   | 2               | basic     | no       | yes   |
+| 10                | 20                  | 0               | premium   | yes      | no    |
+:::
+:::{.column width=30%}
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A[monthly_watch_hours] -->|<= 8| B[auto_pay]
+    A -->|>8| C((no))
+    style C fill:#a3f7a3,stroke:#000,stroke-width:1px
+
+    B -->|no| D((yes))
+    B -->|yes| E[tickets]
+    style D fill:#f78c8c,stroke:#000,stroke-width:1px
+
+    E -->|>= 2| F((yes))
+    E -->|< 2| G((no))
+    style F fill:#f78c8c,stroke:#000,stroke-width:1px
+    style G fill:#a3f7a3,stroke:#000,stroke-width:1px
+```
+:::
+::::
+
+# Applying the tree
 
 What is the predicted class for the following test data?
 
@@ -187,7 +199,7 @@ What is the predicted class for the following test data?
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
 | 1                 | 2                   | 2               | basic     | no       | ?   |
 
-# Applying the model
+# Applying the tree
 
 What is the predicted class for the following test data?
 
@@ -216,7 +228,7 @@ flowchart TD
     style G fill:#a3f7a3,stroke:#000
 ```
 
-# Applying the model
+# Applying the tree
 
 What is the predicted class for the following test data?
 
@@ -247,7 +259,7 @@ flowchart TD
     style G fill:#a3f7a3,stroke:#000
 ```
 
-# Applying the model
+# Applying the tree
 
 What is the predicted class for the following test data?
 
@@ -279,7 +291,7 @@ flowchart TD
     style G fill:#a3f7a3,stroke:#000
 ```
 
-# Learning the model {background-color="#121011"}
+# Learning the tree {background-color="#121011"}
 
 ```{mermaid}
 %%| echo: false
@@ -298,16 +310,13 @@ flowchart LR
     style C fill:#f78c8c,stroke:#000
 ```
 
-# Learning the model
+# Learning the tree
 
 The decision tree grows exponentially with the number of attributes. Algorithms generally use greedy techniques that locally make the "best" choice.
 
 Many algorithms are available:
 
-- Hunt's Algorithm
-- CART
-- ID3, **C4.5**
-- Sliq, SPRINT
+- Hunt's Algorithm, CART, ID3, **C4.5**, etc.
 
 Different issues have to be addressed.
 
@@ -733,10 +742,12 @@ Starting from the basic logic to completely define an algorithm for building dec
 
 # Stop Criteria for Decision Tree Induction
 
-- Stop splitting a node when all its records belong to the same class
-- Stop splitting a node when all its records have similar values on all attributes
+Stop splitting a node
+
+- All its records belong to the same class
+- All its records have similar values on all attributes
     - Classification would be unimportant and dependent on small fluctuations in values
-- Stop splitting when the number of records in the node is below a certain threshold (data fragmentation)
+- The number of records in the node is below a certain threshold (data fragmentation)
     - The selected criterion would not be statistically relevant
 
 # Characteristic features {background-color="#121011"}
@@ -817,8 +828,6 @@ If both are valid 1, the predetermined classes coincide with the real ones.
 
 A metric that summarizes precision and recall is called the F-measure ($\text{F-measure} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$).
 
-
-
 F-measure represents the harmonic mean of precision and recall.
 
 - The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers.
@@ -836,69 +845,11 @@ Accuracy, Precision, Recall, and F-measure classify an instance as positive if $
 
 ![](img/dt/3-Decision Tree_68.jpg)
 
-# The Cost Matrix
-
-The cost matrix encodes the penalty that a classifier incurs in classifying a record in a different class.
-
-A negative penalty indicates the "prize" that is obtained for a correct classification.
-
-$C(M)=TP \cdot C(+|+) + FP \cdot C(+|- ) + FN \cdot C(- |+) + TN \cdot C(- |- )$
-
-
-| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
-| :-: | :-: | :-: |
-| **Class=+** | C(+\|+) | C(+\|-) |
-| **Class=-** | C(-\|+) | C(-\|-) |
-
-A model constructed by structuring, as a purity function, a cost matrix, will tend to provide a model with a minimum cost over the specified weights.
-
-# Computing the Cost
-
-::::{.columns}
-:::{.column width=33%}
-
-Costs
-
-| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
-| :-: | :-: | :-: |
-| **Class=+** | -1 | 100 |
-| **Class=-** | 1 | 0 |
-:::
-:::{.column width=33%}
-
-:::{.fragment}
-Predictions of Model M1
-
-| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
-| :-: | :-: | :-: |
-| **Class=+** | 150 | 40 |
-| **Class=-** | 60 | 250 |
-
-- Accuracy = 80%
-- Cost = 3910
-:::
-
-:::
-:::{.column width=33%}
-
-:::{.fragment}
-Predictions of Model M2
-
-| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
-| :-: | :-: | :-: |
-| **Class=+** | 250 | 45 |
-| **Class=-** | 5 | 200 |
-
-- Accuracy = 90%
-- Cost = 4255
-:::
-
-:::
-::::
-
 # ROC Space
 
-ROC graphs are two-dimensional graphs that depict relative tradeoffs between benefits (true positives) and costs (false negatives) induced by a classifier. We distinguish between:
+ROC graphs are 2D charts that depict relative tradeoffs between benefits (TP) and costs (FN) induced by a classifier. 
+
+We distinguish between:
 
 _Probabilistic classifiers_ return a score that is not necessarily a _sensu stricto_ probability but represents the degree to which an object is a member of one particular class rather than another one (e.g., Decision tree, Naïve Bayes)
 
@@ -1045,25 +996,6 @@ The classification error done on the training set does not provide accurate esti
 
 It requires new techniques to estimate generalization errors.
 
-# Estimate generalization errors
-
-A decision tree should minimize the error on the real data set; unfortunately, during construction, only the training set is available.
-
-Then the real-time data error must be estimated.
-
-- __Re-substitution error:__ number of errors in the training set
-- __Generalization error:__ number of errors in the real data set
-
-The methods for estimating the generalization error are:
-
-- __Optimistic approach:__ $e'(t) = e(t)$
-- __Pessimistic approach__
-- __Minimum Description Length (MDL)__
-- __Using the test set:__ The generalization error is equal to the error on the test set.
-
-    - Normally, the test set is obtained by extracting from the initial training set 1/3 of the records
-    - It offers good results, but the risk is to work with a too small training set
-
 # Occam's Razor
 
 Given two models with a similar generalization error, always choose the simplest one.
@@ -1073,126 +1005,6 @@ Given two models with a similar generalization error, always choose the simplest
 It is therefore useful to consider the complexity of the model when evaluating the goodness of a decision tree.
 
 Note: The methodological principle was expressed in the 14th century by the English Franciscan philosopher and friar William of Ockham
-
-# Minimum Description Length
-
-Given two models, choose the one that minimizes the cost to describe a classification. To describe the model, I can:
-
-- Sequentially send class $O(n)$
-- Build a classifier, and send the description along with a detailed description of the mistakes it makes
-
-$Cost(model, data)=Cost(model)+Cost(data|model)$
-
-# Minimum Description Length
-
-![Different decision trees](img/dt/3-Decision Tree_108.png)
-
-Datasets with $n$ records described by 16 binary attributes and 3 class values
-
-- Each inner node is modeled with the ID of the used attribute: $log_2(16)=4$ bits
-- Each leaf is modeled with the ID of the class: $log_2(3)=2$ bits
-- Each error is modeled with its position in the training set, considering $n$ record: $log_2(n)$
-
-Cost:
-
-- Cost(Tree1)= $4 \cdot 2 + 2 \cdot 3 + 7 \cdot log_2(n) = 14 + 7 \cdot log_2(n)$
-- Cost(Tree2)= $4 \cdot 4 + 2 \cdot 5 + 4 \cdot log_2(n) = 26 + 4 \cdot log_2(n)$
-- Overall: Cost(Tree1) < Cost(Tree2) if $n$ < 16
-
-# Pessimistic approach
-
-The generalization error is estimated by adding to the error on the training set a penalty related to the complexity of the model.
-
-- $e(t_i)$: classification errors on leaf $i$
-
-    - $\Sigma(t_i)$: leaf-related penalty $i$
-    - $n(t_i)$ number of records in the training set belonging to leaf $i$
-
-$E(T)=\frac{\sum_{i=1}^k e(t_i)+\Sigma(t_i)}{\sum_{i=1}^k n(t_i)}$
-
-For binary trees, a penalty equal to 0.5 implies that a node should always be expanded into the two child nodes if it improves the classification of at least one record.
-
-# Post Pruning: an example
-
-::::{.columns}
-:::{.column width=50%}
-| Class | Instances|
-| :-: | :-: |
-| Class = Yes | 20 |
-| Class = No | 10 |
-
-:::
-:::{.column width=50%}
-![Should I prune?](img/dt/image30.png)
-:::
-::::
-
-- Training error (before split) = $\frac{10}{30}$
-- Pessimistic error = $\frac{10 + 0.5}{30} = \frac{10.5}{30}$
-- Training error (after split) = $\frac{9}{30}$
-- Pessimistic error (after splitting) = $\frac{9 + 4 \cdot 0.5}{30} = \frac{11}{30}$
-
-PRUNE!
-
-# Post Pruning: an example
-
-::::{.columns}
-:::{.column width=50%}
-Optimistic error?
-
-- Do not cut in any of the cases
-
-Pessimistic error (penalty 0.5)?
-
-- Do not cut in case 1, cut in case 2
-
-Pessimistic error (penalty 1)?
-:::
-:::{.column width=50%}
-![](img/dt/image31.png)
-:::
-::::
-
-# Building the Test Set
-
-__Holdout__
-
-Use $\frac{2}{3}$ of the training records and $\frac{1}{3}$ for validation.
-
-Disadvantages:
-
-* It works with a reduced set of training
-* The result depends on the composition of the training set and test set
-
-__Random subsampling__
-
-It consists of a repeated execution of the holdout method, in which the training dataset is randomly selected.
-
-# Building the Test Set
-
-__Cross validation__
-
-- Partition the records into separate $k$ subdivisions
-- Run the training on $k-1$ partitions and test the remainder
-- Repeat the test $k$ times and calculate the average accuracy
-- CAUTION: cross-validation creates $k$ different classifiers. Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem
-- Built decision trees can have different split attributes and conditions depending on the character of the $k$-th training set
-
-# Bootstrap
-
-Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of $N$records, you can create an $N$-record set in which each record has approximately a 63.2% probability of appearing (with $N$sufficiently large)
-
-$1 - (1 - \frac{1}{N})^N = 1 - e^{-1} = 0.632$
-
-- Records that are not used even once in the current training set form the validation set
-
-The procedure is repeated $b$ times. Commonly, the model's accuracy is calculated as:
-
-$Acc_{boot} = \frac{1}{b} \sum_{i=1}^b 0.632 \cdot Acc_i + 0.368 \cdot Acc_s$
-
-where $Acc_i$ is the accuracy of the $i$-th bootstrap, $Acc_s$ is the accuracy of the complete dataset
-
-The bootstrap does not create a (new) dataset with more information, but it can stabilize the obtained results of the available dataset. It is therefore particularly useful for small datasets.
 
 # C4.5
 
