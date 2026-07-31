@@ -6,10 +6,18 @@ subtitle: Decision Trees
 
 **Customer churn** is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.
 
-- Let us assume that this is our dataset to train a decision tree for predicting customer churn
-- This is a *supervised learning* task since the dataset contains a *label* (or *class*) to predict (**`churn`**)
+![Customer churn](img/00-ml/churn.png)
+
+# Learn by doing!
+
+![Customer churn](img/00-ml/churn1.png)
+
+# Learn by doing!
+
+- This is a *supervised learning* task since the *dataset* contains a *label* (or *class*) to predict (**`churn`**)
 - ... as a function of *other* customer suscriptions' attributes (`months_subscribed`, ..., `auto_pay`)
-- Each *row* (or *data item/record*) is customer subscription, each *column* is an *attribute* (or *feature*)
+
+Each *row* (or *data item/record*) is customer subscription, each *column* is an *attribute* (or *feature*)
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
@@ -39,13 +47,17 @@ By the end of this lecture, you will be able to:
 
 First we need to split the dataset into *training* and *test sets*
 
+# Training and test sets
+
 __Holdout__
 
 - Randomly use $\frac{2}{3}$ (or $\frac{4}{5}$) of training and $\frac{1}{3}$ (or $\frac{1}{5}$) for testing.
-- They are not overlapping
-- Disadvantages:
-    - It works with a reduced set of training
-    - The result depends on the composition of the training set and test set
+- Training and test sets are not overlapping
+
+Disadvantages:
+
+- It works with a reduced set of training
+- The result depends on the composition of the training set and test set
 
 # Training and test sets
 
@@ -160,8 +172,8 @@ One of the most widely used classification techniques
 
 There are two types of nodes:
 
-- *Leaf nodes* (i.e., nodes with no children) identify the predicted classes
-- The other nodes are attribute-based split conditions that that partitions the records.
+- *Leaves* (i.e., nodes with no children) identify the predicted classes
+- *Split conditions* that partitions the records based on attribute values
     - The partitioning criterion represents the label of the arcs
 
 
@@ -342,16 +354,13 @@ flowchart LR
     style C fill:#f78c8c,stroke:#000
 ```
 
-# Learning the model
+# Learning the tree
 
 The decision tree grows exponentially with the number of attributes. Algorithms generally use greedy techniques that locally make the "best" choice.
 
 Many algorithms are available:
 
-- Hunt's Algorithm
-- CART
-- ID3, **C4.5**
-- Sliq, SPRINT
+- Hunt's Algorithm, CART, ID3, **C4.5**, etc.
 
 Different issues have to be addressed.
 
@@ -774,10 +783,12 @@ Starting from the basic logic to completely define an algorithm for building dec
 
 # Stopping criteria for decision-tree induction
 
-- Stop splitting a node when all its records belong to the same class
-- Stop splitting a node when all its records have similar values on all attributes
+Stop splitting a node
+
+- All its records belong to the same class
+- All its records have similar values on all attributes
     - Classification would be unimportant and dependent on small fluctuations in values
-- Stop splitting when the number of records in the node is below a certain threshold (data fragmentation)
+- The number of records in the node is below a certain threshold (data fragmentation)
     - The selected criterion would not be statistically relevant
 
 # Model evaluation
@@ -870,8 +881,6 @@ If both are valid 1, the predetermined classes coincide with the real ones.
 # F-measure
 
 A metric that summarizes precision and recall is called the F-measure ($\text{F-measure} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$).
-
-
 
 F-measure represents the harmonic mean of precision and recall.
 

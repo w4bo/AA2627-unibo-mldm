@@ -147,12 +147,21 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="motivating-problem-who-will-churn" class="title-slide slide level1 center">
 <h1>Motivating problem: who will churn?</h1>
 <p><strong>Customer churn</strong> is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.</p>
+
+<img data-src="img/00-ml/churn.png" class="r-stretch quarto-figure-center"><p class="caption">Customer churn</p></section>
+
+<section id="learn-by-doing" class="title-slide slide level1 center">
+<h1>Learn by doing!</h1>
+
+<img data-src="img/00-ml/churn1.png" class="r-stretch quarto-figure-center"><p class="caption">Customer churn</p></section>
+
+<section id="learn-by-doing-1" class="title-slide slide level1 center">
+<h1>Learn by doing!</h1>
 <ul>
-<li>Let us assume that this is our dataset to train a decision tree for predicting customer churn</li>
-<li>This is a <em>supervised learning</em> task since the dataset contains a <em>label</em> (or <em>class</em>) to predict (<strong><code>churn</code></strong>)</li>
+<li>This is a <em>supervised learning</em> task since the <em>dataset</em> contains a <em>label</em> (or <em>class</em>) to predict (<strong><code>churn</code></strong>)</li>
 <li>… as a function of <em>other</em> customer suscriptions’ attributes (<code>months_subscribed</code>, …, <code>auto_pay</code>)</li>
-<li>Each <em>row</em> (or <em>data item/record</em>) is customer subscription, each <em>column</em> is an <em>attribute</em> (or <em>feature</em>)</li>
 </ul>
+<p>Each <em>row</em> (or <em>data item/record</em>) is customer subscription, each <em>column</em> is an <em>attribute</em> (or <em>feature</em>)</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -287,19 +296,23 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="training-and-test-sets" class="title-slide slide level1 center">
 <h1>Training and test sets</h1>
 <p>First we need to split the dataset into <em>training</em> and <em>test sets</em></p>
-<p><strong>Holdout</strong></p>
-<ul>
-<li>Randomly use <span class="math inline">\(\frac{2}{3}\)</span> (or <span class="math inline">\(\frac{4}{5}\)</span>) of training and <span class="math inline">\(\frac{1}{3}\)</span> (or <span class="math inline">\(\frac{1}{5}\)</span>) for testing.</li>
-<li>They are not overlapping</li>
-<li>Disadvantages:
-<ul>
-<li>It works with a reduced set of training</li>
-<li>The result depends on the composition of the training set and test set</li>
-</ul></li>
-</ul>
 </section>
 
 <section id="training-and-test-sets-1" class="title-slide slide level1 center">
+<h1>Training and test sets</h1>
+<p><strong>Holdout</strong></p>
+<ul>
+<li>Randomly use <span class="math inline">\(\frac{2}{3}\)</span> (or <span class="math inline">\(\frac{4}{5}\)</span>) of training and <span class="math inline">\(\frac{1}{3}\)</span> (or <span class="math inline">\(\frac{1}{5}\)</span>) for testing.</li>
+<li>Training and test sets are not overlapping</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>It works with a reduced set of training</li>
+<li>The result depends on the composition of the training set and test set</li>
+</ul>
+</section>
+
+<section id="training-and-test-sets-2" class="title-slide slide level1 center">
 <h1>Training and test sets</h1>
 <p><em>Training test</em>: used for training the model</p>
 <table class="caption-top">
@@ -551,8 +564,8 @@ Predicted class
 </ul>
 <p>There are two types of nodes:</p>
 <ul>
-<li><em>Leaf nodes</em> (i.e., nodes with no children) identify the predicted classes</li>
-<li>The other nodes are attribute-based split conditions that that partitions the records.
+<li><em>Leaves</em> (i.e., nodes with no children) identify the predicted classes</li>
+<li><em>Split conditions</em> that partitions the records based on attribute values
 <ul>
 <li>The partitioning criterion represents the label of the arcs</li>
 </ul></li>
@@ -968,15 +981,12 @@ Predicted class
 </div>
 </section>
 
-<section id="learning-the-model" class="title-slide slide level1 center">
-<h1>Learning the model</h1>
+<section id="learning-the-tree" class="title-slide slide level1 center">
+<h1>Learning the tree</h1>
 <p>The decision tree grows exponentially with the number of attributes. Algorithms generally use greedy techniques that locally make the “best” choice.</p>
 <p>Many algorithms are available:</p>
 <ul>
-<li>Hunt’s Algorithm</li>
-<li>CART</li>
-<li>ID3, <strong>C4.5</strong></li>
-<li>Sliq, SPRINT</li>
+<li>Hunt’s Algorithm, CART, ID3, <strong>C4.5</strong>, etc.</li>
 </ul>
 <p>Different issues have to be addressed.</p>
 <ul>
@@ -1576,13 +1586,14 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="stopping-criteria-for-decision-tree-induction" class="title-slide slide level1 center">
 <h1>Stopping criteria for decision-tree induction</h1>
+<p>Stop splitting a node</p>
 <ul>
-<li>Stop splitting a node when all its records belong to the same class</li>
-<li>Stop splitting a node when all its records have similar values on all attributes
+<li>All its records belong to the same class</li>
+<li>All its records have similar values on all attributes
 <ul>
 <li>Classification would be unimportant and dependent on small fluctuations in values</li>
 </ul></li>
-<li>Stop splitting when the number of records in the node is below a certain threshold (data fragmentation)
+<li>The number of records in the node is below a certain threshold (data fragmentation)
 <ul>
 <li>The selected criterion would not be statistically relevant</li>
 </ul></li>
