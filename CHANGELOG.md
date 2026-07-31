@@ -1,3 +1,48 @@
+## [1.0.9](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.8...1.0.9) (2026-07-30)
+
+### Bug Fixes
+
+* update the labs ([ad81a7a](https://github.com/w4bo/AA2627-unibo-mldm/commit/ad81a7a9203ca47cecfbb8c5ac4a26d205d36bf9))
+
+## [1.0.8](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.7...1.0.8) (2026-07-30)
+
+### Bug Fixes
+
+* update the charts ([b9d52b8](https://github.com/w4bo/AA2627-unibo-mldm/commit/b9d52b81cdc4df57dcde8cc6dd1adccbacba10d5))
+
+## [1.0.7](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.6...1.0.7) (2026-07-30)
+
+### Bug Fixes
+
+* update the charts ([41ef8a1](https://github.com/w4bo/AA2627-unibo-mldm/commit/41ef8a1db343a334128b0e1849c1b66125316307))
+
+## [1.0.6](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.5...1.0.6) (2026-07-30)
+
+### Dependency updates
+
+* **deps:** update node.js to 24.15 ([#13](https://github.com/w4bo/AA2627-unibo-mldm/issues/13)) ([fd199f5](https://github.com/w4bo/AA2627-unibo-mldm/commit/fd199f54985b3676021290d0dbaccc15615a4062))
+* **deps:** update node.js to 24.16 ([#15](https://github.com/w4bo/AA2627-unibo-mldm/issues/15)) ([4095c5b](https://github.com/w4bo/AA2627-unibo-mldm/commit/4095c5b0d3127b6c7914811c3020a63e80a752da))
+* **deps:** update node.js to 24.17 ([#16](https://github.com/w4bo/AA2627-unibo-mldm/issues/16)) ([baf0c72](https://github.com/w4bo/AA2627-unibo-mldm/commit/baf0c72dbcf840bf47e0523ab9f23dd11ac5494c))
+* **deps:** update node.js to 24.18 ([#18](https://github.com/w4bo/AA2627-unibo-mldm/issues/18)) ([07caa07](https://github.com/w4bo/AA2627-unibo-mldm/commit/07caa07ab10c2a81e735dd88d50cfdfee6ba17a9))
+
+### Bug Fixes
+
+* reworking the slides ([b586a44](https://github.com/w4bo/AA2627-unibo-mldm/commit/b586a44f379dc388201ff939b099272ad0bc8801))
+
+### Build and continuous integration
+
+* **deps:** update actions/checkout action to v7 ([#17](https://github.com/w4bo/AA2627-unibo-mldm/issues/17)) ([e6a5897](https://github.com/w4bo/AA2627-unibo-mldm/commit/e6a589769c3fb24f1e32eafe85d924a809028c95))
+* **deps:** update actions/setup-node action to v6.4.0 ([#14](https://github.com/w4bo/AA2627-unibo-mldm/issues/14)) ([d9c5bd5](https://github.com/w4bo/AA2627-unibo-mldm/commit/d9c5bd53d75656a6a2c65ad4b0d22f3d6aae4d9c))
+* **deps:** update actions/setup-node action to v6.5.0 ([#19](https://github.com/w4bo/AA2627-unibo-mldm/issues/19)) ([07d78c7](https://github.com/w4bo/AA2627-unibo-mldm/commit/07d78c74b4ab12de0036f161160d71158468f7e9))
+* **deps:** update actions/setup-node action to v7 ([#20](https://github.com/w4bo/AA2627-unibo-mldm/issues/20)) ([d6f1857](https://github.com/w4bo/AA2627-unibo-mldm/commit/d6f185779c43f7cea755a48a592cff957cd55f97))
+* **deps:** update jamesives/github-pages-deploy-action action to v4.8.0 ([#9](https://github.com/w4bo/AA2627-unibo-mldm/issues/9)) ([f458b58](https://github.com/w4bo/AA2627-unibo-mldm/commit/f458b58f4c26195e2e33775aa8747a275bc9c5d1))
+
+### General maintenance
+
+* cleaning useless files ([780d455](https://github.com/w4bo/AA2627-unibo-mldm/commit/780d45539e1fd72dc11324ed3efaf5f0cbd987ea))
+* update slides ([b76fbe3](https://github.com/w4bo/AA2627-unibo-mldm/commit/b76fbe3f29b0894668cf905dfa2fa3de4fdf92af))
+* update the slides ([ea818c1](https://github.com/w4bo/AA2627-unibo-mldm/commit/ea818c1d43f367319751f4f2247d5c02846f5208))
+
 ## [1.0.5](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.4...1.0.5) (2026-03-12)
 
 ### Dependency updates

@@ -2,7 +2,26 @@
 subtitle: Clustering
 ---
 
-# What is Clustering analysis?
+# Motivating problem: discover customer segments
+
+A company has customer behavior data but no segment labels.
+
+- Some customers buy frequently but spend little
+- Others purchase rarely but place large orders
+- Some may not fit any stable segment
+
+Can we discover useful groups without being told the correct answer in advance?
+
+# Learning objectives
+
+By the end of this lecture, you will be able to:
+
+- **Explain** why different notions of a cluster can produce different answers
+- **Execute** the main steps of k-means, hierarchical clustering, and DBSCAN
+- **Select** an algorithm based on cluster shape, density, noise, and interpretability
+- **Evaluate** clustering results without assuming that every partition is meaningful
+
+# Intuition: similar objects form groups
 
 Finding groups of objects such that objects that belong to the same group are more "similar" to each other than objects belonging to different groups.
 
@@ -10,6 +29,18 @@ Finding groups of objects such that objects that belong to the same group are mo
 - Intra-cluster distances are minimized
 
 ![Clustering (or Clustering Analysis)](img/clustering/Immagine7.png)
+
+# Formal definition: clustering
+
+Given observations $X=\{x_1,\ldots,x_n\}$ and a notion of similarity, clustering seeks a structure $\mathcal{C}$ that groups related observations.
+
+For a partitioning clustering:
+
+- $\mathcal{C}=\{C_1,\ldots,C_K\}$
+- $C_i \cap C_j=\emptyset$ for $i\neq j$
+- $\bigcup_{i=1}^{K}C_i=X$
+
+The definition does **not** determine the right similarity, number of clusters, or cluster shape. Those are modeling choices.
 
 # What is NOT Clustering analysis?
 
@@ -168,6 +199,16 @@ function kmeans(k, points) is
 
     return clusters
 ```
+
+# Worked example: one k-means iteration
+
+Let the one-dimensional observations be $\{1,2,3,8,9\}$, with $K=2$ and initial centroids $m_1=2$, $m_2=8$.
+
+1. **Assign:** $\{1,2,3\}\rightarrow C_1$ and $\{8,9\}\rightarrow C_2$
+2. **Update:** $m_1=(1+2+3)/3=2$ and $m_2=(8+9)/2=8.5$
+3. **Repeat** assignment and update until assignments stop changing
+
+K-means monotonically reduces its objective, but the final solution can still depend on the initial centroids.
 
 # Convergence and optimality
 
@@ -348,7 +389,7 @@ More dense clusters lead to smaller intra-cluster distances, so less dense areas
 :::
 ::::
 
-# K-means limits: non-globular shape
+# Failure case: non-globular clusters
 
 SSE is based on an Euclidean distance that does not take into account the shape of objects
 
@@ -417,7 +458,7 @@ It consists of executing k-means several times with increasing values for k
 
 ![The elbow method](img/clustering/14-Clustering_54.png)
 
-# Exercise
+# Check your understanding
 
 Draw the cluster partitioning and the approximate position of the centroids chosen by the k-means algorithm, assuming that:
 
@@ -1087,3 +1128,17 @@ Purity is computed as:
 >
 > cit. Algorithms for Clustering Data, Jain and Dubes
 
+# Summary: when should I use each method?
+
+| Situation | Useful starting point |
+|---|---|
+| Compact, roughly spherical groups | **k-means** |
+| A hierarchy or dendrogram is useful | **Hierarchical clustering** |
+| Irregular shapes, noise, and unknown $K$ | **DBSCAN** |
+
+Before trusting any result:
+
+- Scale features and justify the distance or similarity measure
+- Compare stability across parameters, samples, and initializations
+- Inspect whether the groups answer a meaningful domain question
+- Remember that every clustering algorithm can find structure in random data

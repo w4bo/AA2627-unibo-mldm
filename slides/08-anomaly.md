@@ -2,7 +2,36 @@
 subtitle: Outlier (anomaly) detection
 ---
 
-# What is an Anomaly?
+# Motivating problem: which transactions deserve attention?
+
+A payment platform processes millions of legitimate transactions and a few fraudulent ones.
+
+- Fraud labels arrive late and are incomplete
+- Normal behavior varies across customers and time
+- Investigators can inspect only a limited number of alerts
+
+The useful output is therefore often a **ranked anomaly score**, not just a normal/anomalous label.
+
+# Learning objectives
+
+By the end of this lecture, you will be able to:
+
+- **Distinguish** point, contextual, and collective anomalies
+- **Compute and interpret** distance- and density-based anomaly scores
+- **Explain** how Isolation Forest isolates unusual observations
+- **Choose and evaluate** an approach under rare, delayed, or missing labels
+
+# Intuition: learn normality, then look for deviations
+
+An anomaly is unusual **with respect to a reference**:
+
+- Globally unusual compared with the whole dataset
+- Locally unusual compared with nearby observations
+- Unusual only in a particular time, place, or other context
+
+Anomaly detection therefore requires both a score and a decision about what “normal” means.
+
+# Formal definition: anomaly detection
 
 An __anomaly__ is a pattern in the data that does not conform to expected behavior.
 
@@ -124,6 +153,24 @@ Anomalies are the rare events, and this makes it very difficult to label these w
 * __Swamping__ is the error of labelling normal events as anomalies.
 * __Masking__ is the error of labelling anomalous events as normal.
 
+# Worked example: score, rank, and threshold
+
+Suppose five transactions receive anomaly scores:
+
+| Transaction | Score |
+|:---:|---:|
+| A | 0.08 |
+| B | 0.13 |
+| C | 0.91 |
+| D | 0.44 |
+| E | 0.76 |
+
+- A top-2 policy sends **C and E** to investigators
+- A threshold of 0.80 sends only **C**
+- Neither policy proves fraud: the score prioritizes investigation
+
+The operating policy should reflect review capacity and the relative costs of masking and swamping.
+
 # Statistical-based Approaches
 
 Assume the existence of a parametric model that describes the distribution of the data (e.g., Gaussian Distribution)
@@ -190,7 +237,7 @@ Using the average distance over the first 5 neighbor would determine a lower out
 :::
 ::::
 
-# Distance-based Approaches: considerations
+# Failure case: global distance in variable-density data
 
 Have $O(N^2)$ complexity where $N$ is the dataset cardinality
 
@@ -200,6 +247,17 @@ Have $O(N^2)$ complexity where $N$ is the dataset cardinality
 ![$k$=5](img/anomaly/16%20Outlier%20detection_16.png)
 
 $C$ is properly identified, but what about $D$?
+
+# Check your understanding
+
+For each situation, identify the anomaly type and a plausible method:
+
+1. One unusually large bank transfer
+2. Normal electricity usage occurring at an unusual time of day
+3. A suspicious sequence of individually ordinary login events
+4. A point that is normal globally but sparse relative to its local neighborhood
+
+Then ask: what labels or domain feedback would you use to evaluate the alerts?
 
 # Density-based Approaches
 
@@ -305,3 +363,15 @@ __Isolation forests works best when small sampling size is used__. When the samp
 ![](img/anomaly/16%20Outlier%20detection_83.png)
 :::
 ::::
+
+# Summary: when should I use anomaly detection?
+
+**Choose the approach from the available supervision and data geometry:**
+
+- **Supervised classifier:** reliable anomaly labels are available
+- **Statistical model:** the normal distribution is simple and defensible
+- **Distance-based score:** global distances remain meaningful
+- **Density-based or LOF:** local density varies across the dataset
+- **Isolation Forest:** scalable unsupervised detection is needed
+
+**Remember:** anomalies are not automatically errors or fraud. Define the reference population, preserve context, tune the operating threshold, and include human or domain feedback in evaluation.
