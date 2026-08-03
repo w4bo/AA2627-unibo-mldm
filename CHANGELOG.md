@@ -1,3 +1,13 @@
+## [1.0.10](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.9...1.0.10) (2026-08-03)
+
+### Bug Fixes
+
+* working on the slides ([d0c8426](https://github.com/w4bo/AA2627-unibo-mldm/commit/d0c842697df2de85156246517cf08928108f2b35))
+
+### General maintenance
+
+* delete crispdm ([aaec7c9](https://github.com/w4bo/AA2627-unibo-mldm/commit/aaec7c9565f80c556d5969258006a074aa922e7f))
+
 ## [1.0.9](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.8...1.0.9) (2026-07-30)
 
 ### Bug Fixes
