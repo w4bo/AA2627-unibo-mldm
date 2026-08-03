@@ -49,7 +49,7 @@ First we need to split the dataset into *training* and *test sets*
 
 # Training and test sets
 
-__Holdout__
+**Holdout**
 
 - Randomly use $\frac{2}{3}$ (or $\frac{4}{5}$) of training and $\frac{1}{3}$ (or $\frac{1}{5}$) for testing.
 - Training and test sets are not overlapping
@@ -132,8 +132,7 @@ Predicted class
 :::{.column width=60%}
 A decision tree solves a difficult classification problem through a sequence of simpler questions.
 
-- Each internal node asks one question about one feature:
-  - Which question best separates customers who churn from those who stay?
+- Each internal node asks one question about one feature: which question best separates customers who churn from those who stay?
 - Each answer restricts the set of possible records
 - A root-to-leaf path behaves like an **if–then rule**
 - Training searches for questions that make the resulting groups as pure as possible
@@ -235,17 +234,31 @@ flowchart TD
 :::
 ::::
 
-# Reading a decision tree and predicting the class
+# Supervised learning: decision trees
 
-What is the predicted class for the following test data?
+```{mermaid}
+%%| echo: false
+flowchart LR
+    A[("Training set")]
+    G[("Test set")]
+    F[("Predicted class")]
+    A -->|Induction| B[Learn Model]
+    C(DT Algorithm) --> B
+    B --> D[DT Model]
+
+    G -->D
+    D -->|Deduction| F
+
+    style F fill:#f78c8c,stroke:#000
+```
+
+# What is the predicted class for the following test data?
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
 | 1                 | 2                   | 2               | basic     | no       | ?   |
 
-# Reading a decision tree and predicting the class
-
-What is the predicted class for the following test data?
+# What is the predicted class for the following test data?
 
 | `months_subscribed` | **`monthly_watch_hours`** | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
@@ -272,9 +285,7 @@ flowchart TD
     style G fill:#a3f7a3,stroke:#000
 ```
 
-# Reading a decision tree and predicting the class
-
-What is the predicted class for the following test data?
+# What is the predicted class for the following test data?
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | **`auto_pay`** | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
@@ -303,9 +314,7 @@ flowchart TD
     style G fill:#a3f7a3,stroke:#000
 ```
 
-# Reading a decision tree and predicting the class
-
-What is the predicted class for the following test data?
+# What is the predicted class for the following test data?
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
 | ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
@@ -356,10 +365,11 @@ flowchart LR
 
 # Learning the tree
 
-The decision tree grows exponentially with the number of attributes. Algorithms generally use greedy techniques that locally make the "best" choice.
+The decision tree grows exponentially with the number of attributes.
 
 Many algorithms are available:
 
+- Algorithms generally use greedy techniques that locally make the "best" choice.
 - Hunt's Algorithm, CART, ID3, **C4.5**, etc.
 
 Different issues have to be addressed.
@@ -580,7 +590,7 @@ flowchart TD
 :::
 ::::
 
-# Splitting continuous attributes
+# Splitting *continuous* attributes
 
 ::::{.columns}
 :::{.column width=50%}
@@ -617,8 +627,8 @@ flowchart TD
 
 A discretization technique can be used to manage the complexity of the search for optimal split points.
 
-- __Static:__ discretization takes place only once before applying the algorithm
-- __Dynamic:__ discretization takes place at each recursion step by exploiting information about the distribution of input data to the $D_t$ node.
+- **Static:** discretization takes place only once before applying the algorithm
+- **Dynamic:** discretization takes place at each recursion step by exploiting information about the distribution of input data to the $D_t$ node.
 
 # Characteristic features {background-color="#121011"}
 
@@ -651,7 +661,7 @@ Given a node $p$ with records belonging to $k$ classes and its partitioning into
 * $M$ = record number in parent node $p$
 * $M_i$ = number of records in child node $i$
 
-__ATTENTION: do not confuse the number of classes ($k$) and of the child nodes ($n$)__
+**ATTENTION: do not confuse the number of classes ($k$) and of the child nodes ($n$)**
 
 Several indices can be adopted.
 
@@ -684,26 +694,26 @@ attribute and then perform calculations using that matrix
 :::{.column width=33%}
 | | CarType | |
 | :-: | :-: | :-: |
-| | __{Sports, Luxury}__ | __{Family}__ |
-| __C1__ | 3 | 1 |
-| __C2__ | 2 | 4 |
-| Gini | __0.400__ | |
+| | **{Sports, Luxury}** | **{Family}** |
+| **C1** | 3 | 1 |
+| **C2** | 2 | 4 |
+| Gini | **0.400** | |
 :::
 :::{.column width=33%}
 | | CarType | |
 | :-: | :-: | :-: |
-| | __{Sports}__ | __{Family, Luxury}__ |
-| __C1__ | 2 | 2 |
-| __C2__ | 1 | 5 |
-| Gini | __0.419__ | |
+| | **{Sports}** | **{Family, Luxury}** |
+| **C1** | 2 | 2 |
+| **C2** | 1 | 5 |
+| Gini | **0.419** | |
 :::
 :::{.column width=33%}
 | | CarType | | |
 | :-: | :-: | :-: | :-: |
-| | __Family__ | __Sports__ | __Luxury__ |
-| __C1__ | 1 | 2 | 1 |
-| __C2__ | 4 | 1 | 1 |
-| Gini | __0.393__ | | |
+| | **Family** | **Sports** | **Luxury** |
+| **C1** | 1 | 2 | 1 |
+| **C2** | 4 | 1 | 1 |
+| Gini | **0.393** | | |
 :::
 ::::
 
@@ -854,9 +864,9 @@ In the case of binary classification problems, the class "rare" is also called a
 
 Precision and Recall are two metrics used in applications where _the correct classification of positive class records is more important_
 
-- __Precision__ ($Precision = \frac{TP}{TP + FP}$) measures the fraction of record results that are actually positive among all those who were classified as such.
+- **Precision** ($Precision = \frac{TP}{TP + FP}$) measures the fraction of record results that are actually positive among all those who were classified as such.
     - High values indicate that few negative class records were incorrectly classified as positive.
-- __Recall__ ($Recall = \frac{TP}{TP + FN}$) measures the fraction of positive records correctly classified
+- **Recall** ($Recall = \frac{TP}{TP + FN}$) measures the fraction of positive records correctly classified
     - High values indicate that few records of the positive class were incorrectly classified as negatives.
 
 ![Outcome of classification](./img/dt/image24.png)
@@ -1028,10 +1038,10 @@ $$
 
 # Classification errors {background-color="#121011"}
 
-- __Training error:__ are mistakes that are made on the training set
-- __Generalization error:__ errors are made on the test set (i.e., records that have not been trained on the system).
-- __Underfitting:__ The model is too simple and does not allow a good classification of the training set or test set
-- __Overfitting:__ The model is too complex, it allows a good classification of the training set, but a poor classification of the test set
+- **Training error:** are mistakes that are made on the training set
+- **Generalization error:** errors are made on the test set (i.e., records that have not been trained on the system).
+- **Underfitting:** The model is too simple and does not allow a good classification of the training set or test set
+- **Overfitting:** The model is too complex, it allows a good classification of the training set, but a poor classification of the test set
 
     - The model fails to generalize because it is based on the specific peculiarities of the training set that are not found in the test set (e.g., noise present in the training set)
 
@@ -1104,15 +1114,15 @@ A decision tree should minimize the error on the real data set; unfortunately, d
 
 Then the real-time data error must be estimated.
 
-- __Re-substitution error:__ number of errors in the training set
-- __Generalization error:__ number of errors in the real data set
+- **Re-substitution error:** number of errors in the training set
+- **Generalization error:** number of errors in the real data set
 
 The methods for estimating the generalization error are:
 
-- __Optimistic approach:__ $e'(t) = e(t)$
-- __Pessimistic approach__
-- __Minimum Description Length (MDL)__
-- __Using the test set:__ The generalization error is equal to the error on the test set.
+- **Optimistic approach:** $e'(t) = e(t)$
+- **Pessimistic approach**
+- **Minimum Description Length (MDL)**
+- **Using the test set:** The generalization error is equal to the error on the test set.
 
     - Normally, the test set is obtained by extracting from the initial training set 1/3 of the records
     - It offers good results, but the risk is to work with a too small training set
@@ -1127,7 +1137,7 @@ It is therefore useful to consider the complexity of the model when evaluating t
 
 Note: The methodological principle was expressed in the 14th century by the English Franciscan philosopher and friar William of Ockham
 
-# Minimum description length
+# Minimum description length {visibility="hidden"}
 
 Given two models, choose the one that minimizes the cost to describe a classification. To describe the model, I can:
 
@@ -1136,7 +1146,7 @@ Given two models, choose the one that minimizes the cost to describe a classific
 
 $Cost(model, data)=Cost(model)+Cost(data|model)$
 
-# Minimum description length
+# Minimum description length {visibility="hidden"}
 
 ![Different decision trees](img/dt/3-Decision Tree_108.png)
 
@@ -1208,7 +1218,7 @@ Pessimistic error (penalty 1)?
 
 # Building the test set
 
-__Holdout__
+**Holdout**
 
 Use $\frac{2}{3}$ of the training records and $\frac{1}{3}$ for validation.
 
@@ -1217,13 +1227,13 @@ Disadvantages:
 * It works with a reduced set of training
 * The result depends on the composition of the training set and test set
 
-__Random subsampling__
+**Random subsampling**
 
 It consists of a repeated execution of the holdout method, in which the training dataset is randomly selected.
 
 # Building the test set
 
-__Cross validation__
+**Cross validation**
 
 - Partition the records into separate $k$ subdivisions
 - Run the training on $k-1$ partitions and test the remainder
@@ -1251,7 +1261,7 @@ The bootstrap does not create a (new) dataset with more information, but it can 
 
 Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.
 
-__Features:__
+**Features:**
 
 - Use GainRatio as a criterion for determining the split attribute
 - It manages the continuous attributes by determining a split point that divides the range of values into two
@@ -1259,7 +1269,7 @@ __Features:__
 - It can handle attributes that are associated with different weights
 - Run post-pruning of the created tree
 
-__The tree construction stops when:__
+**The tree construction stops when:**
 
 - The node contains records belonging to a single class
 - No attribute allows for determining a positive GainRatio

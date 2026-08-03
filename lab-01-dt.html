@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="decision_trees_3_hour_lab_files/libs/quarto-html/tabby.min.js"></script>
-<script src="decision_trees_3_hour_lab_files/libs/quarto-html/popper.min.js"></script>
-<script src="decision_trees_3_hour_lab_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="decision_trees_3_hour_lab_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="decision_trees_3_hour_lab_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="decision_trees_3_hour_lab_files/libs/quarto-html/quarto-syntax-highlighting-dfa48a90d809c806c7ea2d5aecd9fc66.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-01-dt_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lab-01-dt_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-01-dt_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lab-01-dt_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-01-dt_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lab-01-dt_files/libs/quarto-html/quarto-syntax-highlighting-dfa48a90d809c806c7ea2d5aecd9fc66.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.29">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
@@ -13,8 +13,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="decision_trees_3_hour_lab_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="decision_trees_3_hour_lab_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="lab-01-dt_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lab-01-dt_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -97,11 +97,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="decision_trees_3_hour_lab_files/libs/revealjs/dist/theme/quarto-3aff54e5f0c64c9f44dab45420b5f30d.css">
-  <link href="decision_trees_3_hour_lab_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="decision_trees_3_hour_lab_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="decision_trees_3_hour_lab_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="decision_trees_3_hour_lab_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="lab-01-dt_files/libs/revealjs/dist/theme/quarto-3aff54e5f0c64c9f44dab45420b5f30d.css">
+  <link href="lab-01-dt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lab-01-dt_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lab-01-dt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lab-01-dt_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -321,7 +321,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="iris-dataset-dimensions" class="slide level2">
 <h2>Iris: dataset dimensions</h2>
-<div id="echo-false-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:40.524548Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:40.524205Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:40.527764Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:40.526999Z&quot;}}" data-execution_count="3">
+<div id="echo-false-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:21.651712Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:21.651536Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:21.654346Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:21.653700Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>Feature matrix shape: (150, 2)
 Target shape: (150,)</code></pre>
@@ -330,7 +330,7 @@ Target shape: (150,)</code></pre>
 </section>
 <section id="iris-data-preview" class="slide level2">
 <h2>Iris: data preview</h2>
-<div id="echo-false-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:40.529801Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:40.529461Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:40.539930Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:40.539163Z&quot;}}" data-execution_count="4">
+<div id="echo-false-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:21.656308Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:21.656135Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:21.666046Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:21.665268Z&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -405,29 +405,29 @@ Target shape: (150,)</code></pre>
 <section id="iris-feature-space-plot" class="slide level2">
 <h2>Iris: feature-space plot</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"><h3 id="train-trees-from-depth-1-to-x">Train trees from depth 1 to X</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"><h3 id="train-trees-from-depth-1-to-x">Train trees from depth 1 to X</h3>
 <p>The next chart trains one decision tree per depth. The colored background shows the class predicted for every point in the two-feature plane; the scatter points use the same colors for the observed classes.</p>
 </section>
 <section id="iris-boundary-max-depth-1" class="slide level2">
 <h2>Iris boundary: max depth 1</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
 <section id="iris-boundary-max-depth-2" class="slide level2">
 <h2>Iris boundary: max depth 2</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
 <section id="iris-boundary-max-depth-3" class="slide level2">
 <h2>Iris boundary: max depth 3</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
 <section id="iris-boundary-max-depth-4" class="slide level2">
 <h2>Iris boundary: max depth 4</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
 <section id="iris-boundary-max-depth-5" class="slide level2">
 <h2>Iris boundary: max depth 5</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"><h3 id="iris-checkpoint">Iris checkpoint</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"><h3 id="iris-checkpoint">Iris checkpoint</h3>
 <ul>
 <li>At depth 1, how many regions can the tree create?</li>
 <li>Which feature appears first in the shallow trees?</li>
@@ -447,7 +447,7 @@ Target shape: (150,)</code></pre>
 </section>
 <section id="breast-cancer-dataset-dimensions" class="slide level2">
 <h2>Breast cancer: dataset dimensions</h2>
-<div id="echo-false-5-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.626785Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.626611Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.629928Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.629113Z&quot;}}" data-execution_count="14">
+<div id="echo-false-5-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.628774Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.628600Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.631482Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.630807Z&quot;}}" data-execution_count="14">
 <div class="cell-output cell-output-stdout">
 <pre><code>Feature matrix shape: (569, 30)
 Target shape: (569,)</code></pre>
@@ -456,7 +456,7 @@ Target shape: (569,)</code></pre>
 </section>
 <section id="breast-cancer-data-preview" class="slide level2">
 <h2>Breast cancer: data preview</h2>
-<div id="echo-false-6-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.632054Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.631852Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.647576Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.646682Z&quot;}}" data-execution_count="15">
+<div id="echo-false-6-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.633508Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.633325Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.647174Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.646320Z&quot;}}" data-execution_count="15">
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 <style scoped="">
@@ -631,7 +631,7 @@ Target shape: (569,)</code></pre>
 </section>
 <section id="breast-cancer-feature-summary" class="slide level2">
 <h2>Breast cancer: feature summary</h2>
-<div id="a8136211" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.649309Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.649141Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.660948Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.660183Z&quot;}}" data-execution_count="16">
+<div id="a8136211" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.648908Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.648730Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.659934Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.659106Z&quot;}}" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
@@ -749,7 +749,7 @@ Target shape: (569,)</code></pre>
 </section>
 <section id="breast-cancer-class-counts" class="slide level2">
 <h2>Breast cancer: class counts</h2>
-<div id="echo-false-7-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.662869Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.662697Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.668744Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.667887Z&quot;}}" data-execution_count="17">
+<div id="echo-false-7-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.661608Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.661414Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.667303Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.666563Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -795,7 +795,7 @@ Target shape: (569,)</code></pre>
 </section>
 <section id="breast-cancer-class-proportions" class="slide level2">
 <h2>Breast cancer: class proportions</h2>
-<div id="echo-false-8-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.670520Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.670347Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.676925Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.676152Z&quot;}}" data-execution_count="18">
+<div id="echo-false-8-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.669017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.668855Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.674735Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.673874Z&quot;}}" data-execution_count="18">
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div>
 <style scoped="">
@@ -862,7 +862,7 @@ Suggested answers
 </section>
 <section id="split-class-balance" class="slide level2">
 <h2>Split: class balance</h2>
-<div id="echo-false-8-2-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.687026Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.686832Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.692457Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.691637Z&quot;}}" data-execution_count="20">
+<div id="echo-false-8-2-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.684512Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.684328Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.689464Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.688654Z&quot;}}" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -907,7 +907,7 @@ Suggested answers
 </section>
 <section id="split-matrix-shapes" class="slide level2">
 <h2>Split: matrix shapes</h2>
-<div id="echo-false-9-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.694175Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.694002Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.697379Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.696485Z&quot;}}" data-execution_count="21">
+<div id="echo-false-9-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.691106Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.690934Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.693937Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.693233Z&quot;}}" data-execution_count="21">
 <div class="cell-output cell-output-stdout">
 <pre><code>Train shape: (426, 30)
 Test shape: (143, 30)</code></pre>
@@ -921,7 +921,7 @@ Test shape: (143, 30)</code></pre>
 </section>
 <section id="first-tree-decision-stump" class="slide level2">
 <h2>First tree: decision stump</h2>
-<div id="27c0f563" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.699161Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.698986Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.709032Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.708159Z&quot;}}" data-execution_count="22">
+<div id="27c0f563" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.695844Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.695683Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.705573Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.704793Z&quot;}}" data-execution_count="22">
 <div class="cell-output cell-output-stdout">
 <pre><code>Train accuracy: 0.9225352112676056
 Test accuracy:  0.9230769230769231
@@ -933,10 +933,10 @@ Number of leaves: 2</code></pre>
 <section id="decision-stump-tree-view" class="slide level2">
 <h2>Decision stump: tree view</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-24-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-24-output-1.png" class="r-stretch"></section>
 <section id="decision-stump-text-rules" class="slide level2">
 <h2>Decision stump: text rules</h2>
-<div id="2634bd92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.849124Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.848916Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.853121Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.852131Z&quot;}}" data-execution_count="24">
+<div id="2634bd92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.836836Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.836652Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.840435Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.839665Z&quot;}}" data-execution_count="24">
 <div class="cell-output cell-output-stdout">
 <pre><code>|--- worst radius &lt;= 16.80
 |   |--- class: 1
@@ -966,7 +966,7 @@ Number of leaves: 2</code></pre>
 <section id="impurity-curves" class="slide level2">
 <h2>Impurity curves</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-27-output-1.png" class="r-stretch"><h3 id="exercise-1-calculate-impurity-by-hand-8-minutes">Exercise 1 — calculate impurity by hand (8 minutes)</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-27-output-1.png" class="r-stretch"><h3 id="exercise-1-calculate-impurity-by-hand-8-minutes">Exercise 1 — calculate impurity by hand (8 minutes)</h3>
 <p>A node contains 40 samples:</p>
 <ul>
 <li>30 benign</li>
@@ -981,7 +981,7 @@ Number of leaves: 2</code></pre>
 </section>
 <section id="exercise-impurity-by-hand" class="slide level2">
 <h2>Exercise: impurity by hand</h2>
-<div id="af792ad7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.975057Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.974860Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.978830Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.977991Z&quot;}}" data-execution_count="27">
+<div id="af792ad7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.950739Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.950548Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.954651Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.953853Z&quot;}}" data-execution_count="27">
 <div class="cell-output cell-output-stdout">
 <pre><code>Gini: 0.375
 Entropy: 0.8112781244591328</code></pre>
@@ -997,7 +997,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="weighted-impurity-numeric-example" class="slide level2">
 <h2>Weighted impurity: numeric example</h2>
-<div id="echo-false-13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:41.985447Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:41.985273Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:41.988804Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:41.987906Z&quot;}}" data-execution_count="29">
+<div id="echo-false-13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:22.961112Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:22.960942Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:22.964050Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:22.963336Z&quot;}}" data-execution_count="29">
 <div class="cell-output cell-output-stdout">
 <pre><code>Local weighted impurity decrease: 0.264</code></pre>
 </div>
@@ -1022,7 +1022,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="depth-sweep-metrics-table" class="slide level2">
 <h2>Depth sweep: metrics table</h2>
-<div id="echo-false-15" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:42.138293Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:42.138108Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:42.148794Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:42.148003Z&quot;}}" data-execution_count="31">
+<div id="echo-false-15" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:23.109710Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:23.109516Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:23.119920Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:23.119138Z&quot;}}" data-execution_count="31">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1222,19 +1222,19 @@ Entropy: 0.8112781244591328</code></pre>
 <section id="accuracy-by-depth" class="slide level2">
 <h2>Accuracy by depth</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-33-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-33-output-1.png" class="r-stretch"></section>
 <section id="log-loss-by-depth" class="slide level2">
 <h2>Log loss by depth</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-34-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-34-output-1.png" class="r-stretch"></section>
 <section id="leaf-impurity-by-depth" class="slide level2">
 <h2>Leaf impurity by depth</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-35-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-35-output-1.png" class="r-stretch"></section>
 <section id="model-complexity-by-depth" class="slide level2">
 <h2>Model complexity by depth</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-36-output-1.png" class="r-stretch"><h3 id="interpretation-questions">Interpretation questions</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-36-output-1.png" class="r-stretch"><h3 id="interpretation-questions">Interpretation questions</h3>
 <ol type="1">
 <li>At which depth is test accuracy highest?</li>
 <li>Does the depth with the purest leaves necessarily generalize best?</li>
@@ -1245,7 +1245,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="best-test-depth" class="slide level2">
 <h2>Best test depth</h2>
-<div id="echo-false-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:42.671805Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:42.671638Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:42.677859Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:42.677089Z&quot;}}" data-execution_count="37">
+<div id="echo-false-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:23.602395Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:23.602218Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:23.608032Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:23.607367Z&quot;}}" data-execution_count="37">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1319,7 +1319,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="first-perfect-training-depth" class="slide level2">
 <h2>First perfect training depth</h2>
-<div id="echo-false-18" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:42.679675Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:42.679492Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:42.683088Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:42.682170Z&quot;}}" data-execution_count="38">
+<div id="echo-false-18" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:23.609856Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:23.609682Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:23.613057Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:23.612380Z&quot;}}" data-execution_count="38">
 <div class="cell-output cell-output-stdout">
 <pre><code>First depth with perfect training accuracy: 7</code></pre>
 </div>
@@ -1330,19 +1330,19 @@ Entropy: 0.8112781244591328</code></pre>
 <section id="tree-structure-max-depth-1" class="slide level2">
 <h2>Tree structure: max depth 1</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-40-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-40-output-1.png" class="r-stretch"></section>
 <section id="tree-structure-max-depth-2" class="slide level2">
 <h2>Tree structure: max depth 2</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-41-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-41-output-1.png" class="r-stretch"></section>
 <section id="tree-structure-max-depth-3" class="slide level2">
 <h2>Tree structure: max depth 3</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-42-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-42-output-1.png" class="r-stretch"></section>
 <section id="tree-structure-max-depth-5" class="slide level2">
 <h2>Tree structure: max depth 5</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-43-output-1.png" class="r-stretch"><h3 id="exercise-2-choose-a-depth-10-minutes">Exercise 2 — choose a depth (10 minutes)</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-43-output-1.png" class="r-stretch"><h3 id="exercise-2-choose-a-depth-10-minutes">Exercise 2 — choose a depth (10 minutes)</h3>
 <p>Choose a depth for a hypothetical interpretable screening aid.</p>
 <p>Your answer must mention:</p>
 <ul>
@@ -1356,7 +1356,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="exercise-choose-a-depth" class="slide level2">
 <h2>Exercise: choose a depth</h2>
-<div id="d4f7d351" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:43.859229Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:43.859043Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:43.866604Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:43.865804Z&quot;}}" data-execution_count="43">
+<div id="d4f7d351" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:24.669898Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:24.669706Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:24.677221Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:24.676364Z&quot;}}" data-execution_count="43">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1450,7 +1450,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="top-feature-importances" class="slide level2">
 <h2>Top feature importances</h2>
-<div id="echo-false-24" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:43.873634Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:43.873462Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:43.879626Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:43.878814Z&quot;}}" data-execution_count="45">
+<div id="echo-false-24" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:24.684139Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:24.683960Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:24.689934Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:24.689197Z&quot;}}" data-execution_count="45">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1532,7 +1532,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="feature-importance-sum" class="slide level2">
 <h2>Feature importance sum</h2>
-<div id="echo-false-25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:43.881561Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:43.881376Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:43.884727Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:43.883886Z&quot;}}" data-execution_count="46">
+<div id="echo-false-25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:24.691660Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:24.691487Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:24.694770Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:24.694094Z&quot;}}" data-execution_count="46">
 <div class="cell-output cell-output-stdout">
 <pre><code>Sum: 1.0</code></pre>
 </div>
@@ -1540,7 +1540,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="manual-importance-equals-scikit-learn" class="slide level2">
 <h2>Manual importance equals scikit-learn</h2>
-<div id="echo-false-27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:43.894342Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:43.894168Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:43.902215Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:43.901490Z&quot;}}" data-execution_count="48">
+<div id="echo-false-27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:24.704492Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:24.704297Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:24.712395Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:24.711694Z&quot;}}" data-execution_count="48">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1648,7 +1648,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="manual-importance-numerical-difference" class="slide level2">
 <h2>Manual importance: numerical difference</h2>
-<div id="echo-false-28" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:43.904429Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:43.904121Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:43.907779Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:43.906906Z&quot;}}" data-execution_count="49">
+<div id="echo-false-28" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:24.714164Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:24.713993Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:24.717539Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:24.716688Z&quot;}}" data-execution_count="49">
 <div class="cell-output cell-output-stdout">
 <pre><code>Maximum absolute difference: 1.1102230246251565e-16</code></pre>
 </div>
@@ -1658,7 +1658,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="split-contribution-details" class="slide level2">
 <h2>Split contribution details</h2>
-<div id="echo-false-30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:43.917636Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:43.917466Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:43.927538Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:43.926646Z&quot;}}" data-execution_count="51">
+<div id="echo-false-30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:24.727629Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:24.727343Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:24.736346Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:24.735680Z&quot;}}" data-execution_count="51">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1821,13 +1821,13 @@ Entropy: 0.8112781244591328</code></pre>
 <section id="top-split-contributions" class="slide level2">
 <h2>Top split contributions</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-53-output-1.png" class="r-stretch"><h3 id="feature-importance-changes-with-depth">Feature importance changes with depth</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-53-output-1.png" class="r-stretch"><h3 id="feature-importance-changes-with-depth">Feature importance changes with depth</h3>
 <p>Feature importance is a property of the <strong>fitted tree</strong>, not an eternal property of the dataset.</p>
 <p>We now place the importances from each depth in a pandas table.</p>
 </section>
 <section id="feature-importance-over-depth" class="slide level2">
 <h2>Feature importance over depth</h2>
-<div id="3b7cb674" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:44.087136Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:44.086938Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:44.103559Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:44.102634Z&quot;}}" data-execution_count="53">
+<div id="3b7cb674" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:24.881905Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:24.881720Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:24.897899Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:24.897192Z&quot;}}" data-execution_count="53">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2053,7 +2053,7 @@ Entropy: 0.8112781244591328</code></pre>
 <section id="feature-importance-heatmap" class="slide level2">
 <h2>Feature importance heatmap</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-55-output-1.png" class="r-stretch"><h3 id="important-caveats">Important caveats</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-55-output-1.png" class="r-stretch"><h3 id="important-caveats">Important caveats</h3>
 <p>Impurity-based feature importance:</p>
 <ul>
 <li>is calculated from the <strong>training tree</strong>;</li>
@@ -2074,7 +2074,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="exercise-zero-importance" class="slide level2">
 <h2>Exercise: zero importance</h2>
-<div id="b5980659" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:44.333497Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:44.333311Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:44.338085Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:44.337274Z&quot;}}" data-execution_count="55">
+<div id="b5980659" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:25.111173Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:25.110983Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:25.115757Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:25.114942Z&quot;}}" data-execution_count="55">
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of zero-importance features at depth 2: 27
 ['mean radius', 'mean texture', 'mean perimeter', 'mean area', 'mean smoothness', 'mean compactness', 'mean concavity', 'mean concave points', 'mean symmetry', 'mean fractal dimension']</code></pre>
@@ -2093,7 +2093,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="criteria-comparison-first-rows" class="slide level2">
 <h2>Criteria comparison: first rows</h2>
-<div id="echo-false-32" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:44.770126Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:44.769726Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:44.780338Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:44.779445Z&quot;}}" data-execution_count="57">
+<div id="echo-false-32" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:25.591633Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:25.591453Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:25.600847Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:25.599969Z&quot;}}" data-execution_count="57">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2280,14 +2280,14 @@ Entropy: 0.8112781244591328</code></pre>
 <section id="criteria-accuracy-chart" class="slide level2">
 <h2>Criteria accuracy chart</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-60-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-60-output-1.png" class="r-stretch"></section>
 <section id="criteria-log-loss-chart" class="slide level2">
 <h2>Criteria log-loss chart</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-61-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-61-output-1.png" class="r-stretch"></section>
 <section id="fixed-depth-criteria-models" class="slide level2">
 <h2>Fixed-depth criteria models</h2>
-<div id="80f0d23f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:45.055520Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:45.055323Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:45.065466Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:45.064708Z&quot;}}" data-execution_count="61">
+<div id="80f0d23f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:25.849138Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:25.848961Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:25.858169Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:25.857446Z&quot;}}" data-execution_count="61">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2374,7 +2374,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="criteria-root-split-table" class="slide level2">
 <h2>Criteria root split table</h2>
-<div id="echo-false-37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:45.073811Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:45.073640Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:45.080502Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:45.079610Z&quot;}}" data-execution_count="63">
+<div id="echo-false-37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:25.866598Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:25.866387Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:25.873050Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:25.872151Z&quot;}}" data-execution_count="63">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2445,20 +2445,20 @@ Entropy: 0.8112781244591328</code></pre>
 <section id="root-rules-gini" class="slide level2">
 <h2>Root rules: gini</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-65-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-65-output-1.png" class="r-stretch"></section>
 <section id="root-rules-entropy" class="slide level2">
 <h2>Root rules: entropy</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-66-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-66-output-1.png" class="r-stretch"></section>
 <section id="root-rules-log_loss" class="slide level2">
 <h2>Root rules: log_loss</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-67-output-1.png" class="r-stretch"><h3 id="compare-feature-importance-across-criteria">Compare feature importance across criteria</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-67-output-1.png" class="r-stretch"><h3 id="compare-feature-importance-across-criteria">Compare feature importance across criteria</h3>
 <p>Keep depth fixed so the comparison isolates the split criterion as much as possible.</p>
 </section>
 <section id="criteria-feature-importance-table" class="slide level2">
 <h2>Criteria feature-importance table</h2>
-<div id="echo-false-39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:45.980070Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:45.979862Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:45.988213Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:45.987462Z&quot;}}" data-execution_count="68">
+<div id="echo-false-39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:26.688329Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:26.688147Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:26.696223Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:26.695368Z&quot;}}" data-execution_count="68">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2567,7 +2567,7 @@ Entropy: 0.8112781244591328</code></pre>
 <section id="criteria-feature-importance-chart" class="slide level2">
 <h2>Criteria feature-importance chart</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-71-output-1.png" class="r-stretch"><h3 id="exercise-4-criterion-conclusions-10-minutes">Exercise 4 — criterion conclusions (10 minutes)</h3>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-71-output-1.png" class="r-stretch"><h3 id="exercise-4-criterion-conclusions-10-minutes">Exercise 4 — criterion conclusions (10 minutes)</h3>
 <p>Answer using evidence from the tables and plots:</p>
 <ol type="1">
 <li>Which criterion gives the best test accuracy at depth 3?</li>
@@ -2584,7 +2584,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="final-model-scores" class="slide level2">
 <h2>Final model scores</h2>
-<div id="61adc0d7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:46.213781Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:46.213591Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:46.230329Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:46.229476Z&quot;}}" data-execution_count="71">
+<div id="61adc0d7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:26.896554Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:26.896358Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:26.912949Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:26.911996Z&quot;}}" data-execution_count="71">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2643,11 +2643,11 @@ Entropy: 0.8112781244591328</code></pre>
 <section id="final-confusion-matrix" class="slide level2">
 <h2>Final confusion matrix</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-73-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-73-output-1.png" class="r-stretch"></section>
 <section id="final-tree-structure" class="slide level2">
 <h2>Final tree structure</h2>
 
-<img data-src="decision_trees_3_hour_lab_files/figure-revealjs/cell-74-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-dt_files/figure-revealjs/cell-74-output-1.png" class="r-stretch"></section>
 <section id="capstone-tasks---20-minutes" class="slide level2">
 <h2>10. Capstone tasks - 20 minutes</h2>
 <p>Complete these tasks without changing the model family.</p>
@@ -2676,7 +2676,7 @@ Entropy: 0.8112781244591328</code></pre>
 </section>
 <section id="capstone-comparison-table" class="slide level2">
 <h2>Capstone comparison table</h2>
-<div id="echo-false-37-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-07-31T09:46:46.689567Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-07-31T09:46:46.689382Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-07-31T09:46:46.696839Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-07-31T09:46:46.695973Z&quot;}}" data-execution_count="75">
+<div id="echo-false-37-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T09:29:27.328048Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T09:29:27.327874Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T09:29:27.334769Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T09:29:27.334049Z&quot;}}" data-execution_count="75">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2785,19 +2785,19 @@ Entropy: 0.8112781244591328</code></pre>
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="decision_trees_3_hour_lab_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -2966,7 +2966,7 @@ Entropy: 0.8112781244591328</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

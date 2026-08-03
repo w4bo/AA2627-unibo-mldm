@@ -516,10 +516,7 @@ Predicted class
 <div class="column" style="width:60%;">
 <p>A decision tree solves a difficult classification problem through a sequence of simpler questions.</p>
 <ul>
-<li>Each internal node asks one question about one feature:
-<ul>
-<li>Which question best separates customers who churn from those who stay?</li>
-</ul></li>
+<li>Each internal node asks one question about one feature: which question best separates customers who churn from those who stay?</li>
 <li>Each answer restricts the set of possible records</li>
 <li>A root-to-leaf path behaves like an <strong>if–then rule</strong></li>
 <li>Training searches for questions that make the resulting groups as pure as possible</li>
@@ -724,9 +721,35 @@ Predicted class
 </div></div>
 </section>
 
-<section id="reading-a-decision-tree-and-predicting-the-class" class="title-slide slide level1 center">
-<h1>Reading a decision tree and predicting the class</h1>
-<p>What is the predicted class for the following test data?</p>
+<section id="supervised-learning-decision-trees-1" class="title-slide slide level1 center">
+<h1>Supervised learning: decision trees</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[("Training set")]
+    G[("Test set")]
+    F[("Predicted class")]
+    A --&gt;|Induction| B[Learn Model]
+    C(DT Algorithm) --&gt; B
+    B --&gt; D[DT Model]
+
+    G --&gt;D
+    D --&gt;|Deduction| F
+
+    style F fill:#f78c8c,stroke:#000
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="what-is-the-predicted-class-for-the-following-test-data" class="title-slide slide level1 center">
+<h1>What is the predicted class for the following test data?</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -759,9 +782,8 @@ Predicted class
 </table>
 </section>
 
-<section id="reading-a-decision-tree-and-predicting-the-class-1" class="title-slide slide level1 center">
-<h1>Reading a decision tree and predicting the class</h1>
-<p>What is the predicted class for the following test data?</p>
+<section id="what-is-the-predicted-class-for-the-following-test-data-1" class="title-slide slide level1 center">
+<h1>What is the predicted class for the following test data?</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -822,9 +844,8 @@ Predicted class
 </div>
 </section>
 
-<section id="reading-a-decision-tree-and-predicting-the-class-2" class="title-slide slide level1 center">
-<h1>Reading a decision tree and predicting the class</h1>
-<p>What is the predicted class for the following test data?</p>
+<section id="what-is-the-predicted-class-for-the-following-test-data-2" class="title-slide slide level1 center">
+<h1>What is the predicted class for the following test data?</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -887,9 +908,8 @@ Predicted class
 </div>
 </section>
 
-<section id="reading-a-decision-tree-and-predicting-the-class-3" class="title-slide slide level1 center">
-<h1>Reading a decision tree and predicting the class</h1>
-<p>What is the predicted class for the following test data?</p>
+<section id="what-is-the-predicted-class-for-the-following-test-data-3" class="title-slide slide level1 center">
+<h1>What is the predicted class for the following test data?</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -953,7 +973,7 @@ Predicted class
 </div>
 </section>
 
-<section id="supervised-learning-decision-trees-1" class="title-slide slide level1 center">
+<section id="supervised-learning-decision-trees-2" class="title-slide slide level1 center">
 <h1>Supervised learning: decision trees</h1>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -983,9 +1003,10 @@ Predicted class
 
 <section id="learning-the-tree" class="title-slide slide level1 center">
 <h1>Learning the tree</h1>
-<p>The decision tree grows exponentially with the number of attributes. Algorithms generally use greedy techniques that locally make the “best” choice.</p>
+<p>The decision tree grows exponentially with the number of attributes.</p>
 <p>Many algorithms are available:</p>
 <ul>
+<li>Algorithms generally use greedy techniques that locally make the “best” choice.</li>
 <li>Hunt’s Algorithm, CART, ID3, <strong>C4.5</strong>, etc.</li>
 </ul>
 <p>Different issues have to be addressed.</p>
@@ -1278,7 +1299,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </section>
 
 <section id="splitting-continuous-attributes" class="title-slide slide level1 center">
-<h1>Splitting continuous attributes</h1>
+<h1>Splitting <em>continuous</em> attributes</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><em>N-ary split</em>: The split condition can be expressed as a Boolean test that results in multiple ranges of values. The algorithm must consider the entire possible range of values as possible split points</p>
@@ -2094,32 +2115,9 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p>Note: The methodological principle was expressed in the 14th century by the English Franciscan philosopher and friar William of Ockham</p>
 </section>
 
-<section id="minimum-description-length" class="title-slide slide level1 center">
-<h1>Minimum description length</h1>
-<p>Given two models, choose the one that minimizes the cost to describe a classification. To describe the model, I can:</p>
-<ul>
-<li>Sequentially send class <span class="math inline">\(O(n)\)</span></li>
-<li>Build a classifier, and send the description along with a detailed description of the mistakes it makes</li>
-</ul>
-<p><span class="math inline">\(Cost(model, data)=Cost(model)+Cost(data|model)\)</span></p>
-</section>
 
-<section id="minimum-description-length-1" class="title-slide slide level1 center">
-<h1>Minimum description length</h1>
 
-<img data-src="img/dt/3-Decision%20Tree_108.png" class="r-stretch quarto-figure-center"><p class="caption">Different decision trees</p><p>Datasets with <span class="math inline">\(n\)</span> records described by 16 binary attributes and 3 class values</p>
-<ul>
-<li>Each inner node is modeled with the ID of the used attribute: <span class="math inline">\(log_2(16)=4\)</span> bits</li>
-<li>Each leaf is modeled with the ID of the class: <span class="math inline">\(log_2(3)=2\)</span> bits</li>
-<li>Each error is modeled with its position in the training set, considering <span class="math inline">\(n\)</span> record: <span class="math inline">\(log_2(n)\)</span></li>
-</ul>
-<p>Cost:</p>
-<ul>
-<li>Cost(Tree1)= <span class="math inline">\(4 \cdot 2 + 2 \cdot 3 + 7 \cdot log_2(n) = 14 + 7 \cdot log_2(n)\)</span></li>
-<li>Cost(Tree2)= <span class="math inline">\(4 \cdot 4 + 2 \cdot 5 + 4 \cdot log_2(n) = 26 + 4 \cdot log_2(n)\)</span></li>
-<li>Overall: Cost(Tree1) &lt; Cost(Tree2) if <span class="math inline">\(n\)</span> &lt; 16</li>
-</ul>
-</section>
+
 
 <section id="pessimistic-approach" class="title-slide slide level1 center">
 <h1>Pessimistic approach</h1>
@@ -2454,7 +2452,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

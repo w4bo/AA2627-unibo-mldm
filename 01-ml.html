@@ -152,7 +152,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Machine Learning and Data Mining (Module I)</h1>
-  <p class="subtitle">Data Mining, Machine Learning, and CRISP-DM</p>
+  <p class="subtitle">Fundamentals of Machine Learning</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -215,11 +215,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
       }</style></aside>
 </section>
 
-<section id="section-1" class="title-slide slide level1 center">
-<h1></h1>
-
-<img data-src="./img/00-ml/data-mining-Venn-diagram.png" class="r-stretch quarto-figure-center"><p class="caption">AI, Data Mining, and Machine Learning</p></section>
-
 <section id="what-is-artificial-intelligence" class="title-slide slide level1 center">
 <h1>What is Artificial Intelligence?</h1>
 <p>Artificial intelligence (AI) is the capability of <em>computational systems</em> to perform tasks typically associated with <em>human intelligence</em>, such as learning, reasoning, problem-solving, perception, and decision-making.</p>
@@ -272,6 +267,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p><strong>Artificial general intelligence (AGI)</strong> refers to a hypothetical system able to perform a broad range of intellectual tasks at a human level.</p>
 <p>The distinction concerns the <strong>scope of capabilities</strong>, not one specific algorithm.</p>
 </section>
+
+<section id="section-1" class="title-slide slide level1 center">
+<h1></h1>
+
+<img data-src="./img/00-ml/data-mining-Venn-diagram.png" class="r-stretch quarto-figure-center"><p class="caption">AI, Data Mining, and Machine Learning</p></section>
 
 <section id="data-mining-turns-large-datasets-into-useful-patterns" class="title-slide slide level1 center">
 <h1>Data mining turns large datasets into useful patterns</h1>
@@ -597,7 +597,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="neural-networks-compose-learned-transformations" class="title-slide slide level1 center">
 <h1>Neural networks compose learned transformations</h1>
 
-<img data-src="http://neuralnetworksanddeeplearning.com/images/tikz36.png" class="r-stretch quarto-figure-center"><p class="caption">Neural networks</p></section>
+<img data-src="./img/00-ml/nn.png" class="r-stretch quarto-figure-center"><p class="caption">Neural networks</p></section>
 
 <section id="instance-based-methods-predict-from-similar-examples" class="title-slide slide level1 center">
 <h1>Instance-based methods predict from similar examples</h1>
@@ -770,13 +770,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="agglomerative-clustering-merges-the-closest-groups" class="title-slide slide level1 center">
 <h1>Agglomerative clustering merges the closest groups</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
 <p><em>Agglomerative clustering</em> (“bottom-up” approach)</p>
 <ul>
 <li>Begin with each data point as an individual cluster.</li>
 <li>At each step, merge the two most similar clusters based on a chosen distance metric</li>
 </ul>
-
-<img data-src="https://upload.wikimedia.org/wikipedia/commons/1/12/Iris_dendrogram.png" class="r-stretch quarto-figure-center"><p class="caption">Hierarchical Clustering</p></section>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/1/12/Iris_dendrogram.png"></p>
+<figcaption>Hierarchical Clustering</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
 
 <section id="association-rules-describe-co-occurrence-patterns" class="title-slide slide level1 center">
 <h1>Association rules describe co-occurrence patterns</h1>
@@ -1076,7 +1085,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="automating-data-science" class="title-slide slide level1 center">
 <h1>Automating Data Science</h1>
-<p>Read:</p>
 <ul>
 <li><a href="https://cacm.acm.org/research/automating-data-science/">CACM: Automating Data Science</a></li>
 <li><a href="https://www.weforum.org/stories/2025/09/gen-z-are-competitive-job-market-randstad/">Gen Z face a more competitive job market than their predecessors</a></li>
@@ -1089,10 +1097,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Glossary <span class="citation" data-cites="sammut2017encyclopedia">(<a href="#/references" role="doc-biblioref" onclick="">Sammut and Webb 2017</a>)</span></h1>
 <div class="columns">
 <div class="column" style="width:60%;">
-<p><strong>Data</strong></p>
+<p><strong>Data</strong> (aka. data point, observation, data sample, instance, tuple)</p>
 <blockquote>
 <p>Facts and statistics collected together for reference or analysis.</p>
-<p>Synonyms: data point, observation, data sample, instance, tuple, etc.</p>
 </blockquote>
 <p><strong>Dataset (data set)</strong></p>
 <blockquote>
@@ -1101,10 +1108,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div><div class="column" style="width:40%;">
 <p><img data-src="https://github.com/user-attachments/assets/6b3f38bf-1a0f-4979-b141-854508d5faa9"></p>
 </div></div>
-<p><strong>Feature</strong></p>
+<p><strong>Feature</strong> (aka. characteristic; attribute; property; trait, etc.)</p>
 <blockquote>
 <p>Properties of things, ways that we, as humans, might describe them.</p>
-<p>Synonyms: characteristic; attribute; property; trait, etc.</p>
 </blockquote>
 <p><strong>(Database) Query</strong></p>
 <blockquote>
@@ -1862,7 +1868,7 @@ Shearer, Colin. 2000. <span>“The CRISP-DM Model: The New Blueprint for Data Mi
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
