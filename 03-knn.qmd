@@ -19,48 +19,84 @@ By the end of this lecture, you will be able to:
 - **Explain** instance-based learning and the role of a distance metric
 - **Compute** a k-NN prediction, with and without distance weighting
 - **Select** a suitable value of $k$ using validation data
-- **Recognize** when scaling, irrelevant features, or dimensionality make k-NN unreliable
+- **Recognize** why feature scaling is essential for distance-based learning
+- **Diagnose** failure cases caused by irrelevant features and high dimensionality
 
 # Intuition: nearby points tend to behave alike
 
-K-nearest neighbors do not build models but classify new records based on their similarity to the examples in the training set.
+K-nearest neighbors is an **instance-based** method.
 
-They are called lazy-diligent learners as opposed to eager-diligent, impatient learners (rule-based, decision trees, neural networks, etc.).
-
-* Nearest-Neighbor: ranks the record based on the most similar ones in the training set
-* _If it walks like a duck, quacks like a duck, then it's probably a duck_
+- Training is mostly memorization: store the labeled examples
+- Prediction is local: inspect the neighborhood of the new record
+- The learned boundary can be nonlinear because each region can vote differently
 
 ![K-nearest neighbors](img/knn/Immagine1.png)
 
-# Nearest Neighbor Classifier
+# Lazy learning
+
+k-NN is often called a **lazy learner**.
+
+- Eager learners, such as trees and neural networks, build a model before prediction
+- Lazy learners postpone most of the work until a new query arrives
+- The prediction cost can therefore be high for large training sets
+
+The key question becomes:
+
+> What does "similar" mean for these records?
+
+# Nearest-neighbor classifier
 
 ![K-nearest neighbors](img/knn/Immagine2.png)
 
-Requirement:
+Requirements:
 
-* A training set
-* A metric to calculate the distance between records
-* The value of $k$, i.e., the number of neighbors to be used
+- A labeled training set
+- A distance or similarity measure
+- A value of $k$, the number of neighbors
+- A voting rule
 
-The classification process:
+# Prediction workflow
 
-* Calculates the distance to the records in the training set
-* Identifies $k$ nearest neighbors
-* Uses nearest neighbor class labels to determine the class of the unknown record (e.g., choosing the one that appears most frequently)
+For a new record $z$:
 
-# Formal definition: k-nearest neighbors
+1. Calculate the distance from $z$ to every training record
+2. Sort the training records by distance
+3. Select the first $k$ records
+4. Predict the class with the largest vote
 
-A record $z$ is classified according a _majority voting process_ using the $k$ elements $D_z$ of the training set $D$ that are closest/most similar to $z$
+The result depends on both the **data representation** and the **distance metric**.
 
-$\hat{y}=argmax_{y \in Y}\sum_{(x_i, y_i) \in D_z} I(y_i=y)$
+# Common distance metrics
 
-* $Y$ is the set of class labels
-* $I()$ returns 1 if its argument is TRUE, 0 otherwise
+For two records $x_i$ and $z$ with $d$ numeric features:
 
-All the neighbors have the same weight.
+Euclidean distance:
 
-* The algorithm is very sensitive to the value of $k$
-* This risk can be reduced by weighing the contribution of neighbors by distance $w = \frac{1}{d(z,x_i)}$
+$$
+dist(x_i,z)=\sqrt{\sum_{j=1}^{d}(x_{ij}-z_j)^2}
+$$
+
+Manhattan distance:
+
+$$
+dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
+$$
+
+Both are sensitive to the units used to measure each feature.
+
+# Formal definition: majority vote
+
+Let $D_z$ be the set of the $k$ closest training records to a query record $z$.
+
+The predicted class is:
+
+$$
+\hat{y}=\arg\max_{y \in Y}\sum_{(x_i,y_i)\in D_z} I(y_i=y)
+$$
+
+- $Y$ is the set of possible class labels
+- $I(\cdot)$ is 1 if the condition is true and 0 otherwise
+- Each selected neighbor has the same vote
 
 # Worked example: majority vote
 
@@ -68,44 +104,245 @@ Suppose the three nearest training records to a new point $z$ are:
 
 | Neighbor | Distance from $z$ | Class |
 |---:|---:|:---:|
-| $x_1$ | 0.8 | churn |
-| $x_2$ | 1.1 | stay |
+| $x_1$ | 0.8 | stay |
+| $x_2$ | 1.1 | churn |
 | $x_3$ | 1.3 | churn |
 
-- With $k=1$, predict **churn**
+- With $k=1$, predict **stay**
 - With $k=3$, predict **churn** by a 2-to-1 majority
-- With distance weighting, compare $\sum 1/d(z,x_i)$ separately for each class
 
 The prediction is local: a different neighborhood may follow a different rule.
 
-# The $k$ value
+# Distance-weighted vote
 
-The choice of $k$ is important because:
+Sometimes closer neighbors should count more.
 
-* If $k$ is too small, the approach is sensitive to noise
-* If $k$ is too large, the surround may include examples belonging to other classes
+A common weighted vote is:
 
-Remember that to operate correctly, the attributes must have the same scale of values and thus must be normalized in pre-processing.
+$$
+\hat{y}=\arg\max_{y \in Y}\sum_{(x_i,y_i)\in D_z} \frac{I(y_i=y)}{dist(x_i,z)}
+$$
 
-* Example: on which attribute is a difference of 0.5 worth more?
-  * The height of an adult ranges from 1.5m to 2.1m
-  * The weight of an adult varies from 40kg to 150kg
-  * A person's salary ranges from 10K€ to 1M€.
+- Very close neighbors receive a larger weight
+- Distant neighbors still contribute, but less
+- Implementations usually handle zero-distance cases explicitly
 
-# Failure case: distance can be misleading
+# Worked example: weighted vote
 
-Consider two features:
+Using the same three neighbors:
 
-- `age`, ranging from 18 to 80
-- `annual_income`, ranging from €10,000 to €1,000,000
+| Neighbor | Distance from $z$ | Class | Weight $1/dist$ |
+|---:|---:|:---:|---:|
+| $x_1$ | 0.8 | stay | 1.25 |
+| $x_2$ | 1.1 | churn | 0.91 |
+| $x_3$ | 1.3 | churn | 0.77 |
 
-Without scaling, income dominates Euclidean distance even if age is more predictive.
+Total weighted vote:
 
-Other failure modes:
+- stay: $1.25$
+- churn: $0.91 + 0.77$
 
-- Irrelevant features make unrelated points appear far apart
-- In high dimensions, distances become less informative
-- A small $k$ follows noise; a large $k$ erases local structure
+Prediction: **stay**.
+
+# Choosing the value of $k$
+
+The choice of $k$ controls how local the prediction is.
+
+- Small $k$: flexible, sensitive to noise, higher variance
+- Large $k$: smoother, more stable, higher bias
+- Odd values of $k$ can avoid ties in binary classification
+
+Choose $k$ using validation data or cross-validation, not the test set.
+
+# The $k$ value: visual intuition
+
+With $k=1$, every training point can create its own tiny region.
+
+With a larger $k$, the boundary becomes smoother because each prediction averages over a wider neighborhood.
+
+This is the same bias-variance trade-off seen in many classifiers:
+
+- too local: follows noise
+- too global: misses real local structure
+
+# Feature scaling is not optional
+
+k-NN compares records using distances.
+
+If features have very different numeric ranges, large-scale features dominate the distance even when they are not more informative.
+
+Example:
+
+- `age`: 18 to 80
+- `weekly_sessions`: 0 to 20
+- `annual_income`: 10,000 to 1,000,000
+
+Without scaling, income can dominate Euclidean distance.
+
+# Scaling example
+
+Compare two customers with a query customer:
+
+| Customer | Age difference | Income difference |
+|---:|---:|---:|
+| A | 2 years | 20,000 EUR |
+| B | 20 years | 500 EUR |
+
+Euclidean distance on raw values is dominated by income:
+
+$$
+dist(A) \approx 20000,\qquad dist(B) \approx 500
+$$
+
+The model may treat B as closer, even if age is the predictive feature.
+
+# Standardization
+
+Standardization converts each feature to:
+
+$$
+x'=\frac{x-\mu}{\sigma}
+$$
+
+- $\mu$ is the feature mean
+- $\sigma$ is the feature standard deviation
+- The transformed feature has mean 0 and standard deviation 1 on the training set
+
+Fit the scaler on the **training set only**.
+
+# Min-max scaling
+
+Min-max scaling converts each feature to:
+
+$$
+x'=\frac{x-\min(x)}{\max(x)-\min(x)}
+$$
+
+- Values are usually mapped to $[0,1]$
+- It preserves the shape of the distribution
+- It can be sensitive to outliers
+
+The right scaler is a modeling choice and should be evaluated with validation data.
+
+# Avoiding data leakage
+
+Incorrect workflow:
+
+1. Scale the whole dataset
+2. Split into train and test sets
+3. Evaluate the model
+
+This leaks information from the test set into preprocessing.
+
+Correct workflow:
+
+1. Split into train and test sets
+2. Fit the scaler on the training set
+3. Transform train and test with the fitted scaler
+4. Evaluate once on the test set
+
+# Use pipelines
+
+In scikit-learn, use a pipeline:
+
+```python
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+
+model = Pipeline([
+    ("scaler", StandardScaler()),
+    ("knn", KNeighborsClassifier(n_neighbors=5)),
+])
+```
+
+The pipeline fits preprocessing only on the training folds during cross-validation.
+
+# Failure case: irrelevant features
+
+Scaling fixes unequal units, but it does not remove useless dimensions.
+
+If we add many irrelevant features:
+
+- each feature contributes noise to the distance
+- truly similar records may appear far apart
+- prediction can degrade even after scaling
+
+k-NN benefits from feature selection, dimensionality reduction, or careful feature engineering.
+
+# Failure case: high dimensionality
+
+In high-dimensional spaces, distances often become less informative.
+
+This is part of the **curse of dimensionality**.
+
+- Points become sparse
+- The nearest and farthest points can have surprisingly similar distances
+- A huge number of examples may be needed to cover the space well
+
+k-NN is strongest when the chosen features make neighborhoods meaningful.
+
+# Practical model-selection checklist
+
+For k-NN, validate:
+
+- Number of neighbors: `n_neighbors`
+- Weighting: uniform or distance-weighted
+- Distance metric: Euclidean, Manhattan, or a domain-specific metric
+- Scaling method: standardization, min-max scaling, or another transformation
+- Feature set: remove irrelevant or redundant features
+
+Keep the test set untouched until the final evaluation.
+
+# Computational cost
+
+Naive prediction requires computing distances to many training records.
+
+For $n$ training records and $d$ features:
+
+- one prediction costs $O(nd)$ with a brute-force search
+- storing the training data costs $O(nd)$
+- prediction can be slower than for eager models
+
+Index structures can reduce the search cost in some low-dimensional settings.
+
+# The R-tree index structure (Guttman, 1984)
+
+R-trees are extensions of B+-trees to multi-dimensional spaces.
+
+B+-trees organize objects into:
+
+- A set of nonoverlapping one-dimensional intervals
+- Recursively nested pages from leaves to root
+
+R-trees organize objects into:
+
+- Overlapping multi-dimensional rectangles
+- Recursively nested bounding regions
+
+# R-tree basic idea
+
+- Recursively aggregate objects using minimum bounding rectangles (MBRs)
+- Regions can overlap
+- A 2-D range query can ignore regions that cannot contain relevant objects
+
+![R-tree](img/knn/Immagine3.png)
+
+# k-NN: strengths
+
+- Very simple baseline
+- No expensive training phase
+- Naturally supports nonlinear decision boundaries
+- Easy to adapt to multiclass classification
+- Can work well when the distance metric matches the domain
+
+# k-NN: weaknesses
+
+- Requires a meaningful distance metric
+- Requires preprocessing for feature scaling
+- Sensitive to noise and irrelevant features
+- Prediction cost can be high for large datasets
+- Performance may degrade in high-dimensional spaces
 
 # Check your understanding
 
@@ -118,57 +355,31 @@ A query point has five nearest-neighbor labels:
 3. Which dataset split should you use to choose $k$?
 4. What preprocessing must be fitted on the training set before computing distances?
 
-# K-Nearest Neighbor: Pro & Cons
-
-Pro
-
-* Do not require the construction of a model
-* Compared with rule-based or decision tree systems, they allow the construction of nonlinear class "contours" and are therefore more flexible
-
-Cons
-
-* Require a similarity or distance measure to assess closeness
-* Require a pre-processing step to normalize the range of variation of attributes
-* Class is locally determined and therefore susceptible to data noise
-* Are very sensitive to the presence of irrelevant or related attributes that will distort distances between objects
-* Classification cost can be high and depends linearly on the size of the training set in the absence of appropriate __index structures__
-
-# The R-Tree Index Structure (Guttman, 1984)
-
-R-trees are extensions of B+-trees to multi-dimensional spaces.
-
-B+-trees organize objects into
-
-* A set of nonoverlapping one-dimensional intervals
-* They apply this principle recursively from the leaves to the root
-
-R-trees organize objects into
-
-* A set of overlapping multi-dimensional intervals (hyper-rectangles)
-* They apply this principle recursively from the leaves to the root
-
-R-trees are available in many commercial DBMSs, such as Oracle DMMS, since version 9
-
-# R-Tree basic idea
-
-- Recursive aggregation of objects based on minimum bounding rectangle - MBR
-- Regions can overlap
-- The 2-D range query must check objects in G/H/L MBRs only
-
-![R-tree](img/knn/Immagine3.png)
-
 # Summary: when should I use k-NN?
 
 **Use k-NN when:**
 
 - Similar cases are expected to have similar outputs
-- The dataset is not too large or an efficient neighbor index is available
-- You want a flexible, non-linear baseline with almost no training time
+- The dataset is not too large, or an efficient neighbor search is available
+- You want a flexible nonlinear baseline with almost no training time
 
 **Be careful when:**
 
-- Features use different scales or include irrelevant dimensions
+- Features use different scales
+- Many features are irrelevant
 - Prediction latency matters
-- The data are sparse or high-dimensional
+- Data are sparse or high-dimensional
 
 **Remember:** scale features, select the metric and $k$ with validation data, and keep the test set untouched.
+
+# Laboratory
+
+In the accompanying lab, you will:
+
+- compute neighbor votes by hand
+- compare k-NN decision boundaries for different $k$
+- measure raw versus scaled k-NN on real data
+- inspect how scaling changes the nearest neighbors
+- tune $k$, metric, weighting, and scaler with cross-validation
+
+Open `lab-02-knn.ipynb`.
