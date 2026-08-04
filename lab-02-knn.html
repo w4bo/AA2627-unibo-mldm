@@ -5,8 +5,8 @@
 <script src="lab-02-knn_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lab-02-knn_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lab-02-knn_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lab-02-knn_files/libs/quarto-html/quarto-syntax-highlighting-dfa48a90d809c806c7ea2d5aecd9fc66.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.29">
+<link href="lab-02-knn_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
   <title>K-Nearest Neighbors from First Principles with pandas and scikit-learn</title>
@@ -19,10 +19,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -203,7 +206,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it 
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
@@ -234,7 +237,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>predicts by majority vote, or by distance-weighted vote.</li>
 </ol>
 <p>We start with a tiny customer-churn example so every number is visible.</p>
-<div id="a045484c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:44.272188Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:44.271849Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:44.282412Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:44.281577Z&quot;}}" data-execution_count="2">
+<div id="a045484c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:34.569520Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:34.569192Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:34.580956Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:34.580121Z&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <style scoped="">
@@ -313,7 +316,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="manual-euclidean-distances" class="slide level2">
 <h2>Manual Euclidean distances</h2>
-<div id="9e8dc012" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:44.284191Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:44.284000Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:44.295679Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:44.294928Z&quot;}}" data-execution_count="3">
+<div id="9e8dc012" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:34.583198Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:34.582981Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:34.597118Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:34.596018Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -404,7 +407,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="weighted-vote" class="slide level2">
 <h2>Weighted vote</h2>
 <p>With <code>weights="distance"</code>, closer neighbors have more influence. A common intuition is that a neighbor at distance 1 should matter more than a neighbor at distance 5.</p>
-<div id="a50ebacd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:44.441606Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:44.441436Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:44.453097Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:44.452410Z&quot;}}" data-execution_count="5">
+<div id="a50ebacd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:34.772418Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:34.772222Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:34.786112Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:34.785193Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -500,7 +503,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="iris-warm-up-decision-regions---25-minutes" class="slide level2">
 <h2>2. Iris warm-up: decision regions - 25 minutes</h2>
 <p>The Iris dataset is small enough to visualize in two dimensions. We will use only petal length and petal width for the first experiment.</p>
-<div id="596d937a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:44.455315Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:44.455061Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:44.469608Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:44.468811Z&quot;}}" data-execution_count="6">
+<div id="596d937a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:34.788083Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:34.787886Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:34.802862Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:34.802031Z&quot;}}" data-execution_count="6">
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <style scoped="">
@@ -607,7 +610,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="load-and-split-the-breast-cancer-dataset---15-minutes" class="slide level2">
 <h2>3. Load and split the breast-cancer dataset - 15 minutes</h2>
 <p>We now move to a realistic binary classification task. The target is whether a tumor is malignant or benign.</p>
-<div id="66b2cfad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.035475Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.035300Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:45.059999Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:45.059252Z&quot;}}" data-execution_count="11">
+<div id="66b2cfad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:35.464993Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:35.464773Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:35.493105Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:35.492231Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code>(569, 30)</code></pre>
 </div>
@@ -827,7 +830,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="feature-ranges" class="slide level2">
 <h2>Feature ranges</h2>
 <p>k-NN is driven by distances. Before training anything, inspect whether all features live on comparable scales.</p>
-<div id="9ad52907" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.061786Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.061612Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:45.071682Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:45.070935Z&quot;}}" data-execution_count="12">
+<div id="9ad52907" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:35.495182Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:35.494958Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:35.506355Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:35.505422Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 <style scoped="">
@@ -948,7 +951,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="one-fixed-traintest-split" class="slide level2">
 <h2>One fixed train/test split</h2>
-<div id="747ad47d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.073413Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.073236Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:45.084522Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:45.083624Z&quot;}}" data-execution_count="13">
+<div id="747ad47d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:35.508260Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:35.508049Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:35.520349Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:35.519476Z&quot;}}" data-execution_count="13">
 <div class="cell-output cell-output-stdout">
 <pre><code>train (426, 30) test (143, 30)</code></pre>
 </div>
@@ -969,7 +972,7 @@ Name: test proportion, dtype: float64</code></pre>
 <section id="first-k-nn-model-intentionally-unscaled---20-minutes" class="slide level2">
 <h2>4. First k-NN model: intentionally unscaled - 20 minutes</h2>
 <p>This first model is deliberately incomplete. It shows what happens when Euclidean distance is computed on raw feature units.</p>
-<div id="f78a19cb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.086182Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.085991Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:45.126274Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:45.125438Z&quot;}}" data-execution_count="14">
+<div id="f78a19cb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:35.522508Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:35.522309Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:35.569062Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:35.568025Z&quot;}}" data-execution_count="14">
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
@@ -1025,7 +1028,7 @@ Name: test proportion, dtype: float64</code></pre>
 <h2>5. Feature scaling changes the geometry - 30 minutes</h2>
 <p>Standardization transforms each feature so that the training-set mean is 0 and the training-set standard deviation is 1.</p>
 <p>Important: fit the scaler on the training set only. The test set must remain unseen during preprocessing.</p>
-<div id="349c1f1a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.228472Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.228282Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:45.248987Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:45.248285Z&quot;}}" data-execution_count="16">
+<div id="349c1f1a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:35.683038Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:35.682848Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:35.704836Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:35.703972Z&quot;}}" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
@@ -1081,7 +1084,7 @@ Name: test proportion, dtype: float64</code></pre>
 <section id="why-the-neighbors-changed" class="slide level2">
 <h2>Why the neighbors changed</h2>
 <p>The model can predict differently after scaling because the nearest records are no longer necessarily the same records.</p>
-<div id="e7ec8581" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.250817Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.250647Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:45.268377Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:45.267642Z&quot;}}" data-execution_count="17">
+<div id="e7ec8581" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:35.707220Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:35.706801Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:35.727937Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:35.726977Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -1174,7 +1177,7 @@ Name: test proportion, dtype: float64</code></pre>
 <section id="scaling-example-a-controlled-synthetic-dataset" class="slide level2">
 <h2>Scaling example: a controlled synthetic dataset</h2>
 <p>In this synthetic dataset, feature <code>x_small_signal</code> contains the useful signal. Feature <code>x_large_noise</code> is mostly noise but has a much larger numeric range. Without scaling, the noisy feature can dominate distances.</p>
-<div id="ef5c1b5b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.270390Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.270205Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:45.287612Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:45.286782Z&quot;}}" data-execution_count="18">
+<div id="ef5c1b5b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:35.729906Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:35.729721Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:35.749679Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:35.748823Z&quot;}}" data-execution_count="18">
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div>
 <style scoped="">
@@ -1219,7 +1222,7 @@ Name: test proportion, dtype: float64</code></pre>
 </section>
 <section id="synthetic-feature-space" class="slide level2">
 <h2>Synthetic feature space</h2>
-<div id="ea7d4ebb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.289384Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.289217Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:45.726889Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:45.726099Z&quot;}}" data-execution_count="19">
+<div id="ea7d4ebb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:35.751823Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:35.751621Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:36.254883Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:36.253715Z&quot;}}" data-execution_count="19">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1251,7 +1254,7 @@ Name: test proportion, dtype: float64</code></pre>
 <li>large <code>k</code>: smoother, more stable, may underfit.</li>
 </ul>
 <p>We choose <code>k</code> on training data using cross-validation. The test set is used once at the end.</p>
-<div id="dce2d679" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:45.728857Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:45.728674Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:48.673320Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:48.672529Z&quot;}}" data-execution_count="20">
+<div id="dce2d679" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:36.256979Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:36.256752Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:39.479984Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:39.478895Z&quot;}}" data-execution_count="20">
 <div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 <style scoped="">
@@ -1337,7 +1340,7 @@ Name: test proportion, dtype: float64</code></pre>
 <img data-src="lab-02-knn_files/figure-revealjs/cell-23-output-1.png" class="r-stretch"></section>
 <section id="best-k-by-validation-score" class="slide level2">
 <h2>Best k by validation score</h2>
-<div id="1b0f82ae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:48.858335Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:48.858145Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:48.869767Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:48.868991Z&quot;}}" data-execution_count="23">
+<div id="1b0f82ae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:39.700436Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:39.700229Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:39.714382Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:39.713453Z&quot;}}" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1497,7 +1500,7 @@ Name: test proportion, dtype: float64</code></pre>
 <section id="compare-distance-weighting-metrics-and-scalers---25-minutes" class="slide level2">
 <h2>7. Compare distance weighting, metrics, and scalers - 25 minutes</h2>
 <p>Now we search several reasonable k-NN configurations with <code>GridSearchCV</code>.</p>
-<div id="6a7ae8b3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:48.871447Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:48.871281Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:51.571334Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:51.570586Z&quot;}}" data-execution_count="24">
+<div id="6a7ae8b3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:39.716520Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:39.716335Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:42.922260Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:42.921262Z&quot;}}" data-execution_count="24">
 <div class="cell-output cell-output-stdout">
 <pre><code>0.9650462962962962</code></pre>
 </div>
@@ -1511,7 +1514,7 @@ Name: test proportion, dtype: float64</code></pre>
 </section>
 <section id="grid-search-results" class="slide level2">
 <h2>Grid-search results</h2>
-<div id="e8ea8739" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:51.573481Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:51.573308Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:51.585798Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:51.585102Z&quot;}}" data-execution_count="25">
+<div id="e8ea8739" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:42.924424Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:42.924210Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:42.940370Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:42.939404Z&quot;}}" data-execution_count="25">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1684,7 +1687,7 @@ Name: test proportion, dtype: float64</code></pre>
 </section>
 <section id="final-tuned-model-on-the-test-set" class="slide level2">
 <h2>Final tuned model on the test set</h2>
-<div id="044d9813" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:51.587764Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:51.587580Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:51.604186Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:51.603496Z&quot;}}" data-execution_count="26">
+<div id="044d9813" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:42.942308Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:42.942078Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:42.961735Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:42.960857Z&quot;}}" data-execution_count="26">
 <div class="cell-output cell-output-display" data-execution_count="26">
 <div>
 <style scoped="">
@@ -1748,7 +1751,7 @@ Name: test proportion, dtype: float64</code></pre>
 <img data-src="lab-02-knn_files/figure-revealjs/cell-28-output-1.png" class="r-stretch"></section>
 <section id="final-classification-report" class="slide level2">
 <h2>Final classification report</h2>
-<div id="97b1ea64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:51.703377Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:51.703204Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:51.712686Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:51.712050Z&quot;}}" data-execution_count="28">
+<div id="97b1ea64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:43.076747Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:43.076555Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:43.087724Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:43.086874Z&quot;}}" data-execution_count="28">
 <div class="cell-output cell-output-stdout">
 <pre><code>              precision    recall  f1-score   support
 
@@ -1765,7 +1768,7 @@ weighted avg       0.97      0.97      0.96       143
 <section id="what-happens-with-irrelevant-features---20-minutes" class="slide level2">
 <h2>8. What happens with irrelevant features? - 20 minutes</h2>
 <p>k-NN is sensitive to irrelevant dimensions because every feature can contribute to distance. Scaling solves unequal units, but it does not decide which features are useful.</p>
-<div id="753071b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:51.714688Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:51.714522Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:51.744598Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:51.743739Z&quot;}}" data-execution_count="29">
+<div id="753071b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:43.089577Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:43.089392Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:43.123950Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:43.122978Z&quot;}}" data-execution_count="29">
 <div class="cell-output cell-output-display" data-execution_count="29">
 <div>
 <style scoped="">
@@ -1828,22 +1831,22 @@ weighted avg       0.97      0.97      0.96       143
 <li>Explain one prediction by listing its nearest neighbors before and after scaling.</li>
 <li>Write a short conclusion: when would you use k-NN for this dataset?</li>
 </ol>
-<div id="8f183bd2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:51.746374Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:51.746205Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:51.748966Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:51.748252Z&quot;}}" data-execution_count="30">
+<div id="8f183bd2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:43.125959Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:43.125754Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:43.129517Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:43.128602Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="co"># </span><span class="al">TODO</span><span class="co">: capstone workspace</span></span>
-<span id="cb8-2"><a href=""></a><span class="co"># Suggested structure:</span></span>
-<span id="cb8-3"><a href=""></a><span class="co"># 1. define candidate pipelines</span></span>
-<span id="cb8-4"><a href=""></a><span class="co"># 2. evaluate with cross-validation on X_train/y_train</span></span>
-<span id="cb8-5"><a href=""></a><span class="co"># 3. fit the selected model on X_train/y_train</span></span>
-<span id="cb8-6"><a href=""></a><span class="co"># 4. evaluate once on X_test/y_test</span></span>
-<span id="cb8-7"><a href=""></a><span class="co"># 5. inspect nearest neighbors for one selected test case</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: capstone workspace</span></span>
+<span id="cb8-2"><a href="" aria-label="2"></a><span class="co"># Suggested structure:</span></span>
+<span id="cb8-3"><a href="" aria-label="3"></a><span class="co"># 1. define candidate pipelines</span></span>
+<span id="cb8-4"><a href="" aria-label="4"></a><span class="co"># 2. evaluate with cross-validation on X_train/y_train</span></span>
+<span id="cb8-5"><a href="" aria-label="5"></a><span class="co"># 3. fit the selected model on X_train/y_train</span></span>
+<span id="cb8-6"><a href="" aria-label="6"></a><span class="co"># 4. evaluate once on X_test/y_test</span></span>
+<span id="cb8-7"><a href="" aria-label="7"></a><span class="co"># 5. inspect nearest neighbors for one selected test case</span></span></code></pre></div>
 </details>
 </div>
 </section>
 <section id="capstone-helper-reusable-evaluation-function" class="slide level2">
 <h2>Capstone helper: reusable evaluation function</h2>
-<div id="45c1e483" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:06:51.750795Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:06:51.750636Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:06:51.790274Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:06:51.789514Z&quot;}}" data-execution_count="31">
+<div id="45c1e483" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:43.131905Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:43.131705Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:43.180779Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:43.179847Z&quot;}}" data-execution_count="31">
 <div class="cell-output cell-output-display" data-execution_count="31">
 <div>
 <style scoped="">
@@ -2112,7 +2115,7 @@ weighted avg       0.97      0.97      0.96       143
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

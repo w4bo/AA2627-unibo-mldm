@@ -5,8 +5,8 @@
 <script src="lab-10-modeling_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lab-10-modeling_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lab-10-modeling_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lab-10-modeling_files/libs/quarto-html/quarto-syntax-highlighting-dfa48a90d809c806c7ea2d5aecd9fc66.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.29">
+<link href="lab-10-modeling_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
   <title>Machine Learning and Data Mining (Module I)</title>
@@ -19,10 +19,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -204,7 +207,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it 
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
@@ -297,16 +300,16 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section>
 <section id="decision-tree" class="title-slide slide level1 center">
 <h1>Decision tree</h1>
-<div id="qRGDyke9OGij" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:01.614240Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:01.613908Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:01.676316Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:01.675495Z&quot;}}" data-outputid="28adc7ac-dafc-4623-98c5-dda0795d6ca5" data-execution_count="2">
+<div id="qRGDyke9OGij" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:54.052271Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:54.051914Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:54.121984Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:54.120856Z&quot;}}" data-outputid="28adc7ac-dafc-4623-98c5-dda0795d6ca5" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier  <span class="co"># Import the model</span></span>
-<span id="cb1-2"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
-<span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a>clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed)  <span class="co"># Instantiate and fit the model (on the training set)</span></span>
-<span id="cb1-5"><a href=""></a>clf.fit(X_train, y_train)  <span class="co"># Train the model</span></span>
-<span id="cb1-6"><a href=""></a>y_pred <span class="op">=</span> clf.predict(X_test)  <span class="co"># Predict new values</span></span>
-<span id="cb1-7"><a href=""></a>accuracy_score(y_test, y_pred)  <span class="co"># Evaluate the model (on the test set)</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier  <span class="co"># Import the model</span></span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb1-3"><a href="" aria-label="3"></a></span>
+<span id="cb1-4"><a href="" aria-label="4"></a>clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed)  <span class="co"># Instantiate and fit the model (on the training set)</span></span>
+<span id="cb1-5"><a href="" aria-label="5"></a>clf.fit(X_train, y_train)  <span class="co"># Train the model</span></span>
+<span id="cb1-6"><a href="" aria-label="6"></a>y_pred <span class="op">=</span> clf.predict(X_test)  <span class="co"># Predict new values</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a>accuracy_score(y_test, y_pred)  <span class="co"># Evaluate the model (on the test set)</span></span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>0.9666666666666667</code></pre>
@@ -315,22 +318,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="plotting-the-tree" class="slide level2">
 <h2>Plotting the tree</h2>
-<div id="TCYt3BziRjqK" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:01.678190Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:01.677987Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:01.834393Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:01.833617Z&quot;}}" data-outputid="a5c6ce55-6e0d-4504-e4c8-408382791a1d" data-execution_count="3">
+<div id="TCYt3BziRjqK" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:54.124031Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:54.123828Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:54.296472Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:54.295437Z&quot;}}" data-outputid="a5c6ce55-6e0d-4504-e4c8-408382791a1d" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
-<span id="cb3-2"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
-<span id="cb3-3"><a href=""></a>plot_tree(clf, feature_names<span class="op">=</span>df.columns, class_names<span class="op">=</span>[<span class="st">'setosa'</span>, <span class="st">'versicolor'</span>, <span class="st">'virginica'</span>], filled<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>plot_tree(clf, feature_names<span class="op">=</span>df.columns, class_names<span class="op">=</span>[<span class="st">'setosa'</span>, <span class="st">'versicolor'</span>, <span class="st">'virginica'</span>], filled<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code></pre></div>
 </details>
 
 </div>
 <img data-src="lab-10-modeling_files/figure-revealjs/cell-4-output-1.png" class="r-stretch"><p>Checking feature relevance</p>
-<div id="JV7m4ZKqPaJm" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:01.836520Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:01.836322Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:01.845965Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:01.845227Z&quot;}}" data-outputid="efeb6271-4cec-4fcb-b621-84f298272ad7" data-execution_count="4">
+<div id="JV7m4ZKqPaJm" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:54.298665Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:54.298478Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:54.308745Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:54.307799Z&quot;}}" data-outputid="efeb6271-4cec-4fcb-b621-84f298272ad7" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>feature_importance_df <span class="op">=</span> pd.DataFrame({<span class="st">'Feature'</span>: X.columns, <span class="st">'Importance'</span>: clf.feature_importances_})  <span class="co"># Create a DataFrame to display feature importance</span></span>
-<span id="cb4-2"><a href=""></a>feature_importance_df <span class="op">=</span> feature_importance_df.sort_values([<span class="st">'Importance'</span>, <span class="st">'Feature'</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>])  <span class="co"># Sort the DataFrame by importance in descending order</span></span>
-<span id="cb4-3"><a href=""></a>feature_importance_df  <span class="co"># Display the feature importance </span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>feature_importance_df <span class="op">=</span> pd.DataFrame({<span class="st">'Feature'</span>: X.columns, <span class="st">'Importance'</span>: clf.feature_importances_})  <span class="co"># Create a DataFrame to display feature importance</span></span>
+<span id="cb4-2"><a href="" aria-label="2"></a>feature_importance_df <span class="op">=</span> feature_importance_df.sort_values([<span class="st">'Importance'</span>, <span class="st">'Feature'</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>])  <span class="co"># Sort the DataFrame by importance in descending order</span></span>
+<span id="cb4-3"><a href="" aria-label="3"></a>feature_importance_df  <span class="co"># Display the feature importance </span></span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -386,10 +389,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section></section>
 <section id="petal-vs-sepal" class="title-slide slide level1 center">
 <h1><code>petal</code> vs <code>sepal</code></h1>
-<div id="8h4GlwOOPlz3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:01.853221Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:01.853021Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:01.937595Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:01.936789Z&quot;}}" data-outputid="a3ff9957-5136-4fe3-d3e0-dc7a7ddf2bfe" data-execution_count="6">
+<div id="8h4GlwOOPlz3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:54.316730Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:54.316552Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:54.413002Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:54.411878Z&quot;}}" data-outputid="a3ff9957-5136-4fe3-d3e0-dc7a7ddf2bfe" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[:<span class="dv">2</span>].tolist())  <span class="co"># plot the 2 most important features</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[:<span class="dv">2</span>].tolist())  <span class="co"># plot the 2 most important features</span></span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -399,10 +402,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
-<div id="nFNaqWIOT-Rd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:01.939309Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:01.939101Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:02.024886Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:02.024060Z&quot;}}" data-outputid="e57d7a46-c26b-4bfc-c956-f67944b26ada" data-execution_count="7">
+<div id="nFNaqWIOT-Rd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:54.414820Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:54.414638Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:54.513312Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:54.512193Z&quot;}}" data-outputid="e57d7a46-c26b-4bfc-c956-f67944b26ada" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[<span class="dv">2</span>:].tolist())  <span class="co"># plot the 2 lest important features</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[<span class="dv">2</span>:].tolist())  <span class="co"># plot the 2 lest important features</span></span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -416,10 +419,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="feature-selection-checking-correlations" class="title-slide slide level1 center">
 <h1>Feature selection: checking correlations</h1>
-<div id="e8799449" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:02.026769Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:02.026599Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:02.033787Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:02.033033Z&quot;}}" data-execution_count="8">
+<div id="e8799449" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:54.515236Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:54.515025Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:54.523057Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:54.522296Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>X_train.corr(method<span class="op">=</span><span class="st">'pearson'</span>, numeric_only<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>X_train.corr(method<span class="op">=</span><span class="st">'pearson'</span>, numeric_only<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
@@ -491,10 +494,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth1" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=1</code></h1>
-<div id="5d66e1c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:02.051774Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:02.051599Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:02.479394Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:02.478557Z&quot;}}" data-execution_count="10">
+<div id="5d66e1c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:54.542778Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:54.542595Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:54.995472Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:54.994623Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -502,10 +505,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth2" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=2</code></h1>
-<div id="a334f69e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:02.481755Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:02.481416Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:02.885768Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:02.885067Z&quot;}}" data-execution_count="11">
+<div id="a334f69e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:54.997756Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:54.997552Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:55.421961Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:55.420927Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href=""></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -513,10 +516,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth2-changing-the-random-seed" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=2</code> (changing the random seed)</h1>
-<div id="648564ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:02.887899Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:02.887727Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:03.274199Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:03.273303Z&quot;}}" data-execution_count="12">
+<div id="648564ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:55.423931Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:55.423730Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:55.844901Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:55.843911Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">1</span>), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">1</span>), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -524,10 +527,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth3" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=3</code></h1>
-<div id="11077234" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:03.276006Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:03.275825Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:03.665225Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:03.664381Z&quot;}}" data-execution_count="13">
+<div id="11077234" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:55.846853Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:55.846653Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:56.266273Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:56.265236Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href=""></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -535,10 +538,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth6" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=6</code></h1>
-<div id="6fd5a7ac" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:03.667129Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:03.666930Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:04.060692Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:04.059777Z&quot;}}" data-execution_count="14">
+<div id="6fd5a7ac" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:56.268377Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:56.268190Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:56.691410Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:56.690341Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">6</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">6</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -546,29 +549,29 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="plotting-the-accuracy" class="title-slide slide level1 center">
 <h1>Plotting the accuracy</h1>
-<div id="b0ec6d95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:04.062541Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:04.062362Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:04.196360Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:04.195499Z&quot;}}" data-execution_count="15">
+<div id="b0ec6d95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:56.693306Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:56.693086Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:47:56.846660Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:47:56.845575Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="co"># Prepare to store max_depth values and corresponding accuracies</span></span>
-<span id="cb13-2"><a href=""></a>max_depths <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb13-3"><a href=""></a>train_accuracies, test_accuracies <span class="op">=</span> [], []</span>
-<span id="cb13-4"><a href=""></a><span class="cf">for</span> max_depth <span class="kw">in</span> max_depths:  <span class="co"># Train decision trees with increasing max_depth</span></span>
-<span id="cb13-5"><a href=""></a>    clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>max_depth, random_state<span class="op">=</span>seed)</span>
-<span id="cb13-6"><a href=""></a>    clf.fit(X_train, y_train)</span>
-<span id="cb13-7"><a href=""></a>    train_acc <span class="op">=</span> accuracy_score(y_train, clf.predict(X_train))  <span class="co"># Compute accuracy for training set</span></span>
-<span id="cb13-8"><a href=""></a>    test_acc <span class="op">=</span> accuracy_score(y_test, clf.predict(X_test))  <span class="co"># Compute accuracy for test set</span></span>
-<span id="cb13-9"><a href=""></a>    train_accuracies.append(train_acc)</span>
-<span id="cb13-10"><a href=""></a>    test_accuracies.append(test_acc)</span>
-<span id="cb13-11"><a href=""></a><span class="co"># Plot accuracies</span></span>
-<span id="cb13-12"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
-<span id="cb13-13"><a href=""></a>plt.plot(max_depths, train_accuracies, label<span class="op">=</span><span class="st">"Training"</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
-<span id="cb13-14"><a href=""></a>plt.plot(max_depths, test_accuracies, label<span class="op">=</span><span class="st">"Test"</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
-<span id="cb13-15"><a href=""></a>plt.xticks(max_depths)</span>
-<span id="cb13-16"><a href=""></a>plt.xlabel(<span class="st">"max_depth"</span>)</span>
-<span id="cb13-17"><a href=""></a>plt.ylabel(<span class="st">"Accuracy"</span>)</span>
-<span id="cb13-18"><a href=""></a>plt.legend()</span>
-<span id="cb13-19"><a href=""></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb13-20"><a href=""></a>plt.tight_layout()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># Prepare to store max_depth values and corresponding accuracies</span></span>
+<span id="cb13-2"><a href="" aria-label="2"></a>max_depths <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb13-3"><a href="" aria-label="3"></a>train_accuracies, test_accuracies <span class="op">=</span> [], []</span>
+<span id="cb13-4"><a href="" aria-label="4"></a><span class="cf">for</span> max_depth <span class="kw">in</span> max_depths:  <span class="co"># Train decision trees with increasing max_depth</span></span>
+<span id="cb13-5"><a href="" aria-label="5"></a>    clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>max_depth, random_state<span class="op">=</span>seed)</span>
+<span id="cb13-6"><a href="" aria-label="6"></a>    clf.fit(X_train, y_train)</span>
+<span id="cb13-7"><a href="" aria-label="7"></a>    train_acc <span class="op">=</span> accuracy_score(y_train, clf.predict(X_train))  <span class="co"># Compute accuracy for training set</span></span>
+<span id="cb13-8"><a href="" aria-label="8"></a>    test_acc <span class="op">=</span> accuracy_score(y_test, clf.predict(X_test))  <span class="co"># Compute accuracy for test set</span></span>
+<span id="cb13-9"><a href="" aria-label="9"></a>    train_accuracies.append(train_acc)</span>
+<span id="cb13-10"><a href="" aria-label="10"></a>    test_accuracies.append(test_acc)</span>
+<span id="cb13-11"><a href="" aria-label="11"></a><span class="co"># Plot accuracies</span></span>
+<span id="cb13-12"><a href="" aria-label="12"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb13-13"><a href="" aria-label="13"></a>plt.plot(max_depths, train_accuracies, label<span class="op">=</span><span class="st">"Training"</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb13-14"><a href="" aria-label="14"></a>plt.plot(max_depths, test_accuracies, label<span class="op">=</span><span class="st">"Test"</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb13-15"><a href="" aria-label="15"></a>plt.xticks(max_depths)</span>
+<span id="cb13-16"><a href="" aria-label="16"></a>plt.xlabel(<span class="st">"max_depth"</span>)</span>
+<span id="cb13-17"><a href="" aria-label="17"></a>plt.ylabel(<span class="st">"Accuracy"</span>)</span>
+<span id="cb13-18"><a href="" aria-label="18"></a>plt.legend()</span>
+<span id="cb13-19"><a href="" aria-label="19"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb13-20"><a href="" aria-label="20"></a>plt.tight_layout()</span></code></pre></div>
 </details>
 
 </div>
@@ -590,7 +593,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>In scikit-learn they are passed as arguments to the constructor of the estimator classes</li>
 <li>Any parameter provided when constructing an estimator may be optimized</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>estimator.get_params()</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>estimator.get_params()</span></code></pre></div>
 <p>A search consists of:</p>
 <ul>
 <li>an estimator <span class="math inline">\((\checkmark)\)</span></li>
@@ -655,26 +658,26 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="random-forest" class="title-slide slide level1 center">
 <h1>Random forest</h1>
-<div id="aa8c6cae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:04.512201Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:04.512006Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:20.540188Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:20.539461Z&quot;}}" data-execution_count="18">
+<div id="aa8c6cae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:47:57.218769Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:47:57.218581Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:48:15.370670Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:48:15.369660Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
-<span id="cb15-2"><a href=""></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
-<span id="cb15-3"><a href=""></a><span class="im">from</span> scipy.stats <span class="im">import</span> randint</span>
-<span id="cb15-4"><a href=""></a>rf <span class="op">=</span> RandomForestClassifier(random_state<span class="op">=</span>seed)  <span class="co"># Define a Random Forest Classifier</span></span>
-<span id="cb15-5"><a href=""></a>param_dist <span class="op">=</span> {  <span class="co"># Set up the parameter grid for random search</span></span>
-<span id="cb15-6"><a href=""></a>    <span class="st">'n_estimators'</span>: randint(<span class="dv">2</span>, <span class="dv">200</span>),        <span class="co"># Number of trees in the forest</span></span>
-<span id="cb15-7"><a href=""></a>    <span class="st">'max_depth'</span>: randint(<span class="dv">2</span>, <span class="dv">20</span>),            <span class="co"># Maximum depth of the tree</span></span>
-<span id="cb15-8"><a href=""></a>    <span class="st">'min_samples_split'</span>: randint(<span class="dv">2</span>, <span class="dv">20</span>),    <span class="co"># Minimum number of samples to split a node</span></span>
-<span id="cb15-9"><a href=""></a>    <span class="st">'min_samples_leaf'</span>: randint(<span class="dv">1</span>, <span class="dv">20</span>),     <span class="co"># Minimum number of samples in a leaf node</span></span>
-<span id="cb15-10"><a href=""></a>}</span>
-<span id="cb15-11"><a href=""></a>random_search <span class="op">=</span> RandomizedSearchCV(rf, param_distributions<span class="op">=</span>param_dist, n_iter<span class="op">=</span><span class="dv">50</span>, scoring<span class="op">=</span><span class="st">'accuracy'</span>, cv<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span>seed, n_jobs<span class="op">=-</span><span class="dv">1</span>)  <span class="co"># Setup RandomizedSearchCV</span></span>
-<span id="cb15-12"><a href=""></a>random_search.fit(X_train, y_train)  <span class="co"># Fit the random search model</span></span>
-<span id="cb15-13"><a href=""></a><span class="bu">print</span>(<span class="st">"Best Parameters from Random Search:"</span>, random_search.best_params_)  <span class="co"># Output the best parameters </span></span>
-<span id="cb15-14"><a href=""></a>best_rf <span class="op">=</span> random_search.best_estimator_</span>
-<span id="cb15-15"><a href=""></a>test_accuracy <span class="op">=</span> best_rf.score(X_test, y_test)  <span class="co"># Evaluate the model with the best parameters on the test set</span></span>
-<span id="cb15-16"><a href=""></a><span class="bu">print</span>(<span class="st">"Best Cross-validation Accuracy:"</span>, random_search.best_score_, <span class="st">"Test Set Accuracy with Best Parameters:"</span>, test_accuracy)  <span class="co"># Output the best score</span></span>
-<span id="cb15-17"><a href=""></a>forest <span class="op">=</span> plot_boundary(best_rf, <span class="st">"rf_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
+<span id="cb15-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb15-3"><a href="" aria-label="3"></a><span class="im">from</span> scipy.stats <span class="im">import</span> randint</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>rf <span class="op">=</span> RandomForestClassifier(random_state<span class="op">=</span>seed)  <span class="co"># Define a Random Forest Classifier</span></span>
+<span id="cb15-5"><a href="" aria-label="5"></a>param_dist <span class="op">=</span> {  <span class="co"># Set up the parameter grid for random search</span></span>
+<span id="cb15-6"><a href="" aria-label="6"></a>    <span class="st">'n_estimators'</span>: randint(<span class="dv">2</span>, <span class="dv">200</span>),        <span class="co"># Number of trees in the forest</span></span>
+<span id="cb15-7"><a href="" aria-label="7"></a>    <span class="st">'max_depth'</span>: randint(<span class="dv">2</span>, <span class="dv">20</span>),            <span class="co"># Maximum depth of the tree</span></span>
+<span id="cb15-8"><a href="" aria-label="8"></a>    <span class="st">'min_samples_split'</span>: randint(<span class="dv">2</span>, <span class="dv">20</span>),    <span class="co"># Minimum number of samples to split a node</span></span>
+<span id="cb15-9"><a href="" aria-label="9"></a>    <span class="st">'min_samples_leaf'</span>: randint(<span class="dv">1</span>, <span class="dv">20</span>),     <span class="co"># Minimum number of samples in a leaf node</span></span>
+<span id="cb15-10"><a href="" aria-label="10"></a>}</span>
+<span id="cb15-11"><a href="" aria-label="11"></a>random_search <span class="op">=</span> RandomizedSearchCV(rf, param_distributions<span class="op">=</span>param_dist, n_iter<span class="op">=</span><span class="dv">50</span>, scoring<span class="op">=</span><span class="st">'accuracy'</span>, cv<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span>seed, n_jobs<span class="op">=-</span><span class="dv">1</span>)  <span class="co"># Setup RandomizedSearchCV</span></span>
+<span id="cb15-12"><a href="" aria-label="12"></a>random_search.fit(X_train, y_train)  <span class="co"># Fit the random search model</span></span>
+<span id="cb15-13"><a href="" aria-label="13"></a><span class="bu">print</span>(<span class="st">"Best Parameters from Random Search:"</span>, random_search.best_params_)  <span class="co"># Output the best parameters </span></span>
+<span id="cb15-14"><a href="" aria-label="14"></a>best_rf <span class="op">=</span> random_search.best_estimator_</span>
+<span id="cb15-15"><a href="" aria-label="15"></a>test_accuracy <span class="op">=</span> best_rf.score(X_test, y_test)  <span class="co"># Evaluate the model with the best parameters on the test set</span></span>
+<span id="cb15-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="st">"Best Cross-validation Accuracy:"</span>, random_search.best_score_, <span class="st">"Test Set Accuracy with Best Parameters:"</span>, test_accuracy)  <span class="co"># Output the best score</span></span>
+<span id="cb15-17"><a href="" aria-label="17"></a>forest <span class="op">=</span> plot_boundary(best_rf, <span class="st">"rf_cplot"</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best Parameters from Random Search: {'max_depth': 4, 'min_samples_leaf': 3, 'min_samples_split': 2, 'n_estimators': 124}
@@ -696,12 +699,12 @@ Best Cross-validation Accuracy: 0.9583333333333334 Test Set Accuracy with Best P
 
 <section id="decision-boundaries-k1-no-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=1</code> (no normalization)</h1>
-<div id="313f0aeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:20.706793Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:20.706616Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:21.624576Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:21.623671Z&quot;}}" data-execution_count="20">
+<div id="313f0aeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:48:15.570088Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:48:15.569652Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:48:16.551721Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:48:16.550753Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
-<span id="cb17-2"><a href=""></a></span>
-<span id="cb17-3"><a href=""></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb17-2"><a href="" aria-label="2"></a></span>
+<span id="cb17-3"><a href="" aria-label="3"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -709,10 +712,10 @@ Best Cross-validation Accuracy: 0.9583333333333334 Test Set Accuracy with Best P
 
 <section id="decision-boundaries-k1-min-max-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=1</code> (min-max normalization)</h1>
-<div id="fd0b352a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:21.626465Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:21.626265Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:21.912152Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:21.911348Z&quot;}}" data-execution_count="21">
+<div id="fd0b352a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:48:16.553635Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:48:16.553445Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:48:16.876319Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:48:16.875289Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href=""></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -720,10 +723,10 @@ Best Cross-validation Accuracy: 0.9583333333333334 Test Set Accuracy with Best P
 
 <section id="decision-boundaries-k10-min-max-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=10</code> (min-max normalization)</h1>
-<div id="8c2f5371" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:21.914067Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:21.913880Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:22.269182Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:22.268273Z&quot;}}" data-execution_count="22">
+<div id="8c2f5371" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:48:16.878252Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:48:16.878025Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:48:17.273887Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:48:17.272733Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href=""></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">10</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">10</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -731,29 +734,29 @@ Best Cross-validation Accuracy: 0.9583333333333334 Test Set Accuracy with Best P
 
 <section id="plotting-the-accuracy-1" class="title-slide slide level1 center">
 <h1>Plotting the accuracy</h1>
-<div id="40f79431" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:22.270952Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:22.270774Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:22.401907Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:22.401185Z&quot;}}" data-execution_count="23">
+<div id="40f79431" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:48:17.275859Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:48:17.275656Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:48:17.430892Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:48:17.429816Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="co"># Prepare to store max_depth values and corresponding accuracies</span></span>
-<span id="cb20-2"><a href=""></a>k_s <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb20-3"><a href=""></a>train_accuracies, test_accuracies <span class="op">=</span> [], []</span>
-<span id="cb20-4"><a href=""></a><span class="cf">for</span> k <span class="kw">in</span> k_s:  <span class="co"># Train decision trees with increasing max_depth</span></span>
-<span id="cb20-5"><a href=""></a>    knn <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span>k)</span>
-<span id="cb20-6"><a href=""></a>    knn.fit(X_train, y_train)</span>
-<span id="cb20-7"><a href=""></a>    train_acc <span class="op">=</span> accuracy_score(y_train, clf.predict(X_train))  <span class="co"># Compute accuracy for training set</span></span>
-<span id="cb20-8"><a href=""></a>    test_acc <span class="op">=</span> accuracy_score(y_test, clf.predict(X_test))  <span class="co"># Compute accuracy for test set</span></span>
-<span id="cb20-9"><a href=""></a>    train_accuracies.append(train_acc)</span>
-<span id="cb20-10"><a href=""></a>    test_accuracies.append(test_acc)</span>
-<span id="cb20-11"><a href=""></a><span class="co"># Plot accuracies</span></span>
-<span id="cb20-12"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
-<span id="cb20-13"><a href=""></a>plt.plot(max_depths, train_accuracies, label<span class="op">=</span><span class="st">"Training"</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
-<span id="cb20-14"><a href=""></a>plt.plot(max_depths, test_accuracies, label<span class="op">=</span><span class="st">"Test"</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
-<span id="cb20-15"><a href=""></a>plt.xticks(max_depths)</span>
-<span id="cb20-16"><a href=""></a>plt.xlabel(<span class="st">"k"</span>)</span>
-<span id="cb20-17"><a href=""></a>plt.ylabel(<span class="st">"Accuracy"</span>)</span>
-<span id="cb20-18"><a href=""></a>plt.legend()</span>
-<span id="cb20-19"><a href=""></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb20-20"><a href=""></a>plt.tight_layout()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Prepare to store max_depth values and corresponding accuracies</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a>k_s <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb20-3"><a href="" aria-label="3"></a>train_accuracies, test_accuracies <span class="op">=</span> [], []</span>
+<span id="cb20-4"><a href="" aria-label="4"></a><span class="cf">for</span> k <span class="kw">in</span> k_s:  <span class="co"># Train decision trees with increasing max_depth</span></span>
+<span id="cb20-5"><a href="" aria-label="5"></a>    knn <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span>k)</span>
+<span id="cb20-6"><a href="" aria-label="6"></a>    knn.fit(X_train, y_train)</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>    train_acc <span class="op">=</span> accuracy_score(y_train, clf.predict(X_train))  <span class="co"># Compute accuracy for training set</span></span>
+<span id="cb20-8"><a href="" aria-label="8"></a>    test_acc <span class="op">=</span> accuracy_score(y_test, clf.predict(X_test))  <span class="co"># Compute accuracy for test set</span></span>
+<span id="cb20-9"><a href="" aria-label="9"></a>    train_accuracies.append(train_acc)</span>
+<span id="cb20-10"><a href="" aria-label="10"></a>    test_accuracies.append(test_acc)</span>
+<span id="cb20-11"><a href="" aria-label="11"></a><span class="co"># Plot accuracies</span></span>
+<span id="cb20-12"><a href="" aria-label="12"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb20-13"><a href="" aria-label="13"></a>plt.plot(max_depths, train_accuracies, label<span class="op">=</span><span class="st">"Training"</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb20-14"><a href="" aria-label="14"></a>plt.plot(max_depths, test_accuracies, label<span class="op">=</span><span class="st">"Test"</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb20-15"><a href="" aria-label="15"></a>plt.xticks(max_depths)</span>
+<span id="cb20-16"><a href="" aria-label="16"></a>plt.xlabel(<span class="st">"k"</span>)</span>
+<span id="cb20-17"><a href="" aria-label="17"></a>plt.ylabel(<span class="st">"Accuracy"</span>)</span>
+<span id="cb20-18"><a href="" aria-label="18"></a>plt.legend()</span>
+<span id="cb20-19"><a href="" aria-label="19"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb20-20"><a href="" aria-label="20"></a>plt.tight_layout()</span></code></pre></div>
 </details>
 
 </div>
@@ -787,12 +790,12 @@ Is this image a grape?</code></pre>
 
 <section id="perceptron-1" class="title-slide slide level1 center">
 <h1>Perceptron</h1>
-<div id="38b9e754" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:22.404056Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:22.403880Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:22.835803Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:22.834919Z&quot;}}" data-execution_count="24">
+<div id="38b9e754" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:48:17.432913Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:48:17.432717Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:48:17.914590Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:48:17.913530Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron</span>
-<span id="cb22-2"><a href=""></a></span>
-<span id="cb22-3"><a href=""></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span>seed), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron</span>
+<span id="cb22-2"><a href="" aria-label="2"></a></span>
+<span id="cb22-3"><a href="" aria-label="3"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span>seed), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -800,10 +803,10 @@ Is this image a grape?</code></pre>
 
 <section id="perceptron-changing-the-seed" class="title-slide slide level1 center">
 <h1>Perceptron: changing the seed</h1>
-<div id="04c0a645" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:22.837639Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:22.837457Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:23.272195Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:23.271362Z&quot;}}" data-execution_count="25">
+<div id="04c0a645" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:48:17.916480Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:48:17.916294Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:48:18.395753Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:48:18.394567Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href=""></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span><span class="dv">1</span>), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span><span class="dv">1</span>), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -811,12 +814,12 @@ Is this image a grape?</code></pre>
 
 <section id="multi-layer-perceptron" class="title-slide slide level1 center">
 <h1>Multi-layer perceptron</h1>
-<div id="56b111d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-03T22:07:23.274095Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-03T22:07:23.273914Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-03T22:07:24.068221Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-03T22:07:24.067324Z&quot;}}" data-execution_count="26">
+<div id="56b111d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-04T00:48:18.397704Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-04T00:48:18.397487Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-04T00:48:19.289002Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-04T00:48:19.288042Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>
-<span id="cb24-2"><a href=""></a></span>
-<span id="cb24-3"><a href=""></a>mlp <span class="op">=</span> plot_boundary(MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">20</span>), random_state<span class="op">=</span>seed, max_iter<span class="op">=</span><span class="dv">1000</span>), <span class="st">"mlp_cplot"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>
+<span id="cb24-2"><a href="" aria-label="2"></a></span>
+<span id="cb24-3"><a href="" aria-label="3"></a>mlp <span class="op">=</span> plot_boundary(MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">20</span>), random_state<span class="op">=</span>seed, max_iter<span class="op">=</span><span class="dv">1000</span>), <span class="st">"mlp_cplot"</span>)</span></code></pre></div>
 </details>
 
 </div>
@@ -1022,7 +1025,7 @@ Is this image a grape?</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

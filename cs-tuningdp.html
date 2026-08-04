@@ -5,8 +5,8 @@
 <script src="cs-tuningdp_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="cs-tuningdp_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="cs-tuningdp_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="cs-tuningdp_files/libs/quarto-html/quarto-syntax-highlighting-dfa48a90d809c806c7ea2d5aecd9fc66.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.29">
+<link href="cs-tuningdp_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
   <title>Machine Learning and Data Mining (Module I)</title>
@@ -19,10 +19,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -219,7 +222,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it 
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
@@ -392,14 +395,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>KB and Problem Graph</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb1-1"><a href=""></a><span class="co">// Declare steps pipeline</span></span>
-<span id="cb1-2"><a href=""></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
-<span id="cb1-3"><a href=""></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
-<span id="cb1-4"><a href=""></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
-<span id="cb1-5"><a href=""></a></span>
-<span id="cb1-6"><a href=""></a><span class="co">// Declare classification algorithms</span></span>
-<span id="cb1-7"><a href=""></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
-<span id="cb1-8"><a href=""></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb1-1"><a href="" aria-label="1"></a><span class="co">// Declare steps pipeline</span></span>
+<span id="cb1-2"><a href="" aria-label="2"></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
+<span id="cb1-4"><a href="" aria-label="4"></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
+<span id="cb1-5"><a href="" aria-label="5"></a></span>
+<span id="cb1-6"><a href="" aria-label="6"></a><span class="co">// Declare classification algorithms</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
+<span id="cb1-8"><a href="" aria-label="8"></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span></code></pre></div>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -414,17 +417,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>KB and Problem Graph</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb2-1"><a href=""></a><span class="co">// Declare steps pipeline</span></span>
-<span id="cb2-2"><a href=""></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
-<span id="cb2-3"><a href=""></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
-<span id="cb2-4"><a href=""></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
-<span id="cb2-5"><a href=""></a></span>
-<span id="cb2-6"><a href=""></a><span class="co">// Declare classification algorithms</span></span>
-<span id="cb2-7"><a href=""></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
-<span id="cb2-8"><a href=""></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span>
-<span id="cb2-9"><a href=""></a></span>
-<span id="cb2-10"><a href=""></a><span class="co">// Forbid Normalization when using DT</span></span>
-<span id="cb2-11"><a href=""></a>c1 <span class="op">:</span> ⇒ <span class="fu">forbidden</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Dt<span class="op">).</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb2-1"><a href="" aria-label="1"></a><span class="co">// Declare steps pipeline</span></span>
+<span id="cb2-2"><a href="" aria-label="2"></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
+<span id="cb2-3"><a href="" aria-label="3"></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
+<span id="cb2-4"><a href="" aria-label="4"></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
+<span id="cb2-5"><a href="" aria-label="5"></a></span>
+<span id="cb2-6"><a href="" aria-label="6"></a><span class="co">// Declare classification algorithms</span></span>
+<span id="cb2-7"><a href="" aria-label="7"></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
+<span id="cb2-8"><a href="" aria-label="8"></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span>
+<span id="cb2-9"><a href="" aria-label="9"></a></span>
+<span id="cb2-10"><a href="" aria-label="10"></a><span class="co">// Forbid Normalization when using DT</span></span>
+<span id="cb2-11"><a href="" aria-label="11"></a>c1 <span class="op">:</span> ⇒ <span class="fu">forbidden</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Dt<span class="op">).</span></span></code></pre></div>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -439,20 +442,20 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>KB and Problem Graph</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb3-1"><a href=""></a><span class="co">// Declare steps pipeline</span></span>
-<span id="cb3-2"><a href=""></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
-<span id="cb3-3"><a href=""></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
-<span id="cb3-4"><a href=""></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
-<span id="cb3-5"><a href=""></a></span>
-<span id="cb3-6"><a href=""></a><span class="co">// Declare classification algorithms</span></span>
-<span id="cb3-7"><a href=""></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
-<span id="cb3-8"><a href=""></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span>
-<span id="cb3-9"><a href=""></a></span>
-<span id="cb3-10"><a href=""></a><span class="co">// Forbid Normalization when using DT</span></span>
-<span id="cb3-11"><a href=""></a>c1 <span class="op">:</span> ⇒ <span class="fu">forbidden</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Dt<span class="op">).</span></span>
-<span id="cb3-12"><a href=""></a></span>
-<span id="cb3-13"><a href=""></a><span class="co">// Mandatory Normalization in Classification Pipelines</span></span>
-<span id="cb3-14"><a href=""></a>c2 <span class="op">:</span> ⇒ <span class="fu">mandatory</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Cl<span class="op">).</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb3-1"><a href="" aria-label="1"></a><span class="co">// Declare steps pipeline</span></span>
+<span id="cb3-2"><a href="" aria-label="2"></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
+<span id="cb3-3"><a href="" aria-label="3"></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
+<span id="cb3-4"><a href="" aria-label="4"></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
+<span id="cb3-5"><a href="" aria-label="5"></a></span>
+<span id="cb3-6"><a href="" aria-label="6"></a><span class="co">// Declare classification algorithms</span></span>
+<span id="cb3-7"><a href="" aria-label="7"></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
+<span id="cb3-8"><a href="" aria-label="8"></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span>
+<span id="cb3-9"><a href="" aria-label="9"></a></span>
+<span id="cb3-10"><a href="" aria-label="10"></a><span class="co">// Forbid Normalization when using DT</span></span>
+<span id="cb3-11"><a href="" aria-label="11"></a>c1 <span class="op">:</span> ⇒ <span class="fu">forbidden</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Dt<span class="op">).</span></span>
+<span id="cb3-12"><a href="" aria-label="12"></a></span>
+<span id="cb3-13"><a href="" aria-label="13"></a><span class="co">// Mandatory Normalization in Classification Pipelines</span></span>
+<span id="cb3-14"><a href="" aria-label="14"></a>c2 <span class="op">:</span> ⇒ <span class="fu">mandatory</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Cl<span class="op">).</span></span></code></pre></div>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -467,20 +470,20 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>KB and Problem Graph</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb4-1"><a href=""></a><span class="co">// Declare steps pipeline</span></span>
-<span id="cb4-2"><a href=""></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
-<span id="cb4-3"><a href=""></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
-<span id="cb4-4"><a href=""></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
-<span id="cb4-5"><a href=""></a></span>
-<span id="cb4-6"><a href=""></a><span class="co">// Declare classification algorithms</span></span>
-<span id="cb4-7"><a href=""></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
-<span id="cb4-8"><a href=""></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span>
-<span id="cb4-9"><a href=""></a></span>
-<span id="cb4-10"><a href=""></a><span class="co">// Forbid Normalization when using DT</span></span>
-<span id="cb4-11"><a href=""></a>c1 <span class="op">:</span> ⇒ <span class="fu">forbidden</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Dt<span class="op">).</span></span>
-<span id="cb4-12"><a href=""></a></span>
-<span id="cb4-13"><a href=""></a><span class="co">// Mandatory Normalization in Classification Pipelines</span></span>
-<span id="cb4-14"><a href=""></a>c2 <span class="op">:</span> ⇒ <span class="fu">mandatory</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Cl<span class="op">).</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb4-1"><a href="" aria-label="1"></a><span class="co">// Declare steps pipeline</span></span>
+<span id="cb4-2"><a href="" aria-label="2"></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
+<span id="cb4-3"><a href="" aria-label="3"></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
+<span id="cb4-4"><a href="" aria-label="4"></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
+<span id="cb4-5"><a href="" aria-label="5"></a></span>
+<span id="cb4-6"><a href="" aria-label="6"></a><span class="co">// Declare classification algorithms</span></span>
+<span id="cb4-7"><a href="" aria-label="7"></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
+<span id="cb4-8"><a href="" aria-label="8"></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span>
+<span id="cb4-9"><a href="" aria-label="9"></a></span>
+<span id="cb4-10"><a href="" aria-label="10"></a><span class="co">// Forbid Normalization when using DT</span></span>
+<span id="cb4-11"><a href="" aria-label="11"></a>c1 <span class="op">:</span> ⇒ <span class="fu">forbidden</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Dt<span class="op">).</span></span>
+<span id="cb4-12"><a href="" aria-label="12"></a></span>
+<span id="cb4-13"><a href="" aria-label="13"></a><span class="co">// Mandatory Normalization in Classification Pipelines</span></span>
+<span id="cb4-14"><a href="" aria-label="14"></a>c2 <span class="op">:</span> ⇒ <span class="fu">mandatory</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Cl<span class="op">).</span></span></code></pre></div>
 <p><strong>Conflict</strong> between c1 and c2!</p>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
@@ -496,23 +499,23 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>KB and Problem Graph</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb5-1"><a href=""></a><span class="co">// Declare steps pipeline</span></span>
-<span id="cb5-2"><a href=""></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
-<span id="cb5-3"><a href=""></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
-<span id="cb5-4"><a href=""></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
-<span id="cb5-5"><a href=""></a></span>
-<span id="cb5-6"><a href=""></a><span class="co">// Declare classification algorithms</span></span>
-<span id="cb5-7"><a href=""></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
-<span id="cb5-8"><a href=""></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span>
-<span id="cb5-9"><a href=""></a></span>
-<span id="cb5-10"><a href=""></a><span class="co">// Forbid Normalization when using DT</span></span>
-<span id="cb5-11"><a href=""></a>c1 <span class="op">:</span> ⇒ <span class="fu">forbidden</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Dt<span class="op">).</span></span>
-<span id="cb5-12"><a href=""></a></span>
-<span id="cb5-13"><a href=""></a><span class="co">// Mandatory Normalization in Classification Pipelines</span></span>
-<span id="cb5-14"><a href=""></a>c2 <span class="op">:</span> ⇒ <span class="fu">mandatory</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Cl<span class="op">).</span></span>
-<span id="cb5-15"><a href=""></a></span>
-<span id="cb5-16"><a href=""></a><span class="co">// Resolve conflict between c1 and c2</span></span>
-<span id="cb5-17"><a href=""></a><span class="fu">sup</span><span class="op">(</span>c1<span class="op">,</span> c2<span class="op">).</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb5-1"><a href="" aria-label="1"></a><span class="co">// Declare steps pipeline</span></span>
+<span id="cb5-2"><a href="" aria-label="2"></a>s1 <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>D<span class="op">).</span></span>
+<span id="cb5-3"><a href="" aria-label="3"></a><span class="fu">s2</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>N<span class="op">).</span></span>
+<span id="cb5-4"><a href="" aria-label="4"></a><span class="fu">s3</span> <span class="op">:</span> ⇒ <span class="fu">step</span><span class="op">(</span>Cl<span class="op">).</span></span>
+<span id="cb5-5"><a href="" aria-label="5"></a></span>
+<span id="cb5-6"><a href="" aria-label="6"></a><span class="co">// Declare classification algorithms</span></span>
+<span id="cb5-7"><a href="" aria-label="7"></a>a1 <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Dt<span class="op">).</span></span>
+<span id="cb5-8"><a href="" aria-label="8"></a><span class="fu">a2</span> <span class="op">:</span> ⇒ <span class="fu">algorithm</span><span class="op">(</span>Cl<span class="op">,</span> Knn<span class="op">).</span></span>
+<span id="cb5-9"><a href="" aria-label="9"></a></span>
+<span id="cb5-10"><a href="" aria-label="10"></a><span class="co">// Forbid Normalization when using DT</span></span>
+<span id="cb5-11"><a href="" aria-label="11"></a>c1 <span class="op">:</span> ⇒ <span class="fu">forbidden</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Dt<span class="op">).</span></span>
+<span id="cb5-12"><a href="" aria-label="12"></a></span>
+<span id="cb5-13"><a href="" aria-label="13"></a><span class="co">// Mandatory Normalization in Classification Pipelines</span></span>
+<span id="cb5-14"><a href="" aria-label="14"></a>c2 <span class="op">:</span> ⇒ <span class="fu">mandatory</span><span class="op">(</span>⟨N⟩<span class="op">,</span> Cl<span class="op">).</span></span>
+<span id="cb5-15"><a href="" aria-label="15"></a></span>
+<span id="cb5-16"><a href="" aria-label="16"></a><span class="co">// Resolve conflict between c1 and c2</span></span>
+<span id="cb5-17"><a href="" aria-label="17"></a><span class="fu">sup</span><span class="op">(</span>c1<span class="op">,</span> c2<span class="op">).</span></span></code></pre></div>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -786,7 +789,7 @@ Thornton, Chris, Frank Hutter, Holger H Hoos, and Kevin Leyton-Brown. 2013. <spa
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
