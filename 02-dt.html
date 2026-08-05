@@ -1657,12 +1657,12 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="metrics-for-model-evaluation" class="title-slide slide level1 center">
 <h1>Metrics for model evaluation</h1>
-<p>The Confusion Matrix evaluates the ability of a classifier based on the following indicators.</p>
+<p>The confusion matrix compares the predicted class with the actual class.</p>
 <ul>
-<li><span class="math inline">\(TP\)</span> (true positive): records correctly classified as the Yes class</li>
-<li><span class="math inline">\(FN\)</span> (false negative): Incorrectly classified records as class No</li>
-<li><span class="math inline">\(FP\)</span> (false positive): Incorrectly classified records as class Yes</li>
-<li><span class="math inline">\(TN\)</span> (true negative) records correctly classified as class No</li>
+<li><span class="math inline">\(TP\)</span> (true positive): actual positive, predicted positive</li>
+<li><span class="math inline">\(FN\)</span> (false negative): actual positive, predicted negative</li>
+<li><span class="math inline">\(FP\)</span> (false positive): actual negative, predicted positive</li>
+<li><span class="math inline">\(TN\)</span> (true negative): actual negative, predicted negative</li>
 </ul>
 <table class="caption-top">
 <colgroup>
@@ -1672,7 +1672,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
+<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Actual <span class="math inline">\(\rightarrow\)</span></th>
 <th style="text-align: center;"><strong>Class=+</strong></th>
 <th style="text-align: center;"><strong>Class=-</strong></th>
 </tr>
@@ -1681,16 +1681,69 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <tr class="odd">
 <td style="text-align: center;"><strong>Class=+</strong></td>
 <td style="text-align: center;">TP</td>
-<td style="text-align: center;">FN</td>
+<td style="text-align: center;">FP</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>Class=-</strong></td>
-<td style="text-align: center;">FP</td>
+<td style="text-align: center;">FN</td>
 <td style="text-align: center;">TN</td>
 </tr>
 </tbody>
 </table>
-<p>If the classification uses <span class="math inline">\(n\)</span> classes, the confusion matrix will be <span class="math inline">\(n \cdot n\)</span></p>
+<p>For <span class="math inline">\(n\)</span> classes, the confusion matrix has size <span class="math inline">\(n\times n\)</span>.</p>
+</section>
+
+<section id="real-world-example-card-payment-fraud" class="title-slide slide level1 center">
+<h1>Real-world example: card-payment fraud</h1>
+<p>Define <strong>positive</strong> as a fraudulent payment and <strong>negative</strong> as a legitimate payment.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Example</th>
+<th style="text-align: center;">Actual class</th>
+<th style="text-align: center;">Model prediction</th>
+<th style="text-align: center;">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A stolen-card payment is correctly flagged</td>
+<td style="text-align: center;">Fraud</td>
+<td style="text-align: center;">Fraud</td>
+<td style="text-align: center;"><strong>True positive</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A legitimate payment is incorrectly blocked</td>
+<td style="text-align: center;">Legitimate</td>
+<td style="text-align: center;">Fraud</td>
+<td style="text-align: center;"><strong>False positive</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A fraudulent payment is incorrectly approved</td>
+<td style="text-align: center;">Fraud</td>
+<td style="text-align: center;">Legitimate</td>
+<td style="text-align: center;"><strong>False negative</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A normal grocery payment is correctly approved</td>
+<td style="text-align: center;">Legitimate</td>
+<td style="text-align: center;">Legitimate</td>
+<td style="text-align: center;"><strong>True negative</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>True</strong> means that the prediction matches reality</li>
+<li><strong>False</strong> means that the prediction does not match reality</li>
+<li><strong>Positive</strong> and <strong>negative</strong> name the classes; they do not mean good and bad</li>
+</ul>
+<p>TP and TN are correct predictions; FP and FN are errors with potentially different costs.</p>
 </section>
 
 <section id="accuracy" class="title-slide slide level1 center">
@@ -1714,25 +1767,51 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="precision-and-recall" class="title-slide slide level1 center">
 <h1>Precision and recall</h1>
-<p>Precision and Recall are two metrics used in applications where <em>the correct classification of positive class records is more important</em></p>
+<p>Precision and recall answer different questions about the positive class:</p>
 <ul>
-<li><strong>Precision</strong> (<span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span>) measures the fraction of record results that are actually positive among all those who were classified as such.
+<li><strong>Precision</strong> (<span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span>): among predicted positives, how many are actually positive?
 <ul>
-<li>High values indicate that few negative class records were incorrectly classified as positive.</li>
+<li>High precision means few false positives.</li>
 </ul></li>
-<li><strong>Recall</strong> (<span class="math inline">\(Recall = \frac{TP}{TP + FN}\)</span>) measures the fraction of positive records correctly classified
+<li><strong>Recall</strong> (<span class="math inline">\(Recall = \frac{TP}{TP + FN}\)</span>): among actual positives, how many did the model detect?
 <ul>
-<li>High values indicate that few records of the positive class were incorrectly classified as negatives.</li>
+<li>High recall means few false negatives.</li>
 </ul></li>
 </ul>
 
 <img data-src="./img/dt/image24.png" class="r-stretch quarto-figure-center"><p class="caption">Outcome of classification</p></section>
 
+<section id="prioritize-precision-when-false-positives-are-costly" class="title-slide slide level1 center">
+<h1>Prioritize precision when false positives are costly</h1>
+<p>Precision asks: <strong>when the model predicts positive, how often is it correct?</strong></p>
+<p>Prefer higher precision when a positive prediction triggers an expensive, disruptive, or irreversible action.</p>
+<p>Examples:</p>
+<ul>
+<li>A spam filter that automatically deletes messages</li>
+<li>A fraud system that automatically blocks card payments</li>
+<li>A moderation system that automatically removes content</li>
+</ul>
+<p>These systems should hesitate before taking positive action against a negative case.</p>
+</section>
+
+<section id="prioritize-recall-when-false-negatives-are-costly" class="title-slide slide level1 center">
+<h1>Prioritize recall when false negatives are costly</h1>
+<p>Recall asks: <strong>of all real positive cases, how many did the model find?</strong></p>
+<p>Prefer higher recall when missing a positive case creates danger or a major loss.</p>
+<p>Examples:</p>
+<ul>
+<li>Cancer or infectious-disease screening</li>
+<li>Fraud alerts sent to a human investigator</li>
+<li>Fire, intrusion, or safety-defect detection</li>
+</ul>
+<p>The same domain can differ: <strong>automatic fraud blocking favors precision</strong>, while a <strong>fraud-review queue favors recall</strong>. Choose the metric and threshold from the consequences of FP and FN.</p>
+</section>
+
 <section id="precision-and-recall-1" class="title-slide slide level1 center">
 <h1>Precision and recall</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><span class="math inline">\(Precision = 1\)</span> if all the positive records were actually detected</p>
+<p><span class="math inline">\(Precision = 1\)</span> if there are no false positives: every predicted positive is actually positive.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image25.png"></p>
@@ -1740,7 +1819,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
-<p><span class="math inline">\(Recall = 1\)</span> if there are no false negatives</p>
+<p><span class="math inline">\(Recall = 1\)</span> if there are no false negatives: every actual positive is detected.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image26.png"></p>
@@ -1748,7 +1827,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </figure>
 </div>
 </div></div>
-<p>If both are valid 1, the predetermined classes coincide with the real ones.</p>
+<p>If both equal 1, the model makes neither false-positive nor false-negative errors.</p>
 </section>
 
 <section id="f-measure" class="title-slide slide level1 center">

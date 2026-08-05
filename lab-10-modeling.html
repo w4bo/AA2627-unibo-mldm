@@ -300,7 +300,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section>
 <section id="decision-tree" class="title-slide slide level1 center">
 <h1>Decision tree</h1>
-<div id="qRGDyke9OGij" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:42.530224Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:42.529921Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:42.594525Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:42.593462Z&quot;}}" data-outputid="28adc7ac-dafc-4623-98c5-dda0795d6ca5" data-execution_count="2">
+<div id="qRGDyke9OGij" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:35.316265Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:35.315952Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:35.380184Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:35.379306Z&quot;}}" data-outputid="28adc7ac-dafc-4623-98c5-dda0795d6ca5" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier  <span class="co"># Import the model</span></span>
@@ -318,7 +318,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="plotting-the-tree" class="slide level2">
 <h2>Plotting the tree</h2>
-<div id="TCYt3BziRjqK" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:42.596412Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:42.596221Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:42.763474Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:42.762449Z&quot;}}" data-outputid="a5c6ce55-6e0d-4504-e4c8-408382791a1d" data-execution_count="3">
+<div id="TCYt3BziRjqK" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:35.382192Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:35.381991Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:35.549805Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:35.548817Z&quot;}}" data-outputid="a5c6ce55-6e0d-4504-e4c8-408382791a1d" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
@@ -328,7 +328,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 </div>
 <img data-src="lab-10-modeling_files/figure-revealjs/cell-4-output-1.png" class="r-stretch"><p>Checking feature relevance</p>
-<div id="JV7m4ZKqPaJm" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:42.765396Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:42.765187Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:42.775811Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:42.774891Z&quot;}}" data-outputid="efeb6271-4cec-4fcb-b621-84f298272ad7" data-execution_count="4">
+<div id="JV7m4ZKqPaJm" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:35.551725Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:35.551506Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:35.562246Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:35.561410Z&quot;}}" data-outputid="efeb6271-4cec-4fcb-b621-84f298272ad7" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>feature_importance_df <span class="op">=</span> pd.DataFrame({<span class="st">'Feature'</span>: X.columns, <span class="st">'Importance'</span>: clf.feature_importances_})  <span class="co"># Create a DataFrame to display feature importance</span></span>
@@ -389,7 +389,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section></section>
 <section id="petal-vs-sepal" class="title-slide slide level1 center">
 <h1><code>petal</code> vs <code>sepal</code></h1>
-<div id="8h4GlwOOPlz3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:42.783600Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:42.783430Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:42.877735Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:42.876845Z&quot;}}" data-outputid="a3ff9957-5136-4fe3-d3e0-dc7a7ddf2bfe" data-execution_count="6">
+<div id="8h4GlwOOPlz3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:35.570144Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:35.569966Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:35.665448Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:35.664682Z&quot;}}" data-outputid="a3ff9957-5136-4fe3-d3e0-dc7a7ddf2bfe" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[:<span class="dv">2</span>].tolist())  <span class="co"># plot the 2 most important features</span></span></code></pre></div>
@@ -402,7 +402,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
-<div id="nFNaqWIOT-Rd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:42.879980Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:42.879624Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:42.977892Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:42.976999Z&quot;}}" data-outputid="e57d7a46-c26b-4bfc-c956-f67944b26ada" data-execution_count="7">
+<div id="nFNaqWIOT-Rd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:35.667617Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:35.667399Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:35.764591Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:35.763787Z&quot;}}" data-outputid="e57d7a46-c26b-4bfc-c956-f67944b26ada" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[<span class="dv">2</span>:].tolist())  <span class="co"># plot the 2 lest important features</span></span></code></pre></div>
@@ -419,7 +419,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="feature-selection-checking-correlations" class="title-slide slide level1 center">
 <h1>Feature selection: checking correlations</h1>
-<div id="e8799449" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:42.979781Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:42.979570Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:42.987380Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:42.986540Z&quot;}}" data-execution_count="8">
+<div id="e8799449" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:35.766754Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:35.766568Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:35.774353Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:35.773503Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>X_train.corr(method<span class="op">=</span><span class="st">'pearson'</span>, numeric_only<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
@@ -494,7 +494,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth1" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=1</code></h1>
-<div id="5d66e1c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:43.006296Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:43.006120Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:43.454345Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:43.453432Z&quot;}}" data-execution_count="10">
+<div id="5d66e1c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:35.793292Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:35.793108Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:36.250187Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:36.249035Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
@@ -505,7 +505,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth2" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=2</code></h1>
-<div id="a334f69e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:43.456487Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:43.456285Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:43.865432Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:43.864498Z&quot;}}" data-execution_count="11">
+<div id="a334f69e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:36.252122Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:36.251919Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:36.660277Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:36.659305Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
@@ -516,7 +516,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth2-changing-the-random-seed" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=2</code> (changing the random seed)</h1>
-<div id="648564ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:43.867371Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:43.867178Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:44.281192Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:44.280148Z&quot;}}" data-execution_count="12">
+<div id="648564ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:36.662277Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:36.662080Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:37.081740Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:37.080757Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">1</span>), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
@@ -527,7 +527,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth3" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=3</code></h1>
-<div id="11077234" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:44.283044Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:44.282854Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:44.689930Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:44.688861Z&quot;}}" data-execution_count="13">
+<div id="11077234" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:37.083651Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:37.083422Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:37.496559Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:37.495816Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
@@ -538,7 +538,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth6" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=6</code></h1>
-<div id="6fd5a7ac" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:44.691973Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:44.691765Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:45.118430Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:45.117512Z&quot;}}" data-execution_count="14">
+<div id="6fd5a7ac" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:37.498837Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:37.498646Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:37.911175Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:37.910277Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">6</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div>
@@ -549,7 +549,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="plotting-the-accuracy" class="title-slide slide level1 center">
 <h1>Plotting the accuracy</h1>
-<div id="b0ec6d95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:45.120365Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:45.120182Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:09:45.269562Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:09:45.268597Z&quot;}}" data-execution_count="15">
+<div id="b0ec6d95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:37.913202Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:37.913017Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:38.065750Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:38.064743Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># Prepare to store max_depth values and corresponding accuracies</span></span>
@@ -658,7 +658,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="random-forest" class="title-slide slide level1 center">
 <h1>Random forest</h1>
-<div id="aa8c6cae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:09:45.630225Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:09:45.630041Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:10:03.346726Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:10:03.345726Z&quot;}}" data-execution_count="18">
+<div id="aa8c6cae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:38.431405Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:38.431212Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:56.217317Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:56.216272Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
@@ -699,7 +699,7 @@ Best Cross-validation Accuracy: 0.9583333333333334 Test Set Accuracy with Best P
 
 <section id="decision-boundaries-k1-no-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=1</code> (no normalization)</h1>
-<div id="313f0aeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:10:03.535576Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:10:03.535395Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:10:04.495802Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:10:04.494750Z&quot;}}" data-execution_count="20">
+<div id="313f0aeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:56.407879Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:56.407679Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:57.376812Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:57.375909Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
@@ -712,7 +712,7 @@ Best Cross-validation Accuracy: 0.9583333333333334 Test Set Accuracy with Best P
 
 <section id="decision-boundaries-k1-min-max-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=1</code> (min-max normalization)</h1>
-<div id="fd0b352a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:10:04.497656Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:10:04.497470Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:10:04.807260Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:10:04.806250Z&quot;}}" data-execution_count="21">
+<div id="fd0b352a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:57.379122Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:57.378677Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:57.691566Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:57.690549Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
@@ -723,7 +723,7 @@ Best Cross-validation Accuracy: 0.9583333333333334 Test Set Accuracy with Best P
 
 <section id="decision-boundaries-k10-min-max-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=10</code> (min-max normalization)</h1>
-<div id="8c2f5371" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:10:04.809121Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:10:04.808940Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:10:05.202409Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:10:05.201390Z&quot;}}" data-execution_count="22">
+<div id="8c2f5371" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:57.693486Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:57.693298Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:58.083581Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:58.082660Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">10</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
@@ -734,7 +734,7 @@ Best Cross-validation Accuracy: 0.9583333333333334 Test Set Accuracy with Best P
 
 <section id="plotting-the-accuracy-1" class="title-slide slide level1 center">
 <h1>Plotting the accuracy</h1>
-<div id="40f79431" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:10:05.204368Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:10:05.204166Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:10:05.356442Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:10:05.355549Z&quot;}}" data-execution_count="23">
+<div id="40f79431" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:58.085743Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:58.085544Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:58.237636Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:58.236431Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Prepare to store max_depth values and corresponding accuracies</span></span>
@@ -790,7 +790,7 @@ Is this image a grape?</code></pre>
 
 <section id="perceptron-1" class="title-slide slide level1 center">
 <h1>Perceptron</h1>
-<div id="38b9e754" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:10:05.358602Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:10:05.358398Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:10:05.825390Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:10:05.824265Z&quot;}}" data-execution_count="24">
+<div id="38b9e754" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:58.239764Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:58.239562Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:58.706374Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:58.705434Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron</span>
@@ -803,7 +803,7 @@ Is this image a grape?</code></pre>
 
 <section id="perceptron-changing-the-seed" class="title-slide slide level1 center">
 <h1>Perceptron: changing the seed</h1>
-<div id="04c0a645" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:10:05.827417Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:10:05.827227Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:10:06.292707Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:10:06.291759Z&quot;}}" data-execution_count="25">
+<div id="04c0a645" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:58.708361Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:58.708171Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:14:59.175403Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:14:59.174369Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span><span class="dv">1</span>), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div>
@@ -814,7 +814,7 @@ Is this image a grape?</code></pre>
 
 <section id="multi-layer-perceptron" class="title-slide slide level1 center">
 <h1>Multi-layer perceptron</h1>
-<div id="56b111d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:10:06.294684Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:10:06.294479Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:10:07.210113Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:10:07.209257Z&quot;}}" data-execution_count="26">
+<div id="56b111d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T10:14:59.177299Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T10:14:59.177112Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T10:15:00.060649Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T10:15:00.059435Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>

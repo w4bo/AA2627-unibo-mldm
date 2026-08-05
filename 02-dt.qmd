@@ -825,19 +825,36 @@ flowchart LR
 
 # Metrics for model evaluation
 
-The Confusion Matrix evaluates the ability of a classifier based on the following indicators.
+The confusion matrix compares the predicted class with the actual class.
 
-- $TP$ (true positive): records correctly classified as the Yes class
-- $FN$ (false negative): Incorrectly classified records as class No
-- $FP$ (false positive): Incorrectly classified records as class Yes
-- $TN$ (true negative) records correctly classified as class No
+- $TP$ (true positive): actual positive, predicted positive
+- $FN$ (false negative): actual positive, predicted negative
+- $FP$ (false positive): actual negative, predicted positive
+- $TN$ (true negative): actual negative, predicted negative
 
-| Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
+| Predicted $\downarrow$ / Actual $\rightarrow$ | **Class=+** | **Class=-** |
 | :-: | :-: | :-: |
-| **Class=+** | TP | FN |
-| **Class=-** | FP | TN |
+| **Class=+** | TP | FP |
+| **Class=-** | FN | TN |
 
-If the classification uses $n$ classes, the confusion matrix will be $n \cdot n$
+For $n$ classes, the confusion matrix has size $n\times n$.
+
+# Real-world example: card-payment fraud
+
+Define **positive** as a fraudulent payment and **negative** as a legitimate payment.
+
+| Example | Actual class | Model prediction | Result |
+|:---|:---:|:---:|:---:|
+| A stolen-card payment is correctly flagged | Fraud | Fraud | **True positive** |
+| A legitimate payment is incorrectly blocked | Legitimate | Fraud | **False positive** |
+| A fraudulent payment is incorrectly approved | Fraud | Legitimate | **False negative** |
+| A normal grocery payment is correctly approved | Legitimate | Legitimate | **True negative** |
+
+- **True** means that the prediction matches reality
+- **False** means that the prediction does not match reality
+- **Positive** and **negative** name the classes; they do not mean good and bad
+
+TP and TN are correct predictions; FP and FN are errors with potentially different costs.
 
 # Accuracy
 
@@ -862,31 +879,59 @@ In the case of binary classification problems, the class "rare" is also called a
 
 # Precision and recall
 
-Precision and Recall are two metrics used in applications where _the correct classification of positive class records is more important_
+Precision and recall answer different questions about the positive class:
 
-- **Precision** ($Precision = \frac{TP}{TP + FP}$) measures the fraction of record results that are actually positive among all those who were classified as such.
-    - High values indicate that few negative class records were incorrectly classified as positive.
-- **Recall** ($Recall = \frac{TP}{TP + FN}$) measures the fraction of positive records correctly classified
-    - High values indicate that few records of the positive class were incorrectly classified as negatives.
+- **Precision** ($Precision = \frac{TP}{TP + FP}$): among predicted positives, how many are actually positive?
+    - High precision means few false positives.
+- **Recall** ($Recall = \frac{TP}{TP + FN}$): among actual positives, how many did the model detect?
+    - High recall means few false negatives.
 
 ![Outcome of classification](./img/dt/image24.png)
+
+# Prioritize precision when false positives are costly
+
+Precision asks: **when the model predicts positive, how often is it correct?**
+
+Prefer higher precision when a positive prediction triggers an expensive, disruptive, or irreversible action.
+
+Examples:
+
+- A spam filter that automatically deletes messages
+- A fraud system that automatically blocks card payments
+- A moderation system that automatically removes content
+
+These systems should hesitate before taking positive action against a negative case.
+
+# Prioritize recall when false negatives are costly
+
+Recall asks: **of all real positive cases, how many did the model find?**
+
+Prefer higher recall when missing a positive case creates danger or a major loss.
+
+Examples:
+
+- Cancer or infectious-disease screening
+- Fraud alerts sent to a human investigator
+- Fire, intrusion, or safety-defect detection
+
+The same domain can differ: **automatic fraud blocking favors precision**, while a **fraud-review queue favors recall**. Choose the metric and threshold from the consequences of FP and FN.
 
 # Precision and recall
 
 ::::{.columns}
 :::{.column width=50%}
-$Precision = 1$ if all the positive records were actually detected
+$Precision = 1$ if there are no false positives: every predicted positive is actually positive.
 
 ![$Precision = 1$](./img/dt/image25.png)
 :::
 :::{.column width=50%}
-$Recall = 1$ if there are no false negatives
+$Recall = 1$ if there are no false negatives: every actual positive is detected.
 
 ![$Recall = 1$](./img/dt/image26.png)
 :::
 ::::
 
-If both are valid 1, the predetermined classes coincide with the real ones.
+If both equal 1, the model makes neither false-positive nor false-negative errors.
 
 # F-measure
 
