@@ -1,3 +1,15 @@
+## [1.0.14](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.13...1.0.14) (2026-08-05)
+
+### Bug Fixes
+
+* improve evaluation ([55381ab](https://github.com/w4bo/AA2627-unibo-mldm/commit/55381ab7986cde66f619e6bcdfed20d2525d5490))
+* update the slides ([a8c7cb4](https://github.com/w4bo/AA2627-unibo-mldm/commit/a8c7cb4e3f5561b1d5f5206a2e22b68fc6dcde08))
+* update the slides ([7a3ca17](https://github.com/w4bo/AA2627-unibo-mldm/commit/7a3ca17e2066ba366445919bfe8a4deaf7445e1a))
+
+### General maintenance
+
+* udpate styling and tables ([34bf053](https://github.com/w4bo/AA2627-unibo-mldm/commit/34bf0532776cb42a05073c8d283fab18ed7239c1))
+
 ## [1.0.13](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.12...1.0.13) (2026-08-05)
 
 ### Bug Fixes
