@@ -198,7 +198,7 @@ Without scaling, income can dominate Euclidean distance.
 
 # Scaling can reverse the nearest neighbor
 
-Query customer: age 40, income EUR 50,000.
+Query customer $z$: age 40, income EUR 50,000.
 
 | Candidate | Age | Income | Difference from query |
 |:---:|---:|---:|:---|
@@ -208,11 +208,11 @@ Query customer: age 40, income EUR 50,000.
 On raw values:
 
 $$
-dist(A)=\sqrt{2^2+20{,}000^2}\approx20{,}000
+dist(z,A)=\sqrt{2^2+20{,}000^2}\approx20{,}000
 $$
 
 $$
-dist(B)=\sqrt{20^2+500^2}\approx500.4
+dist(z,B)=\sqrt{20^2+500^2}\approx500.4
 $$
 
 Income overwhelms age, so the raw distance selects **B**.
@@ -354,6 +354,7 @@ ax_1d.scatter([0.5], [0], color="#D55E00", marker="X", s=120, zorder=3)
 ax_1d.set(
     title="1-D interval: 20% nearby",
     xlabel="Feature 1",
+    ylabel="Display-only jitter",
     xlim=(0, 1),
     ylim=(-0.12, 0.12),
     yticks=[],
@@ -399,6 +400,8 @@ for ax in (ax_1d, ax_2d):
 fig.tight_layout()
 plt.show()
 ```
+
+In the 1-D panel, vertical jitter separates overlapping points; it is **not a feature**.
 
 Adding one dimension multiplies the relative neighborhood volume by another factor of $0.2$.
 
@@ -518,17 +521,42 @@ For k-NN, validate:
 
 Keep the test set untouched until the final evaluation.
 
-# Computational cost
+# Why brute-force distance computation costs $O(nd)$
 
-Naive prediction requires computing distances to many training records.
+For one query, k-NN compares the query with every training record.
 
-For $n$ training records and $d$ features:
+Computing the distance to **one** record examines all $d$ features:
 
-- one prediction costs $O(nd)$ with a brute-force search
-- storing the training data costs $O(nd)$
-- prediction can be slower than for eager models
+$$
+dist(x,z)=\sqrt{\sum_{j=1}^{d}(x_j-z_j)^2}
+\quad\Longrightarrow\quad O(d)
+$$
 
-Index structures can reduce the search cost in some low-dimensional settings.
+Repeating this for all $n$ training records gives:
+
+$$
+n\times O(d)=O(nd)
+$$
+
+This is the cost of the **distance-computation stage** for one prediction.
+
+# Selecting the $k$ nearest records adds work
+
+After computing $n$ distances, k-NN must identify the smallest $k$:
+
+- Sort every distance: $O(n\log n)$
+- Maintain a heap of size $k$: $O(n\log k)$
+- Specialized selection algorithms can achieve $O(n)$
+
+With a heap, the complete brute-force prediction cost is:
+
+$$
+O(nd+n\log k)
+$$
+
+It is often summarized as $O(nd)$ when $k$ is small and distance computation dominates. Storing the $n\times d$ training matrix also costs $O(nd)$.
+
+Index structures can reduce search cost in some low-dimensional settings.
 
 # The R-tree index structure (Guttman, 1984)
 
