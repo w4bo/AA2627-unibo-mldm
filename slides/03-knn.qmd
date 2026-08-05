@@ -1,5 +1,8 @@
 ---
 subtitle: K-nearest neighbors
+jupyter: python3
+execute:
+  enabled: true
 ---
 
 # Motivating problem: classify by similar cases
@@ -83,6 +86,20 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 $$
 
 Both are sensitive to the units used to measure each feature.
+
+# Manhattan and Euclidean can select different neighbors
+
+Let the query be $z=(0,0)$ and compare two candidates:
+
+| Candidate | Coordinates | Euclidean distance | Manhattan distance |
+|:---:|:---:|---:|---:|
+| $A$ | $(3,0)$ | $\sqrt{3^2+0^2}=3$ | $\lvert3\rvert+\lvert0\rvert=3$ |
+| $B$ | $(2,2)$ | $\sqrt{2^2+2^2}\approx2.83$ | $\lvert2\rvert+\lvert2\rvert=4$ |
+
+- **Euclidean:** $B$ is closer because diagonal movement is direct
+- **Manhattan:** $A$ is closer because movement along each axis is added
+
+The metric can therefore change the neighbor set and the prediction.
 
 # Formal definition: majority vote
 
@@ -179,22 +196,43 @@ Example:
 
 Without scaling, income can dominate Euclidean distance.
 
-# Scaling example
+# Scaling can reverse the nearest neighbor
 
-Compare two customers with a query customer:
+Query customer: age 40, income EUR 50,000.
 
-| Customer | Age difference | Income difference |
-|---:|---:|---:|
-| A | 2 years | 20,000 EUR |
-| B | 20 years | 500 EUR |
+| Candidate | Age | Income | Difference from query |
+|:---:|---:|---:|:---|
+| $A$ | 42 | EUR 70,000 | $(2,\ 20{,}000)$ |
+| $B$ | 60 | EUR 50,500 | $(20,\ 500)$ |
 
-Euclidean distance on raw values is dominated by income:
+On raw values:
 
 $$
-dist(A) \approx 20000,\qquad dist(B) \approx 500
+dist(A)=\sqrt{2^2+20{,}000^2}\approx20{,}000
 $$
 
-The model may treat B as closer, even if age is the predictive feature.
+$$
+dist(B)=\sqrt{20^2+500^2}\approx500.4
+$$
+
+Income overwhelms age, so the raw distance selects **B**.
+
+# After standardization, the answer changes
+
+Suppose the training-set standard deviations are:
+
+$$
+\sigma_{age}=10\text{ years},\qquad \sigma_{income}=\text{EUR }25{,}000
+$$
+
+Standardized differences and distances become:
+
+| Candidate | Standardized difference | Euclidean distance |
+|:---:|:---:|---:|
+| $A$ | $(2/10,\ 20{,}000/25{,}000)=(0.2,0.8)$ | $\sqrt{0.2^2+0.8^2}\approx0.82$ |
+| $B$ | $(20/10,\ 500/25{,}000)=(2,0.02)$ | $\sqrt{2^2+0.02^2}\approx2.00$ |
+
+After scaling, **A** is closer. Scaling gives each feature influence relative to its typical variation.
 
 # Standardization
 
@@ -270,17 +308,203 @@ If we add many irrelevant features:
 
 k-NN benefits from feature selection, dimensionality reduction, or careful feature engineering.
 
+# A neighborhood inside the unit hypercube
+
+The query is at the center, and "near" means within $\pm0.1$ on every feature.
+
+```{python}
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4.4
+#| dpi: 160
+
+import random
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
+
+rng = random.Random(1)
+n_points = 250
+
+plt.rcParams.update({"font.size": 15})
+fig, (ax_1d, ax_2d) = plt.subplots(1, 2)
+
+# One-dimensional unit interval
+x_1d = [rng.random() for _ in range(n_points)]
+jitter = [rng.uniform(-0.08, 0.08) for _ in range(n_points)]
+inside_1d = [0.4 <= x <= 0.6 for x in x_1d]
+
+ax_1d.axvspan(0.4, 0.6, color="#E69F00", alpha=0.18)
+ax_1d.scatter(
+    [x for x, inside in zip(x_1d, inside_1d) if not inside],
+    [y for y, inside in zip(jitter, inside_1d) if not inside],
+    color="#999999",
+    alpha=0.55,
+    s=18,
+)
+ax_1d.scatter(
+    [x for x, inside in zip(x_1d, inside_1d) if inside],
+    [y for y, inside in zip(jitter, inside_1d) if inside],
+    color="#E69F00",
+    alpha=0.85,
+    s=22,
+)
+ax_1d.scatter([0.5], [0], color="#D55E00", marker="X", s=120, zorder=3)
+ax_1d.set(
+    title="1-D interval: 20% nearby",
+    xlabel="Feature 1",
+    xlim=(0, 1),
+    ylim=(-0.12, 0.12),
+    yticks=[],
+)
+
+# Two-dimensional unit square
+x_2d = [rng.random() for _ in range(n_points)]
+y_2d = [rng.random() for _ in range(n_points)]
+inside_2d = [0.4 <= x <= 0.6 and 0.4 <= y <= 0.6 for x, y in zip(x_2d, y_2d)]
+
+ax_2d.add_patch(Rectangle((0.4, 0.4), 0.2, 0.2, color="#E69F00", alpha=0.18))
+ax_2d.scatter(
+    [x for x, inside in zip(x_2d, inside_2d) if not inside],
+    [y for y, inside in zip(y_2d, inside_2d) if not inside],
+    color="#999999",
+    alpha=0.55,
+    s=18,
+    label="outside neighborhood",
+)
+ax_2d.scatter(
+    [x for x, inside in zip(x_2d, inside_2d) if inside],
+    [y for y, inside in zip(y_2d, inside_2d) if inside],
+    color="#E69F00",
+    alpha=0.85,
+    s=24,
+    label="inside neighborhood",
+)
+ax_2d.scatter([0.5], [0.5], color="#D55E00", marker="X", s=120, label="query")
+ax_2d.set(
+    title="2-D square: 4% nearby",
+    xlabel="Feature 1",
+    ylabel="Feature 2",
+    xlim=(0, 1),
+    ylim=(0, 1),
+)
+ax_2d.set_aspect("equal", adjustable="box")
+ax_2d.legend(loc="upper right", fontsize=12)
+
+for ax in (ax_1d, ax_2d):
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+fig.tight_layout()
+plt.show()
+```
+
+Adding one dimension multiplies the relative neighborhood volume by another factor of $0.2$.
+
 # Failure case: high dimensionality
 
-In high-dimensional spaces, distances often become less informative.
+Assume 1,000 points are uniformly distributed in $[0,1]^d$. Around a query at the center, define "near" as within $\pm0.1$ on **every** feature.
 
-This is part of the **curse of dimensionality**.
+The relative neighborhood volume is $(0.2)^d$:
 
-- Points become sparse
-- The nearest and farthest points can have surprisingly similar distances
-- A huge number of examples may be needed to cover the space well
+| Dimensions $d$ | Relative volume $(0.2)^d$ | Expected nearby points |
+|---:|---:|---:|
+| 2 | $0.04$ | $1000\times0.04=40$ |
+| 5 | $0.00032$ | $1000\times0.00032=0.32$ |
+| 10 | $1.024\times10^{-7}$ | $0.0001024$ |
 
-k-NN is strongest when the chosen features make neighborhoods meaningful.
+With the same data size and per-feature tolerance, a useful local neighborhood goes from **40 points in 2-D** to effectively **empty in 10-D**.
+
+This sparsity is the **curse of dimensionality**: k-NN needs far more data, or fewer and more informative features, to keep neighborhoods meaningful.
+
+# Local neighborhoods quickly become empty
+
+For 1,000 uniformly distributed points, using a tolerance of $\pm0.1$ on every normalized feature:
+
+```{python}
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4.4
+#| dpi: 160
+
+import matplotlib.pyplot as plt
+
+n_points = 1_000
+dimensions = list(range(1, 13))
+expected_neighbors = [n_points * 0.2**d for d in dimensions]
+
+plt.rcParams.update({"font.size": 16})
+fig, ax = plt.subplots()
+
+ax.semilogy(
+    dimensions,
+    expected_neighbors,
+    color="#0072B2",
+    marker="o",
+    linewidth=3,
+    markersize=7,
+)
+ax.axhline(1, color="#D55E00", linestyle="--", linewidth=2)
+ax.fill_between(
+    dimensions,
+    expected_neighbors,
+    1,
+    where=[value < 1 for value in expected_neighbors],
+    color="#D55E00",
+    alpha=0.10,
+)
+
+for d in (2, 5, 10):
+    value = n_points * 0.2**d
+    ax.annotate(
+        f"d={d}: {value:g}",
+        (d, value),
+        xytext=(9, 8),
+        textcoords="offset points",
+        fontsize=15,
+    )
+
+ax.text(12, 1.25, "one expected neighbor", color="#D55E00", ha="right")
+ax.set(
+    xlabel="Number of dimensions",
+    ylabel="Expected nearby points",
+    xticks=dimensions,
+)
+ax.grid(axis="y", which="both", alpha=0.25)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+fig.tight_layout()
+plt.show()
+```
+
+# Shrinking neighborhoods make k-NN less local
+
+With a fixed dataset size, the feature space becomes increasingly sparse.
+
+- **Neighborhoods become empty:** the nearest observation may still be far away on several features
+- **The search radius must grow:** finding $k$ neighbors includes increasingly dissimilar observations
+- **Predictions become less local:** k-NN loses the local similarity that makes it useful
+
+The algorithm must trade a tiny, unreliable neighborhood for a larger, less relevant one.
+
+# Preserving density requires exponentially more data
+
+To keep an expected $m$ observations in a neighborhood occupying the fraction $(0.2)^d$:
+
+$$
+n=\frac{m}{(0.2)^d}
+$$
+
+Keeping 40 expected neighbors in 10 dimensions would require:
+
+$$
+n=\frac{40}{(0.2)^{10}}=390{,}625{,}000\text{ observations}
+$$
+
+In practice, **feature selection** and **dimensionality reduction** are often more realistic than collecting exponentially more data.
 
 # Practical model-selection checklist
 
