@@ -478,7 +478,7 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 
 <section id="scaling-can-reverse-the-nearest-neighbor" class="title-slide slide level1 center">
 <h1>Scaling can reverse the nearest neighbor</h1>
-<p>Query customer: age 40, income EUR 50,000.</p>
+<p>Query customer <span class="math inline">\(z\)</span>: age 40, income EUR 50,000.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -505,10 +505,10 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 </table>
 <p>On raw values:</p>
 <p><span class="math display">\[
-dist(A)=\sqrt{2^2+20{,}000^2}\approx20{,}000
+dist(z,A)=\sqrt{2^2+20{,}000^2}\approx20{,}000
 \]</span></p>
 <p><span class="math display">\[
-dist(B)=\sqrt{20^2+500^2}\approx500.4
+dist(z,B)=\sqrt{20^2+500^2}\approx500.4
 \]</span></p>
 <p>Income overwhelms age, so the raw distance selects <strong>B</strong>.</p>
 </section>
@@ -624,15 +624,16 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="a-neighborhood-inside-the-unit-hypercube" class="title-slide slide level1 center">
 <h1>A neighborhood inside the unit hypercube</h1>
 <p>The query is at the center, and “near” means within <span class="math inline">\(\pm0.1\)</span> on every feature.</p>
-<div id="ff1fa30c" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
+<div id="1bfe81e0" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="03-knn_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="918" height="456"></p>
+<p><img data-src="03-knn_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="921" height="456"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>In the 1-D panel, vertical jitter separates overlapping points; it is <strong>not a feature</strong>.</p>
 <p>Adding one dimension multiplies the relative neighborhood volume by another factor of <span class="math inline">\(0.2\)</span>.</p>
 </section>
 
@@ -673,7 +674,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="local-neighborhoods-quickly-become-empty" class="title-slide slide level1 center">
 <h1>Local neighborhoods quickly become empty</h1>
 <p>For 1,000 uniformly distributed points, using a tolerance of <span class="math inline">\(\pm0.1\)</span> on every normalized feature:</p>
-<div id="bc76adbf" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
+<div id="f948bee4" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -721,16 +722,35 @@ n=\frac{40}{(0.2)^{10}}=390{,}625{,}000\text{ observations}
 <p>Keep the test set untouched until the final evaluation.</p>
 </section>
 
-<section id="computational-cost" class="title-slide slide level1 center">
-<h1>Computational cost</h1>
-<p>Naive prediction requires computing distances to many training records.</p>
-<p>For <span class="math inline">\(n\)</span> training records and <span class="math inline">\(d\)</span> features:</p>
+<section id="why-brute-force-distance-computation-costs-ond" class="title-slide slide level1 center">
+<h1>Why brute-force distance computation costs <span class="math inline">\(O(nd)\)</span></h1>
+<p>For one query, k-NN compares the query with every training record.</p>
+<p>Computing the distance to <strong>one</strong> record examines all <span class="math inline">\(d\)</span> features:</p>
+<p><span class="math display">\[
+dist(x,z)=\sqrt{\sum_{j=1}^{d}(x_j-z_j)^2}
+\quad\Longrightarrow\quad O(d)
+\]</span></p>
+<p>Repeating this for all <span class="math inline">\(n\)</span> training records gives:</p>
+<p><span class="math display">\[
+n\times O(d)=O(nd)
+\]</span></p>
+<p>This is the cost of the <strong>distance-computation stage</strong> for one prediction.</p>
+</section>
+
+<section id="selecting-the-k-nearest-records-adds-work" class="title-slide slide level1 center">
+<h1>Selecting the <span class="math inline">\(k\)</span> nearest records adds work</h1>
+<p>After computing <span class="math inline">\(n\)</span> distances, k-NN must identify the smallest <span class="math inline">\(k\)</span>:</p>
 <ul>
-<li>one prediction costs <span class="math inline">\(O(nd)\)</span> with a brute-force search</li>
-<li>storing the training data costs <span class="math inline">\(O(nd)\)</span></li>
-<li>prediction can be slower than for eager models</li>
+<li>Sort every distance: <span class="math inline">\(O(n\log n)\)</span></li>
+<li>Maintain a heap of size <span class="math inline">\(k\)</span>: <span class="math inline">\(O(n\log k)\)</span></li>
+<li>Specialized selection algorithms can achieve <span class="math inline">\(O(n)\)</span></li>
 </ul>
-<p>Index structures can reduce the search cost in some low-dimensional settings.</p>
+<p>With a heap, the complete brute-force prediction cost is:</p>
+<p><span class="math display">\[
+O(nd+n\log k)
+\]</span></p>
+<p>It is often summarized as <span class="math inline">\(O(nd)\)</span> when <span class="math inline">\(k\)</span> is small and distance computation dominates. Storing the <span class="math inline">\(n\times d\)</span> training matrix also costs <span class="math inline">\(O(nd)\)</span>.</p>
+<p>Index structures can reduce search cost in some low-dimensional settings.</p>
 </section>
 
 <section id="the-r-tree-index-structure-guttman-1984" class="title-slide slide level1 center">
