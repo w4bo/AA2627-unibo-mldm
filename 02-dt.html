@@ -1397,7 +1397,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li><span class="math inline">\(Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))\)</span> (adopted in ID3 e C4.5)</li>
 <li><span class="math inline">\(Misclassification~Error(i) = 1 - max_{j \in K} p(j|i)\)</span></li>
 </ul>
-<p>The total impurity of the split is given by the following formula, where meas () is one of the measures introduced so far.</p>
+<p>The total impurity of the split is given by the following formula, where <span class="math inline">\(meas\)</span> is one of the measures introduced so far.</p>
 <ul>
 <li><span class="math inline">\(Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)\)</span></li>
 </ul>
@@ -1572,7 +1572,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="split-based-on-splitinfo" class="title-slide slide level1 center">
 <h1>Split based on <span class="math inline">\(SplitInfo\)</span></h1>
-<p>To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:</p>
+<p>To avoid the problem of spraying classes, it is preferable to maximize the <span class="math inline">\(GainRATIO\)</span>:</p>
 <ul>
 <li><span class="math inline">\(N\)</span> = number of child nodes</li>
 <li><span class="math inline">\(M\)</span> = record number in father <span class="math inline">\(p\)</span></li>
@@ -1580,7 +1580,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 <p><span class="math inline">\(GainRATIO_{split}=\frac{GAIN_{split}}{SplitINFO}\)</span></p>
 <p><span class="math inline">\(SplitINFO=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}\)</span></p>
-<p>The higher the number of children, the greater the value of <span class="math inline">\(SplitInfo\)</span>, with a consequent reduction in the <span class="math inline">\(SplitInfo\)</span></p>
+<p>The higher the number of children, the greater the value of <span class="math inline">\(SplitInfo\)</span>, with a consequent reduction in the <span class="math inline">\(GainRATIO\)</span></p>
 <ul>
 <li>For example, assuming that each child node contains the same number of records, <span class="math inline">\(SplitInfo = log(n)\)</span>.</li>
 <li>C4.5 uses the <span class="math inline">\(SplitInfo\)</span>-based criterion</li>
@@ -2016,16 +2016,16 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p>Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.</p>
 <p><strong>Features:</strong></p>
 <ul>
-<li>Use <span class="math inline">\(SplitInfo\)</span> as a criterion for determining the split attribute</li>
+<li>Use <span class="math inline">\(GainRATIO\)</span> as a criterion for determining the split attribute</li>
 <li>It manages the continuous attributes by determining a split point that divides the range of values into two</li>
-<li>It manages data with missing values. Missing attributes are not considered to calculate <span class="math inline">\(SplitInfo\)</span>.</li>
+<li>It manages data with missing values. Missing attributes are not considered to calculate <span class="math inline">\(GainRATIO\)</span>.</li>
 <li>It can handle attributes that are associated with different weights</li>
 <li>Run post-pruning of the created tree</li>
 </ul>
 <p><strong>The tree construction stops when:</strong></p>
 <ul>
 <li>The node contains records belonging to a single class</li>
-<li>No attribute allows for determining a positive <span class="math inline">\(SplitInfo\)</span></li>
+<li>No attribute allows for determining a positive <span class="math inline">\(GainRATIO\)</span></li>
 <li>Node does not contain records.</li>
 </ul>
 </section>

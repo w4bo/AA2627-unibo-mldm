@@ -669,7 +669,7 @@ Several indices can be adopted.
 * $Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))$ (adopted in ID3 e C4.5)
 * $Misclassification~Error(i) = 1 - max_{j \in K} p(j|i)$
 
-The total impurity of the split is given by the following formula, where meas () is one of the measures introduced so far.
+The total impurity of the split is given by the following formula, where $meas$ is one of the measures introduced so far.
 
 * $Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)$
 
@@ -758,7 +758,7 @@ Selecting the split value that maximizes GAIN tends to determine split criteria 
 
 # Split based on $SplitInfo$
 
-To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:
+To avoid the problem of spraying classes, it is preferable to maximize the $GainRATIO$:
 
 - $N$ = number of child nodes
 - $M$ = record number in father $p$
@@ -768,7 +768,7 @@ $GainRATIO_{split}=\frac{GAIN_{split}}{SplitINFO}$
 
 $SplitINFO=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}$
 
-The higher the number of children, the greater the value of $SplitInfo$, with a consequent  reduction in the $SplitInfo$
+The higher the number of children, the greater the value of $SplitInfo$, with a consequent reduction in the $GainRATIO$
 
 - For example, assuming that each child node contains the same number of records, $SplitInfo = log(n)$.
 - C4.5 uses the $SplitInfo$-based criterion
@@ -1263,16 +1263,16 @@ Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.
 
 **Features:**
 
-- Use $SplitInfo$ as a criterion for determining the split attribute
+- Use $GainRATIO$ as a criterion for determining the split attribute
 - It manages the continuous attributes by determining a split point that divides the range of values into two
-- It manages data with missing values. Missing attributes are not considered to calculate $SplitInfo$.
+- It manages data with missing values. Missing attributes are not considered to calculate $GainRATIO$.
 - It can handle attributes that are associated with different weights
 - Run post-pruning of the created tree
 
 **The tree construction stops when:**
 
 - The node contains records belonging to a single class
-- No attribute allows for determining a positive $SplitInfo$
+- No attribute allows for determining a positive $GainRATIO$
 - Node does not contain records.
 
 # Summary: when should I use a decision tree?
