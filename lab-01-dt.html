@@ -1,0 +1,3108 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-01-dt_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lab-01-dt_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-01-dt_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lab-01-dt_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-01-dt_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lab-01-dt_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
+  <title>Decision Trees from First Principles with pandas and scikit-learn</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lab-01-dt_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lab-01-dt_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="lab-01-dt_files/libs/revealjs/dist/theme/quarto-3aff54e5f0c64c9f44dab45420b5f30d.css">
+  <link href="lab-01-dt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lab-01-dt_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lab-01-dt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lab-01-dt_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Decision Trees from First Principles with pandas and scikit-learn</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
+</div>
+</div>
+</div>
+
+</section>
+<section>
+<section id="decision-trees-from-first-principles-with-pandas-and-scikit-learn" class="title-slide slide level1 center">
+<h1>Decision Trees from First Principles with pandas and scikit-learn</h1>
+
+</section>
+<section id="a-3-hour-hands-on-classification-lab" class="slide level2">
+<h2>A 3-hour hands-on classification lab</h2>
+<p><strong>Scope:</strong> train and study <em>single decision-tree classifiers only</em>.</p>
+<h3 id="learning-objectives">Learning objectives</h3>
+<p>By the end of the lab, you will be able to:</p>
+<ol type="1">
+<li>Train a <code>DecisionTreeClassifier</code> with a reproducible train/test workflow.</li>
+<li>Explain what a tree level (depth) represents.</li>
+<li>Visualize how increasing <code>max_depth</code> changes:
+<ul>
+<li>the learned rules,</li>
+<li>train/test performance,</li>
+<li>tree size,</li>
+<li>leaf purity,</li>
+<li>feature importance.</li>
+</ul></li>
+<li>Explain and manually verify impurity-based feature importance.</li>
+<li>Compare the split criteria <code>"gini"</code>, <code>"entropy"</code>, and <code>"log_loss"</code>.</li>
+<li>Recognize overfitting and limitations of impurity-based importance.</li>
+</ol>
+</section>
+<section id="suggested-timing" class="slide level2">
+<h2>Suggested timing</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Segment</th>
+<th>Topic</th>
+<th style="text-align: right;">Time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Setup and Iris visual warm-up</td>
+<td style="text-align: right;">35 min</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Breast-cancer data and first tree</td>
+<td style="text-align: right;">25 min</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Purity and feature importance</td>
+<td style="text-align: right;">35 min</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Depth sweep: levels 1 to X</td>
+<td style="text-align: right;">35 min</td>
+</tr>
+<tr class="odd">
+<td>Break</td>
+<td>Short break</td>
+<td style="text-align: right;">10 min</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Criteria and final diagnosis</td>
+<td style="text-align: right;">25 min</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Exercises and synthesis</td>
+<td style="text-align: right;">15 min</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td></td>
+<td style="text-align: right;"><strong>180 min</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>This notebook uses a medical dataset for teaching only. It is not a diagnostic tool.</p>
+</blockquote>
+<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-mldm/blob/master/slides/lab-01-dt.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+</section></section>
+<section>
+<section id="setup" class="title-slide slide level1 center">
+<h1>Setup</h1>
+<p>The notebook needs:</p>
+<ul>
+<li>Python 3.10+</li>
+<li>pandas</li>
+<li>NumPy</li>
+<li>matplotlib</li>
+<li>scikit-learn</li>
+</ul>
+<p>Install missing packages with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb1-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install pandas numpy matplotlib scikit-learn</span></code></pre></div>
+</section>
+<section id="iris-warm-up-levels-and-features---35-minutes" class="slide level2">
+<h2>1. Iris warm-up: levels and features - 35 minutes</h2>
+<p>Before moving to the larger breast-cancer dataset, use the Iris dataset to build geometric intuition.</p>
+<p>We keep only two features so each trained tree can be drawn as a decision boundary:</p>
+<ul>
+<li><code>petal length (cm)</code></li>
+<li><code>petal width (cm)</code></li>
+</ul>
+<p>This small example makes two ideas visible:</p>
+<ol type="1">
+<li>A tree level adds another round of yes/no splits.</li>
+<li>Each split is a threshold on one feature, so the boundary is made of horizontal and vertical steps.</li>
+</ol>
+</section>
+<section id="iris-dataset-dimensions" class="slide level2">
+<h2>Iris: dataset dimensions</h2>
+<div id="echo-false-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:18.328958Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:18.328786Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:18.331900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:18.331035Z&quot;}}" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>Feature matrix shape: (150, 2)
+Target shape: (150,)</code></pre>
+</div>
+</div>
+</section>
+<section id="iris-data-preview" class="slide level2">
+<h2>Iris: data preview</h2>
+<div id="echo-false-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:18.333673Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:18.333493Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:18.344306Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:18.343414Z&quot;}}" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">petal length (cm)</th>
+<th data-quarto-table-cell-role="th">petal width (cm)</th>
+<th data-quarto-table-cell-role="th">target</th>
+<th data-quarto-table-cell-role="th">target_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+<td>setosa</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+<td>setosa</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>1.3</td>
+<td>0.2</td>
+<td>0</td>
+<td>setosa</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>1.5</td>
+<td>0.2</td>
+<td>0</td>
+<td>setosa</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+<td>setosa</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<h3 id="plot-the-two-feature-space">Plot the two-feature space</h3>
+<p>Each point is one flower. A decision tree trained on these two columns can only split the plane using feature thresholds.</p>
+</section>
+<section id="iris-feature-space-plot" class="slide level2">
+<h2>Iris: feature-space plot</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"><h3 id="train-trees-from-depth-1-to-x">Train trees from depth 1 to X</h3>
+<p>The next chart trains one decision tree per depth. The colored background shows the class predicted for every point in the two-feature plane; the scatter points use the same colors for the observed classes.</p>
+</section>
+<section id="iris-boundary-max-depth-1" class="slide level2">
+<h2>Iris boundary: max depth 1</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
+<section id="iris-boundary-max-depth-2" class="slide level2">
+<h2>Iris boundary: max depth 2</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+<section id="iris-boundary-max-depth-3" class="slide level2">
+<h2>Iris boundary: max depth 3</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
+<section id="iris-boundary-max-depth-4" class="slide level2">
+<h2>Iris boundary: max depth 4</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
+<section id="iris-boundary-max-depth-5" class="slide level2">
+<h2>Iris boundary: max depth 5</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"><h3 id="iris-checkpoint">Iris checkpoint</h3>
+<ul>
+<li>At depth 1, how many regions can the tree create?</li>
+<li>Which feature appears first in the shallow trees?</li>
+<li>Where does increasing depth help, and where does it start fitting small local details?</li>
+</ul>
+<p>Keep these visual ideas in mind. The breast-cancer dataset has many more features, so the geometry is harder to draw, but the training mechanism is the same.</p>
+</section>
+<section id="load-and-inspect-the-breast-cancer-dataset---15-minutes" class="slide level2">
+<h2>2. Load and inspect the breast-cancer dataset - 15 minutes</h2>
+<p>We use scikit-learn’s Breast Cancer Wisconsin diagnostic dataset.</p>
+<ul>
+<li><strong>Rows:</strong> observations</li>
+<li><strong>Predictors:</strong> 30 numeric measurements</li>
+<li><strong>Target:</strong> malignant or benign</li>
+</ul>
+<p>The loader can return pandas objects directly with <code>as_frame=True</code>.</p>
+</section>
+<section id="breast-cancer-dataset-dimensions" class="slide level2">
+<h2>Breast cancer: dataset dimensions</h2>
+<div id="echo-false-5-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.426340Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.426120Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.429791Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.428989Z&quot;}}" data-execution_count="14">
+<div class="cell-output cell-output-stdout">
+<pre><code>Feature matrix shape: (569, 30)
+Target shape: (569,)</code></pre>
+</div>
+</div>
+</section>
+<section id="breast-cancer-data-preview" class="slide level2">
+<h2>Breast cancer: data preview</h2>
+<div id="echo-false-6-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.431810Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.431624Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.447648Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.446731Z&quot;}}" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean radius</th>
+<th data-quarto-table-cell-role="th">mean texture</th>
+<th data-quarto-table-cell-role="th">mean perimeter</th>
+<th data-quarto-table-cell-role="th">mean area</th>
+<th data-quarto-table-cell-role="th">mean smoothness</th>
+<th data-quarto-table-cell-role="th">mean compactness</th>
+<th data-quarto-table-cell-role="th">mean concavity</th>
+<th data-quarto-table-cell-role="th">mean concave points</th>
+<th data-quarto-table-cell-role="th">mean symmetry</th>
+<th data-quarto-table-cell-role="th">mean fractal dimension</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">worst perimeter</th>
+<th data-quarto-table-cell-role="th">worst area</th>
+<th data-quarto-table-cell-role="th">worst smoothness</th>
+<th data-quarto-table-cell-role="th">worst compactness</th>
+<th data-quarto-table-cell-role="th">worst concavity</th>
+<th data-quarto-table-cell-role="th">worst concave points</th>
+<th data-quarto-table-cell-role="th">worst symmetry</th>
+<th data-quarto-table-cell-role="th">worst fractal dimension</th>
+<th data-quarto-table-cell-role="th">target</th>
+<th data-quarto-table-cell-role="th">target_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>17.99</td>
+<td>10.38</td>
+<td>122.80</td>
+<td>1001.0</td>
+<td>0.11840</td>
+<td>0.27760</td>
+<td>0.3001</td>
+<td>0.14710</td>
+<td>0.2419</td>
+<td>0.07871</td>
+<td>...</td>
+<td>184.60</td>
+<td>2019.0</td>
+<td>0.1622</td>
+<td>0.6656</td>
+<td>0.7119</td>
+<td>0.2654</td>
+<td>0.4601</td>
+<td>0.11890</td>
+<td>0</td>
+<td>malignant</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>20.57</td>
+<td>17.77</td>
+<td>132.90</td>
+<td>1326.0</td>
+<td>0.08474</td>
+<td>0.07864</td>
+<td>0.0869</td>
+<td>0.07017</td>
+<td>0.1812</td>
+<td>0.05667</td>
+<td>...</td>
+<td>158.80</td>
+<td>1956.0</td>
+<td>0.1238</td>
+<td>0.1866</td>
+<td>0.2416</td>
+<td>0.1860</td>
+<td>0.2750</td>
+<td>0.08902</td>
+<td>0</td>
+<td>malignant</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>19.69</td>
+<td>21.25</td>
+<td>130.00</td>
+<td>1203.0</td>
+<td>0.10960</td>
+<td>0.15990</td>
+<td>0.1974</td>
+<td>0.12790</td>
+<td>0.2069</td>
+<td>0.05999</td>
+<td>...</td>
+<td>152.50</td>
+<td>1709.0</td>
+<td>0.1444</td>
+<td>0.4245</td>
+<td>0.4504</td>
+<td>0.2430</td>
+<td>0.3613</td>
+<td>0.08758</td>
+<td>0</td>
+<td>malignant</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>11.42</td>
+<td>20.38</td>
+<td>77.58</td>
+<td>386.1</td>
+<td>0.14250</td>
+<td>0.28390</td>
+<td>0.2414</td>
+<td>0.10520</td>
+<td>0.2597</td>
+<td>0.09744</td>
+<td>...</td>
+<td>98.87</td>
+<td>567.7</td>
+<td>0.2098</td>
+<td>0.8663</td>
+<td>0.6869</td>
+<td>0.2575</td>
+<td>0.6638</td>
+<td>0.17300</td>
+<td>0</td>
+<td>malignant</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>20.29</td>
+<td>14.34</td>
+<td>135.10</td>
+<td>1297.0</td>
+<td>0.10030</td>
+<td>0.13280</td>
+<td>0.1980</td>
+<td>0.10430</td>
+<td>0.1809</td>
+<td>0.05883</td>
+<td>...</td>
+<td>152.20</td>
+<td>1575.0</td>
+<td>0.1374</td>
+<td>0.2050</td>
+<td>0.4000</td>
+<td>0.1625</td>
+<td>0.2364</td>
+<td>0.07678</td>
+<td>0</td>
+<td>malignant</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 32 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="breast-cancer-feature-summary" class="slide level2">
+<h2>Breast cancer: feature summary</h2>
+<div id="a8136211" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.449612Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.449257Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.461587Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.460706Z&quot;}}" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">dtype</th>
+<th data-quarto-table-cell-role="th">missing</th>
+<th data-quarto-table-cell-role="th">n_unique</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean radius</th>
+<td>float64</td>
+<td>0</td>
+<td>456</td>
+<td>14.127292</td>
+<td>3.524049</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean texture</th>
+<td>float64</td>
+<td>0</td>
+<td>479</td>
+<td>19.289649</td>
+<td>4.301036</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean perimeter</th>
+<td>float64</td>
+<td>0</td>
+<td>522</td>
+<td>91.969033</td>
+<td>24.298981</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean area</th>
+<td>float64</td>
+<td>0</td>
+<td>539</td>
+<td>654.889104</td>
+<td>351.914129</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean smoothness</th>
+<td>float64</td>
+<td>0</td>
+<td>474</td>
+<td>0.096360</td>
+<td>0.014064</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean compactness</th>
+<td>float64</td>
+<td>0</td>
+<td>537</td>
+<td>0.104341</td>
+<td>0.052813</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean concavity</th>
+<td>float64</td>
+<td>0</td>
+<td>537</td>
+<td>0.088799</td>
+<td>0.079720</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean concave points</th>
+<td>float64</td>
+<td>0</td>
+<td>542</td>
+<td>0.048919</td>
+<td>0.038803</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean symmetry</th>
+<td>float64</td>
+<td>0</td>
+<td>432</td>
+<td>0.181162</td>
+<td>0.027414</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean fractal dimension</th>
+<td>float64</td>
+<td>0</td>
+<td>499</td>
+<td>0.062798</td>
+<td>0.007060</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="breast-cancer-class-counts" class="slide level2">
+<h2>Breast cancer: class counts</h2>
+<div id="echo-false-7-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.463384Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.463176Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.469510Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.468701Z&quot;}}" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">target_name</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">benign</th>
+<td>357</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">malignant</th>
+<td>212</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="breast-cancer-class-proportions" class="slide level2">
+<h2>Breast cancer: class proportions</h2>
+<div id="echo-false-8-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.471339Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.471132Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.477715Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.476782Z&quot;}}" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">proportion</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">target_name</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">benign</th>
+<td>0.627417</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">malignant</th>
+<td>0.372583</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<h3 id="checkpoint">Checkpoint</h3>
+<ol type="1">
+<li>Is this a classification or regression task?</li>
+<li>Is the target perfectly balanced?</li>
+<li>Why do decision trees not require feature scaling?</li>
+</ol>
+<details>
+<summary>
+Suggested answers
+</summary>
+<ol type="1">
+<li>Binary classification.</li>
+<li>No.&nbsp;The classes are moderately imbalanced.</li>
+<li>Trees compare one feature with a threshold. Rescaling a feature preserves its ordering and therefore does not fundamentally change candidate partitions.</li>
+</ol>
+</details>
+</section>
+<section id="create-one-fixed-traintest-split---10-minutes" class="slide level2">
+<h2>3. Create one fixed train/test split - 10 minutes</h2>
+<p>To compare depths and criteria fairly, every experiment must use the <strong>same split</strong>.</p>
+<p><code>stratify=y</code> keeps the class proportions similar in the training and test sets.</p>
+</section>
+<section id="split-class-balance" class="slide level2">
+<h2>Split: class balance</h2>
+<div id="echo-false-8-2-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.488323Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.488120Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.493691Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.492906Z&quot;}}" data-execution_count="20">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">train_count</th>
+<th data-quarto-table-cell-role="th">test_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">malignant</th>
+<td>159</td>
+<td>53</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">benign</th>
+<td>267</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="split-matrix-shapes" class="slide level2">
+<h2>Split: matrix shapes</h2>
+<div id="echo-false-9-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.495533Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.495358Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.498733Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.497853Z&quot;}}" data-execution_count="21">
+<div class="cell-output cell-output-stdout">
+<pre><code>Train shape: (426, 30)
+Test shape: (143, 30)</code></pre>
+</div>
+</div>
+</section>
+<section id="train-the-first-decision-tree---15-minutes" class="slide level2">
+<h2>4. Train the first decision tree - 15 minutes</h2>
+<p>Start with a <strong>decision stump</strong>, a tree with <code>max_depth=1</code>.</p>
+<p>A depth-1 classifier makes one split and has at most two leaves.</p>
+</section>
+<section id="first-tree-decision-stump" class="slide level2">
+<h2>First tree: decision stump</h2>
+<div id="27c0f563" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.500496Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.500282Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.510890Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.509981Z&quot;}}" data-execution_count="22">
+<div class="cell-output cell-output-stdout">
+<pre><code>Train accuracy: 0.9225352112676056
+Test accuracy:  0.9230769230769231
+Actual depth:   1
+Number of leaves: 2</code></pre>
+</div>
+</div>
+</section>
+<section id="decision-stump-tree-view" class="slide level2">
+<h2>Decision stump: tree view</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-24-output-1.png" class="r-stretch"></section>
+<section id="decision-stump-text-rules" class="slide level2">
+<h2>Decision stump: text rules</h2>
+<div id="2634bd92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.651640Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.651258Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.655623Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.654772Z&quot;}}" data-execution_count="24">
+<div class="cell-output cell-output-stdout">
+<pre><code>|--- worst radius &lt;= 16.80
+|   |--- class: 1
+|--- worst radius &gt;  16.80
+|   |--- class: 0
+</code></pre>
+</div>
+</div>
+</section>
+<section id="purity-and-impurity---30-minutes" class="slide level2">
+<h2>5. Purity and impurity - 30 minutes</h2>
+<p>A node is <strong>pure</strong> when all its samples belong to one class.</p>
+<h3 id="gini-impurity">Gini impurity</h3>
+<p>For class proportions (p_1,,p_K):</p>
+<p>[ G = 1 - _{k=1}<sup>{K}p_k</sup>2 ]</p>
+<p>For binary classification with positive-class proportion (p):</p>
+<p>[ G = 1 - p^2 - (1-p)^2 = 2p(1-p) ]</p>
+<h3 id="entropy">Entropy</h3>
+<p>[ H = -_{k=1}^{K}p_k_2(p_k) ]</p>
+<p>Both are:</p>
+<ul>
+<li>zero at a pure node,</li>
+<li>largest when the binary classes are evenly mixed,</li>
+<li>used to choose splits that reduce weighted child impurity.</li>
+</ul>
+</section>
+<section id="impurity-curves" class="slide level2">
+<h2>Impurity curves</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-27-output-1.png" class="r-stretch"><h3 id="exercise-1-calculate-impurity-by-hand-8-minutes">Exercise 1 — calculate impurity by hand (8 minutes)</h3>
+<p>A node contains 40 samples:</p>
+<ul>
+<li>30 benign</li>
+<li>10 malignant</li>
+</ul>
+<p>Calculate:</p>
+<ol type="1">
+<li>Gini impurity.</li>
+<li>Entropy.</li>
+<li>Whether the node is more or less pure than a 20/20 node.</li>
+</ol>
+</section>
+<section id="exercise-impurity-by-hand" class="slide level2">
+<h2>Exercise: impurity by hand</h2>
+<div id="af792ad7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.781115Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.780913Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.785159Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.784481Z&quot;}}" data-execution_count="27">
+<div class="cell-output cell-output-stdout">
+<pre><code>Gini: 0.375
+Entropy: 0.8112781244591328</code></pre>
+</div>
+</div>
+<h3 id="weighted-impurity-decrease">Weighted impurity decrease</h3>
+<p>Suppose a parent node (t) is split into left and right children.</p>
+<p>The local weighted reduction is:</p>
+<p>[ i(t) = i(t) - i(t_L) - i(t_R) ]</p>
+<p>scikit-learn’s global contribution also weights by the fraction of all training samples reaching the node:</p>
+<p>[ i(t) ]</p>
+<p>A good split has a large positive impurity decrease.</p>
+</section>
+<section id="weighted-impurity-numeric-example" class="slide level2">
+<h2>Weighted impurity: numeric example</h2>
+<div id="echo-false-13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.792652Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.792462Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.796280Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.795413Z&quot;}}" data-execution_count="29">
+<div class="cell-output cell-output-stdout">
+<pre><code>Local weighted impurity decrease: 0.264</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-the-impact-of-tree-levels---40-minutes" class="slide level2">
+<h2>6. Visualize the impact of tree levels - 40 minutes</h2>
+<p>We now fit trees with <code>max_depth</code> from 1 to 12.</p>
+<p>For each depth, record:</p>
+<ul>
+<li>training accuracy,</li>
+<li>test accuracy,</li>
+<li>balanced test accuracy,</li>
+<li>test log loss,</li>
+<li>actual depth,</li>
+<li>number of leaves,</li>
+<li>node count,</li>
+<li>mean leaf impurity,</li>
+<li>weighted mean leaf impurity.</li>
+</ul>
+<p>The model family remains exactly the same: one <code>DecisionTreeClassifier</code>.</p>
+</section>
+<section id="depth-sweep-metrics-table" class="slide level2">
+<h2>Depth sweep: metrics table</h2>
+<div id="echo-false-15" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:19.947143Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:19.946950Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:19.958105Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:19.957202Z&quot;}}" data-execution_count="31">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">max_depth</th>
+<th data-quarto-table-cell-role="th">actual_depth</th>
+<th data-quarto-table-cell-role="th">train_accuracy</th>
+<th data-quarto-table-cell-role="th">test_accuracy</th>
+<th data-quarto-table-cell-role="th">test_balanced_accuracy</th>
+<th data-quarto-table-cell-role="th">test_log_loss</th>
+<th data-quarto-table-cell-role="th">n_leaves</th>
+<th data-quarto-table-cell-role="th">node_count</th>
+<th data-quarto-table-cell-role="th">mean_leaf_impurity</th>
+<th data-quarto-table-cell-role="th">weighted_leaf_impurity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1</td>
+<td>1</td>
+<td>0.9225</td>
+<td>0.9231</td>
+<td>0.9079</td>
+<td>0.2706</td>
+<td>2</td>
+<td>3</td>
+<td>0.1334</td>
+<td>0.1425</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2</td>
+<td>2</td>
+<td>0.9577</td>
+<td>0.9091</td>
+<td>0.9161</td>
+<td>0.4759</td>
+<td>4</td>
+<td>7</td>
+<td>0.1313</td>
+<td>0.0661</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>3</td>
+<td>3</td>
+<td>0.9765</td>
+<td>0.9441</td>
+<td>0.9362</td>
+<td>0.8763</td>
+<td>7</td>
+<td>13</td>
+<td>0.1512</td>
+<td>0.0386</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>4</td>
+<td>4</td>
+<td>0.9883</td>
+<td>0.9441</td>
+<td>0.9400</td>
+<td>1.3539</td>
+<td>11</td>
+<td>21</td>
+<td>0.0923</td>
+<td>0.0202</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>5</td>
+<td>5</td>
+<td>0.9953</td>
+<td>0.9371</td>
+<td>0.9345</td>
+<td>1.8494</td>
+<td>15</td>
+<td>29</td>
+<td>0.0255</td>
+<td>0.0082</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>6</td>
+<td>6</td>
+<td>0.9977</td>
+<td>0.9371</td>
+<td>0.9345</td>
+<td>2.2693</td>
+<td>17</td>
+<td>33</td>
+<td>0.0062</td>
+<td>0.0044</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>7</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>8</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>9</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>10</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>11</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>12</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="accuracy-by-depth" class="slide level2">
+<h2>Accuracy by depth</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-33-output-1.png" class="r-stretch"></section>
+<section id="log-loss-by-depth" class="slide level2">
+<h2>Log loss by depth</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-34-output-1.png" class="r-stretch"></section>
+<section id="leaf-impurity-by-depth" class="slide level2">
+<h2>Leaf impurity by depth</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-35-output-1.png" class="r-stretch"></section>
+<section id="model-complexity-by-depth" class="slide level2">
+<h2>Model complexity by depth</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-36-output-1.png" class="r-stretch"><h3 id="interpretation-questions">Interpretation questions</h3>
+<ol type="1">
+<li>At which depth is test accuracy highest?</li>
+<li>Does the depth with the purest leaves necessarily generalize best?</li>
+<li>At what depth does training accuracy reach 1.0?</li>
+<li>Why can test log loss worsen sharply even when accuracy changes little?</li>
+<li>Where do you see evidence of overfitting?</li>
+</ol>
+</section>
+<section id="best-test-depth" class="slide level2">
+<h2>Best test depth</h2>
+<div id="echo-false-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:20.498870Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:20.498694Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:20.505409Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:20.504451Z&quot;}}" data-execution_count="37">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">max_depth</th>
+<td>3.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">actual_depth</th>
+<td>3.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">train_accuracy</th>
+<td>0.976526</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">test_accuracy</th>
+<td>0.944056</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">test_balanced_accuracy</th>
+<td>0.936164</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">test_log_loss</th>
+<td>0.876332</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">n_leaves</th>
+<td>7.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">node_count</th>
+<td>13.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean_leaf_impurity</th>
+<td>0.151231</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">weighted_leaf_impurity</th>
+<td>0.038564</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="first-perfect-training-depth" class="slide level2">
+<h2>First perfect training depth</h2>
+<div id="echo-false-18" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:20.507064Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:20.506894Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:20.510801Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:20.509928Z&quot;}}" data-execution_count="38">
+<div class="cell-output cell-output-stdout">
+<pre><code>First depth with perfect training accuracy: 7</code></pre>
+</div>
+</div>
+<h3 id="view-selected-tree-structures">View selected tree structures</h3>
+<p>Plotting every deep tree becomes unreadable. Compare depths 1, 2, 3, and 5.</p>
+</section>
+<section id="tree-structure-max-depth-1" class="slide level2">
+<h2>Tree structure: max depth 1</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-40-output-1.png" class="r-stretch"></section>
+<section id="tree-structure-max-depth-2" class="slide level2">
+<h2>Tree structure: max depth 2</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-41-output-1.png" class="r-stretch"></section>
+<section id="tree-structure-max-depth-3" class="slide level2">
+<h2>Tree structure: max depth 3</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-42-output-1.png" class="r-stretch"></section>
+<section id="tree-structure-max-depth-5" class="slide level2">
+<h2>Tree structure: max depth 5</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-43-output-1.png" class="r-stretch"><h3 id="exercise-2-choose-a-depth-10-minutes">Exercise 2 — choose a depth (10 minutes)</h3>
+<p>Choose a depth for a hypothetical interpretable screening aid.</p>
+<p>Your answer must mention:</p>
+<ul>
+<li>test performance,</li>
+<li>train/test gap,</li>
+<li>number of leaves,</li>
+<li>readability,</li>
+<li>why maximum purity is not the only objective.</li>
+</ul>
+<p>Write your reasoning below.</p>
+</section>
+<section id="exercise-choose-a-depth" class="slide level2">
+<h2>Exercise: choose a depth</h2>
+<div id="d4f7d351" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:21.718183Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:21.717847Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:21.725866Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:21.725024Z&quot;}}" data-execution_count="43">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">selected_model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">max_depth</th>
+<td>3.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">actual_depth</th>
+<td>3.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">train_accuracy</th>
+<td>0.976526</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">test_accuracy</th>
+<td>0.944056</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">test_balanced_accuracy</th>
+<td>0.936164</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">test_log_loss</th>
+<td>0.876332</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">n_leaves</th>
+<td>7.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">node_count</th>
+<td>13.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean_leaf_impurity</th>
+<td>0.151231</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">weighted_leaf_impurity</th>
+<td>0.038564</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="how-impurity-based-feature-importance-is-calculated---40-minutes" class="slide level2">
+<h2>7. How impurity-based feature importance is calculated - 40 minutes</h2>
+<p>For one tree, each split node contributes importance to the feature used at that node.</p>
+<p>For split node (t), the unnormalized contribution is:</p>
+<p>[ N_t i(t) - N_L i(t_L) - N_R i(t_R) ]</p>
+<p>where:</p>
+<ul>
+<li>(N_t) is the weighted number of samples at the parent,</li>
+<li>(i(t)) is parent impurity,</li>
+<li>(N_L, N_R) and (i(t_L), i(t_R)) refer to the children.</li>
+</ul>
+<p>Contributions are summed by feature and then normalized so all importances sum to 1.</p>
+<p>Therefore, a feature is important when it:</p>
+<ol type="1">
+<li>is used in one or more splits,</li>
+<li>affects many training samples,</li>
+<li>creates a large impurity reduction.</li>
+</ol>
+<p>A feature not chosen for a split gets zero impurity-based importance.</p>
+</section>
+<section id="top-feature-importances" class="slide level2">
+<h2>Top feature importances</h2>
+<div id="echo-false-24" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:21.733432Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:21.733104Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:21.739489Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:21.738687Z&quot;}}" data-execution_count="45">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">sklearn_importance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst radius</th>
+<td>0.726829</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">worst concave points</th>
+<td>0.122113</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">texture error</th>
+<td>0.048398</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">worst texture</th>
+<td>0.033231</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst concavity</th>
+<td>0.018188</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean concave points</th>
+<td>0.014158</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">area error</th>
+<td>0.012613</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean texture</th>
+<td>0.012585</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst symmetry</th>
+<td>0.011885</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean area</th>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean compactness</th>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean smoothness</th>
+<td>0.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="feature-importance-sum" class="slide level2">
+<h2>Feature importance sum</h2>
+<div id="echo-false-25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:21.741417Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:21.741211Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:21.744773Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:21.743909Z&quot;}}" data-execution_count="46">
+<div class="cell-output cell-output-stdout">
+<pre><code>Sum: 1.0</code></pre>
+</div>
+</div>
+</section>
+<section id="manual-importance-equals-scikit-learn" class="slide level2">
+<h2>Manual importance equals scikit-learn</h2>
+<div id="echo-false-27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:21.754745Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:21.754427Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:21.763060Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:21.762212Z&quot;}}" data-execution_count="48">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">sklearn_importance</th>
+<th data-quarto-table-cell-role="th">manual_importance</th>
+<th data-quarto-table-cell-role="th">absolute_difference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst radius</th>
+<td>0.726829</td>
+<td>0.726829</td>
+<td>1.110223e-16</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">worst concave points</th>
+<td>0.122113</td>
+<td>0.122113</td>
+<td>0.000000e+00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">texture error</th>
+<td>0.048398</td>
+<td>0.048398</td>
+<td>0.000000e+00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">worst texture</th>
+<td>0.033231</td>
+<td>0.033231</td>
+<td>0.000000e+00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst concavity</th>
+<td>0.018188</td>
+<td>0.018188</td>
+<td>0.000000e+00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean concave points</th>
+<td>0.014158</td>
+<td>0.014158</td>
+<td>1.734723e-18</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">area error</th>
+<td>0.012613</td>
+<td>0.012613</td>
+<td>1.734723e-18</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean texture</th>
+<td>0.012585</td>
+<td>0.012585</td>
+<td>0.000000e+00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst symmetry</th>
+<td>0.011885</td>
+<td>0.011885</td>
+<td>0.000000e+00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean area</th>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000e+00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean compactness</th>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000e+00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean smoothness</th>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000e+00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="manual-importance-numerical-difference" class="slide level2">
+<h2>Manual importance: numerical difference</h2>
+<div id="echo-false-28" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:21.764974Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:21.764653Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:21.768473Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:21.767547Z&quot;}}" data-execution_count="49">
+<div class="cell-output cell-output-stdout">
+<pre><code>Maximum absolute difference: 1.1102230246251565e-16</code></pre>
+</div>
+</div>
+<h3 id="inspect-each-splits-contribution">Inspect each split’s contribution</h3>
+<p>The following table exposes the tree’s internal arrays and computes the impurity decrease contributed by each split node.</p>
+</section>
+<section id="split-contribution-details" class="slide level2">
+<h2>Split contribution details</h2>
+<div id="echo-false-30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:21.778926Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:21.778742Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:21.788681Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:21.787805Z&quot;}}" data-execution_count="51">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">node</th>
+<th data-quarto-table-cell-role="th">feature</th>
+<th data-quarto-table-cell-role="th">threshold</th>
+<th data-quarto-table-cell-role="th">samples_at_node</th>
+<th data-quarto-table-cell-role="th">parent_impurity</th>
+<th data-quarto-table-cell-role="th">left_impurity</th>
+<th data-quarto-table-cell-role="th">right_impurity</th>
+<th data-quarto-table-cell-role="th">unnormalized_contribution</th>
+<th data-quarto-table-cell-role="th">normalized_node_contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>0</td>
+<td>worst radius</td>
+<td>16.79500</td>
+<td>426</td>
+<td>0.46786</td>
+<td>0.16056</td>
+<td>0.10633</td>
+<td>138.61268</td>
+<td>0.72683</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>1</td>
+<td>worst concave points</td>
+<td>0.13595</td>
+<td>284</td>
+<td>0.16056</td>
+<td>0.03124</td>
+<td>0.45117</td>
+<td>23.28808</td>
+<td>0.12211</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>14</td>
+<td>texture error</td>
+<td>0.47315</td>
+<td>142</td>
+<td>0.10633</td>
+<td>0.00000</td>
+<td>0.04284</td>
+<td>9.22998</td>
+<td>0.04840</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>7</td>
+<td>worst texture</td>
+<td>25.62000</td>
+<td>32</td>
+<td>0.45117</td>
+<td>0.37500</td>
+<td>0.18000</td>
+<td>6.33750</td>
+<td>0.03323</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>16</td>
+<td>worst concavity</td>
+<td>0.19070</td>
+<td>137</td>
+<td>0.04284</td>
+<td>0.48000</td>
+<td>0.00000</td>
+<td>3.46861</td>
+<td>0.01819</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>8</td>
+<td>mean concave points</td>
+<td>0.07973</td>
+<td>12</td>
+<td>0.37500</td>
+<td>0.18000</td>
+<td>0.00000</td>
+<td>2.70000</td>
+<td>0.01416</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">9</th>
+<td>17</td>
+<td>mean texture</td>
+<td>21.35000</td>
+<td>5</td>
+<td>0.48000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>2.40000</td>
+<td>0.01258</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>11</td>
+<td>worst symmetry</td>
+<td>0.26820</td>
+<td>20</td>
+<td>0.18000</td>
+<td>0.44444</td>
+<td>0.00000</td>
+<td>2.26667</td>
+<td>0.01189</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2</td>
+<td>area error</td>
+<td>91.55500</td>
+<td>252</td>
+<td>0.03124</td>
+<td>0.02362</td>
+<td>0.00000</td>
+<td>1.94473</td>
+<td>0.01020</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>3</td>
+<td>area error</td>
+<td>48.70000</td>
+<td>251</td>
+<td>0.02362</td>
+<td>0.01606</td>
+<td>0.37500</td>
+<td>0.46068</td>
+<td>0.00242</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="top-split-contributions" class="slide level2">
+<h2>Top split contributions</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-53-output-1.png" class="r-stretch"><h3 id="feature-importance-changes-with-depth">Feature importance changes with depth</h3>
+<p>Feature importance is a property of the <strong>fitted tree</strong>, not an eternal property of the dataset.</p>
+<p>We now place the importances from each depth in a pandas table.</p>
+</section>
+<section id="feature-importance-over-depth" class="slide level2">
+<h2>Feature importance over depth</h2>
+<div id="3b7cb674" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:21.953478Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:21.953248Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:21.971074Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:21.970238Z&quot;}}" data-execution_count="53">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th">max_depth</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">6</th>
+<th data-quarto-table-cell-role="th">7</th>
+<th data-quarto-table-cell-role="th">8</th>
+<th data-quarto-table-cell-role="th">9</th>
+<th data-quarto-table-cell-role="th">10</th>
+<th data-quarto-table-cell-role="th">11</th>
+<th data-quarto-table-cell-role="th">12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst radius</th>
+<td>1.0</td>
+<td>0.810</td>
+<td>0.758</td>
+<td>0.727</td>
+<td>0.708</td>
+<td>0.709</td>
+<td>0.695</td>
+<td>0.695</td>
+<td>0.695</td>
+<td>0.695</td>
+<td>0.695</td>
+<td>0.695</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">worst concave points</th>
+<td>0.0</td>
+<td>0.136</td>
+<td>0.127</td>
+<td>0.122</td>
+<td>0.119</td>
+<td>0.127</td>
+<td>0.117</td>
+<td>0.117</td>
+<td>0.117</td>
+<td>0.117</td>
+<td>0.117</td>
+<td>0.117</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst texture</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.035</td>
+<td>0.033</td>
+<td>0.032</td>
+<td>0.040</td>
+<td>0.061</td>
+<td>0.061</td>
+<td>0.061</td>
+<td>0.061</td>
+<td>0.061</td>
+<td>0.061</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">texture error</th>
+<td>0.0</td>
+<td>0.054</td>
+<td>0.050</td>
+<td>0.048</td>
+<td>0.055</td>
+<td>0.054</td>
+<td>0.046</td>
+<td>0.046</td>
+<td>0.046</td>
+<td>0.046</td>
+<td>0.046</td>
+<td>0.046</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst concavity</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.019</td>
+<td>0.018</td>
+<td>0.018</td>
+<td>0.018</td>
+<td>0.017</td>
+<td>0.017</td>
+<td>0.017</td>
+<td>0.017</td>
+<td>0.017</td>
+<td>0.017</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean concave points</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.014</td>
+<td>0.000</td>
+<td>0.014</td>
+<td>0.014</td>
+<td>0.014</td>
+<td>0.014</td>
+<td>0.014</td>
+<td>0.014</td>
+<td>0.014</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst smoothness</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.014</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">area error</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.011</td>
+<td>0.013</td>
+<td>0.012</td>
+<td>0.012</td>
+<td>0.012</td>
+<td>0.012</td>
+<td>0.012</td>
+<td>0.012</td>
+<td>0.012</td>
+<td>0.012</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean texture</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.013</td>
+<td>0.012</td>
+<td>0.012</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">worst symmetry</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.012</td>
+<td>0.012</td>
+<td>0.011</td>
+<td>0.011</td>
+<td>0.011</td>
+<td>0.011</td>
+<td>0.011</td>
+<td>0.011</td>
+<td>0.011</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst area</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.009</td>
+<td>0.000</td>
+<td>0.009</td>
+<td>0.009</td>
+<td>0.009</td>
+<td>0.009</td>
+<td>0.009</td>
+<td>0.009</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean radius</th>
+<td>0.0</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.008</td>
+<td>0.008</td>
+<td>0.008</td>
+<td>0.008</td>
+<td>0.008</td>
+<td>0.008</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="feature-importance-heatmap" class="slide level2">
+<h2>Feature importance heatmap</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-55-output-1.png" class="r-stretch"><h3 id="important-caveats">Important caveats</h3>
+<p>Impurity-based feature importance:</p>
+<ul>
+<li>is calculated from the <strong>training tree</strong>;</li>
+<li>can distribute importance unpredictably among correlated predictors;</li>
+<li>can favor features that offer many possible split points;</li>
+<li>does not state the direction of an effect;</li>
+<li>is not causal;</li>
+<li>can change with depth, criterion, split, or random seed.</li>
+</ul>
+<p>In this lab we stay focused on tree-native impurity importance rather than introducing another model or importance algorithm.</p>
+<h3 id="exercise-3-explain-zero-importance-8-minutes">Exercise 3 — explain zero importance (8 minutes)</h3>
+<p>Find three features with zero importance at depth 2.</p>
+<p>For each one, answer:</p>
+<ul>
+<li>Does zero mean the feature contains no predictive information?</li>
+<li>Or does it mean the fitted tree did not select it?</li>
+</ul>
+</section>
+<section id="exercise-zero-importance" class="slide level2">
+<h2>Exercise: zero importance</h2>
+<div id="b5980659" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:22.208696Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:22.208364Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:22.213501Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:22.212698Z&quot;}}" data-execution_count="55">
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of zero-importance features at depth 2: 27
+['mean radius', 'mean texture', 'mean perimeter', 'mean area', 'mean smoothness', 'mean compactness', 'mean concavity', 'mean concave points', 'mean symmetry', 'mean fractal dimension']</code></pre>
+</div>
+</div>
+</section>
+<section id="compare-purity-criteria---35-minutes" class="slide level2">
+<h2>8. Compare purity criteria - 35 minutes</h2>
+<p><code>DecisionTreeClassifier</code> currently supports:</p>
+<ul>
+<li><code>"gini"</code></li>
+<li><code>"entropy"</code></li>
+<li><code>"log_loss"</code></li>
+</ul>
+<p>For classification trees, these criteria evaluate candidate splits using class purity. We compare them while holding all other settings fixed.</p>
+</section>
+<section id="criteria-comparison-first-rows" class="slide level2">
+<h2>Criteria comparison: first rows</h2>
+<div id="echo-false-32" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:22.678243Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:22.678041Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:22.688383Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:22.687555Z&quot;}}" data-execution_count="57">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">criterion</th>
+<th data-quarto-table-cell-role="th">max_depth</th>
+<th data-quarto-table-cell-role="th">actual_depth</th>
+<th data-quarto-table-cell-role="th">train_accuracy</th>
+<th data-quarto-table-cell-role="th">test_accuracy</th>
+<th data-quarto-table-cell-role="th">test_balanced_accuracy</th>
+<th data-quarto-table-cell-role="th">test_log_loss</th>
+<th data-quarto-table-cell-role="th">n_leaves</th>
+<th data-quarto-table-cell-role="th">node_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>gini</td>
+<td>1</td>
+<td>1</td>
+<td>0.9225</td>
+<td>0.9231</td>
+<td>0.9079</td>
+<td>0.2706</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>gini</td>
+<td>2</td>
+<td>2</td>
+<td>0.9577</td>
+<td>0.9091</td>
+<td>0.9161</td>
+<td>0.4759</td>
+<td>4</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>gini</td>
+<td>3</td>
+<td>3</td>
+<td>0.9765</td>
+<td>0.9441</td>
+<td>0.9362</td>
+<td>0.8763</td>
+<td>7</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>gini</td>
+<td>4</td>
+<td>4</td>
+<td>0.9883</td>
+<td>0.9441</td>
+<td>0.9400</td>
+<td>1.3539</td>
+<td>11</td>
+<td>21</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>gini</td>
+<td>5</td>
+<td>5</td>
+<td>0.9953</td>
+<td>0.9371</td>
+<td>0.9345</td>
+<td>1.8494</td>
+<td>15</td>
+<td>29</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>gini</td>
+<td>6</td>
+<td>6</td>
+<td>0.9977</td>
+<td>0.9371</td>
+<td>0.9345</td>
+<td>2.2693</td>
+<td>17</td>
+<td>33</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>gini</td>
+<td>7</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>gini</td>
+<td>8</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>gini</td>
+<td>9</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>gini</td>
+<td>10</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>gini</td>
+<td>11</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>gini</td>
+<td>12</td>
+<td>7</td>
+<td>1.0000</td>
+<td>0.9231</td>
+<td>0.9234</td>
+<td>2.7726</td>
+<td>18</td>
+<td>35</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="criteria-accuracy-chart" class="slide level2">
+<h2>Criteria accuracy chart</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-60-output-1.png" class="r-stretch"></section>
+<section id="criteria-log-loss-chart" class="slide level2">
+<h2>Criteria log-loss chart</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-61-output-1.png" class="r-stretch"></section>
+<section id="fixed-depth-criteria-models" class="slide level2">
+<h2>Fixed-depth criteria models</h2>
+<div id="80f0d23f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:22.971755Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:22.971557Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:22.981533Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:22.980780Z&quot;}}" data-execution_count="61">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">max_depth</th>
+<th data-quarto-table-cell-role="th">actual_depth</th>
+<th data-quarto-table-cell-role="th">train_accuracy</th>
+<th data-quarto-table-cell-role="th">test_accuracy</th>
+<th data-quarto-table-cell-role="th">test_balanced_accuracy</th>
+<th data-quarto-table-cell-role="th">test_log_loss</th>
+<th data-quarto-table-cell-role="th">n_leaves</th>
+<th data-quarto-table-cell-role="th">node_count</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">criterion</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">entropy</th>
+<td>3</td>
+<td>3</td>
+<td>0.9671</td>
+<td>0.9510</td>
+<td>0.9417</td>
+<td>0.8744</td>
+<td>7</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">log_loss</th>
+<td>3</td>
+<td>3</td>
+<td>0.9671</td>
+<td>0.9510</td>
+<td>0.9417</td>
+<td>0.8744</td>
+<td>7</td>
+<td>13</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">gini</th>
+<td>3</td>
+<td>3</td>
+<td>0.9765</td>
+<td>0.9441</td>
+<td>0.9362</td>
+<td>0.8763</td>
+<td>7</td>
+<td>13</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<h3 id="compare-the-learned-root-split">Compare the learned root split</h3>
+<p>Even when final scores are similar, criteria may select different features or thresholds.</p>
+</section>
+<section id="criteria-root-split-table" class="slide level2">
+<h2>Criteria root split table</h2>
+<div id="echo-false-37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:22.990639Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:22.990469Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:22.997630Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:22.996843Z&quot;}}" data-execution_count="63">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">root_feature</th>
+<th data-quarto-table-cell-role="th">root_threshold</th>
+<th data-quarto-table-cell-role="th">root_impurity</th>
+<th data-quarto-table-cell-role="th">actual_depth</th>
+<th data-quarto-table-cell-role="th">n_leaves</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">criterion</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">gini</th>
+<td>worst radius</td>
+<td>16.795</td>
+<td>0.467864</td>
+<td>3</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">entropy</th>
+<td>worst radius</td>
+<td>16.795</td>
+<td>0.953127</td>
+<td>3</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">log_loss</th>
+<td>worst radius</td>
+<td>16.795</td>
+<td>0.953127</td>
+<td>3</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="root-rules-gini" class="slide level2">
+<h2>Root rules: gini</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-65-output-1.png" class="r-stretch"></section>
+<section id="root-rules-entropy" class="slide level2">
+<h2>Root rules: entropy</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-66-output-1.png" class="r-stretch"></section>
+<section id="root-rules-log_loss" class="slide level2">
+<h2>Root rules: log_loss</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-67-output-1.png" class="r-stretch"><h3 id="compare-feature-importance-across-criteria">Compare feature importance across criteria</h3>
+<p>Keep depth fixed so the comparison isolates the split criterion as much as possible.</p>
+</section>
+<section id="criteria-feature-importance-table" class="slide level2">
+<h2>Criteria feature-importance table</h2>
+<div id="echo-false-39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:23.907638Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:23.907460Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:23.916156Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:23.915247Z&quot;}}" data-execution_count="68">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">gini</th>
+<th data-quarto-table-cell-role="th">entropy</th>
+<th data-quarto-table-cell-role="th">log_loss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst radius</th>
+<td>0.7579</td>
+<td>0.6638</td>
+<td>0.6638</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">worst concave points</th>
+<td>0.1273</td>
+<td>0.1738</td>
+<td>0.1738</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">texture error</th>
+<td>0.0505</td>
+<td>0.0654</td>
+<td>0.0654</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">worst texture</th>
+<td>0.0347</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">worst concavity</th>
+<td>0.0190</td>
+<td>0.0442</td>
+<td>0.0442</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">area error</th>
+<td>0.0106</td>
+<td>0.0222</td>
+<td>0.0222</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean texture</th>
+<td>0.0000</td>
+<td>0.0306</td>
+<td>0.0306</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean smoothness</th>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean concavity</th>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean concave points</th>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mean compactness</th>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean area</th>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="criteria-feature-importance-chart" class="slide level2">
+<h2>Criteria feature-importance chart</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-71-output-1.png" class="r-stretch"><h3 id="exercise-4-criterion-conclusions-10-minutes">Exercise 4 — criterion conclusions (10 minutes)</h3>
+<p>Answer using evidence from the tables and plots:</p>
+<ol type="1">
+<li>Which criterion gives the best test accuracy at depth 3?</li>
+<li>Do <code>"entropy"</code> and <code>"log_loss"</code> produce the same tree here?</li>
+<li>Does the best criterion stay best at every depth?</li>
+<li>Do criteria agree on the most important feature?</li>
+<li>Why should one avoid a universal claim that one criterion is always superior?</li>
+</ol>
+</section>
+<section id="final-model-diagnosis---15-minutes" class="slide level2">
+<h2>9. Final model diagnosis - 15 minutes</h2>
+<p>Select one depth and criterion based on your evidence.</p>
+<p>The code below remains a single decision tree.</p>
+</section>
+<section id="final-model-scores" class="slide level2">
+<h2>Final model scores</h2>
+<div id="61adc0d7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:24.144092Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:24.143903Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:24.161006Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:24.160110Z&quot;}}" data-execution_count="71">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">train_accuracy</th>
+<td>0.976526</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">test_accuracy</th>
+<td>0.944056</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">test_balanced_accuracy</th>
+<td>0.936164</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">actual_depth</th>
+<td>3.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">n_leaves</th>
+<td>7.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">node_count</th>
+<td>13.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="final-confusion-matrix" class="slide level2">
+<h2>Final confusion matrix</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-73-output-1.png" class="r-stretch"></section>
+<section id="final-tree-structure" class="slide level2">
+<h2>Final tree structure</h2>
+
+<img data-src="lab-01-dt_files/figure-revealjs/cell-74-output-1.png" class="r-stretch"></section>
+<section id="capstone-tasks---20-minutes" class="slide level2">
+<h2>10. Capstone tasks - 20 minutes</h2>
+<p>Complete these tasks without changing the model family.</p>
+<h3 id="task-a-depth-recommendation">Task A — depth recommendation</h3>
+<p>Choose a maximum depth from 1 to 12. Defend the choice with at least three measurements.</p>
+<h3 id="task-b-feature-importance-audit">Task B — feature importance audit</h3>
+<p>For your selected tree:</p>
+<ol type="1">
+<li>List the five most important features.</li>
+<li>Find every node that uses the top feature.</li>
+<li>Sum that feature’s unnormalized node contributions.</li>
+<li>Verify that normalization reproduces <code>feature_importances_</code>.</li>
+</ol>
+<h3 id="task-c-purity-criterion-comparison">Task C — purity criterion comparison</h3>
+<p>At your chosen depth:</p>
+<ol type="1">
+<li>Train one tree per criterion.</li>
+<li>Compare root split, leaves, accuracy, log loss, and top features.</li>
+<li>Explain why different impurity functions may lead to similar or different trees.</li>
+</ol>
+<h3 id="task-d-written-synthesis">Task D — written synthesis</h3>
+<p>Write 150–250 words answering:</p>
+<blockquote>
+<p>How do depth and purity criterion affect tree complexity, generalization, leaf purity, and impurity-based feature importance?</p>
+</blockquote>
+</section>
+<section id="capstone-comparison-table" class="slide level2">
+<h2>Capstone comparison table</h2>
+<div id="echo-false-37-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-05T08:42:24.627245Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-05T08:42:24.627066Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-05T08:42:24.634876Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-05T08:42:24.634050Z&quot;}}" data-execution_count="75">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">test_accuracy</th>
+<th data-quarto-table-cell-role="th">test_log_loss</th>
+<th data-quarto-table-cell-role="th">actual_depth</th>
+<th data-quarto-table-cell-role="th">n_leaves</th>
+<th data-quarto-table-cell-role="th">root_feature</th>
+<th data-quarto-table-cell-role="th">top_5_features</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">criterion</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">gini</th>
+<td>0.944056</td>
+<td>0.876332</td>
+<td>3</td>
+<td>7</td>
+<td>worst radius</td>
+<td>worst radius, worst concave points, texture er...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">entropy</th>
+<td>0.951049</td>
+<td>0.874367</td>
+<td>3</td>
+<td>7</td>
+<td>worst radius</td>
+<td>worst radius, worst concave points, texture er...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">log_loss</th>
+<td>0.951049</td>
+<td>0.874367</td>
+<td>3</td>
+<td>7</td>
+<td>worst radius</td>
+<td>worst radius, worst concave points, texture er...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="key-takeaways" class="slide level2">
+<h2>11. Key takeaways</h2>
+<ul>
+<li><code>max_depth</code> directly limits how many successive decisions a path can contain.</li>
+<li>Increasing depth usually lowers training impurity and raises training accuracy.</li>
+<li>Deeper is not automatically better: test performance can plateau or worsen.</li>
+<li>Gini, entropy, and log-loss criteria quantify class mixture differently.</li>
+<li>Criterion choice can change split features, thresholds, topology, predictions, and importances.</li>
+<li>Tree feature importance is normalized accumulated weighted impurity decrease.</li>
+<li>Importance depends on the fitted tree and should not be interpreted as causality.</li>
+<li>A useful tree balances predictive performance, stability, and interpretability.</li>
+</ul>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<p>Official scikit-learn documentation:</p>
+<ul>
+<li><code>DecisionTreeClassifier</code></li>
+<li>Decision Trees user guide</li>
+<li><code>plot_tree</code></li>
+<li><code>load_iris</code></li>
+<li><code>load_breast_cancer</code></li>
+<li>Tree structure example</li>
+<li>Impurity-based feature importance examples</li>
+</ul>
+<p>The notebook intentionally uses only a single-tree classifier for model training.</p>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Matteo Francia - Machine Learning and Data Mining (Module I) - A.Y. 2026/27</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lab-01-dt_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lab-01-dt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lab-01-dt_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lab-01-dt_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
