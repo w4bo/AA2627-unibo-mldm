@@ -100,7 +100,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-knn_files/libs/revealjs/dist/theme/quarto-3aff54e5f0c64c9f44dab45420b5f30d.css">
+  <link rel="stylesheet" href="03-knn_files/libs/revealjs/dist/theme/quarto-16bc8fc46cf16bb45dbb7941de0fb807.css">
   <link href="03-knn_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="03-knn_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="03-knn_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -301,31 +301,31 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 <p>Let the query be <span class="math inline">\(z=(0,0)\)</span> and compare two candidates:</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 27%">
-<col style="width: 27%">
-<col style="width: 22%">
-<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: center;">Candidate</th>
 <th style="text-align: center;">Coordinates</th>
-<th style="text-align: right;">Euclidean distance</th>
-<th style="text-align: right;">Manhattan distance</th>
+<th style="text-align: center;">Euclidean distance</th>
+<th style="text-align: center;">Manhattan distance</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(A\)</span></td>
 <td style="text-align: center;"><span class="math inline">\((3,0)\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(\sqrt{3^2+0^2}=3\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(\lvert3\rvert+\lvert0\rvert=3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sqrt{3^2+0^2}=3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lvert3\rvert+\lvert0\rvert=3\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(B\)</span></td>
 <td style="text-align: center;"><span class="math inline">\((2,2)\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(\sqrt{2^2+2^2}\approx2.83\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(\lvert2\rvert+\lvert2\rvert=4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sqrt{2^2+2^2}\approx2.83\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lvert2\rvert+\lvert2\rvert=4\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -356,25 +356,25 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: right;">Neighbor</th>
-<th style="text-align: right;">Distance from <span class="math inline">\(z\)</span></th>
+<th style="text-align: center;">Neighbor</th>
+<th style="text-align: center;">Distance from <span class="math inline">\(z\)</span></th>
 <th style="text-align: center;">Class</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;"><span class="math inline">\(x_1\)</span></td>
-<td style="text-align: right;">0.8</td>
+<td style="text-align: center;"><span class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">0.8</td>
 <td style="text-align: center;">stay</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><span class="math inline">\(x_2\)</span></td>
-<td style="text-align: right;">1.1</td>
+<td style="text-align: center;"><span class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">1.1</td>
 <td style="text-align: center;">churn</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;"><span class="math inline">\(x_3\)</span></td>
-<td style="text-align: right;">1.3</td>
+<td style="text-align: center;"><span class="math inline">\(x_3\)</span></td>
+<td style="text-align: center;">1.3</td>
 <td style="text-align: center;">churn</td>
 </tr>
 </tbody>
@@ -406,30 +406,30 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: right;">Neighbor</th>
-<th style="text-align: right;">Distance from <span class="math inline">\(z\)</span></th>
+<th style="text-align: center;">Neighbor</th>
+<th style="text-align: center;">Distance from <span class="math inline">\(z\)</span></th>
 <th style="text-align: center;">Class</th>
-<th style="text-align: right;">Weight <span class="math inline">\(1/dist\)</span></th>
+<th style="text-align: center;">Weight <span class="math inline">\(1/dist\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;"><span class="math inline">\(x_1\)</span></td>
-<td style="text-align: right;">0.8</td>
+<td style="text-align: center;"><span class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">0.8</td>
 <td style="text-align: center;">stay</td>
-<td style="text-align: right;">1.25</td>
+<td style="text-align: center;">1.25</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><span class="math inline">\(x_2\)</span></td>
-<td style="text-align: right;">1.1</td>
+<td style="text-align: center;"><span class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">1.1</td>
 <td style="text-align: center;">churn</td>
-<td style="text-align: right;">0.91</td>
+<td style="text-align: center;">0.91</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;"><span class="math inline">\(x_3\)</span></td>
-<td style="text-align: right;">1.3</td>
+<td style="text-align: center;"><span class="math inline">\(x_3\)</span></td>
+<td style="text-align: center;">1.3</td>
 <td style="text-align: center;">churn</td>
-<td style="text-align: right;">0.77</td>
+<td style="text-align: center;">0.77</td>
 </tr>
 </tbody>
 </table>
@@ -483,23 +483,23 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 <thead>
 <tr class="header">
 <th style="text-align: center;">Candidate</th>
-<th style="text-align: right;">Age</th>
-<th style="text-align: right;">Income</th>
-<th style="text-align: left;">Difference from query</th>
+<th style="text-align: center;">Age</th>
+<th style="text-align: center;">Income</th>
+<th style="text-align: center;">Difference from query</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(A\)</span></td>
-<td style="text-align: right;">42</td>
-<td style="text-align: right;">EUR 70,000</td>
-<td style="text-align: left;"><span class="math inline">\((2,\ 20{,}000)\)</span></td>
+<td style="text-align: center;">42</td>
+<td style="text-align: center;">EUR 70,000</td>
+<td style="text-align: center;"><span class="math inline">\((2,\ 20{,}000)\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(B\)</span></td>
-<td style="text-align: right;">60</td>
-<td style="text-align: right;">EUR 50,500</td>
-<td style="text-align: left;"><span class="math inline">\((20,\ 500)\)</span></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">EUR 50,500</td>
+<td style="text-align: center;"><span class="math inline">\((20,\ 500)\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -522,27 +522,27 @@ dist(z,B)=\sqrt{20^2+500^2}\approx500.4
 <p>Standardized differences and distances become:</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 35%">
-<col style="width: 35%">
-<col style="width: 28%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: center;">Candidate</th>
 <th style="text-align: center;">Standardized difference</th>
-<th style="text-align: right;">Euclidean distance</th>
+<th style="text-align: center;">Euclidean distance</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(A\)</span></td>
 <td style="text-align: center;"><span class="math inline">\((2/10,\ 20{,}000/25{,}000)=(0.2,0.8)\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(\sqrt{0.2^2+0.8^2}\approx0.82\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sqrt{0.2^2+0.8^2}\approx0.82\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(B\)</span></td>
 <td style="text-align: center;"><span class="math inline">\((20/10,\ 500/25{,}000)=(2,0.02)\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(\sqrt{2^2+0.02^2}\approx2.00\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sqrt{2^2+0.02^2}\approx2.00\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -624,7 +624,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="a-neighborhood-inside-the-unit-hypercube" class="title-slide slide level1 center">
 <h1>A neighborhood inside the unit hypercube</h1>
 <p>The query is at the center, and “near” means within <span class="math inline">\(\pm0.1\)</span> on every feature.</p>
-<div id="3b96fb88" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
+<div id="cbc171a0" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -644,26 +644,26 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: right;">Dimensions <span class="math inline">\(d\)</span></th>
-<th style="text-align: right;">Relative volume <span class="math inline">\((0.2)^d\)</span></th>
-<th style="text-align: right;">Expected nearby points</th>
+<th style="text-align: center;">Dimensions <span class="math inline">\(d\)</span></th>
+<th style="text-align: center;">Relative volume <span class="math inline">\((0.2)^d\)</span></th>
+<th style="text-align: center;">Expected nearby points</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;"><span class="math inline">\(0.04\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(1000\times0.04=40\)</span></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><span class="math inline">\(0.04\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1000\times0.04=40\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">5</td>
-<td style="text-align: right;"><span class="math inline">\(0.00032\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(1000\times0.00032=0.32\)</span></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><span class="math inline">\(0.00032\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1000\times0.00032=0.32\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">10</td>
-<td style="text-align: right;"><span class="math inline">\(1.024\times10^{-7}\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.0001024\)</span></td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><span class="math inline">\(1.024\times10^{-7}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.0001024\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -671,14 +671,29 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <p>This sparsity is the <strong>curse of dimensionality</strong>: k-NN needs far more data, or fewer and more informative features, to keep neighborhoods meaningful.</p>
 </section>
 
-<section id="local-neighborhoods-quickly-become-empty" class="title-slide slide level1 center">
-<h1>Local neighborhoods quickly become empty</h1>
-<p>For 1,000 uniformly distributed points, using a tolerance of <span class="math inline">\(\pm0.1\)</span> on every normalized feature:</p>
-<div id="b444845b" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
+<section id="average-distance-grows-with-dimensionality" class="title-slide slide level1 center">
+<h1>Average distance grows with dimensionality</h1>
+<p>For 1,000 points uniformly distributed in <span class="math inline">\([0,1]^{10}\)</span>, select one point and measure its average Euclidean distance from all the others while using the first 1 to 10 dimensions:</p>
+<div id="d2ee7fbe" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="03-knn_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="918" height="453"></p>
+<p><img data-src="03-knn_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="934" height="453"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Each additional feature contributes another nonnegative term to the Euclidean distance, so points become farther apart on average even though every feature remains in <span class="math inline">\([0,1]\)</span>.</p>
+</section>
+
+<section id="local-neighborhoods-quickly-become-empty" class="title-slide slide level1 center">
+<h1>Local neighborhoods quickly become empty</h1>
+<p>For 1,000 uniformly distributed points, using a tolerance of <span class="math inline">\(\pm0.1\)</span> on every normalized feature:</p>
+<div id="10f162bf" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03-knn_files/figure-revealjs/cell-4-output-1.png" class="quarto-figure quarto-figure-center" width="918" height="453"></p>
 </figure>
 </div>
 </div>
