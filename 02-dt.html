@@ -1030,7 +1030,7 @@ Predicted class
 <div class="column" style="width:85%;">
 <p>Recursive approach that progressively subdivides a set of <span class="math inline">\(D_t\)</span> records into pure record sets</p>
 <ul>
-<li>Let <span class="math inline">\(D_t\)</span> be the set of records of the training set corresponding to <span class="math inline">\(node_t\)</span> and <span class="math inline">\(y_t = \{y_1, ..., y_k\}\)</span> the possible class labels</li>
+<li>Let <span class="math inline">\(D_t=\{x_1, ..., x_k\}\)</span> be the set of records of the training set corresponding to <span class="math inline">\(node_t\)</span> and <span class="math inline">\(y_t = \{y_1, ..., y_k\}\)</span> the possible class labels</li>
 <li>If <span class="math inline">\(D_t\)</span>
 <ul>
 <li>Contains records of the <span class="math inline">\(y_j\)</span> class only, then <span class="math inline">\(node_t\)</span> is a leaf with label <span class="math inline">\(y_j\)</span></li>
@@ -1046,8 +1046,8 @@ Predicted class
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TD
-    A["Parent"]--&gt;B
-    B["D_t"]
+    A["parent"]--&gt;B
+    B["node_t"]
 
     style B stroke:#ff0000,stroke-width:3px
 </pre>
@@ -1570,8 +1570,8 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="split-based-on-split-infor" class="title-slide slide level1 center">
-<h1>Split based on split infor</h1>
+<section id="split-based-on-splitinfo" class="title-slide slide level1 center">
+<h1>Split based on <span class="math inline">\(SplitInfo\)</span></h1>
 <p>To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:</p>
 <ul>
 <li><span class="math inline">\(N\)</span> = number of child nodes</li>
@@ -1580,15 +1580,15 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 <p><span class="math inline">\(GainRATIO_{split}=\frac{GAIN_{split}}{SplitINFO}\)</span></p>
 <p><span class="math inline">\(SplitINFO=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}\)</span></p>
-<p>The higher the number of children, the greater the value of SplitInfo, with a consequent reduction in the GainRatio</p>
+<p>The higher the number of children, the greater the value of <span class="math inline">\(SplitInfo\)</span>, with a consequent reduction in the <span class="math inline">\(SplitInfo\)</span></p>
 <ul>
-<li>For example, assuming that each child node contains the same number of records, SplitInfo = log n.</li>
-<li>C4.5 uses the SplitINFO-based criterion</li>
+<li>For example, assuming that each child node contains the same number of records, <span class="math inline">\(SplitInfo = log(n)\)</span>.</li>
+<li>C4.5 uses the <span class="math inline">\(SplitInfo\)</span>-based criterion</li>
 </ul>
 </section>
 
-<section id="split-based-on-split-info" class="title-slide slide level1 center">
-<h1>Split based on split info</h1>
+<section id="split-based-on-splitinfo-1" class="title-slide slide level1 center">
+<h1>Split based on <span class="math inline">\(SplitInfo\)</span></h1>
 <p>To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:</p>
 <ul>
 <li><span class="math inline">\(n \in [2, 64]\)</span></li>
@@ -1596,7 +1596,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li><span class="math inline">\(m_i = \frac{m}{n}\)</span></li>
 </ul>
 
-<img data-src="./img/dt/image23.png" class="r-stretch quarto-figure-center"><p class="caption">Split info</p></section>
+<img data-src="./img/dt/image23.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(SplitInfo\)</span></p></section>
 
 <section id="characteristic-features-2" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Characteristic features</h1>
@@ -1762,239 +1762,19 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="cost-based-evaluation" class="title-slide slide level1 center">
-<h1>Cost-based evaluation</h1>
-<p>Accuracy, Precision, Recall, and F-measure classify an instance as positive if <span class="math inline">\(P(+, i)&gt;P(-, i)\)</span>.</p>
-<ul>
-<li>They assume that FN and FP have the same weight, thus they are Cost-Insensitive</li>
-<li>In many domains, this is not true!
-<ul>
-<li>For a cancer screening test, for example, we may be prepared to put up with a relatively high false positive rate in order to get a high true positive; it is most important to identify possible cancer sufferers</li>
-<li>For a follow-up test after treatment, however, a different threshold might be more desirable, since we want to minimize false negatives; we don’t want to tell a patient they’re clear if this is not actually the case.</li>
-</ul></li>
-</ul>
 
-<img data-src="img/dt/3-Decision%20Tree_68.jpg" class="r-stretch"></section>
 
-<section id="the-cost-matrix" class="title-slide slide level1 center">
-<h1>The cost matrix</h1>
-<p>The cost matrix encodes the penalty that a classifier incurs in classifying a record in a different class.</p>
-<p>A negative penalty indicates the “prize” that is obtained for a correct classification.</p>
-<p><span class="math inline">\(C(M)=TP \cdot C(+|+) + FP \cdot C(+|- ) + FN \cdot C(- |+) + TN \cdot C(- |- )\)</span></p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
-<th style="text-align: center;"><strong>Class=+</strong></th>
-<th style="text-align: center;"><strong>Class=-</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Class=+</strong></td>
-<td style="text-align: center;">C(+|+)</td>
-<td style="text-align: center;">C(+|-)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Class=-</strong></td>
-<td style="text-align: center;">C(-|+)</td>
-<td style="text-align: center;">C(-|-)</td>
-</tr>
-</tbody>
-</table>
-<p>A model constructed by structuring, as a purity function, a cost matrix, will tend to provide a model with a minimum cost over the specified weights.</p>
-</section>
 
-<section id="computing-the-cost" class="title-slide slide level1 center">
-<h1>Computing the cost</h1>
-<div class="columns">
-<div class="column" style="width:33%;">
-<p>Costs</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
-<th style="text-align: center;"><strong>Class=+</strong></th>
-<th style="text-align: center;"><strong>Class=-</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Class=+</strong></td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">100</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Class=-</strong></td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0</td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:33%;">
-<div class="fragment">
-<p>Predictions of Model M1</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
-<th style="text-align: center;"><strong>Class=+</strong></th>
-<th style="text-align: center;"><strong>Class=-</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Class=+</strong></td>
-<td style="text-align: center;">150</td>
-<td style="text-align: center;">40</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Class=-</strong></td>
-<td style="text-align: center;">60</td>
-<td style="text-align: center;">250</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Accuracy = 80%</li>
-<li>Cost = 3910</li>
-</ul>
-</div>
-</div><div class="column" style="width:33%;">
-<div class="fragment">
-<p>Predictions of Model M2</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Expected <span class="math inline">\(\rightarrow\)</span></th>
-<th style="text-align: center;"><strong>Class=+</strong></th>
-<th style="text-align: center;"><strong>Class=-</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Class=+</strong></td>
-<td style="text-align: center;">250</td>
-<td style="text-align: center;">45</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Class=-</strong></td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">200</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Accuracy = 90%</li>
-<li>Cost = 4255</li>
-</ul>
-</div>
-</div></div>
-</section>
 
-<section id="roc-curves-compare-sensitivity-with-false-alarms" class="title-slide slide level1 center">
-<h1>ROC curves compare sensitivity with false alarms</h1>
-<div class="columns">
-<div class="column" style="width:55%;">
-<p>A ROC curve plots:</p>
-<p><span class="math display">\[
-\mathrm{TPR}=\frac{TP}{TP+FN}
-\qquad
-\mathrm{FPR}=\frac{FP}{FP+TN}
-\]</span></p>
-<ul>
-<li><strong>True-positive rate (TPR):</strong> fraction of positives correctly detected</li>
-<li><strong>False-positive rate (FPR):</strong> fraction of negatives incorrectly classified as positive</li>
-<li>One classifier threshold produces one point <span class="math inline">\((\mathrm{FPR},\mathrm{TPR})\)</span></li>
-</ul>
-</div><div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image27.png"></p>
-<figcaption>ROC curve</figcaption>
-</figure>
-</div>
-</div></div>
-</section>
 
-<section id="changing-the-threshold-traces-the-roc-curve" class="title-slide slide level1 center">
-<h1>Changing the threshold traces the ROC curve</h1>
-<p>Many classifiers output a <strong>score</strong> rather than only a class.</p>
-<p>Predict positive when:</p>
-<p><span class="math display">\[
-\operatorname{score}(i)\geq x
-\]</span></p>
-<ul>
-<li>Lowering <span class="math inline">\(x\)</span> usually detects more positives but also creates more false alarms</li>
-<li>Raising <span class="math inline">\(x\)</span> usually reduces both true positives and false positives</li>
-<li>Varying <span class="math inline">\(x\)</span> traces the complete ROC curve</li>
-</ul>
 
-<img data-src="./img/dt/image28.png" class="r-stretch quarto-figure-center"><p class="caption">Changing the classification threshold</p></section>
 
-<section id="better-curves-approach-the-upper-left-corner" class="title-slide slide level1 center">
-<h1>Better curves approach the upper-left corner</h1>
-<div class="columns">
-<div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image29.png"></p>
-<figcaption>Class overlap and ROC curves</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:55%;">
-<ul>
-<li><span class="math inline">\((0,1)\)</span> represents perfect classification</li>
-<li>The diagonal represents random ranking: <span class="math inline">\(\mathrm{TPR}=\mathrm{FPR}\)</span></li>
-<li><strong>AUC</strong> summarizes performance across all thresholds
-<ul>
-<li><span class="math inline">\(1.0\)</span>: perfect ranking</li>
-<li><span class="math inline">\(0.5\)</span>: random ranking</li>
-</ul></li>
-<li>Greater class overlap makes discrimination harder</li>
-</ul>
-</div></div>
-</section>
 
-<section id="compare-models-where-the-operating-point-matters" class="title-slide slide level1 center">
-<h1>Compare models where the operating point matters</h1>
-<div class="columns">
-<div class="column" style="width:55%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/dt/3-Decision%20Tree_73.jpg"></p>
-<figcaption>Comparison of ROC curves</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:45%;">
-<ul>
-<li>A curve above another performs better across those thresholds</li>
-<li>If curves cross, the best model depends on the tolerated FPR and required TPR</li>
-<li>AUC is useful as a summary, but it does not select the operating threshold</li>
-<li>ROC rates are normalized within each class; precision and cost can still change with class prevalence</li>
-</ul>
-</div></div>
-</section>
+
+
+
+
+
 
 <section id="classification-errors" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Classification errors</h1>
@@ -2236,16 +2016,16 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p>Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.</p>
 <p><strong>Features:</strong></p>
 <ul>
-<li>Use GainRatio as a criterion for determining the split attribute</li>
+<li>Use <span class="math inline">\(SplitInfo\)</span> as a criterion for determining the split attribute</li>
 <li>It manages the continuous attributes by determining a split point that divides the range of values into two</li>
-<li>It manages data with missing values. Missing attributes are not considered to calculate GainRatio.</li>
+<li>It manages data with missing values. Missing attributes are not considered to calculate <span class="math inline">\(SplitInfo\)</span>.</li>
 <li>It can handle attributes that are associated with different weights</li>
 <li>Run post-pruning of the created tree</li>
 </ul>
 <p><strong>The tree construction stops when:</strong></p>
 <ul>
 <li>The node contains records belonging to a single class</li>
-<li>No attribute allows for determining a positive GainRatio</li>
+<li>No attribute allows for determining a positive <span class="math inline">\(SplitInfo\)</span></li>
 <li>Node does not contain records.</li>
 </ul>
 </section>
