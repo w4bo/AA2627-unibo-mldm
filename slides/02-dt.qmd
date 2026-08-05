@@ -388,7 +388,7 @@ Different issues have to be addressed.
 :::{.column width=85%}
 Recursive approach that progressively subdivides a set of $D_t$ records into pure record sets
 
-- Let $D_t$ be the set of records of the training set corresponding to $node_t$ and $y_t = \{y_1, ..., y_k\}$ the possible class labels
+- Let $D_t=\{x_1, ..., x_k\}$ be the set of records of the training set corresponding to $node_t$ and $y_t = \{y_1, ..., y_k\}$ the possible class labels
 - If $D_t$
     - Contains records of the $y_j$ class only, then $node_t$ is a leaf with label $y_j$
     - Is an empty set, then $node_t$ is a leaf node to which a parent node class is assigned
@@ -399,8 +399,8 @@ Recursive approach that progressively subdivides a set of $D_t$ records into pur
 ```{mermaid}
 %%| echo: false
 flowchart TD
-    A["Parent"]-->B
-    B["D_t"]
+    A["parent"]-->B
+    B["node_t"]
 
     style B stroke:#ff0000,stroke-width:3px
 ```
@@ -756,7 +756,7 @@ Selecting the split value that maximizes GAIN tends to determine split criteria 
 
 - Partitioning students according to their enrollment guarantees that all classes (formed by only one student) are totally pure
 
-# Split based on split infor
+# Split based on $SplitInfo$
 
 To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:
 
@@ -768,12 +768,12 @@ $GainRATIO_{split}=\frac{GAIN_{split}}{SplitINFO}$
 
 $SplitINFO=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}$
 
-The higher the number of children, the greater the value of SplitInfo, with a consequent  reduction in the GainRatio
+The higher the number of children, the greater the value of $SplitInfo$, with a consequent  reduction in the $SplitInfo$
 
-- For example, assuming that each child node contains the same number of records, SplitInfo = log n.
-- C4.5 uses the SplitINFO-based criterion
+- For example, assuming that each child node contains the same number of records, $SplitInfo = log(n)$.
+- C4.5 uses the $SplitInfo$-based criterion
 
-# Split based on split info
+# Split based on $SplitInfo$
 
 To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:
 
@@ -781,7 +781,7 @@ To avoid the problem of spraying classes, it is preferable to maximize the Gain 
 - $m = 100$
 - $m_i = \frac{m}{n}$
 
-![Split info](./img/dt/image23.png)
+![$SplitInfo$](./img/dt/image23.png)
 
 # Characteristic features {background-color="#121011"}
 
@@ -898,7 +898,7 @@ F-measure represents the harmonic mean of precision and recall.
 - So if the harmonic average is high, it means both precision and recall are.
 - ... so there have been no false negatives or false positives
 
-# Cost-based evaluation
+# Cost-based evaluation {visibility="hidden"}
 
 Accuracy, Precision, Recall, and F-measure classify an instance as positive if $P(+, i)>P(-, i)$.
 
@@ -909,7 +909,7 @@ Accuracy, Precision, Recall, and F-measure classify an instance as positive if $
 
 ![](img/dt/3-Decision Tree_68.jpg)
 
-# The cost matrix
+# The cost matrix {visibility="hidden"}
 
 The cost matrix encodes the penalty that a classifier incurs in classifying a record in a different class.
 
@@ -925,7 +925,7 @@ $C(M)=TP \cdot C(+|+) + FP \cdot C(+|- ) + FN \cdot C(- |+) + TN \cdot C(- |- )$
 
 A model constructed by structuring, as a purity function, a cost matrix, will tend to provide a model with a minimum cost over the specified weights.
 
-# Computing the cost
+# Computing the cost {visibility="hidden"}
 
 ::::{.columns}
 :::{.column width=33%}
@@ -969,7 +969,7 @@ Predictions of Model M2
 :::
 ::::
 
-# ROC curves compare sensitivity with false alarms
+# ROC curves compare sensitivity with false alarms {visibility="hidden"}
 
 ::::{.columns}
 :::{.column width=55%}
@@ -990,7 +990,7 @@ $$
 :::
 ::::
 
-# Changing the threshold traces the ROC curve
+# Changing the threshold traces the ROC curve {visibility="hidden"}
 
 Many classifiers output a **score** rather than only a class.
 
@@ -1006,7 +1006,7 @@ $$
 
 ![Changing the classification threshold](./img/dt/image28.png)
 
-# Better curves approach the upper-left corner
+# Better curves approach the upper-left corner {visibility="hidden"}
 
 ::::{.columns}
 :::{.column width=45%}
@@ -1022,7 +1022,7 @@ $$
 :::
 ::::
 
-# Compare models where the operating point matters
+# Compare models where the operating point matters {visibility="hidden"}
 
 ::::{.columns}
 :::{.column width=55%}
@@ -1263,16 +1263,16 @@ Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.
 
 **Features:**
 
-- Use GainRatio as a criterion for determining the split attribute
+- Use $SplitInfo$ as a criterion for determining the split attribute
 - It manages the continuous attributes by determining a split point that divides the range of values into two
-- It manages data with missing values. Missing attributes are not considered to calculate GainRatio.
+- It manages data with missing values. Missing attributes are not considered to calculate $SplitInfo$.
 - It can handle attributes that are associated with different weights
 - Run post-pruning of the created tree
 
 **The tree construction stops when:**
 
 - The node contains records belonging to a single class
-- No attribute allows for determining a positive GainRatio
+- No attribute allows for determining a positive $SplitInfo$
 - Node does not contain records.
 
 # Summary: when should I use a decision tree?
