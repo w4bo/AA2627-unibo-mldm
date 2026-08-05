@@ -20,7 +20,7 @@ subtitle: Decision Trees
 Each *row* (or *data item/record*) is customer subscription, each *column* is an *attribute* (or *feature*)
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 2                 | 3                   | 2               | basic     | no       | *yes*   |
 | 4                 | 6                   | 1               | basic     | no       | *yes*   |
 | 6                 | 15                  | 0               | standard  | yes      | *no*    |
@@ -64,7 +64,7 @@ Disadvantages:
 *Training test*: used for training the model
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 2                 | 3                   | 2               | basic     | no       | *yes*   |
 | 4                 | 6                   | 1               | basic     | no       | *yes*   |
 | 6                 | 15                  | 0               | standard  | yes      | *no*    |
@@ -78,7 +78,7 @@ Disadvantages:
 *Test test*: used for testing the generalization capability of the model
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 7                 | 12                  | 1               | standard  | yes      | *no*    |
 | 2                 | 5                   | 2               | basic     | no       | *yes*   |
 | 9                 | 16                  | 0               | premium   | yes      | *no*    |
@@ -203,7 +203,7 @@ flowchart TD
 ::::{.columns}
 :::{.column width=70%}
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 2                 | 3                   | 2               | basic     | no       | yes   |
 | 4                 | 6                   | 1               | basic     | no       | yes   |
 | 6                 | 15                  | 0               | standard  | yes      | no    |
@@ -255,13 +255,13 @@ flowchart LR
 # What is the predicted class for the following test data?
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 1                 | 2                   | 2               | basic     | no       | ?   |
 
 # What is the predicted class for the following test data?
 
 | `months_subscribed` | **`monthly_watch_hours`** | `tickets` | `type` | `auto_pay` | **`churn`** |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 1                 | **2**                   | 2               | basic     | no       | ?   |
 
 ```{mermaid}
@@ -288,7 +288,7 @@ flowchart TD
 # What is the predicted class for the following test data?
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | **`auto_pay`** | **`churn`** |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 1                 | 2                   | 2               | basic     | **no**       | ?   |
 
 ```{mermaid}
@@ -317,7 +317,7 @@ flowchart TD
 # What is the predicted class for the following test data?
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
-| ----------------- | ------------------- | --------------- | --------- | -------- | ----- |
+| :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 1                 | 2                   | 2               | basic     | no       | **yes**   |
 
 ```{mermaid}
@@ -844,7 +844,7 @@ For $n$ classes, the confusion matrix has size $n\times n$.
 Define **positive** as a fraudulent payment and **negative** as a legitimate payment.
 
 | Example | Actual class | Model prediction | Result |
-|:---|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|
 | A stolen-card payment is correctly flagged | Fraud | Fraud | **True positive** |
 | A legitimate payment is incorrectly blocked | Legitimate | Fraud | **False positive** |
 | A fraudulent payment is incorrectly approved | Fraud | Legitimate | **False negative** |
