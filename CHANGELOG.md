@@ -1,3 +1,15 @@
+## [1.0.15](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.14...1.0.15) (2026-08-07)
+
+### Bug Fixes
+
+* upload notebooks ([54e998d](https://github.com/w4bo/AA2627-unibo-mldm/commit/54e998d5a7182cd1659c12e695eec4f3d149964d))
+* working on the labs ([ee02b3a](https://github.com/w4bo/AA2627-unibo-mldm/commit/ee02b3a21dd90baaeb74a9ff98fe8958d7fff445))
+
+### General maintenance
+
+* fix repo structure ([20077ad](https://github.com/w4bo/AA2627-unibo-mldm/commit/20077ad0582f8ab54d609a42d32527c940614e27))
+* remove nested gitignore ([de51f49](https://github.com/w4bo/AA2627-unibo-mldm/commit/de51f49f8fb0821b3db3d94c6737c64b4a62e2f6))
+
 ## [1.0.14](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.13...1.0.14) (2026-08-05)
 
 ### Bug Fixes
