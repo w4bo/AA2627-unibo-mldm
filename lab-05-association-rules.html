@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="lab-05-association-rules_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lab-05-association-rules_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-05-association-rules_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lab-05-association-rules_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-05-association-rules_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lab-05-association-rules_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
+  <title>Association rules with Python - solutions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lab-05-association-rules_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lab-05-association-rules_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="lab-05-association-rules_files/libs/revealjs/dist/theme/quarto-16bc8fc46cf16bb45dbb7941de0fb807.css">
+  <link href="lab-05-association-rules_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lab-05-association-rules_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lab-05-association-rules_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lab-05-association-rules_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Association rules with Python - solutions</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
+</div>
+</div>
+</div>
+
+</section>
+<section>
+<section id="association-rules-with-python---solutions" class="title-slide slide level1 center">
+<h1>Association rules with Python - solutions</h1>
+<p>This laboratory closely follows <strong>13-Association rules with Weka - Solutions</strong>, translating the Weka workflow to Python while using only the local ARFF files in <code>datasets/</code>.</p>
+<p>We will:</p>
+<ul>
+<li>discretize the Census attributes and mine frequent itemsets;</li>
+<li>reproduce Weka’s decreasing-support Apriori search;</li>
+<li>read rule support, antecedent support, confidence, lift, leverage, and conviction;</li>
+<li>constrain rules to a target attribute (Weka’s <code>car</code> behavior);</li>
+<li>perform Market Basket Analysis at several support and confidence thresholds;</li>
+<li>use lift to interpret the link among hamburger, hamburger buns, and white bread.</li>
+</ul>
+<blockquote>
+<p><strong>Weka to Python:</strong> scikit-learn does not provide Apriori or association-rule generation. We therefore use <code>mlxtend.frequent_patterns.apriori</code> and <code>association_rules</code>, whose definitions of support, confidence, lift, leverage, and conviction match Weka’s. The remaining analysis follows the familiar pandas/scikit-learn workflow.</p>
+</blockquote>
+</section>
+<section id="setup-and-arff-loader" class="slide level2">
+<h2>Setup and ARFF loader</h2>
+<p>Run the notebook from either the repository root or the <code>slides/</code> directory. The path helper deliberately uses the <strong>local</strong> <code>slides/datasets</code> folder; no dataset is downloaded.</p>
+<p>If needed, uncomment the installation line in the next cell.</p>
+<div id="a6ab991b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:27.671847Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:27.671847Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.097039Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.097039Z&quot;}}">
+<details class="code-fold">
+<summary>Show implementation</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="co"># %pip install -q numpy pandas scipy scikit-learn mlxtend matplotlib</span></span>
+<span id="cb1-2"><a href="" aria-label="2"></a></span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-4"><a href="" aria-label="4"></a><span class="im">import</span> warnings</span>
+<span id="cb1-5"><a href="" aria-label="5"></a></span>
+<span id="cb1-6"><a href="" aria-label="6"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="" aria-label="7"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-8"><a href="" aria-label="8"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-9"><a href="" aria-label="9"></a></span>
+<span id="cb1-10"><a href="" aria-label="10"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Markdown</span>
+<span id="cb1-11"><a href="" aria-label="11"></a><span class="im">from</span> scipy.io <span class="im">import</span> arff</span>
+<span id="cb1-12"><a href="" aria-label="12"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> normalized_mutual_info_score</span>
+<span id="cb1-13"><a href="" aria-label="13"></a><span class="im">from</span> mlxtend.frequent_patterns <span class="im">import</span> apriori, association_rules</span>
+<span id="cb1-14"><a href="" aria-label="14"></a></span>
+<span id="cb1-15"><a href="" aria-label="15"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-16"><a href="" aria-label="16"></a>pd.set_option(<span class="st">"display.max_colwidth"</span>, <span class="dv">120</span>)</span>
+<span id="cb1-17"><a href="" aria-label="17"></a>pd.set_option(<span class="st">"display.max_rows"</span>, <span class="dv">100</span>)</span>
+<span id="cb1-18"><a href="" aria-label="18"></a>plt.style.use(<span class="st">"seaborn-v0_8-whitegrid"</span>)</span>
+<span id="cb1-19"><a href="" aria-label="19"></a>plt.rcParams.update({<span class="st">"figure.figsize"</span>: (<span class="dv">8</span>, <span class="fl">4.5</span>), <span class="st">"axes.spines.top"</span>: <span class="va">False</span>, <span class="st">"axes.spines.right"</span>: <span class="va">False</span>})</span>
+<span id="cb1-20"><a href="" aria-label="20"></a></span>
+<span id="cb1-21"><a href="" aria-label="21"></a></span>
+<span id="cb1-22"><a href="" aria-label="22"></a><span class="kw">def</span> find_datasets_dir():</span>
+<span id="cb1-23"><a href="" aria-label="23"></a>    candidates <span class="op">=</span> [Path(<span class="st">"datasets"</span>), Path(<span class="st">"slides/datasets"</span>), Path.cwd() <span class="op">/</span> <span class="st">"slides"</span> <span class="op">/</span> <span class="st">"datasets"</span>]</span>
+<span id="cb1-24"><a href="" aria-label="24"></a>    <span class="cf">for</span> candidate <span class="kw">in</span> candidates:</span>
+<span id="cb1-25"><a href="" aria-label="25"></a>        <span class="cf">if</span> (candidate <span class="op">/</span> <span class="st">"CensusTraining.arff"</span>).exists() <span class="kw">and</span> (candidate <span class="op">/</span> <span class="st">"MarketBasket.arff"</span>).exists():</span>
+<span id="cb1-26"><a href="" aria-label="26"></a>            <span class="cf">return</span> candidate.resolve()</span>
+<span id="cb1-27"><a href="" aria-label="27"></a>    <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="st">"Could not find slides/datasets. Start the notebook in the repository root or slides/."</span>)</span>
+<span id="cb1-28"><a href="" aria-label="28"></a></span>
+<span id="cb1-29"><a href="" aria-label="29"></a></span>
+<span id="cb1-30"><a href="" aria-label="30"></a>DATASETS <span class="op">=</span> find_datasets_dir()</span>
+<span id="cb1-31"><a href="" aria-label="31"></a>DATASETS</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="reusable-apriori-helpers" class="slide level2">
+<h2>Reusable Apriori helpers</h2>
+<p>The following utilities load ARFF data, format itemsets and rules, and reproduce Weka’s decreasing-support search.</p>
+<div id="52469393" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.097039Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.097039Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.113906Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.113906Z&quot;}}">
+<details class="code-fold">
+<summary>Show implementation</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="kw">def</span> load_arff_frame(filename):</span>
+<span id="cb2-2"><a href="" aria-label="2"></a>    <span class="co">'''Load a local ARFF file and decode byte-valued nominal columns.'''</span></span>
+<span id="cb2-3"><a href="" aria-label="3"></a>    records, metadata <span class="op">=</span> arff.loadarff(DATASETS <span class="op">/</span> filename)</span>
+<span id="cb2-4"><a href="" aria-label="4"></a>    frame <span class="op">=</span> pd.DataFrame(records)</span>
+<span id="cb2-5"><a href="" aria-label="5"></a>    <span class="cf">for</span> column <span class="kw">in</span> frame.columns:</span>
+<span id="cb2-6"><a href="" aria-label="6"></a>        <span class="cf">if</span> frame[column].dtype <span class="op">==</span> <span class="bu">object</span>:</span>
+<span id="cb2-7"><a href="" aria-label="7"></a>            frame[column] <span class="op">=</span> frame[column].<span class="bu">map</span>(</span>
+<span id="cb2-8"><a href="" aria-label="8"></a>                <span class="kw">lambda</span> value: value.decode(<span class="st">"utf-8"</span>) <span class="cf">if</span> <span class="bu">isinstance</span>(value, <span class="bu">bytes</span>) <span class="cf">else</span> value</span>
+<span id="cb2-9"><a href="" aria-label="9"></a>            )</span>
+<span id="cb2-10"><a href="" aria-label="10"></a>    <span class="cf">return</span> frame, metadata</span>
+<span id="cb2-11"><a href="" aria-label="11"></a></span>
+<span id="cb2-12"><a href="" aria-label="12"></a></span>
+<span id="cb2-13"><a href="" aria-label="13"></a><span class="kw">def</span> item_label(itemset):</span>
+<span id="cb2-14"><a href="" aria-label="14"></a>    <span class="co">'''Stable, readable rendering of a frozenset of items.'''</span></span>
+<span id="cb2-15"><a href="" aria-label="15"></a>    <span class="cf">return</span> <span class="st">", "</span>.join(<span class="bu">sorted</span>(<span class="bu">map</span>(<span class="bu">str</span>, itemset)))</span>
+<span id="cb2-16"><a href="" aria-label="16"></a></span>
+<span id="cb2-17"><a href="" aria-label="17"></a></span>
+<span id="cb2-18"><a href="" aria-label="18"></a><span class="kw">def</span> itemset_table(frequent_itemsets, top<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-19"><a href="" aria-label="19"></a>    table <span class="op">=</span> frequent_itemsets.copy()</span>
+<span id="cb2-20"><a href="" aria-label="20"></a>    table[<span class="st">"length"</span>] <span class="op">=</span> table[<span class="st">"itemsets"</span>].<span class="bu">map</span>(<span class="bu">len</span>)</span>
+<span id="cb2-21"><a href="" aria-label="21"></a>    table[<span class="st">"itemset"</span>] <span class="op">=</span> table[<span class="st">"itemsets"</span>].<span class="bu">map</span>(item_label)</span>
+<span id="cb2-22"><a href="" aria-label="22"></a>    table <span class="op">=</span> table.sort_values([<span class="st">"length"</span>, <span class="st">"support"</span>], ascending<span class="op">=</span>[<span class="va">True</span>, <span class="va">False</span>])</span>
+<span id="cb2-23"><a href="" aria-label="23"></a>    columns <span class="op">=</span> [<span class="st">"length"</span>, <span class="st">"support"</span>, <span class="st">"itemset"</span>]</span>
+<span id="cb2-24"><a href="" aria-label="24"></a>    <span class="cf">return</span> table[columns].head(top) <span class="cf">if</span> top <span class="cf">else</span> table[columns]</span>
+<span id="cb2-25"><a href="" aria-label="25"></a></span>
+<span id="cb2-26"><a href="" aria-label="26"></a></span>
+<span id="cb2-27"><a href="" aria-label="27"></a>RULE_COLUMNS <span class="op">=</span> [</span>
+<span id="cb2-28"><a href="" aria-label="28"></a>    <span class="st">"antecedents"</span>, <span class="st">"consequents"</span>, <span class="st">"antecedent support"</span>, <span class="st">"consequent support"</span>,</span>
+<span id="cb2-29"><a href="" aria-label="29"></a>    <span class="st">"support"</span>, <span class="st">"confidence"</span>, <span class="st">"lift"</span>, <span class="st">"leverage"</span>, <span class="st">"conviction"</span></span>
+<span id="cb2-30"><a href="" aria-label="30"></a>]</span>
+<span id="cb2-31"><a href="" aria-label="31"></a></span>
+<span id="cb2-32"><a href="" aria-label="32"></a></span>
+<span id="cb2-33"><a href="" aria-label="33"></a><span class="kw">def</span> readable_rules(rules, top<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-34"><a href="" aria-label="34"></a>    <span class="co">'''Format mlxtend rules like Weka's antecedent ==&gt; consequent listing.'''</span></span>
+<span id="cb2-35"><a href="" aria-label="35"></a>    <span class="cf">if</span> rules.empty:</span>
+<span id="cb2-36"><a href="" aria-label="36"></a>        <span class="cf">return</span> pd.DataFrame(columns<span class="op">=</span>[<span class="st">"antecedent"</span>, <span class="st">"consequent"</span>] <span class="op">+</span> RULE_COLUMNS[<span class="dv">2</span>:])</span>
+<span id="cb2-37"><a href="" aria-label="37"></a>    table <span class="op">=</span> rules[RULE_COLUMNS].copy()</span>
+<span id="cb2-38"><a href="" aria-label="38"></a>    table[<span class="st">"antecedent"</span>] <span class="op">=</span> table.pop(<span class="st">"antecedents"</span>).<span class="bu">map</span>(item_label)</span>
+<span id="cb2-39"><a href="" aria-label="39"></a>    table[<span class="st">"consequent"</span>] <span class="op">=</span> table.pop(<span class="st">"consequents"</span>).<span class="bu">map</span>(item_label)</span>
+<span id="cb2-40"><a href="" aria-label="40"></a>    table.insert(<span class="dv">2</span>, <span class="st">"rule length"</span>, rules[<span class="st">"antecedents"</span>].<span class="bu">map</span>(<span class="bu">len</span>) <span class="op">+</span> rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="bu">len</span>))</span>
+<span id="cb2-41"><a href="" aria-label="41"></a>    ordered <span class="op">=</span> [<span class="st">"antecedent"</span>, <span class="st">"consequent"</span>, <span class="st">"rule length"</span>] <span class="op">+</span> RULE_COLUMNS[<span class="dv">2</span>:]</span>
+<span id="cb2-42"><a href="" aria-label="42"></a>    table <span class="op">=</span> table[ordered]</span>
+<span id="cb2-43"><a href="" aria-label="43"></a>    <span class="cf">return</span> table.head(top).<span class="bu">round</span>(<span class="dv">4</span>) <span class="cf">if</span> top <span class="cf">else</span> table.<span class="bu">round</span>(<span class="dv">4</span>)</span>
+<span id="cb2-44"><a href="" aria-label="44"></a></span>
+<span id="cb2-45"><a href="" aria-label="45"></a></span>
+<span id="cb2-46"><a href="" aria-label="46"></a><span class="kw">def</span> mine_rules(binary_frame, min_support, metric<span class="op">=</span><span class="st">"confidence"</span>, min_metric<span class="op">=</span><span class="fl">0.9</span>, max_len<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-47"><a href="" aria-label="47"></a>    <span class="co">'''Mine itemsets once, then generate and rank rules using Weka-compatible metrics.'''</span></span>
+<span id="cb2-48"><a href="" aria-label="48"></a>    itemsets <span class="op">=</span> apriori(binary_frame, min_support<span class="op">=</span>min_support, use_colnames<span class="op">=</span><span class="va">True</span>, max_len<span class="op">=</span>max_len)</span>
+<span id="cb2-49"><a href="" aria-label="49"></a>    <span class="cf">if</span> itemsets.empty:</span>
+<span id="cb2-50"><a href="" aria-label="50"></a>        <span class="cf">return</span> itemsets, pd.DataFrame(columns<span class="op">=</span>RULE_COLUMNS)</span>
+<span id="cb2-51"><a href="" aria-label="51"></a>    rules <span class="op">=</span> association_rules(</span>
+<span id="cb2-52"><a href="" aria-label="52"></a>        itemsets,</span>
+<span id="cb2-53"><a href="" aria-label="53"></a>        num_itemsets<span class="op">=</span><span class="bu">len</span>(binary_frame),</span>
+<span id="cb2-54"><a href="" aria-label="54"></a>        metric<span class="op">=</span>metric,</span>
+<span id="cb2-55"><a href="" aria-label="55"></a>        min_threshold<span class="op">=</span>min_metric,</span>
+<span id="cb2-56"><a href="" aria-label="56"></a>    )</span>
+<span id="cb2-57"><a href="" aria-label="57"></a>    <span class="cf">if</span> rules.empty:</span>
+<span id="cb2-58"><a href="" aria-label="58"></a>        <span class="cf">return</span> itemsets, rules</span>
+<span id="cb2-59"><a href="" aria-label="59"></a>    rules <span class="op">=</span> rules.sort_values([metric, <span class="st">"support"</span>, <span class="st">"confidence"</span>], ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-60"><a href="" aria-label="60"></a>    <span class="cf">return</span> itemsets, rules</span>
+<span id="cb2-61"><a href="" aria-label="61"></a></span>
+<span id="cb2-62"><a href="" aria-label="62"></a></span>
+<span id="cb2-63"><a href="" aria-label="63"></a><span class="kw">def</span> weka_like_search(</span>
+<span id="cb2-64"><a href="" aria-label="64"></a>    binary_frame,</span>
+<span id="cb2-65"><a href="" aria-label="65"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
+<span id="cb2-66"><a href="" aria-label="66"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
+<span id="cb2-67"><a href="" aria-label="67"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb2-68"><a href="" aria-label="68"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
+<span id="cb2-69"><a href="" aria-label="69"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
+<span id="cb2-70"><a href="" aria-label="70"></a>    num_rules<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb2-71"><a href="" aria-label="71"></a>    consequent_prefix<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-72"><a href="" aria-label="72"></a>):</span>
+<span id="cb2-73"><a href="" aria-label="73"></a>    <span class="co">'''Reproduce Weka Apriori's rounds of progressively decreasing support.'''</span></span>
+<span id="cb2-74"><a href="" aria-label="74"></a>    support <span class="op">=</span> upper_bound</span>
+<span id="cb2-75"><a href="" aria-label="75"></a>    history <span class="op">=</span> []</span>
+<span id="cb2-76"><a href="" aria-label="76"></a>    <span class="cf">while</span> support <span class="op">&gt;=</span> lower_bound <span class="op">-</span> <span class="fl">1e-12</span>:</span>
+<span id="cb2-77"><a href="" aria-label="77"></a>        itemsets, rules <span class="op">=</span> mine_rules(binary_frame, support, metric, min_metric)</span>
+<span id="cb2-78"><a href="" aria-label="78"></a>        <span class="cf">if</span> consequent_prefix <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="kw">and</span> <span class="kw">not</span> rules.empty:</span>
+<span id="cb2-79"><a href="" aria-label="79"></a>            rules <span class="op">=</span> rules[</span>
+<span id="cb2-80"><a href="" aria-label="80"></a>                (rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="bu">len</span>) <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-81"><a href="" aria-label="81"></a>                <span class="op">&amp;</span> rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(</span>
+<span id="cb2-82"><a href="" aria-label="82"></a>                    <span class="kw">lambda</span> values: <span class="bu">next</span>(<span class="bu">iter</span>(values)).startswith(consequent_prefix)</span>
+<span id="cb2-83"><a href="" aria-label="83"></a>                )</span>
+<span id="cb2-84"><a href="" aria-label="84"></a>            ].copy()</span>
+<span id="cb2-85"><a href="" aria-label="85"></a>            rules <span class="op">=</span> rules.sort_values([metric, <span class="st">"support"</span>], ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-86"><a href="" aria-label="86"></a>        history.append({<span class="st">"min support"</span>: support, <span class="st">"itemsets"</span>: <span class="bu">len</span>(itemsets), <span class="st">"rules"</span>: <span class="bu">len</span>(rules)})</span>
+<span id="cb2-87"><a href="" aria-label="87"></a>        <span class="cf">if</span> <span class="bu">len</span>(rules) <span class="op">&gt;=</span> num_rules <span class="kw">or</span> support <span class="op">&lt;=</span> lower_bound <span class="op">+</span> <span class="fl">1e-12</span>:</span>
+<span id="cb2-88"><a href="" aria-label="88"></a>            <span class="cf">break</span></span>
+<span id="cb2-89"><a href="" aria-label="89"></a>        support <span class="op">=</span> <span class="bu">max</span>(lower_bound, <span class="bu">round</span>(support <span class="op">-</span> delta, <span class="dv">10</span>))</span>
+<span id="cb2-90"><a href="" aria-label="90"></a>    <span class="cf">return</span> itemsets, rules.head(num_rules), pd.DataFrame(history)</span></code></pre></div>
+</details>
+</div>
+</section></section>
+<section>
+<section id="census-data" class="title-slide slide level1 center">
+<h1>Census data</h1>
+
+</section>
+<section id="dataset-overview" class="slide level2">
+<h2>Dataset overview</h2>
+<p>The warm-up uses <code>CensusTraining.arff</code>, a 1,000-row sample of US census records. Its 15 attributes describe age, employment, education, household role, demographics, capital gains/losses, working hours, country, and whether total income exceeds $50K.</p>
+<div id="d0cbd3af" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.115908Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.115908Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.160850Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.160850Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>census, census_meta <span class="op">=</span> load_arff_frame(<span class="st">"CensusTraining.arff"</span>)</span>
+<span id="cb3-2"><a href="" aria-label="2"></a></span>
+<span id="cb3-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="ss">f"Instances: </span><span class="sc">{</span><span class="bu">len</span>(census)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb3-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="ss">f"Attributes: </span><span class="sc">{</span>census<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-5"><a href="" aria-label="5"></a>display(census.head(), census.dtypes.to_frame(<span class="st">"dtype"</span>))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="census-preprocessing" class="slide level2">
+<h2>Census preprocessing</h2>
+<p>Weka’s association-rule search requires discrete attributes. As in the slides, we:</p>
+<ol type="1">
+<li>discretize every numeric attribute into <strong>10 equal-frequency bins</strong>;</li>
+<li>remove <code>fnlwgt</code> (the final sampling weight);</li>
+<li>retain one item per observed <code>attribute=value</code> pair.</li>
+</ol>
+<p>Missing values are not turned into items. The helper preserves ties and places each equal-frequency cut point halfway between distinct observed values, matching Weka’s behavior for attributes with many repeated zeros (notably capital gain/loss).</p>
+<div id="cd80664a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.160850Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.160850Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.219042Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.218174Z&quot;}}">
+<details class="code-fold">
+<summary>Show implementation</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="kw">def</span> discretize_census(frame, bins<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb4-2"><a href="" aria-label="2"></a>    result <span class="op">=</span> frame.drop(columns<span class="op">=</span><span class="st">"fnlwgt"</span>).copy()</span>
+<span id="cb4-3"><a href="" aria-label="3"></a>    <span class="cf">for</span> column <span class="kw">in</span> result.select_dtypes(include<span class="op">=</span><span class="st">"number"</span>):</span>
+<span id="cb4-4"><a href="" aria-label="4"></a>        non_missing <span class="op">=</span> result[column].dropna()</span>
+<span id="cb4-5"><a href="" aria-label="5"></a>        ordered <span class="op">=</span> np.sort(non_missing.to_numpy())</span>
+<span id="cb4-6"><a href="" aria-label="6"></a>        cut_points <span class="op">=</span> []</span>
+<span id="cb4-7"><a href="" aria-label="7"></a>        <span class="co"># Weka does not split equal values across bins. At each target rank, move the</span></span>
+<span id="cb4-8"><a href="" aria-label="8"></a>        <span class="co"># boundary between that value and the next distinct observed value.</span></span>
+<span id="cb4-9"><a href="" aria-label="9"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, bins):</span>
+<span id="cb4-10"><a href="" aria-label="10"></a>            position <span class="op">=</span> <span class="bu">min</span>(<span class="bu">int</span>(np.ceil(k <span class="op">*</span> <span class="bu">len</span>(ordered) <span class="op">/</span> bins)) <span class="op">-</span> <span class="dv">1</span>, <span class="bu">len</span>(ordered) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb4-11"><a href="" aria-label="11"></a>            left <span class="op">=</span> ordered[position]</span>
+<span id="cb4-12"><a href="" aria-label="12"></a>            greater <span class="op">=</span> ordered[ordered <span class="op">&gt;</span> left]</span>
+<span id="cb4-13"><a href="" aria-label="13"></a>            <span class="cf">if</span> <span class="bu">len</span>(greater):</span>
+<span id="cb4-14"><a href="" aria-label="14"></a>                cut_points.append((left <span class="op">+</span> greater[<span class="dv">0</span>]) <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb4-15"><a href="" aria-label="15"></a>        cut_points <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(cut_points))</span>
+<span id="cb4-16"><a href="" aria-label="16"></a>        edges <span class="op">=</span> [<span class="op">-</span>np.inf, <span class="op">*</span>cut_points, np.inf]</span>
+<span id="cb4-17"><a href="" aria-label="17"></a>        result[column] <span class="op">=</span> pd.cut(non_missing, bins<span class="op">=</span>edges).astype(<span class="st">"object"</span>)</span>
+<span id="cb4-18"><a href="" aria-label="18"></a>    <span class="cf">return</span> result</span>
+<span id="cb4-19"><a href="" aria-label="19"></a></span>
+<span id="cb4-20"><a href="" aria-label="20"></a></span>
+<span id="cb4-21"><a href="" aria-label="21"></a><span class="kw">def</span> encode_attribute_values(frame):</span>
+<span id="cb4-22"><a href="" aria-label="22"></a>    encoded <span class="op">=</span> {}</span>
+<span id="cb4-23"><a href="" aria-label="23"></a>    <span class="cf">for</span> column <span class="kw">in</span> frame.columns:</span>
+<span id="cb4-24"><a href="" aria-label="24"></a>        values <span class="op">=</span> frame[column]</span>
+<span id="cb4-25"><a href="" aria-label="25"></a>        <span class="cf">for</span> value <span class="kw">in</span> <span class="bu">sorted</span>(values.dropna().unique(), key<span class="op">=</span><span class="bu">str</span>):</span>
+<span id="cb4-26"><a href="" aria-label="26"></a>            encoded[<span class="ss">f"</span><span class="sc">{</span>column<span class="sc">}</span><span class="ss">=</span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>] <span class="op">=</span> values.eq(value)</span>
+<span id="cb4-27"><a href="" aria-label="27"></a>    <span class="cf">return</span> pd.DataFrame(encoded, index<span class="op">=</span>frame.index, dtype<span class="op">=</span><span class="bu">bool</span>)</span>
+<span id="cb4-28"><a href="" aria-label="28"></a></span>
+<span id="cb4-29"><a href="" aria-label="29"></a></span>
+<span id="cb4-30"><a href="" aria-label="30"></a>census_discrete <span class="op">=</span> discretize_census(census)</span>
+<span id="cb4-31"><a href="" aria-label="31"></a>census_items <span class="op">=</span> encode_attribute_values(census_discrete)</span>
+<span id="cb4-32"><a href="" aria-label="32"></a></span>
+<span id="cb4-33"><a href="" aria-label="33"></a><span class="bu">print</span>(<span class="ss">f"After removing fnlwgt: </span><span class="sc">{</span>census_discrete<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> attributes"</span>)</span>
+<span id="cb4-34"><a href="" aria-label="34"></a><span class="bu">print</span>(<span class="ss">f"One-hot transaction matrix: </span><span class="sc">{</span>census_items<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> x </span><span class="sc">{</span>census_items<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-35"><a href="" aria-label="35"></a>display(census_discrete.head())</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="manual-correlation-check" class="slide level2">
+<h2>Manual correlation check</h2>
+<p>In association analysis there is no privileged class unless we deliberately choose one. A pairwise check reveals the strongest expected relationship: <code>education</code> and <code>education-num</code> encode nearly the same concept. Normalized mutual information (NMI) is 0 for independence and 1 for a deterministic correspondence.</p>
+<div id="84fc8785" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.219565Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.219565Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.285313Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.285313Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>education_pairs <span class="op">=</span> census[[<span class="st">"education"</span>, <span class="st">"education-num"</span>]].dropna()</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>education_nmi <span class="op">=</span> normalized_mutual_info_score(</span>
+<span id="cb5-3"><a href="" aria-label="3"></a>    education_pairs[<span class="st">"education"</span>].astype(<span class="bu">str</span>), education_pairs[<span class="st">"education-num"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb5-4"><a href="" aria-label="4"></a>)</span>
+<span id="cb5-5"><a href="" aria-label="5"></a></span>
+<span id="cb5-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"NMI(education, education-num) = </span><span class="sc">{</span>education_nmi<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb5-7"><a href="" aria-label="7"></a>display(pd.crosstab(education_pairs[<span class="st">"education"</span>], education_pairs[<span class="st">"education-num"</span>]))</span></code></pre></div>
+</details>
+</div>
+</section></section>
+<section>
+<section id="apriori" class="title-slide slide level1 center">
+<h1>Apriori</h1>
+
+</section>
+<section id="parameters-and-rule-metrics" class="slide level2">
+<h2>Parameters and rule metrics</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Weka Apriori option</th>
+<th>Python equivalent in this notebook</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>car</code></td>
+<td>filter rules so the chosen class attribute is the consequent</td>
+</tr>
+<tr class="even">
+<td><code>lowerBoundMinSupport</code></td>
+<td>lowest <code>min_support</code> tried</td>
+</tr>
+<tr class="odd">
+<td><code>upperBoundMinSupport</code></td>
+<td>first <code>min_support</code> tried</td>
+</tr>
+<tr class="even">
+<td><code>delta</code></td>
+<td>decrement between support rounds</td>
+</tr>
+<tr class="odd">
+<td><code>metricType</code></td>
+<td><code>metric</code> in <code>association_rules</code></td>
+</tr>
+<tr class="even">
+<td><code>minMetric</code></td>
+<td><code>min_threshold</code> in <code>association_rules</code></td>
+</tr>
+<tr class="odd">
+<td><code>numRules</code></td>
+<td>stop once enough rules exist, then return the best ones</td>
+</tr>
+<tr class="even">
+<td><code>outputItemSets</code></td>
+<td>display the frequent-itemset table</td>
+</tr>
+</tbody>
+</table>
+<p>Allowed metrics include confidence, lift, leverage, and conviction. Rules are ordered by the selected metric. For a rule <span class="math inline">\(A \Rightarrow B\)</span>:</p>
+<ul>
+<li><strong>antecedent support</strong> is <span class="math inline">\(s(A)\)</span>;</li>
+<li><strong>consequent support</strong> is <span class="math inline">\(s(B)\)</span>;</li>
+<li><strong>rule support</strong> is <span class="math inline">\(s(A \cup B)\)</span>;</li>
+<li><strong>confidence</strong> is <span class="math inline">\(s(A \cup B) / s(A)\)</span>;</li>
+<li><strong>lift</strong> is <span class="math inline">\(s(A \cup B) / (s(A)s(B))\)</span>.</li>
+</ul>
+<p>Because support is anti-monotone, <span class="math inline">\(s(A \cup B) \leq s(A)\)</span> and <span class="math inline">\(s(A \cup B) \leq s(B)\)</span>.</p>
+</section>
+<section id="default-search-with-decreasing-support" class="slide level2">
+<h2>Default search with decreasing support</h2>
+<p>Start at the upper support bound, decrease it by <code>delta</code>, and stop once ten confidence-qualified rules are available.</p>
+<div id="df027c8e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.288471Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.288471Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.341519Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.341519Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>census_itemsets_10, census_rules_10, census_history_10 <span class="op">=</span> weka_like_search(</span>
+<span id="cb6-2"><a href="" aria-label="2"></a>    census_items,</span>
+<span id="cb6-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
+<span id="cb6-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
+<span id="cb6-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb6-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
+<span id="cb6-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
+<span id="cb6-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb6-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb6-10"><a href="" aria-label="10"></a></span>
+<span id="cb6-11"><a href="" aria-label="11"></a>display(Markdown(<span class="st">"#### Decreasing-support rounds"</span>), census_history_10)</span>
+<span id="cb6-12"><a href="" aria-label="12"></a>display(Markdown(<span class="st">"#### Frequent itemsets at the stopping round"</span>), itemset_table(census_itemsets_10))</span>
+<span id="cb6-13"><a href="" aria-label="13"></a>display(Markdown(<span class="st">"#### Best rules"</span>), readable_rules(census_rules_10))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="reading-antecedent-and-rule-support" class="slide level2">
+<h2>Reading antecedent and rule support</h2>
+<p>The rule support must never exceed either side’s support; the check below verifies the anti-monotone relationship numerically.</p>
+<div id="cbe7d4cb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.341519Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.341519Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.355981Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.355981Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="cf">if</span> <span class="kw">not</span> census_rules_10.empty:</span>
+<span id="cb7-2"><a href="" aria-label="2"></a>    check <span class="op">=</span> census_rules_10.assign(</span>
+<span id="cb7-3"><a href="" aria-label="3"></a>        anti_monotone_ok<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">"support"</span>] <span class="op">&lt;=</span> x[<span class="st">"antecedent support"</span>] <span class="op">+</span> <span class="fl">1e-12</span>)</span>
+<span id="cb7-4"><a href="" aria-label="4"></a>        <span class="op">&amp;</span> (x[<span class="st">"support"</span>] <span class="op">&lt;=</span> x[<span class="st">"consequent support"</span>] <span class="op">+</span> <span class="fl">1e-12</span>)</span>
+<span id="cb7-5"><a href="" aria-label="5"></a>    )[[<span class="st">"antecedent support"</span>, <span class="st">"consequent support"</span>, <span class="st">"support"</span>, <span class="st">"anti_monotone_ok"</span>]]</span>
+<span id="cb7-6"><a href="" aria-label="6"></a>    display(check.<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb7-7"><a href="" aria-label="7"></a>    <span class="cf">assert</span> check[<span class="st">"anti_monotone_ok"</span>].<span class="bu">all</span>()</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="iterative-search-with-decreasing-support" class="slide level2">
+<h2>Iterative search with decreasing support</h2>
+<p>Weka starts at the upper support bound and lowers it by <code>delta</code>. Each round returns rules above <code>minMetric</code>; the cycle stops when it reaches the lower bound or has found <code>numRules</code> rules. Increasing <code>numRules</code> therefore permits more rounds and can reveal lower-support but higher-confidence rules.</p>
+<div id="1c2b6b34" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.355981Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.355981Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.446583Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.446583Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>census_itemsets_100, census_rules_100, census_history_100 <span class="op">=</span> weka_like_search(</span>
+<span id="cb8-2"><a href="" aria-label="2"></a>    census_items,</span>
+<span id="cb8-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
+<span id="cb8-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb8-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
+<span id="cb8-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
+<span id="cb8-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb8-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb8-10"><a href="" aria-label="10"></a></span>
+<span id="cb8-11"><a href="" aria-label="11"></a>display(census_history_100)</span>
+<span id="cb8-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="ss">f"Stopping support: </span><span class="sc">{</span>census_history_100<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>][<span class="st">'min support'</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb8-13"><a href="" aria-label="13"></a><span class="bu">print</span>(<span class="ss">f"Rules returned: </span><span class="sc">{</span><span class="bu">len</span>(census_rules_100)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-14"><a href="" aria-label="14"></a>display(readable_rules(census_rules_100, top<span class="op">=</span><span class="dv">15</span>))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="interpreting-the-100-rule-search" class="slide level2">
+<h2>Interpreting the 100-rule search</h2>
+<p>The first returned rules maximize confidence, even when their support is lower. Limiting the support interval is useful when we want patterns at a particular prevalence and want to avoid rules driven only by extremely common single attributes.</p>
+</section>
+<section id="calibrating-support-for-rules-of-length-3" class="slide level2">
+<h2>Calibrating support for rules of length 3</h2>
+<p>The reference solution suggests a lower support near <strong>0.70</strong>. At that level, only very frequent items survive, so the remaining 3-item sets generate several different rules while longer, rarer combinations disappear.</p>
+<div id="bccf68dd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.446583Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.446583Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.478531Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.478531Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>census_itemsets_70, census_rules_70 <span class="op">=</span> mine_rules(</span>
+<span id="cb9-2"><a href="" aria-label="2"></a>    census_items, min_support<span class="op">=</span><span class="fl">0.70</span>, metric<span class="op">=</span><span class="st">"confidence"</span>, min_metric<span class="op">=</span><span class="fl">0.90</span></span>
+<span id="cb9-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb9-4"><a href="" aria-label="4"></a></span>
+<span id="cb9-5"><a href="" aria-label="5"></a>length_summary_70 <span class="op">=</span> (</span>
+<span id="cb9-6"><a href="" aria-label="6"></a>    census_itemsets_70.assign(length<span class="op">=</span>census_itemsets_70[<span class="st">"itemsets"</span>].<span class="bu">map</span>(<span class="bu">len</span>))</span>
+<span id="cb9-7"><a href="" aria-label="7"></a>    .groupby(<span class="st">"length"</span>).size().rename(<span class="st">"frequent itemsets"</span>).to_frame()</span>
+<span id="cb9-8"><a href="" aria-label="8"></a>)</span>
+<span id="cb9-9"><a href="" aria-label="9"></a>display(length_summary_70)</span>
+<span id="cb9-10"><a href="" aria-label="10"></a><span class="bu">print</span>(<span class="ss">f"Frequent itemsets: </span><span class="sc">{</span><span class="bu">len</span>(census_itemsets_70)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="ss">f"Rules generated: </span><span class="sc">{</span><span class="bu">len</span>(census_rules_70)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-12"><a href="" aria-label="12"></a>display(readable_rules(census_rules_70))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="why-rules-can-outnumber-itemsets" class="slide level2">
+<h2>Why rules can outnumber itemsets</h2>
+<p>Each frequent itemset can produce multiple antecedent/consequent partitions, which is why the number of rules may exceed the number of itemsets. At a high support bound, the search can also stop because no further itemsets satisfy both the support and confidence thresholds.</p>
+</section>
+<section id="rules-for-a-target-attribute-cartrue" class="slide level2">
+<h2>Rules for a target attribute (<code>car=True</code>)</h2>
+<p>Weka’s <code>car=True</code> constrains the chosen class attribute to the consequent. Here the original class (attribute 15 in Python’s one-based counting; Weka may display a zero-based index) is represented by items beginning with <code>class=</code>.</p>
+<div id="9521f186" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.478531Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.478531Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.678256Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.677246Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>car_itemsets, car_rules, car_history <span class="op">=</span> weka_like_search(</span>
+<span id="cb10-2"><a href="" aria-label="2"></a>    census_items,</span>
+<span id="cb10-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
+<span id="cb10-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
+<span id="cb10-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb10-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
+<span id="cb10-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
+<span id="cb10-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb10-9"><a href="" aria-label="9"></a>    consequent_prefix<span class="op">=</span><span class="st">"class="</span>,</span>
+<span id="cb10-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb10-11"><a href="" aria-label="11"></a></span>
+<span id="cb10-12"><a href="" aria-label="12"></a>display(car_history)</span>
+<span id="cb10-13"><a href="" aria-label="13"></a>display(readable_rules(car_rules))</span>
+<span id="cb10-14"><a href="" aria-label="14"></a><span class="cf">if</span> <span class="kw">not</span> car_rules.empty:</span>
+<span id="cb10-15"><a href="" aria-label="15"></a>    display(car_rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(item_label).value_counts().to_frame(<span class="st">"rules"</span>))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="interpreting-class-association-rules" class="slide level2">
+<h2>Interpreting class-association rules</h2>
+<p>All returned rules have income class as the consequent. The dominant consequent is <code>class=&lt;=50K</code>, because that is by far the more frequent class in this sample. Weka-style CAR search constrains the <em>attribute</em>, not a specific value; filtering to one value is an additional step:</p>
+<div id="afbaf4ed" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.679257Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.679257Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.688166Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.687155Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>target_over_50k <span class="op">=</span> car_rules[</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>    car_rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> values: <span class="st">"class=&gt;50K"</span> <span class="kw">in</span> values)</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>]</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>display(readable_rules(target_over_50k))</span></code></pre></div>
+</details>
+</div>
+</section></section>
+<section>
+<section id="market-basket-analysis" class="title-slide slide level1 center">
+<h1>Market Basket Analysis</h1>
+
+</section>
+<section id="dataset-overview-1" class="slide level2">
+<h2>Dataset overview</h2>
+<p>Market Basket Analysis identifies buying habits that can inform promotions, shelf placement, and advertising. <code>MarketBasket.arff</code> contains 651 transactions and 56 binary product attributes.</p>
+<p>The local file uses Weka’s dense asymmetric encoding: <code>t</code> means purchased, while <code>f</code> or <code>?</code> means absent. Treating absence as a regular item would produce unhelpful rules about products <em>not</em> being bought, so only <code>t</code> becomes <code>True</code> in the transaction matrix.</p>
+<div id="d8d12299" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.690177Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.689165Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:30.755980Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:30.755980Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>market_raw, market_meta <span class="op">=</span> load_arff_frame(<span class="st">"MarketBasket.arff"</span>)</span>
+<span id="cb12-2"><a href="" aria-label="2"></a>market_raw.columns <span class="op">=</span> market_raw.columns.<span class="bu">str</span>.strip()</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>market <span class="op">=</span> market_raw.eq(<span class="st">"t"</span>).astype(<span class="bu">bool</span>)</span>
+<span id="cb12-4"><a href="" aria-label="4"></a></span>
+<span id="cb12-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="ss">f"Instances: </span><span class="sc">{</span><span class="bu">len</span>(market)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb12-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Products: </span><span class="sc">{</span>market<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-7"><a href="" aria-label="7"></a><span class="bu">print</span>(<span class="ss">f"Average products per transaction: </span><span class="sc">{</span>market<span class="sc">.</span><span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb12-8"><a href="" aria-label="8"></a>display(market.head())</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="dense-and-sparse-arff-formats" class="slide level2">
+<h2>Dense and sparse ARFF formats</h2>
+<p>With one attribute per product, each row is a transaction. Weka supports:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb13-1"><a href="" aria-label="1"></a>% Dense: missing means not purchased</span>
+<span id="cb13-2"><a href="" aria-label="2"></a>@attribute product1 {t}</span>
+<span id="cb13-3"><a href="" aria-label="3"></a>@attribute product2 {t}</span>
+<span id="cb13-4"><a href="" aria-label="4"></a>@data</span>
+<span id="cb13-5"><a href="" aria-label="5"></a>?,t</span>
+<span id="cb13-6"><a href="" aria-label="6"></a>t,?</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb14-1"><a href="" aria-label="1"></a>% Sparse: include only purchased product index/value pairs</span>
+<span id="cb14-2"><a href="" aria-label="2"></a>@attribute product1 {f,t}</span>
+<span id="cb14-3"><a href="" aria-label="3"></a>@attribute product2 {f,t}</span>
+<span id="cb14-4"><a href="" aria-label="4"></a>@data</span>
+<span id="cb14-5"><a href="" aria-label="5"></a>{1 t}</span>
+<span id="cb14-6"><a href="" aria-label="6"></a>{0 t, 1 t}</span></code></pre></div>
+<p>Both map to the same Boolean transaction matrix used below.</p>
+</section>
+<section id="threshold-experiments" class="slide level2">
+<h2>Threshold experiments</h2>
+<p>We reproduce the threshold experiments from the reference:</p>
+<ol type="1">
+<li>default-like settings: support 0.10, 10 rules, confidence 0.90;</li>
+<li>support 0.01, confidence 0.90;</li>
+<li>support 0.05, confidence 0.90;</li>
+<li>support 0.05, confidence 0.70.</li>
+</ol>
+<div id="e9b7baed" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:30.755980Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:30.755980Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:33.266723Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:33.266723Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>market_experiments <span class="op">=</span> []</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>market_results <span class="op">=</span> {}</span>
+<span id="cb15-3"><a href="" aria-label="3"></a></span>
+<span id="cb15-4"><a href="" aria-label="4"></a><span class="cf">for</span> min_support, min_confidence <span class="kw">in</span> [(<span class="fl">0.10</span>, <span class="fl">0.90</span>), (<span class="fl">0.01</span>, <span class="fl">0.90</span>), (<span class="fl">0.05</span>, <span class="fl">0.90</span>), (<span class="fl">0.05</span>, <span class="fl">0.70</span>)]:</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>    itemsets, rules <span class="op">=</span> mine_rules(</span>
+<span id="cb15-6"><a href="" aria-label="6"></a>        market, min_support<span class="op">=</span>min_support, metric<span class="op">=</span><span class="st">"confidence"</span>, min_metric<span class="op">=</span>min_confidence</span>
+<span id="cb15-7"><a href="" aria-label="7"></a>    )</span>
+<span id="cb15-8"><a href="" aria-label="8"></a>    key <span class="op">=</span> (min_support, min_confidence)</span>
+<span id="cb15-9"><a href="" aria-label="9"></a>    market_results[key] <span class="op">=</span> (itemsets, rules)</span>
+<span id="cb15-10"><a href="" aria-label="10"></a>    market_experiments.append({</span>
+<span id="cb15-11"><a href="" aria-label="11"></a>        <span class="st">"min support"</span>: min_support,</span>
+<span id="cb15-12"><a href="" aria-label="12"></a>        <span class="st">"min confidence"</span>: min_confidence,</span>
+<span id="cb15-13"><a href="" aria-label="13"></a>        <span class="st">"frequent itemsets"</span>: <span class="bu">len</span>(itemsets),</span>
+<span id="cb15-14"><a href="" aria-label="14"></a>        <span class="st">"maximum itemset length"</span>: <span class="bu">int</span>(itemsets[<span class="st">"itemsets"</span>].<span class="bu">map</span>(<span class="bu">len</span>).<span class="bu">max</span>()) <span class="cf">if</span> <span class="bu">len</span>(itemsets) <span class="cf">else</span> <span class="dv">0</span>,</span>
+<span id="cb15-15"><a href="" aria-label="15"></a>        <span class="st">"rules"</span>: <span class="bu">len</span>(rules),</span>
+<span id="cb15-16"><a href="" aria-label="16"></a>    })</span>
+<span id="cb15-17"><a href="" aria-label="17"></a></span>
+<span id="cb15-18"><a href="" aria-label="18"></a>market_experiments <span class="op">=</span> pd.DataFrame(market_experiments)</span>
+<span id="cb15-19"><a href="" aria-label="19"></a>display(market_experiments)</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="rules-returned-by-each-threshold" class="slide level2">
+<h2>Rules returned by each threshold</h2>
+<p>Compare the highest-ranked rules after changing minimum support and minimum confidence.</p>
+<div id="bb767a26" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:33.269784Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:33.269247Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:33.385609Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:33.385609Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="cf">for</span> key <span class="kw">in</span> market_results:</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>    min_support, min_confidence <span class="op">=</span> key</span>
+<span id="cb16-3"><a href="" aria-label="3"></a>    itemsets, rules <span class="op">=</span> market_results[key]</span>
+<span id="cb16-4"><a href="" aria-label="4"></a>    display(Markdown(<span class="ss">f"#### support=</span><span class="sc">{</span>min_support<span class="sc">:.2f}</span><span class="ss">, confidence=</span><span class="sc">{</span>min_confidence<span class="sc">:.2f}</span><span class="ss">"</span>))</span>
+<span id="cb16-5"><a href="" aria-label="5"></a>    <span class="cf">if</span> rules.empty:</span>
+<span id="cb16-6"><a href="" aria-label="6"></a>        <span class="bu">print</span>(<span class="st">"No association rules found."</span>)</span>
+<span id="cb16-7"><a href="" aria-label="7"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-8"><a href="" aria-label="8"></a>        display(readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="interpreting-the-threshold-experiments" class="slide level2">
+<h2>Interpreting the threshold experiments</h2>
+<p>At support 0.10 the frequent-itemset collection is short and no rule reaches 0.90 confidence. Lowering support to 0.01 admits long, rare combinations; their small antecedent counts make confidence 1 possible by chance. At support 0.05, confidence 0.90 is still too strict. Reducing confidence to 0.70 yields shorter, better-supported rules, but confidence alone still favors very common consequent products.</p>
+</section>
+<section id="why-confidence-can-be-misleading" class="slide level2">
+<h2>Why confidence can be misleading</h2>
+<p>Frequently purchased staples can appear in high-confidence rules even without a strong association. The reference highlights 2% milk, eggs, cola, and white bread.</p>
+<div id="447b32a1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:33.388211Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:33.388211Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:33.567100Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:33.567100Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>staples <span class="op">=</span> [<span class="st">"2pct. Milk"</span>, <span class="st">"Eggs"</span>, <span class="st">"Cola"</span>, <span class="st">"White Bread"</span>]</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>staple_support <span class="op">=</span> market[staples].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>).to_frame(<span class="st">"support"</span>)</span>
+<span id="cb17-3"><a href="" aria-label="3"></a>display(staple_support.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb17-4"><a href="" aria-label="4"></a></span>
+<span id="cb17-5"><a href="" aria-label="5"></a>ax <span class="op">=</span> staple_support.sort_values(<span class="st">"support"</span>).plot.barh(legend<span class="op">=</span><span class="va">False</span>, color<span class="op">=</span><span class="st">"#4C9BC6"</span>)</span>
+<span id="cb17-6"><a href="" aria-label="6"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"support"</span>, ylabel<span class="op">=</span><span class="st">""</span>, title<span class="op">=</span><span class="st">"Support of frequently purchased products"</span>)</span>
+<span id="cb17-7"><a href="" aria-label="7"></a>plt.show()</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="from-frequent-staples-to-target-rules" class="slide level2">
+<h2>From frequent staples to target rules</h2>
+<p>These products are bought often regardless of other items. Rare combinations can therefore imply a staple with high confidence while having very low support. Raising support removes many accidental combinations, but we then need to accept lower confidence and shorter patterns.</p>
+</section>
+<section id="rules-with-a-specific-consequent-eggs" class="slide level2">
+<h2>Rules with a specific consequent: Eggs</h2>
+<p>To imitate a target-item search, retain only rules whose consequent is exactly <code>Eggs</code>. The high-confidence rules are based on small joint counts, confirming that eggs are frequent but not tightly linked to one particular basket.</p>
+<div id="3accd282" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:33.567100Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:33.567100Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:33.614167Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:33.614167Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>market_itemsets_01, market_rules_01 <span class="op">=</span> market_results[(<span class="fl">0.01</span>, <span class="fl">0.90</span>)]</span>
+<span id="cb18-2"><a href="" aria-label="2"></a>egg_rules <span class="op">=</span> market_rules_01[</span>
+<span id="cb18-3"><a href="" aria-label="3"></a>    market_rules_01[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> values: values <span class="op">==</span> <span class="bu">frozenset</span>({<span class="st">"Eggs"</span>}))</span>
+<span id="cb18-4"><a href="" aria-label="4"></a>].copy()</span>
+<span id="cb18-5"><a href="" aria-label="5"></a></span>
+<span id="cb18-6"><a href="" aria-label="6"></a>display(readable_rules(egg_rules, top<span class="op">=</span><span class="dv">15</span>))</span></code></pre></div>
+</details>
+</div>
+</section></section>
+<section>
+<section id="lift" class="title-slide slide level1 center">
+<h1>Lift</h1>
+
+</section>
+<section id="use-lift-to-reveal-correlation" class="slide level2">
+<h2>Use lift to reveal correlation</h2>
+<p>Confidence <span class="math inline">\(P(B\mid A)\)</span> does not correct for how common <span class="math inline">\(B\)</span> already is. Lift does:</p>
+<p><span class="math display">\[
+\operatorname{lift}(A \Rightarrow B) = \frac{P(A \cap B)}{P(A)P(B)}
+\]</span></p>
+<ul>
+<li>lift <span class="math inline">\(&gt;1\)</span>: positive association;</li>
+<li>lift <span class="math inline">\(=1\)</span>: independence;</li>
+<li>lift <span class="math inline">\(&lt;1\)</span>: negative association.</li>
+</ul>
+<p>Using support 0.10 keeps the comparison focused on well-supported product pairs.</p>
+<div id="278f820e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:33.614167Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:33.614167Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:33.641163Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:33.640581Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>market_itemsets_lift, market_rules_lift <span class="op">=</span> mine_rules(</span>
+<span id="cb19-2"><a href="" aria-label="2"></a>    market, min_support<span class="op">=</span><span class="fl">0.10</span>, metric<span class="op">=</span><span class="st">"lift"</span>, min_metric<span class="op">=</span><span class="fl">1.0</span></span>
+<span id="cb19-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb19-4"><a href="" aria-label="4"></a></span>
+<span id="cb19-5"><a href="" aria-label="5"></a>display(readable_rules(market_rules_lift, top<span class="op">=</span><span class="dv">15</span>))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="hamburger-buns-fat-free-hamburger-and-white-bread" class="slide level2">
+<h2>Hamburger buns, fat-free hamburger, and white bread</h2>
+<p>The strongest lifted pair is <code>98pct. Fat Free Hamburger</code> with <code>Hamburger Buns</code>; fat-free hamburger is also positively associated with <code>White Bread</code>. We now inspect the exact counts, including the three-way overlap that is hidden by pairwise rules.</p>
+<div id="ff084ecd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:33.643260Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:33.643260Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:33.658830Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:33.658830Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>hamburger <span class="op">=</span> <span class="st">"98pct. Fat Free Hamburger"</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a>buns <span class="op">=</span> <span class="st">"Hamburger Buns"</span></span>
+<span id="cb20-3"><a href="" aria-label="3"></a>bread <span class="op">=</span> <span class="st">"White Bread"</span></span>
+<span id="cb20-4"><a href="" aria-label="4"></a></span>
+<span id="cb20-5"><a href="" aria-label="5"></a>counts <span class="op">=</span> pd.Series({</span>
+<span id="cb20-6"><a href="" aria-label="6"></a>    <span class="st">"Hamburger"</span>: <span class="bu">int</span>(market[hamburger].<span class="bu">sum</span>()),</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>    <span class="st">"Buns"</span>: <span class="bu">int</span>(market[buns].<span class="bu">sum</span>()),</span>
+<span id="cb20-8"><a href="" aria-label="8"></a>    <span class="st">"White bread"</span>: <span class="bu">int</span>(market[bread].<span class="bu">sum</span>()),</span>
+<span id="cb20-9"><a href="" aria-label="9"></a>    <span class="st">"Hamburger and buns"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[buns]).<span class="bu">sum</span>()),</span>
+<span id="cb20-10"><a href="" aria-label="10"></a>    <span class="st">"Hamburger and white bread"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[bread]).<span class="bu">sum</span>()),</span>
+<span id="cb20-11"><a href="" aria-label="11"></a>    <span class="st">"Hamburger, buns, and white bread"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[buns] <span class="op">&amp;</span> market[bread]).<span class="bu">sum</span>()),</span>
+<span id="cb20-12"><a href="" aria-label="12"></a>}, name<span class="op">=</span><span class="st">"transactions"</span>)</span>
+<span id="cb20-13"><a href="" aria-label="13"></a>display(counts.to_frame())</span>
+<span id="cb20-14"><a href="" aria-label="14"></a></span>
+<span id="cb20-15"><a href="" aria-label="15"></a>hamburger_baskets <span class="op">=</span> market.loc[market[hamburger], [buns, bread]]</span>
+<span id="cb20-16"><a href="" aria-label="16"></a>choice_table <span class="op">=</span> (</span>
+<span id="cb20-17"><a href="" aria-label="17"></a>    hamburger_baskets.value_counts()</span>
+<span id="cb20-18"><a href="" aria-label="18"></a>    .rename(<span class="st">"transactions"</span>)</span>
+<span id="cb20-19"><a href="" aria-label="19"></a>    .rename_axis([<span class="st">"buys buns"</span>, <span class="st">"buys white bread"</span>])</span>
+<span id="cb20-20"><a href="" aria-label="20"></a>    .to_frame()</span>
+<span id="cb20-21"><a href="" aria-label="21"></a>)</span>
+<span id="cb20-22"><a href="" aria-label="22"></a>display(choice_table)</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="pairwise-lift-rules-for-the-three-products" class="slide level2">
+<h2>Pairwise lift rules for the three products</h2>
+<p>Filter the lifted rules to the hamburger, buns, and white-bread subset before interpreting the relationship.</p>
+<div id="943821d8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-06T15:31:33.658830Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-06T15:31:33.658830Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-06T15:31:33.675572Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-06T15:31:33.674573Z&quot;}}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>focus_rules <span class="op">=</span> market_rules_lift[</span>
+<span id="cb21-2"><a href="" aria-label="2"></a>    market_rules_lift[<span class="st">"antecedents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> s: s.issubset({hamburger, buns, bread}))</span>
+<span id="cb21-3"><a href="" aria-label="3"></a>    <span class="op">&amp;</span> market_rules_lift[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> s: s.issubset({hamburger, buns, bread}))</span>
+<span id="cb21-4"><a href="" aria-label="4"></a>]</span>
+<span id="cb21-5"><a href="" aria-label="5"></a>display(readable_rules(focus_rules))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="solution-and-caveat" class="slide level2">
+<h2>Solution and caveat</h2>
+<p><strong>Solution.</strong> Buyers of the fat-free hamburger often pair it with either white bread or hamburger buns, and both pairwise associations have lift well above 1. The three-way combination has support only <span class="math inline">\(36/651 \approx 0.055\)</span>, so it is absent from the itemsets at the chosen 0.10 support threshold. This supports the slide’s interpretation of the two bread products as alternatives at that threshold, but the direct count also shows that they are <strong>not literally mutually exclusive</strong>. Pairwise rules alone cannot establish exclusivity.</p>
+</section></section>
+<section>
+<section id="takeaways" class="title-slide slide level1 center">
+<h1>Takeaways</h1>
+
+</section>
+<section id="association-rule-checklist" class="slide level2">
+<h2>Association-rule checklist</h2>
+<ul>
+<li>Apriori exploits the anti-monotone property of support to prune itemsets.</li>
+<li>Weka’s decreasing-support loop can be reproduced by repeated <code>mlxtend</code> Apriori calls.</li>
+<li>High confidence is not automatically interesting when the consequent is already common.</li>
+<li>Support controls prevalence; confidence controls conditional reliability; lift measures departure from independence.</li>
+<li>Target-consequent filtering reproduces class association rules, but specifying one target value requires an extra filter.</li>
+<li>Inspect the original counts before turning pairwise rules into a business conclusion.</li>
+</ul>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Matteo Francia - Machine Learning and Data Mining (Module I) - A.Y. 2026/27</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lab-05-association-rules_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lab-05-association-rules_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
