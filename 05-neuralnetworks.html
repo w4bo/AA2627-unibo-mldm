@@ -213,6 +213,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="05-neuralnetworks_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="05-neuralnetworks_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="05-neuralnetworks_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -220,7 +223,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Machine Learning and Data Mining (Module I)</h1>
-  <p class="subtitle">Modeling: Neural Networks</p>
+  <p class="subtitle">Neural Networks</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -817,18 +820,20 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="gradient-descent" class="title-slide slide level1 center">
 <h1>Gradient descent</h1>
-<p><strong>Gradient descent</strong> is a method for unconstrained mathematical optimization.</p>
+<p><strong>Gradient descent</strong> is the rule used to improve the network parameters after we know the direction in which the loss increases.</p>
 <ul>
-<li>It is a first-order iterative algorithm for minimizing a differentiable multivariate function <span class="math inline">\(F(\mathbf {x} )\)</span>.</li>
-<li>Take repeated steps in the opposite direction of the gradient of <span class="math inline">\(F(\mathbf {x})\)</span> at the current point: the direction of steepest descent.</li>
-<li>Conversely, stepping in the direction of the gradient will lead to a trajectory that maximizes that function (gradient ascent)</li>
+<li>The <strong>gradient</strong> tells how the loss changes if each parameter changes a little</li>
+<li>To reduce the loss, move parameters in the opposite direction</li>
+<li>The <strong>learning rate</strong> <span class="math inline">\(\eta\)</span> controls how large each move is</li>
+<li>In a neural network, the parameters are the weights and biases</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:75%;">
-<p>If <span class="math inline">\(F(\mathbf {x})\)</span> is defined and differentiable in a neighborhood of a point <span class="math inline">\(\mathbf {a}\)</span>, then</p>
-<p><span class="math inline">\(F(\mathbf {x} )\)</span> decreases fastest in the direction of the negative gradient of <span class="math inline">\(F\)</span> at <span class="math inline">\(\mathbf {a}\)</span>, that is <span class="math inline">\(-\nabla F(\mathbf {a} )\)</span>.</p>
-<p>It follows that, if <span class="math inline">\(\mathbf {a} _{n+1}=\mathbf {a} _{n}-\eta \nabla F(\mathbf {a} _{n})\)</span></p>
-<p>For a small enough step size or learning rate <span class="math inline">\(\eta \in \mathbb {R} _{+}\)</span>, then <span class="math inline">\(F(\mathbf {a_{n}} ) \geq F(\mathbf {a_{n+1}})\)</span></p>
+<p>If <span class="math inline">\(J(\Theta)\)</span> is the loss and <span class="math inline">\(\Theta\)</span> contains all weights and biases, one update is:</p>
+<p><span class="math display">\[
+\Theta_{\text{new}}=\Theta_{\text{old}}-\eta\nabla J(\Theta_{\text{old}})
+\]</span></p>
+<p>Intuition: if increasing a weight increases the loss, gradient descent decreases that weight.</p>
 </div><div class="column" style="width:25%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -847,10 +852,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ol type="1">
 <li>Start with random initial values for parameters (weights and biases)</li>
 <li>Use the current parameters to compute predictions on the training data</li>
-<li>Compute the cost function</li>
-<li>Calculate the gradient of the cost function with respect to each parameter <span class="math inline">\(\nabla J(\Theta)\)</span></li>
-<li>Adjust each parameter in the opposite direction of the gradient. <span class="math inline">\(\Theta = \Theta−\eta \cdot \nabla J(\Theta)\)</span></li>
-<li>Repeat steps 2–5 for each <em>epoch (i.e., iteration over the entire dataset)</em> until the cost function converges to a minimum or reaches a predefined number of epochs</li>
+<li>Compute the loss: how far predictions are from targets</li>
+<li>Compute the gradient of the loss with respect to each parameter <span class="math inline">\(\nabla J(\Theta)\)</span></li>
+<li>Adjust each parameter in the opposite direction of the gradient: <span class="math inline">\(\Theta = \Theta-\eta \cdot \nabla J(\Theta)\)</span></li>
+<li>Repeat steps 2-5 for each <em>epoch (i.e., iteration over the entire dataset)</em> until the loss converges or reaches a predefined number of epochs</li>
 </ol>
 </div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
@@ -960,22 +965,23 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="backpropagation" class="title-slide slide level1 center">
 <h1>Backpropagation</h1>
-<p><strong>Backpropagation</strong> (i.e., <em>backward propagation of errors</em>) propagates the error to the input of a ANN</p>
+<p><strong>Backpropagation</strong> (i.e., <em>backward propagation of errors</em>) is the algorithm used to compute all gradients in a neural network.</p>
 <ul>
-<li>We cannot directly compute the derivative of the loss function with respect to the outputs of the network</li>
-<li>Backpropagation is a local process: neurons are completely unaware of the complete topology of the network</li>
-<li>Apply the <em>chain rule</em> to propagate the derivative of the loss function up to the inputs of the network</li>
+<li>The output error is easy to measure: compare <span class="math inline">\(\hat{y}\)</span> with <span class="math inline">\(y\)</span></li>
+<li>The difficult part is assigning responsibility to hidden weights that affected the output indirectly</li>
+<li>Backpropagation sends an <strong>error signal</strong> backward, layer by layer</li>
+<li>At each layer, the <strong>chain rule</strong> converts that signal into gradients for local weights and biases</li>
 </ul>
 
 <img data-src="./img/neuralnetworks/3%20Model74.png" class="r-stretch quarto-figure-center"><p class="caption">Chain rule</p><ul>
-<li>The introduction of backpropagation has been fundamental in training DNNs!</li>
+<li>Gradient descent uses these gradients to update the parameters</li>
 <li>The delta rule is a special case of the more general backpropagation algorithm</li>
 </ul>
 </section>
 
 <section id="backpropagation-1" class="title-slide slide level1 center">
 <h1>Backpropagation</h1>
-<p>Steps</p>
+<p>Training step for one batch:</p>
 <ol type="1">
 <li><em>Forward Pass</em>: the network takes input data, computes outputs layer by layer, and calculates a final prediction.
 <ul>
@@ -983,66 +989,338 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul></li>
 <li><em>Loss Calculation</em>: the loss function quantifies the difference between the predicted output and the true output.
 <ul>
-<li>Given an input–output pair (x, y), it is <span class="math inline">\(C(y_i, \hat{y_i}) = C(y,f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{2}(W^{2}f^{1}(W^{1}x))\cdots )))\)</span></li>
+<li>Given an input-output pair (x, y), it is <span class="math inline">\(C(y_i, \hat{y_i}) = C(y,f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{2}(W^{2}f^{1}(W^{1}x))\cdots )))\)</span></li>
 </ul></li>
 <li><em>Backward Pass</em>: gradients are computed by propagating the error backward to each layer in the network, using the <em>chain rule</em></li>
 <li><em>Parameter Update</em>: using gradient descent, each parameter (weight and bias) is updated to reduce the error.</li>
 </ol>
-<p>The <strong>chain rule</strong> is used to differentiate composite functions.</p>
+<p>The <strong>chain rule</strong> tells us how to differentiate composite functions: functions made by applying one transformation after another.</p>
 <ul>
-<li>Given two functions <span class="math inline">\(f()\)</span> and <span class="math inline">\(g()\)</span> and <span class="math inline">\(y=f(g(x))\)</span>, the chain rule states that <span class="math inline">\(\frac{\delta y}{\delta x} = \frac{\delta y}{\delta g} \cdot \frac{\delta g}{\delta x}\)</span></li>
+<li>Given two functions <span class="math inline">\(f()\)</span> and <span class="math inline">\(g()\)</span>, if <span class="math inline">\(y=f(g(x))\)</span>, then <span class="math inline">\(\frac{\partial y}{\partial x} = \frac{\partial y}{\partial g} \cdot \frac{\partial g}{\partial x}\)</span></li>
+<li>In a neural network, each layer is one transformation, so the loss is a long composition of transformations</li>
 </ul>
 <p>For instance, given <span class="math inline">\(y = sin(x^2)\)</span>, it is:</p>
 <ul>
-<li><span class="math inline">\(\frac{\delta y}{\delta g} = cos(g)\)</span>; <span class="math inline">\(\frac{\delta g}{\delta x} = 2x\)</span>; finally, <span class="math inline">\(\frac{\delta y}{\delta x} = cos(x^2) \cdot 2x\)</span></li>
+<li>Let <span class="math inline">\(g=x^2\)</span>; then <span class="math inline">\(y=\sin(g)\)</span></li>
+<li><span class="math inline">\(\frac{\partial y}{\partial g} = \cos(g)\)</span> and <span class="math inline">\(\frac{\partial g}{\partial x} = 2x\)</span></li>
+<li>Therefore, <span class="math inline">\(\frac{\partial y}{\partial x} = \cos(x^2)\cdot 2x\)</span></li>
 </ul>
 </section>
 
-<section id="backpropagation-2" class="title-slide slide level1 center">
-<h1>Backpropagation</h1>
-<p>The problem with DNNs is that we have hidden layers, and the loss functions depend on “hidden parameters” <span class="math inline">\(𝑤\)</span></p>
+<section id="toy-example-learning-and" class="title-slide slide level1 center">
+<h1>Toy example: learning AND</h1>
+<p>Goal: train a very small differentiable network to learn the Boolean function <strong>AND</strong>.</p>
+<p>For the training example <span class="math inline">\((x_1,x_2)=(1,1)\)</span>, the desired output is <span class="math inline">\(y=1\)</span>.</p>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    X1(("x1"))
+    X2(("x2"))
+    H1(("h1"))
+    H2(("h2"))
+    YH(("y_hat"))
+    Y(("y"))
+    C(("loss"))
 
-<img data-src="./img/neuralnetworks/3%20Model73.png" class="r-stretch quarto-figure-center"><p class="caption">Chain rule</p><p><span class="math inline">\(C(y,f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{2}(W^{2}f^{1}(W^{1}x))\cdots )))\)</span></p>
+    X1 -- "w11" --&gt; H1
+    X2 -- "w12" --&gt; H1
+    H1 -- "w21" --&gt; H2
+    H2 -- "w31" --&gt; YH
+    YH --&gt; C
+    Y --&gt; C
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Model</strong></p>
 <ul>
-<li><span class="math inline">\(x\)</span> is the input;</li>
-<li><span class="math inline">\(z^{l}\)</span> is the weighted input of each hidden layer</li>
-<li><span class="math inline">\(a^{l}\)</span> is the output of hidden layer <span class="math inline">\(l\)</span></li>
+<li><span class="math inline">\(h_1=\sigma(w_{11}x_1+w_{12}x_2+b_1)\)</span></li>
+<li><span class="math inline">\(h_2=\sigma(w_{21}h_1+b_2)\)</span></li>
+<li><span class="math inline">\(\hat{y}=\sigma(w_{31}h_2+b_3)\)</span></li>
 </ul>
-<p>Finally, the derivative is <span class="math inline">\(\frac {dC}{da^{L}} \cdot {\frac {da^{L}}{dz^{L}}}\cdot {\frac {dz^{L}}{da^{L-1}}}\cdot {\frac {da^{L-1}}{dz^{L-1}}}\cdot {\frac {dz^{L-1}}{da^{L-2}}}\cdot \ldots \cdot {\frac {da^{1}}{dz^{1}}}\cdot {\frac {\partial z^{1}}{\partial x}}\)</span></p>
+</div><div class="column" style="width:50%;">
+<p><strong>Initial parameters</strong></p>
+<ul>
+<li><span class="math inline">\(w_{11}=1,\; w_{12}=1,\; b_1=-3\)</span></li>
+<li><span class="math inline">\(w_{21}=1,\; b_2=-1\)</span></li>
+<li><span class="math inline">\(w_{31}=1,\; b_3=-1\)</span></li>
+<li><span class="math inline">\(C=\frac{1}{2}(\hat{y}-y)^2\)</span></li>
+</ul>
+</div></div>
+</section>
+
+<section id="toy-example-wrong-prediction" class="title-slide slide level1 center">
+<h1>Toy example: wrong prediction</h1>
+<p>Before training, the network predicts too low for <span class="math inline">\((1,1)\rightarrow1\)</span>.</p>
+<ul>
+<li><span class="math inline">\(z_1=1+1-3=-1\)</span>, so <span class="math inline">\(h_1=\sigma(-1)=0.269\)</span></li>
+<li><span class="math inline">\(z_2=1\cdot0.269-1=-0.731\)</span>, so <span class="math inline">\(h_2=\sigma(-0.731)=0.325\)</span></li>
+<li><span class="math inline">\(z_3=1\cdot0.325-1=-0.675\)</span>, so <span class="math inline">\(\hat{y}=\sigma(-0.675)=0.337\)</span></li>
+<li>With threshold <span class="math inline">\(0.5\)</span>, the network predicts <strong>0</strong></li>
+<li>The correct target is <span class="math inline">\(y=1\)</span>, so the prediction must increase</li>
+</ul>
+</section>
+
+<section id="toy-example-derivative-pieces" class="title-slide slide level1 center">
+<h1>Toy example: derivative pieces</h1>
+<p>Backpropagation answers one question: <strong>which parameters are responsible for the error, and by how much?</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Local derivative rules</strong></p>
+<ul>
+<li>Loss: <span class="math inline">\(C=\frac{1}{2}(\hat{y}-y)^2\)</span>
+<ul>
+<li><span class="math inline">\(\frac{\partial C}{\partial \hat{y}}=\hat{y}-y\)</span></li>
+</ul></li>
+<li>Sigmoid: <span class="math inline">\(a=\sigma(z)\)</span>
+<ul>
+<li><span class="math inline">\(\frac{\partial a}{\partial z}=a(1-a)\)</span></li>
+</ul></li>
+<li>Weighted sum: <span class="math inline">\(z=wa+b\)</span>
+<ul>
+<li><span class="math inline">\(\frac{\partial z}{\partial w}=a\)</span></li>
+<li><span class="math inline">\(\frac{\partial z}{\partial b}=1\)</span></li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Layer 3 uses <span class="math inline">\(h_2\)</span> as its input</strong></p>
+<p><span class="math inline">\(h_2\)</span> is not a replacement for <span class="math inline">\(wx+b\)</span>.</p>
+<p><span class="math display">\[
+h_2=\sigma(z_2)
+\quad\rightarrow\quad
+z_3=w_{31}h_2+b_3
+\quad\rightarrow\quad
+\hat{y}=\sigma(z_3)
+\]</span></p>
+<p>It is the value entering the next neuron, so:</p>
+<p><span class="math display">\[
+\frac{\partial z_3}{\partial w_{31}}
+=
+\frac{\partial (w_{31}h_2+b_3)}{\partial w_{31}}
+=h_2
+\]</span></p>
+</div></div>
+</section>
+
+<section id="toy-example-chain-rule" class="title-slide slide level1 center">
+<h1>Toy example: chain rule</h1>
+<p>Each weight affects the loss through a path. The chain rule multiplies the derivatives along that path.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Output weight</strong></p>
+<p><span class="math inline">\(w_{31}\rightarrow z_3\rightarrow \hat{y}\rightarrow C\)</span></p>
+<p><span class="math display">\[
+\frac{\partial C}{\partial w_{31}}
+=
+\frac{\partial C}{\partial \hat{y}}
+\cdot
+\frac{\partial \hat{y}}{\partial z_3}
+\cdot
+\frac{\partial z_3}{\partial w_{31}}
+\]</span></p>
+<p><span class="math display">\[
+=
+\underbrace{(\hat{y}-y)}_{\frac{\partial C}{\partial \hat{y}}}
+\cdot
+\underbrace{\hat{y}(1-\hat{y})}_{\frac{\partial \hat{y}}{\partial z_3}}
+\cdot
+\underbrace{h_2}_{\frac{\partial z_3}{\partial w_{31}}}
+\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><strong>First-layer weight</strong></p>
+<p><span class="math display">\[
+w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\rightarrow z_3\rightarrow \hat{y}\rightarrow C
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial C}{\partial w_{11}}
+&amp;=
+\frac{\partial C}{\partial \hat{y}}
+\cdot
+\frac{\partial \hat{y}}{\partial z_3}
+\cdot
+\frac{\partial z_3}{\partial h_2}
+\cdot
+\frac{\partial h_2}{\partial z_2} \\
+&amp;\quad \cdot
+\frac{\partial z_2}{\partial h_1}
+\cdot
+\frac{\partial h_1}{\partial z_1}
+\cdot
+\frac{\partial z_1}{\partial w_{11}}
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial C}{\partial w_{11}}
+&amp;=
+\underbrace{(\hat{y}-y)}_{\frac{\partial C}{\partial \hat{y}}}
+\cdot
+\underbrace{\hat{y}(1-\hat{y})}_{\frac{\partial \hat{y}}{\partial z_3}}
+\cdot
+\underbrace{w_{31}}_{\frac{\partial z_3}{\partial h_2}} \\
+&amp;\quad \cdot
+\underbrace{h_2(1-h_2)}_{\frac{\partial h_2}{\partial z_2}}
+\cdot
+\underbrace{w_{21}}_{\frac{\partial z_2}{\partial h_1}}
+\cdot
+\underbrace{h_1(1-h_1)}_{\frac{\partial h_1}{\partial z_1}}
+\cdot
+\underbrace{x_1}_{\frac{\partial z_1}{\partial w_{11}}}
+\end{aligned}
+\]</span></p>
+<p>For <span class="math inline">\(w_{12}\)</span>, only the last factor changes:</p>
+<p><span class="math display">\[
+\frac{\partial C}{\partial w_{12}}=\delta_1x_2
+\quad\text{where}\quad
+\delta_1=\frac{\partial C}{\partial z_1}
+\]</span></p>
+</div></div>
+</section>
+
+<section id="toy-example-numeric-backpropagation" class="title-slide slide level1 center">
+<h1>Toy example: numeric backpropagation</h1>
+<p>Now plug in the values. Each <span class="math inline">\(\delta_l=\frac{\partial C}{\partial z_l}\)</span> is the error signal arriving at layer <span class="math inline">\(l\)</span>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Output layer</strong></p>
+<ul>
+<li><span class="math inline">\(\delta_3=\frac{\partial C}{\partial z_3}=(\hat{y}-y)\hat{y}(1-\hat{y})\)</span>
+<ul>
+<li>output error <span class="math inline">\(\times\)</span> sigmoid derivative</li>
+</ul></li>
+<li><span class="math inline">\(\delta_3=(0.337-1)\cdot0.337\cdot0.663=-0.148\)</span></li>
+<li><span class="math inline">\(\frac{\partial C}{\partial w_{31}}=\delta_3h_2=-0.048\)</span>
+<ul>
+<li>weight gradient <span class="math inline">\(=\)</span> layer error <span class="math inline">\(\times\)</span> input</li>
+</ul></li>
+<li><span class="math inline">\(\frac{\partial C}{\partial b_3}=\delta_3=-0.148\)</span>
+<ul>
+<li>bias gradient <span class="math inline">\(=\)</span> layer error</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Hidden layers</strong></p>
+<ul>
+<li><span class="math inline">\(\delta_2=\delta_3w_{31}h_2(1-h_2)=-0.032\)</span>
+<ul>
+<li>error received from layer 3 <span class="math inline">\(\times\)</span> local derivative</li>
+</ul></li>
+<li><span class="math inline">\(\frac{\partial C}{\partial w_{21}}=\delta_2h_1=-0.009\)</span></li>
+<li><span class="math inline">\(\frac{\partial C}{\partial b_2}=\delta_2=-0.032\)</span></li>
+<li><span class="math inline">\(\delta_1=\delta_2w_{21}h_1(1-h_1)=-0.006\)</span>
+<ul>
+<li>error received from layer 2 <span class="math inline">\(\times\)</span> local derivative</li>
+</ul></li>
+<li><span class="math inline">\(\frac{\partial C}{\partial w_{11}}=\frac{\partial C}{\partial w_{12}}=\delta_1=-0.006\)</span>
+<ul>
+<li>because <span class="math inline">\(x_1=x_2=1\)</span></li>
+</ul></li>
+</ul>
+</div></div>
+<p>Notice the pattern: every hidden-layer error contains the next layer’s error.</p>
+</section>
+
+<section id="toy-example-update-the-weights" class="title-slide slide level1 center">
+<h1>Toy example: update the weights</h1>
+<p>Gradient descent subtracts the gradient from each parameter: <span class="math inline">\(\theta \leftarrow \theta-\eta\frac{\partial C}{\partial \theta}\)</span>.</p>
+<p>Using <span class="math inline">\(\eta=10\)</span>. Since the gradients are negative, subtracting them increases the weights and biases.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Layer 3 update</strong></p>
+<ul>
+<li><span class="math inline">\(w_{31}=1-10(-0.048)=1.48\)</span></li>
+<li><span class="math inline">\(b_3=-1-10(-0.148)=0.48\)</span></li>
+<li>The output layer becomes more likely to output 1</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Hidden-layer updates</strong></p>
+<ul>
+<li><span class="math inline">\(w_{21}=1-10(-0.009)=1.09\)</span></li>
+<li><span class="math inline">\(b_2=-1-10(-0.032)=-0.68\)</span></li>
+<li><span class="math inline">\(w_{11}=w_{12}=1-10(-0.006)=1.06\)</span></li>
+<li><span class="math inline">\(b_1=-3-10(-0.006)=-2.94\)</span></li>
+</ul>
+</div></div>
+<p>After this single update, <span class="math inline">\((1,1)\)</span> gives <span class="math inline">\(\hat{y}\approx0.75\)</span>: now the prediction is <strong>1</strong>.</p>
+</section>
+
+<section id="toy-example-after-training" class="title-slide slide level1 center">
+<h1>Toy example: after training</h1>
+<p>The previous update fixes one example. After training on all four AND rows, one possible set of weights is:</p>
+<ul>
+<li><span class="math inline">\(w_{11}=10,\; w_{12}=10,\; b_1=-15\)</span></li>
+<li><span class="math inline">\(w_{21}=10,\; b_2=-5\)</span></li>
+<li><span class="math inline">\(w_{31}=10,\; b_3=-5\)</span></li>
+</ul>
+<p>With threshold <span class="math inline">\(0.5\)</span>, the network now implements AND:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(x_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(x_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(h_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(h_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\hat{y}\)</span></th>
+<th style="text-align: right;">prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.993</td>
+<td style="text-align: right;">0.993</td>
+<td style="text-align: right;">0.993</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
 </section>
 
 <section id="ann-and-dnn-training-summarizing" class="title-slide slide level1 center">
 <h1>ANN and DNN training: summarizing</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
+<p><strong>One training loop</strong></p>
 <ol type="1">
-<li>Loss function → desired goal of the NN
-<ul>
-<li><em>How</em>?</li>
-</ul></li>
-<li>Minimize loss function → moving close to the goal
-<ul>
-<li><em>What does it mean in practice?</em></li>
-</ul></li>
-<li>Adjusting weights (and bias) of the NN
-<ul>
-<li><em>Through</em></li>
-</ul></li>
-<li>Gradient Descent → Optimizers
-<ul>
-<li>Parameters:
-<ul>
-<li>Learning rate</li>
-<li>Batch size</li>
-<li>…</li>
-</ul></li>
-<li><em>Based on</em></li>
-</ul></li>
-<li>Backpropagation + Chain Rule
-<ul>
-<li><em>Therefore</em></li>
-</ul></li>
-<li>The loss function must be differentiable!</li>
+<li><strong>Forward pass</strong>: compute <span class="math inline">\(\hat{y}\)</span> from the inputs</li>
+<li><strong>Loss</strong>: measure the error between <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(y\)</span></li>
+<li><strong>Chain rule</strong>: relate the loss to each hidden quantity</li>
+<li><strong>Backpropagation</strong>: use the chain rule to compute every gradient</li>
+<li><strong>Gradient descent</strong>: update parameters to lower the loss</li>
+<li><strong>Repeat</strong> over many batches and epochs</li>
 </ol>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
@@ -1051,8 +1329,30 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <figcaption>Learning rate</figcaption>
 </figure>
 </div>
-<p>The choice of the right value of the learning rate is important!</p>
+</div></div>
+</section>
+
+<section id="ann-and-dnn-training-summarizing-1" class="title-slide slide level1 center">
+<h1>ANN and DNN training: summarizing</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Key idea</strong></p>
+<ul>
+<li>The loss defines what “better” means</li>
+<li>The chain rule explains how indirect effects combine</li>
+<li>Backpropagation computes who is responsible for the error</li>
+<li>Gradient descent changes the parameters using those gradients</li>
+<li>Differentiable activations are needed to pass gradients backward</li>
+</ul>
+<p>The learning rate is important: too small learns slowly; too large can overshoot.</p>
 <p>See <a href="https://blog.skz.dev/gradient-descent">this demo</a></p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/neuralnetworks/3%20Model76.png"></p>
+<figcaption>Learning rate</figcaption>
+</figure>
+</div>
 </div></div>
 </section>
 
