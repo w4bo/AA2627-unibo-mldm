@@ -1,5 +1,5 @@
 ---
-subtitle: "Modeling: Neural Networks"
+subtitle: "Neural Networks"
 ---
 
 #
@@ -486,22 +486,23 @@ How to minimize the loss?
 
 # Gradient descent
 
-**Gradient descent** is a method for unconstrained mathematical optimization.
+**Gradient descent** is the rule used to improve the network parameters after we know the direction in which the loss increases.
 
-- It is a first-order iterative algorithm for minimizing a differentiable multivariate function $F(\mathbf {x} )$.
-- Take repeated steps in the opposite direction of the gradient of $F(\mathbf {x})$ at the current point: the direction of steepest descent.
-- Conversely, stepping in the direction of the gradient will lead to a trajectory that maximizes that function (gradient ascent)
+- The **gradient** tells how the loss changes if each parameter changes a little
+- To reduce the loss, move parameters in the opposite direction
+- The **learning rate** $\eta$ controls how large each move is
+- In a neural network, the parameters are the weights and biases
 
 :::: {.columns}
 ::: {.column width="75%"}
 
-If $F(\mathbf {x})$ is defined and differentiable in a neighborhood of a point $\mathbf {a}$, then
+If $J(\Theta)$ is the loss and $\Theta$ contains all weights and biases, one update is:
 
-$F(\mathbf {x} )$ decreases fastest in the direction of the negative gradient of $F$ at $\mathbf {a}$, that is $-\nabla F(\mathbf {a} )$.
+$$
+\Theta_{\text{new}}=\Theta_{\text{old}}-\eta\nabla J(\Theta_{\text{old}})
+$$
 
-It follows that, if $\mathbf {a} _{n+1}=\mathbf {a} _{n}-\eta \nabla F(\mathbf {a} _{n})$
-
-For a small enough step size or learning rate $\eta \in \mathbb {R} _{+}$, then $F(\mathbf {a_{n}} ) \geq F(\mathbf {a_{n+1}})$
+Intuition: if increasing a weight increases the loss, gradient descent decreases that weight.
 
 :::
 ::: {.column width="25%"}
@@ -520,10 +521,10 @@ For a small enough step size or learning rate $\eta \in \mathbb {R} _{+}$, then 
 
 1. Start with random initial values for parameters (weights and biases)
 2. Use the current parameters to compute predictions on the training data
-3. Compute the cost function
-4. Calculate the gradient of the cost function with respect to each parameter $\nabla J(\Theta)$
-5. Adjust each parameter in the opposite direction of the gradient. $\Theta = \Theta−\eta \cdot \nabla J(\Theta)$
-6. Repeat steps 2–5 for each *epoch (i.e., iteration over the entire dataset)* until the cost function converges to a minimum or reaches a predefined number of epochs
+3. Compute the loss: how far predictions are from targets
+4. Compute the gradient of the loss with respect to each parameter $\nabla J(\Theta)$
+5. Adjust each parameter in the opposite direction of the gradient: $\Theta = \Theta-\eta \cdot \nabla J(\Theta)$
+6. Repeat steps 2-5 for each *epoch (i.e., iteration over the entire dataset)* until the loss converges or reaches a predefined number of epochs
 
 :::
 ::: {.column width="40%"}
@@ -621,79 +622,357 @@ $\Delta w_{ij} = \eta (y_i - \hat{y}_i)g'(h_j)x_i$
 
 # Backpropagation
 
-**Backpropagation** (i.e., *backward propagation of errors*) propagates the error to the input of a ANN
+**Backpropagation** (i.e., *backward propagation of errors*) is the algorithm used to compute all gradients in a neural network.
 
-- We cannot directly compute the derivative of the loss function with respect to the outputs of the network
-- Backpropagation is a local process: neurons are completely unaware of the complete topology of the network
-- Apply the *chain rule* to propagate the derivative of the loss function up to the inputs of the network
+- The output error is easy to measure: compare $\hat{y}$ with $y$
+- The difficult part is assigning responsibility to hidden weights that affected the output indirectly
+- Backpropagation sends an **error signal** backward, layer by layer
+- At each layer, the **chain rule** converts that signal into gradients for local weights and biases
 
 ![Chain rule](./img/neuralnetworks/3 Model74.png)
 
-- The introduction of backpropagation has been fundamental in training DNNs!
+- Gradient descent uses these gradients to update the parameters
 - The delta rule is a special case of the more general backpropagation algorithm
 
 # Backpropagation
 
-Steps
+Training step for one batch:
 
 1. *Forward Pass*: the network takes input data, computes outputs layer by layer, and calculates a final prediction.
     - $\hat{y}=f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{1}(W^{1}x)\cdots))$
 1. *Loss Calculation*: the loss function quantifies the difference between the predicted output and the true output.
-    - Given an input–output pair (x, y), it is $C(y_i, \hat{y_i}) = C(y,f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{2}(W^{2}f^{1}(W^{1}x))\cdots )))$
+    - Given an input-output pair (x, y), it is $C(y_i, \hat{y_i}) = C(y,f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{2}(W^{2}f^{1}(W^{1}x))\cdots )))$
 1. *Backward Pass*: gradients are computed by propagating the error backward to each layer in the network, using the *chain rule*
 1. *Parameter Update*: using gradient descent, each parameter (weight and bias) is updated to reduce the error.
 
-The **chain rule** is used to differentiate composite functions.
+The **chain rule** tells us how to differentiate composite functions: functions made by applying one transformation after another.
 
-- Given two functions $f()$ and $g()$ and $y=f(g(x))$, the chain rule states that $\frac{\delta y}{\delta x} = \frac{\delta y}{\delta g} \cdot \frac{\delta g}{\delta x}$
+- Given two functions $f()$ and $g()$, if $y=f(g(x))$, then $\frac{\partial y}{\partial x} = \frac{\partial y}{\partial g} \cdot \frac{\partial g}{\partial x}$
+- In a neural network, each layer is one transformation, so the loss is a long composition of transformations
 
 For instance, given $y = sin(x^2)$, it is:
 
-- $\frac{\delta y}{\delta g} = cos(g)$; $\frac{\delta g}{\delta x} = 2x$; finally, $\frac{\delta y}{\delta x} = cos(x^2) \cdot 2x$
+- Let $g=x^2$; then $y=\sin(g)$
+- $\frac{\partial y}{\partial g} = \cos(g)$ and $\frac{\partial g}{\partial x} = 2x$
+- Therefore, $\frac{\partial y}{\partial x} = \cos(x^2)\cdot 2x$
 
-# Backpropagation
+# Toy example: learning AND
 
-The problem with DNNs is that we have hidden layers, and the loss functions depend on "hidden parameters" $𝑤$
+Goal: train a very small differentiable network to learn the Boolean function **AND**.
 
-![Chain rule](./img/neuralnetworks/3 Model73.png)
+For the training example $(x_1,x_2)=(1,1)$, the desired output is $y=1$.
 
-$C(y,f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{2}(W^{2}f^{1}(W^{1}x))\cdots )))$
+```{mermaid}
+%%| echo: false
+flowchart LR
+    X1(("x1"))
+    X2(("x2"))
+    H1(("h1"))
+    H2(("h2"))
+    YH(("y_hat"))
+    Y(("y"))
+    C(("loss"))
 
-- $x$ is the input;
-- $z^{l}$ is the weighted input of each hidden layer
-- $a^{l}$ is the output of hidden layer $l$
+    X1 -- "w11" --> H1
+    X2 -- "w12" --> H1
+    H1 -- "w21" --> H2
+    H2 -- "w31" --> YH
+    YH --> C
+    Y --> C
+```
 
-Finally, the derivative is $\frac {dC}{da^{L}} \cdot {\frac {da^{L}}{dz^{L}}}\cdot {\frac {dz^{L}}{da^{L-1}}}\cdot {\frac {da^{L-1}}{dz^{L-1}}}\cdot {\frac {dz^{L-1}}{da^{L-2}}}\cdot \ldots \cdot {\frac {da^{1}}{dz^{1}}}\cdot {\frac {\partial z^{1}}{\partial x}}$
+:::: {.columns}
+::: {.column width="50%"}
+
+**Model**
+
+- $h_1=\sigma(w_{11}x_1+w_{12}x_2+b_1)$
+- $h_2=\sigma(w_{21}h_1+b_2)$
+- $\hat{y}=\sigma(w_{31}h_2+b_3)$
+
+:::
+::: {.column width="50%"}
+
+**Initial parameters**
+
+- $w_{11}=1,\; w_{12}=1,\; b_1=-3$
+- $w_{21}=1,\; b_2=-1$
+- $w_{31}=1,\; b_3=-1$
+- $C=\frac{1}{2}(\hat{y}-y)^2$
+
+:::
+::::
+
+# Toy example: wrong prediction
+
+Before training, the network predicts too low for $(1,1)\rightarrow1$.
+
+- $z_1=1+1-3=-1$, so $h_1=\sigma(-1)=0.269$
+- $z_2=1\cdot0.269-1=-0.731$, so $h_2=\sigma(-0.731)=0.325$
+- $z_3=1\cdot0.325-1=-0.675$, so $\hat{y}=\sigma(-0.675)=0.337$
+- With threshold $0.5$, the network predicts **0**
+- The correct target is $y=1$, so the prediction must increase
+
+# Toy example: derivative pieces
+
+Backpropagation answers one question: **which parameters are responsible for the error, and by how much?**
+
+:::: {.columns}
+::: {.column width="50%"}
+
+**Local derivative rules**
+
+- Loss: $C=\frac{1}{2}(\hat{y}-y)^2$
+  - $\frac{\partial C}{\partial \hat{y}}=\hat{y}-y$
+- Sigmoid: $a=\sigma(z)$
+  - $\frac{\partial a}{\partial z}=a(1-a)$
+- Weighted sum: $z=wa+b$
+  - $\frac{\partial z}{\partial w}=a$
+  - $\frac{\partial z}{\partial b}=1$
+
+:::
+::: {.column width="50%"}
+
+**Layer 3 uses $h_2$ as its input**
+
+$h_2$ is not a replacement for $wx+b$.
+
+$$
+h_2=\sigma(z_2)
+\quad\rightarrow\quad
+z_3=w_{31}h_2+b_3
+\quad\rightarrow\quad
+\hat{y}=\sigma(z_3)
+$$
+
+It is the value entering the next neuron, so:
+
+$$
+\frac{\partial z_3}{\partial w_{31}}
+=
+\frac{\partial (w_{31}h_2+b_3)}{\partial w_{31}}
+=h_2
+$$
+
+:::
+::::
+
+# Toy example: chain rule
+
+Each weight affects the loss through a path. The chain rule multiplies the derivatives along that path.
+
+:::: {.columns}
+::: {.column width="50%"}
+
+**Output weight**
+
+$w_{31}\rightarrow z_3\rightarrow \hat{y}\rightarrow C$
+
+$$
+\frac{\partial C}{\partial w_{31}}
+=
+\frac{\partial C}{\partial \hat{y}}
+\cdot
+\frac{\partial \hat{y}}{\partial z_3}
+\cdot
+\frac{\partial z_3}{\partial w_{31}}
+$$
+
+$$
+=
+\underbrace{(\hat{y}-y)}_{\frac{\partial C}{\partial \hat{y}}}
+\cdot
+\underbrace{\hat{y}(1-\hat{y})}_{\frac{\partial \hat{y}}{\partial z_3}}
+\cdot
+\underbrace{h_2}_{\frac{\partial z_3}{\partial w_{31}}}
+$$
+
+:::
+::: {.column width="50%"}
+
+**First-layer weight**
+
+$$
+w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\rightarrow z_3\rightarrow \hat{y}\rightarrow C
+$$
+
+$$
+\begin{aligned}
+\frac{\partial C}{\partial w_{11}}
+&=
+\frac{\partial C}{\partial \hat{y}}
+\cdot
+\frac{\partial \hat{y}}{\partial z_3}
+\cdot
+\frac{\partial z_3}{\partial h_2}
+\cdot
+\frac{\partial h_2}{\partial z_2} \\
+&\quad \cdot
+\frac{\partial z_2}{\partial h_1}
+\cdot
+\frac{\partial h_1}{\partial z_1}
+\cdot
+\frac{\partial z_1}{\partial w_{11}}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\frac{\partial C}{\partial w_{11}}
+&=
+\underbrace{(\hat{y}-y)}_{\frac{\partial C}{\partial \hat{y}}}
+\cdot
+\underbrace{\hat{y}(1-\hat{y})}_{\frac{\partial \hat{y}}{\partial z_3}}
+\cdot
+\underbrace{w_{31}}_{\frac{\partial z_3}{\partial h_2}} \\
+&\quad \cdot
+\underbrace{h_2(1-h_2)}_{\frac{\partial h_2}{\partial z_2}}
+\cdot
+\underbrace{w_{21}}_{\frac{\partial z_2}{\partial h_1}}
+\cdot
+\underbrace{h_1(1-h_1)}_{\frac{\partial h_1}{\partial z_1}}
+\cdot
+\underbrace{x_1}_{\frac{\partial z_1}{\partial w_{11}}}
+\end{aligned}
+$$
+
+For $w_{12}$, only the last factor changes:
+
+$$
+\frac{\partial C}{\partial w_{12}}=\delta_1x_2
+\quad\text{where}\quad
+\delta_1=\frac{\partial C}{\partial z_1}
+$$
+
+:::
+::::
+
+# Toy example: numeric backpropagation
+
+Now plug in the values. Each $\delta_l=\frac{\partial C}{\partial z_l}$ is the error signal arriving at layer $l$.
+
+:::: {.columns}
+::: {.column width="50%"}
+
+**Output layer**
+
+- $\delta_3=\frac{\partial C}{\partial z_3}=(\hat{y}-y)\hat{y}(1-\hat{y})$
+  - output error $\times$ sigmoid derivative
+- $\delta_3=(0.337-1)\cdot0.337\cdot0.663=-0.148$
+- $\frac{\partial C}{\partial w_{31}}=\delta_3h_2=-0.048$
+  - weight gradient $=$ layer error $\times$ input
+- $\frac{\partial C}{\partial b_3}=\delta_3=-0.148$
+  - bias gradient $=$ layer error
+
+:::
+::: {.column width="50%"}
+
+**Hidden layers**
+
+- $\delta_2=\delta_3w_{31}h_2(1-h_2)=-0.032$
+  - error received from layer 3 $\times$ local derivative
+- $\frac{\partial C}{\partial w_{21}}=\delta_2h_1=-0.009$
+- $\frac{\partial C}{\partial b_2}=\delta_2=-0.032$
+- $\delta_1=\delta_2w_{21}h_1(1-h_1)=-0.006$
+  - error received from layer 2 $\times$ local derivative
+- $\frac{\partial C}{\partial w_{11}}=\frac{\partial C}{\partial w_{12}}=\delta_1=-0.006$
+  - because $x_1=x_2=1$
+
+:::
+::::
+
+Notice the pattern: every hidden-layer error contains the next layer's error.
+
+# Toy example: update the weights
+
+Gradient descent subtracts the gradient from each parameter: $\theta \leftarrow \theta-\eta\frac{\partial C}{\partial \theta}$.
+
+Using $\eta=10$. Since the gradients are negative, subtracting them increases the weights and biases.
+
+:::: {.columns}
+::: {.column width="50%"}
+
+**Layer 3 update**
+
+- $w_{31}=1-10(-0.048)=1.48$
+- $b_3=-1-10(-0.148)=0.48$
+- The output layer becomes more likely to output 1
+
+:::
+::: {.column width="50%"}
+
+**Hidden-layer updates**
+
+- $w_{21}=1-10(-0.009)=1.09$
+- $b_2=-1-10(-0.032)=-0.68$
+- $w_{11}=w_{12}=1-10(-0.006)=1.06$
+- $b_1=-3-10(-0.006)=-2.94$
+
+:::
+::::
+
+After this single update, $(1,1)$ gives $\hat{y}\approx0.75$: now the prediction is **1**.
+
+# Toy example: after training
+
+The previous update fixes one example. After training on all four AND rows, one possible set of weights is:
+
+- $w_{11}=10,\; w_{12}=10,\; b_1=-15$
+- $w_{21}=10,\; b_2=-5$
+- $w_{31}=10,\; b_3=-5$
+
+With threshold $0.5$, the network now implements AND:
+
+| $x_1$ | $x_2$ | $h_1$ | $h_2$ | $\hat{y}$ | prediction |
+|---:|---:|---:|---:|---:|---:|
+| 0 | 0 | 0.000 | 0.007 | 0.007 | 0 |
+| 0 | 1 | 0.007 | 0.007 | 0.007 | 0 |
+| 1 | 0 | 0.007 | 0.007 | 0.007 | 0 |
+| 1 | 1 | 0.993 | 0.993 | 0.993 | 1 |
 
 # ANN and DNN training: summarizing
 
 :::: {.columns}
 ::: {.column width="50%"}
 
-1. Loss function → desired goal of the NN
-    - *How*?
-2. Minimize loss function → moving close to the goal
-    - *What does it mean in practice?*
-3. Adjusting weights (and bias) of the NN
-    - *Through*
-4. Gradient Descent → Optimizers
-    - Parameters:
-        - Learning rate
-        - Batch size
-        - ...
-    - *Based on*
-5. Backpropagation + Chain Rule
-    - *Therefore*
-6. The loss function must be differentiable!
+**One training loop**
+
+1. **Forward pass**: compute $\hat{y}$ from the inputs
+2. **Loss**: measure the error between $\hat{y}$ and $y$
+3. **Chain rule**: relate the loss to each hidden quantity
+4. **Backpropagation**: use the chain rule to compute every gradient
+5. **Gradient descent**: update parameters to lower the loss
+6. **Repeat** over many batches and epochs
 
 :::
 ::: {.column width="50%"}
 
 ![Learning rate](./img/neuralnetworks/3 Model76.png)
 
-The choice of the right value of the learning rate is important!
+:::
+::::
+
+# ANN and DNN training: summarizing
+
+:::: {.columns}
+::: {.column width="50%"}
+
+**Key idea**
+
+- The loss defines what "better" means
+- The chain rule explains how indirect effects combine
+- Backpropagation computes who is responsible for the error
+- Gradient descent changes the parameters using those gradients
+- Differentiable activations are needed to pass gradients backward
+
+The learning rate is important: too small learns slowly; too large can overshoot.
 
 See [this demo](https://blog.skz.dev/gradient-descent)
+
+:::
+::: {.column width="50%"}
+
+![Learning rate](./img/neuralnetworks/3 Model76.png)
 
 :::
 ::::

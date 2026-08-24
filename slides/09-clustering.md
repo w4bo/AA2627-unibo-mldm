@@ -978,7 +978,7 @@ In the case of hierarchical clustering, a measure often used is the cophenetic d
 
 Calculating the cophenetic distance for all pairs of points, we obtain a matrix that allows us to calculate the CoPhenetic Correlation Coefficient (CPCC)
 
-* The term Cophenetic comes from biology: phenetics (Greek: phainein – to appear), also known as taximetrics, is an attempt to classify organisms based on overall similarity, usually in morphology or other observable traits, regardless of their phylogeny or evolutionary relation.
+* The term Cophenetic comes from biology: phenetics (Greek: phainein - to appear), also known as taximetrics, is an attempt to classify organisms based on overall similarity, usually in morphology or other observable traits, regardless of their phylogeny or evolutionary relation.
 * The CPCC is the correlation index between the cophenetic distance matrix and the dissimilarity matrix of the points
 * A high correlation indicates that the clustering algorithm has respected the dissimilarity between the elements
 
