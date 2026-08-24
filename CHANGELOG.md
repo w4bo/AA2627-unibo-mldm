@@ -1,3 +1,13 @@
+## [1.0.16](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.15...1.0.16) (2026-08-24)
+
+### Bug Fixes
+
+* working on the slides ([f2300ea](https://github.com/w4bo/AA2627-unibo-mldm/commit/f2300ea7bd777cf5613ffeec585a7ba5fc5cda0b))
+
+### Build and continuous integration
+
+* **deps:** update jamesives/github-pages-deploy-action action to v4.9.0 ([#24](https://github.com/w4bo/AA2627-unibo-mldm/issues/24)) ([fb92cf6](https://github.com/w4bo/AA2627-unibo-mldm/commit/fb92cf6e9d370075537141abbf7b08fea1a453f0))
+
 ## [1.0.15](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.14...1.0.15) (2026-08-07)
 
 ### Bug Fixes
