@@ -290,16 +290,38 @@ Supervised machine learning has two distinct phases:
 
 # Model-based classifiers learn a decision function
 
-Given a **dataset**, i.e. a collection of records:
 
-- Each record has a set of **features**
-- During training, one attribute provides the known **class** or **label**
+::::{.columns}
+:::{.column width=60%}
+
+A **dataset** is a collection (e.g., a table) of records:
+
+- Each record (aka instance, example, or observation) has a set of **features** (aka attributes, or variables) that describe it (e.g., `months_subscribed`)
+- During training, one feature provides the known **class** or **label** (e.g., `churn`)
+- The schema of a dataset is the set of features that defines the structure of the data (e.g., `months_subscribed`, `monthly_watch_hours`, `churn`)
 
 Goal:
 
 - Learn a **model** that maps features to a class
   - A [model](https://en.wikipedia.org/wiki/Model) is an informative, simplified representation of an object or system.
 - Use that model to predict the class of unseen records accurately
+:::
+:::{.column width=40%}
+
+| `months_subscribed` | `monthly_watch_hours` | `churn` |
+| :-----------------: | :-------------------: | :-----: |
+| 2                 | 3                       | *yes*   |
+| 4                 | 6                       | *yes*   |
+| 6                 | 15                      | *no*    |
+| 12                | 22                      | *no*    |
+| 3                 | 4                       | *yes*   |
+| 8                 | 18                      | *no*    |
+| 5                 | 7                       | *no*    |
+| 1                 | 2                       | *yes*   |
+| 10                | 20                      | *no*    |
+
+:::
+::::
 
 # Training and testing serve different purposes
 
@@ -351,9 +373,9 @@ flowchart LR
 
 Instance-based methods store training examples and compare new inputs with known cases.
 
-* No explicit training phase
-* Rely on similarity or distance measures
-* Can be sensitive to noise and data size
+- No explicit training phase
+- Rely on similarity or distance measures
+- Can be sensitive to noise and data size
 
 ```{mermaid}
 %%| echo: false
@@ -473,7 +495,7 @@ The choices depend on the data:
 - At each step, merge the two most similar clusters based on a chosen distance metric
 :::
 ::: {.column width="30%"}
-![Hierarchical Clustering](https://upload.wikimedia.org/wikipedia/commons/1/12/Iris_dendrogram.png)
+![Hierarchical Clustering](img/00-ml/taxonomy.png)
 :::
 ::::
 
