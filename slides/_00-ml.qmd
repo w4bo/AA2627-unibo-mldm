@@ -256,8 +256,8 @@ Supervised machine learning has two distinct phases:
 # Supervised learning learns from labeled examples
 
 - *Supervised Learning*: models are trained using labeled data to learn a mapping from inputs to *labels*
-    - **Classification**: the label is nominal; spam detection (`yes`/`no`), diagnosis (`healthy`/`sick`)
-    - **Regression**: the label is continuous; house price, temperature
+    - **Classification**: the *label* is *nominal*; spam detection (`yes`/`no`), diagnosis (`healthy`/`sick`)
+    - **Regression**: the *label* is *continuous*; house price, temperature
 - Unsupervised Learning
 - Reinforcement Learning
 
@@ -276,7 +276,7 @@ Supervised machine learning has two distinct phases:
 # Classification predicts a categorical label
 
 - *Supervised Learning*
-    - *Classification*: the label is nominal; spam detection (`yes`/`no`), diagnosis (`healthy`/`sick`)
+    - *Classification*: the *label* is *nominal*; spam detection (`yes`/`no`), diagnosis (`healthy`/`sick`)
         - **Model-Based Methods**: learn an explicit model to generalize from training data
             - Decision Trees
             - Neural Networks
@@ -325,7 +325,23 @@ Goal:
 
 # Training and testing serve different purposes
 
-1. Split the original dataset into non-overlapping training and test sets
+1. Split the original dataset into non-overlapping *training* and *test* sets
+
+> | `months_subscribed` | `monthly_watch_hours` | `churn` |
+> | :-----------------: | :-------------------: | :-----: |
+> | 2                 | 3                       | *yes*   |
+> | 4                 | 6                       | *yes*   |
+> | 6                 | 15                      | *no*    |
+> | 12                | 22                      | *no*    |
+> | 3                 | 4                       | *yes*   |
+> | 8                 | 18                      | *no*    |
+> 
+> | `months_subscribed` | `monthly_watch_hours` | `churn` |
+> | :-----------------: | :-------------------: | :-----: |
+> | 5                 | 7                       | ?  |
+> | 1                 | 2                       | ?  |
+> | 10                | 20                      | ?  |
+
 1. Learn the model from the training set
 1. Use the test set only to evaluate performance on unseen records
 
