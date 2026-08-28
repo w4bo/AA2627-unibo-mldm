@@ -1,3 +1,20 @@
+## [1.0.18](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.17...1.0.18) (2026-08-28)
+
+### Bug Fixes
+
+* lab headers ([f7fdb23](https://github.com/w4bo/AA2627-unibo-mldm/commit/f7fdb23f8790ec828f09ad30b1f09be5697d7ee2))
+* working on association rules ([c5d4a34](https://github.com/w4bo/AA2627-unibo-mldm/commit/c5d4a340f0ba28045547be5c7ae203696ded260a))
+* working on program ([62015ea](https://github.com/w4bo/AA2627-unibo-mldm/commit/62015eadd859c665050ba5aae864a0b9ac0c44d8))
+* working on program ([7e32473](https://github.com/w4bo/AA2627-unibo-mldm/commit/7e3247339c4ac97842e9553933b23a6a5144327e))
+* working on program ([aa10227](https://github.com/w4bo/AA2627-unibo-mldm/commit/aa102271ca092706a00a9f17abd938481e7815dd))
+
+### General maintenance
+
+* fix typos ([75faaef](https://github.com/w4bo/AA2627-unibo-mldm/commit/75faaef8e64b1d1552c981d0f9b28f943d49c7aa))
+* remove useless images ([aca62dd](https://github.com/w4bo/AA2627-unibo-mldm/commit/aca62dd2db018452e6698601df2d5daa233bf08d))
+* working on labs ([6e4a5d4](https://github.com/w4bo/AA2627-unibo-mldm/commit/6e4a5d46150f28d3cd53543f64ab03e0c4b1d6c0))
+* working on labs ([459607b](https://github.com/w4bo/AA2627-unibo-mldm/commit/459607b3bf052c9c555d04df746607d2d8c04a72))
+
 ## [1.0.17](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.16...1.0.17) (2026-08-28)
 
 ### Dependency updates
