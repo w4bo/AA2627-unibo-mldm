@@ -144,17 +144,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section id="motivating-problem-discover-customer-segments" class="title-slide slide level1 center">
-<h1>Motivating problem: discover customer segments</h1>
-<p>A company has customer behavior data but no segment labels.</p>
-<ul>
-<li>Some customers buy frequently but spend little</li>
-<li>Others purchase rarely but place large orders</li>
-<li>Some may not fit any stable segment</li>
-</ul>
-<p>Can we discover useful groups without being told the correct answer in advance?</p>
-</section>
-
 <section id="learning-objectives" class="title-slide slide level1 center">
 <h1>Learning objectives</h1>
 <p>By the end of this lecture, you will be able to:</p>
@@ -164,6 +153,33 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Select</strong> an algorithm based on cluster shape, density, noise, and interpretability</li>
 <li><strong>Evaluate</strong> clustering results without assuming that every partition is meaningful</li>
 </ul>
+</section>
+
+<section id="roadmap" class="title-slide slide level1 center">
+<h1>Roadmap</h1>
+<p>We will separate three questions:</p>
+<ol type="1">
+<li><strong>What is a cluster?</strong> Separation, shape, density, and ambiguity</li>
+<li><strong>How does the algorithm define clusters?</strong> Centroids, linkages, or density reachability</li>
+<li><strong>Can we trust the result?</strong> Validation, stability, and domain usefulness</li>
+</ol>
+</section>
+
+<section id="motivating-problem-discover-customer-segments" class="title-slide slide level1 center">
+<h1>Motivating problem: discover customer segments</h1>
+<p>A company has customer behavior data but no segment labels.</p>
+<ul>
+<li>Some customers buy frequently but spend little</li>
+<li>Others purchase rarely but place large orders</li>
+<li>Some may not fit any stable segment</li>
+</ul>
+<p>The business question is not just “how many groups exist?”</p>
+<ul>
+<li>Can we design different offers for different behaviors?</li>
+<li>Are the groups stable enough to act on?</li>
+<li>Which customers should be treated as exceptions rather than forced into a segment?</li>
+</ul>
+<p>Clustering proposes candidate groups; the domain question decides whether they are useful.</p>
 </section>
 
 <section id="intuition-similar-objects-form-groups" class="title-slide slide level1 center">
@@ -240,22 +256,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="type-of-clustering" class="title-slide slide level1 center">
 <h1>Type of clustering</h1>
-<p>A clustering is a set of clusters. We distinguish between:</p>
 <p><strong>Partitioning clustering</strong>: a division of objects into non-overlapping subsets (clusters). Each object belongs exactly to a cluster.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine12.png"></p>
-<figcaption>Partitioning clustering</figcaption>
-</figure>
-</div>
+
+<img data-src="img/clustering/Immagine12.png" class="r-stretch quarto-figure-center"><p class="caption">Partitioning clustering</p></section>
+
+<section id="type-of-clustering-1" class="title-slide slide level1 center">
+<h1>Type of clustering</h1>
 <p><strong>Hierarchical clustering</strong>: a set of nested clusters organized as a hierarchical tree</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine13.png"></p>
-<figcaption>Hierarchical clustering and dendrogram</figcaption>
-</figure>
-</div>
-</section>
+
+<img data-src="img/clustering/Immagine13.png" class="r-stretch quarto-figure-center"><p class="caption">Hierarchical clustering and dendrogram</p></section>
 
 <section id="further-cluster-classification" class="title-slide slide level1 center">
 <h1>Further cluster classification</h1>
@@ -328,21 +337,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="k-means-clustering" class="title-slide slide level1 center">
 <h1>K-means Clustering</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p>Partitional clustering approach</p>
 <ul>
 <li>Number of clusters, K, must be specified</li>
 <li>Each cluster is associated with a centroid (center point)</li>
 <li>Each point is assigned to the cluster with the closest centroid</li>
 </ul>
-<pre><code>function kmeans(k, points) is
+</div><div class="column" style="width:50%;">
+<pre><code>kmeans(k, points):
     // Initialize centroids
     centroids ← list of k starting centroids
     converged ← false
-
     while converged == false do
         // Create empty clusters
         clusters ← list of k empty lists
-
         // Assign each point to the nearest centroid
         for i ← 0 to length(points) - 1 do
             point ← points[i]
@@ -354,20 +364,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
                     minDistance ← d
                     closestIndex ← j
             clusters[closestIndex].append(point)
-
         // Recalculate centroids as the mean of each cluster
         newCentroids ← empty list
         for i ← 0 to k - 1 do
             newCentroid ← calculateCentroid(clusters[i])
             newCentroids.append(newCentroid)
-
         // Check for convergence
         if newCentroids == centroids THEN
             converged ← true
         else
             centroids ← newCentroids
-
     return clusters</code></pre>
+</div></div>
 </section>
 
 <section id="worked-example-one-k-means-iteration" class="title-slide slide level1 center">
@@ -375,7 +383,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Let the one-dimensional observations be <span class="math inline">\(\{1,2,3,8,9\}\)</span>, with <span class="math inline">\(K=2\)</span> and initial centroids <span class="math inline">\(m_1=2\)</span>, <span class="math inline">\(m_2=8\)</span>.</p>
 <ol type="1">
 <li><strong>Assign:</strong> <span class="math inline">\(\{1,2,3\}\rightarrow C_1\)</span> and <span class="math inline">\(\{8,9\}\rightarrow C_2\)</span></li>
-<li><strong>Update:</strong> <span class="math inline">\(m_1=(1+2+3)/3=2\)</span> and <span class="math inline">\(m_2=(8+9)/2=8.5\)</span></li>
+<li><strong>Update:</strong> <span class="math inline">\(m_1=\frac{1+2+3}{3}=2\)</span> and <span class="math inline">\(m_2=\frac{8+9}{2}=8.5\)</span></li>
 <li><strong>Repeat</strong> assignment and update until assignments stop changing</li>
 </ol>
 <p>K-means monotonically reduces its objective, but the final solution can still depend on the initial centroids.</p>
@@ -476,32 +484,25 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li>Assuming the clusters have the same cardinality <span class="math inline">\(n\)</span> :</li>
 </ul>
-<p><span class="math inline">\(P=\frac{\# ways of choosing a centroid by cluster}{\# ways of choosing K centroids}=\frac{(n)^K \cdot K!}{(n \cdot K)^K}=\frac{K!}{K^K}\)</span></p>
+<p><span class="math inline">\(P=\frac{\text{\# ways of choosing a centroid by cluster}}{\text{\# ways of choosing K centroids}}=\frac{(n)^K \cdot K!}{(n \cdot K)^K}=\frac{K!}{K^K}\)</span></p>
 <ul>
-<li><span class="math inline">\(K\)</span> = 10, probability is 10!/1010 = 0.00036</li>
+<li><span class="math inline">\(K\)</span> = 10, probability is <span class="math inline">\(\frac{10!}{10^{10}} \approx 0.00036\)</span></li>
 </ul>
 <p>Sometimes the centroids will reposition themselves correctly, sometimes not…</p>
 </section>
 
 <section id="clusters-example" class="title-slide slide level1 center">
 <h1>10 clusters example</h1>
-
-<img data-src="img/clustering/Immagine24.svg" class="r-stretch quarto-figure-center"><p class="caption">Starting with clusters with 2 centroids and clusters with 0 centroids</p></section>
-
-<section id="clusters-example-1" class="title-slide slide level1 center">
-<h1>10 clusters example</h1>
-
-<img data-src="img/clustering/Immagine25.svg" class="r-stretch quarto-figure-center"><p class="caption">Starting with clusters with 2 centroids and clusters with 0 centroids</p></section>
-
-<section id="clusters-example-2" class="title-slide slide level1 center">
-<h1>10 clusters example</h1>
-
-<img data-src="img/clustering/Immagine26.svg" class="r-stretch quarto-figure-center"><p class="caption">Starting with a couple of clusters with 3 centroids and couple of clusters with 1 centroids</p></section>
-
-<section id="clusters-example-3" class="title-slide slide level1 center">
-<h1>10 clusters example</h1>
-
-<img data-src="img/clustering/Immagine27.svg" class="r-stretch quarto-figure-center"><p class="caption">Starting with a couple of clusters with 3 centroids and couple of clusters with 1 centroids</p></section>
+<div id="04c3656d" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="06-clustering_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="1046" height="492"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 
 <section id="solution-to-the-problems-induced-by-the-choice-of-initial-centroids" class="title-slide slide level1 center">
 <h1>Solution to the problems induced by the choice of initial centroids</h1>
@@ -607,22 +608,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="failure-case-non-globular-clusters" class="title-slide slide level1 center">
 <h1>Failure case: non-globular clusters</h1>
 <p>SSE is based on an Euclidean distance that does not take into account the shape of objects</p>
-<div class="columns">
-<div class="column" style="width:50%;">
+<div id="a62f0196" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="2">
+<div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/clustering/14-Clustering_47.png"></p>
-<figcaption>Unclustered points &amp; natural clusters</figcaption>
+<p><img data-src="06-clustering_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="950" height="302"></p>
 </figure>
 </div>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/14-Clustering_46.png"></p>
-<figcaption>K-means (2 Cluster)</figcaption>
-</figure>
 </div>
-</div></div>
+</div>
 </section>
 
 <section id="k-means-possible-solutions" class="title-slide slide level1 center">
@@ -696,8 +690,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>It consists of executing k-means several times with increasing values for k</p>
 <ul>
 <li>SSE value will decrease</li>
-<li><span class="math inline">\(k &lt; #NaturalCluster\)</span>: SSE includes inter-cluster distances</li>
-<li><span class="math inline">\(k &gt;= #NaturalCluster\)</span>: SSE includes intra-cluster distances</li>
+<li><span class="math inline">\(k &lt; \#NaturalCluster\)</span>: SSE includes inter-cluster distances</li>
+<li><span class="math inline">\(k \ge \#NaturalCluster\)</span>: SSE includes intra-cluster distances</li>
 <li>The “elbow” occurs when SSE starts decreasing more slowly since it is generated only by intra-cluster distances</li>
 </ul>
 
@@ -933,7 +927,7 @@ Until only a single cluster remains</code></pre>
 </figure>
 </div>
 </div></div>
-<p>After step 2: <span class="math inline">\(Dist(\{3,6\}, \{2,\5})=min(dist(\{2,3\}), dist(\{2,6\}), dist(\{5,3\}), dist(\{5,6\})) = min(0.15,0.25,0.28,0.39)=0.15\)</span></p>
+<p>After step 2: <span class="math inline">\(Dist(\{3,6\}, \{2,5\})=min\bigl(dist(\{2,3\}), dist(\{2,6\}), dist(\{5,3\}), dist(\{5,6\})\bigr) = min(0.15,0.25,0.28,0.39)=0.15\)</span></p>
 </section>
 
 <section id="min-pros-and-cons" class="title-slide slide level1 center">
@@ -945,6 +939,10 @@ Until only a single cluster remains</code></pre>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/clustering/14-Clustering_60.png"></p>
 </div></div>
+</section>
+
+<section id="min-pros-and-cons-1" class="title-slide slide level1 center">
+<h1>MIN: pros and cons</h1>
 <p>It is subject to outliers and noise.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1044,9 +1042,9 @@ Until only a single cluster remains</code></pre>
 </div></div>
 <p>After step 2…</p>
 <ul>
-<li><span class="math inline">\(Dist(\{3,\6}, \{4 \})=max(dist(\{3,4\}), dist(\{6,4\})) = max(0.15,0.22)=0.22\)</span></li>
-<li><span class="math inline">\(Dist(\{3,\6}, \{2,5\})=max(dist(\{3,2\}), dist(\{3,5\}), dist(\{6,2\}) dist(\{6,5\})) = max(0.15,0.25,0.28,0.39)=0.39\)</span></li>
-<li><span class="math inline">\(Dist(\{3,\6}, \{1 \})=max(dist(\{3,1\}), dist(\{6,1\})) = max(0.22,0.23)=0.23\)</span></li>
+<li><span class="math inline">\(Dist\bigl(\{3,6\}, \{4 \}\bigr)=max\bigl(dist(\{3,4\}), dist(\{6,4\})\bigr) = max(0.15,0.22)=0.22\)</span></li>
+<li><span class="math inline">\(Dist\bigl(\{3,6\}, \{2,5\}\bigr)=max\bigl(dist(\{3,2\}), dist(\{3,5\}\bigr), dist(\{6,2\}), dist(\{6,5\})) = max(0.15,0.25,0.28,0.39)=0.39\)</span></li>
+<li><span class="math inline">\(Dist\bigl(\{3,6\}, \{1 \}\bigr)=max\bigl(dist(\{3,1\}), dist(\{6,1\})\bigr) = max(0.22,0.23)=0.23\)</span></li>
 </ul>
 </section>
 
@@ -1060,6 +1058,10 @@ Until only a single cluster remains</code></pre>
 <p><img data-src="img/clustering/14-Clustering_64.png"></p>
 </div></div>
 <p>It tends to separate large clusters.</p>
+</section>
+
+<section id="max-pros-and-cons-1" class="title-slide slide level1 center">
+<h1>MAX: pros and cons</h1>
 <p>Favor globular clusters</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1286,13 +1288,12 @@ Until only a single cluster remains</code></pre>
 
 <section id="dbscan-algorithm" class="title-slide slide level1 center">
 <h1>DBSCAN algorithm</h1>
-<p>// Input:Dataset <span class="math inline">\(D, MinPts, Eps\)</span> // Output set of cluster <span class="math inline">\(C\)</span></p>
-<ol type="1">
-<li>Label points in <span class="math inline">\(D\)</span> as core, border or noise</li>
-<li>Drop all noise points</li>
-<li>Assign to cluster ci the core points with a distance &lt; <span class="math inline">\(Eps\)</span> from one of the other points assigned to the same cluster</li>
-<li>Assign border points to one of the clusters that the corresponding core points belong to</li>
-</ol>
+<pre><code>dbscan(Dataset D, MinPts, Eps):
+    1. Label points in D as core, border or noise
+    2. Drop all noise points
+    3. Assign to cluster Ci core points with dist &lt; Eps from one of the other points assigned to the same cluster
+    4. Assign border points to one of the clusters that the corresponding core points belong to
+    5. Output set of cluster C</code></pre>
 </section>
 
 <section id="dbscan-core-border-and-noise-points-1" class="title-slide slide level1 center">
@@ -1331,6 +1332,9 @@ Until only a single cluster remains</code></pre>
 <li>Does not handle dataset variable density</li>
 </ul></li>
 </ul>
+<div>
+
+</div>
 <div class="columns">
 <div class="column" style="width:33%;">
 <div class="quarto-figure quarto-figure-center">
@@ -1363,7 +1367,7 @@ Until only a single cluster remains</code></pre>
 <li>A value of <span class="math inline">\(k\)</span> normally used for two-dimensional datasets is 4</li>
 </ul>
 
-<img data-src="img/clustering/14-Clustering_73.png" class="r-stretch"></section>
+<img data-src="img/clustering/14-Clustering_73.png" class="r-stretch quarto-figure-center"><p class="caption">Choosing Eps and MinPts</p></section>
 
 <section id="cluster-validity" class="title-slide slide level1 center">
 <h1>Cluster validity</h1>
@@ -1383,7 +1387,7 @@ Until only a single cluster remains</code></pre>
 <section id="cluster-validity-1" class="title-slide slide level1 center">
 <h1>Cluster validity</h1>
 
-<img data-src="img/clustering/Immagine48.svg" class="r-stretch"></section>
+<img data-src="img/clustering/Immagine48.svg" class="r-stretch quarto-figure-center"><p class="caption">Examples of clusters</p></section>
 
 <section id="validity-measures" class="title-slide slide level1 center">
 <h1>Validity measures</h1>
@@ -1408,18 +1412,14 @@ Until only a single cluster remains</code></pre>
 <h1>Internal measures</h1>
 <p>Cluster Cohesion: Measures how closely related the objects in a cluster are.</p>
 <ul>
-<li>Example: SSE</li>
+<li>Cohesion is measured by the Within cluster Sum of Squares (WSS or SSE)</li>
+<li><span class="math inline">\(SSE = WSS = \sum_{i=1}\sum_{x \in C_i} dist(x, m_i)^2\)</span></li>
 </ul>
 <p>Cluster Separation: Measure how distinct or well-separated a cluster is from other clusters</p>
 <ul>
-<li><p>Example: Squared Error</p></li>
-<li><p>Cohesion is measured by the __W__ithin cluster __S__um of __S__quares (WSS or SSE)</p></li>
+<li>Separation is measured by the Between cluster Sum of Squares (BSS)</li>
+<li><span class="math inline">\(BSS = \sum_{i=1} |C_i| \cdot dist(m_i, m)^2\)</span></li>
 </ul>
-<p><span class="math inline">\(SSE = WSS = \sum_{i=1}\sum_{x \in C_i} dist(x, m_i)^2\)</span></p>
-<ul>
-<li>Separation is measured by the __B__etween cluster __S__um of __S__quares (BSS)</li>
-</ul>
-<p><span class="math inline">\(BSS = \sum_{i=1} |C_i| \cdot dist(m_i, m)^2\)</span></p>
 </section>
 
 <section id="internal-measures-cohesion-and-separation" class="title-slide slide level1 center">
@@ -1492,25 +1492,20 @@ Until only a single cluster remains</code></pre>
 <section id="measuring-cluster-validity-via-correlation-3" class="title-slide slide level1 center">
 <h1>Measuring Cluster Validity Via Correlation</h1>
 <p>If the data is uniformly distributed, the matrix is more “shaded.”</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine53.svg"></p>
-<figcaption>K-means</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine54.svg"></p>
-<figcaption>DBSCAN</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine55.svg"></p>
-<figcaption>Complete link</figcaption>
-</figure>
-</div>
-</section>
+
+<img data-src="img/clustering/Immagine53.svg" class="r-stretch quarto-figure-center"><p class="caption">K-means</p></section>
+
+<section id="measuring-cluster-validity-via-correlation-4" class="title-slide slide level1 center">
+<h1>Measuring Cluster Validity Via Correlation</h1>
+<p>If the data is uniformly distributed, the matrix is more “shaded.”</p>
+
+<img data-src="img/clustering/Immagine54.svg" class="r-stretch quarto-figure-center"><p class="caption">DBSCAN</p></section>
+
+<section id="measuring-cluster-validity-via-correlation-5" class="title-slide slide level1 center">
+<h1>Measuring Cluster Validity Via Correlation</h1>
+<p>If the data is uniformly distributed, the matrix is more “shaded.”</p>
+
+<img data-src="img/clustering/Immagine55.svg" class="r-stretch quarto-figure-center"><p class="caption">Complete link</p></section>
 
 <section id="exercise" class="title-slide slide level1 center">
 <h1>Exercise</h1>
@@ -1518,7 +1513,7 @@ Until only a single cluster remains</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><img data-src="img/clustering/14-Clustering_89.png"></p>
-</div><div class="column" style="width:350%;">
+</div><div class="column" style="width:50%;">
 <p><img data-src="img/clustering/14-Clustering_88.png"></p>
 </div></div>
 </section>
@@ -1706,8 +1701,8 @@ Until only a single cluster remains</code></pre>
 <h1>External measures for clustering validation: Entropy and Purity</h1>
 <p>Entropy: for each cluster <span class="math inline">\(i\)</span> let <span class="math inline">\(p_{ij} = \frac{m_{ij}}{m_i}\)</span> the probability that a member of cluster <span class="math inline">\(i\)</span> belongs to class <span class="math inline">\(j\)</span></p>
 <ul>
-<li>$m_i = $ # of objects in cluster <span class="math inline">\(i\)</span></li>
-<li>$m_{ij} = $ # of objects of class <span class="math inline">\(j\)</span> in cluster <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(m_i = \text{\# of objects in cluster i}\)</span></li>
+<li><span class="math inline">\(m_{ij} = \text{\# of objects of class j in cluster i}\)</span></li>
 </ul>
 <p>Cluster <span class="math inline">\(i\)</span> entropy is <span class="math inline">\(e_i\)</span> while whole clustering entropy is <span class="math inline">\(e\)</span></p>
 <ul>
@@ -1731,9 +1726,22 @@ Until only a single cluster remains</code></pre>
 <section id="a-final-comment" class="title-slide slide level1 center">
 <h1>A final comment</h1>
 <blockquote>
-<p>” _The validation of clustering structures is the most difficult and frustrating part of cluster analysis. Without a strong effort in this direction, cluster analysis will remain a black art accessible only to those true believers who have experience and great courage.”</p>
+<p>“The validation of clustering structures is the most difficult and frustrating part of cluster analysis. Without a strong effort in this direction, cluster analysis will remain a black art accessible only to those true believers who have experience and great courage.”</p>
 <p>cit. Algorithms for Clustering Data, Jain and Dubes</p>
 </blockquote>
+</section>
+
+<section id="practical-workflow" class="title-slide slide level1 center">
+<h1>Practical workflow</h1>
+<ol type="1">
+<li>Define what “similar” should mean for the problem</li>
+<li>Scale numeric features before using distance-based methods</li>
+<li>Start with simple baselines and visualize when possible</li>
+<li>Compare algorithms using the same data representation</li>
+<li>Test sensitivity to parameters, samples, and initializations</li>
+<li>Validate the result against the domain question</li>
+<li>Check whether random data would produce a similar structure</li>
+</ol>
 </section>
 
 <section id="summary-when-should-i-use-each-method" class="title-slide slide level1 center">
