@@ -192,6 +192,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="07-association_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="07-association_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="07-association_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -210,13 +213,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section>
-<section id="basics" class="title-slide slide level1 center">
-<h1>Basics</h1>
-<p>Given a set of transactions, find rules that signal the presence of an item based on the presence of other items in the same transaction.</p>
-</section>
-<section id="the-walmart-market-basket-use-case" class="slide level2">
-<h2>The Walmart “market basket” use case</h2>
+<section id="the-walmart-market-basket-use-case" class="title-slide slide level1 center">
+<h1>The Walmart “market basket” use case</h1>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -254,7 +252,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><span class="math inline">\(\{\text{Beer}, \text{Bread}\} \to \{\text{Milk}\}\)</span></li>
 </ul>
 <p>Rules discover <strong>co-occurrence</strong>, not causality.</p>
-</section></section>
+</section>
+
 <section id="association-rules-applications" class="title-slide slide level1 center">
 <h1>Association Rules Applications</h1>
 <p>Association rules are useful for marketing and sales promotion.</p>
@@ -299,9 +298,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Support</strong>: fraction of transactions that include <span class="math inline">\(X \cup Y\)</span></li>
 <li><strong>Confidence</strong>: fraction of transactions containing <span class="math inline">\(X\)</span> that also contain <span class="math inline">\(Y\)</span></li>
 </ul>
+</section>
+
+<section id="association-rules-1" class="title-slide slide level1 center">
+<h1>Association Rules</h1>
 <p>For <span class="math inline">\(\{\text{Milk}, \text{Diaper}\} \to \{\text{Beer}\}\)</span>:</p>
 <p><span class="math display">\[s = \frac{\sigma(\text{Milk}, \text{Diaper}, \text{Beer})}{|T|} = \frac{2}{5} = 0.4\]</span></p>
 <p><span class="math display">\[c = \frac{\sigma(\text{Milk}, \text{Diaper}, \text{Beer})}{\sigma(\text{Milk}, \text{Diaper})} = \frac{2}{3} = 0.67\]</span></p>
+<p>Read the confidence as:</p>
+<blockquote>
+<p>Among the 3 transactions that contain Milk and Diaper, 2 also contain Beer.</p>
+</blockquote>
+<p>So the rule is correct for two thirds of the transactions where the antecedent appears.</p>
 </section>
 
 <section id="support-and-confidence-statistical-interpretation" class="title-slide slide level1 center">
@@ -316,8 +324,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Exercise</h1>
 <p>Given the following transactions, compute:</p>
 <ul>
-<li>The itemset support for <span class="math inline">\(\{e\}\)</span>, <span class="math inline">\(\{b,d\}\)</span>, and <span class="math inline">\(\{b,d,e\}\)</span></li>
-<li>The rule confidence for <span class="math inline">\(\{b,d\} \to \{e\}\)</span> and <span class="math inline">\(\{e\} \to \{b,d\}\)</span></li>
+<li>The itemset support for <span class="math inline">\(\{E\}\)</span>, <span class="math inline">\(\{B,D\}\)</span>, and <span class="math inline">\(\{B,D,E\}\)</span></li>
+<li>The rule confidence for <span class="math inline">\(\{B,D\} \to \{E\}\)</span> and <span class="math inline">\(\{E\} \to \{B,D\}\)</span></li>
 </ul>
 <table class="caption-top">
 <thead>
@@ -329,39 +337,39 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
-<td><span class="math inline">\(\{a,d,e\}\)</span></td>
+<td><span class="math inline">\(\{A,D,E\}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
-<td><span class="math inline">\(\{a,b,c,e\}\)</span></td>
+<td><span class="math inline">\(\{A,B,C,E\}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
-<td><span class="math inline">\(\{a,b,d,e\}\)</span></td>
+<td><span class="math inline">\(\{A,B,D,E\}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
-<td><span class="math inline">\(\{a,c,d,e\}\)</span></td>
+<td><span class="math inline">\(\{A,C,D,E\}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
-<td><span class="math inline">\(\{b,c,e\}\)</span></td>
+<td><span class="math inline">\(\{B,C,E\}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">6</td>
-<td><span class="math inline">\(\{b,d,e\}\)</span></td>
+<td><span class="math inline">\(\{B,D,E\}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">7</td>
-<td><span class="math inline">\(\{c,d\}\)</span></td>
+<td><span class="math inline">\(\{C,D\}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">8</td>
-<td><span class="math inline">\(\{a,b,c\}\)</span></td>
+<td><span class="math inline">\(\{A,B,C\}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">9</td>
-<td><span class="math inline">\(\{a,d,e\}\)</span></td>
+<td><span class="math inline">\(\{A,D,E\}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -485,6 +493,83 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p><span class="math display">\[\sum_{k=1}^{d}\binom{d}{k}=2^d-1\]</span></p>
 </section>
 
+<section id="itemset-lattice" class="title-slide slide level1 center">
+<h1>Itemset Lattice</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>An itemset lattice organizes candidates by set inclusion.</p>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart BT
+  empty["{}"]
+
+  A["{A}"]
+  B["{B}"]
+  C["{C}"]
+  D["{D}"]
+
+  AB["{A,B}"]
+  AC["{A,C}"]
+  AD["{A,D}"]
+  BC["{B,C}"]
+  BD["{B,D}"]
+  CD["{C,D}"]
+
+  ABC["{A,B,C}"]
+  ABD["{A,B,D}"]
+  ACD["{A,C,D}"]
+  BCD["{B,C,D}"]
+
+  ABCD["{A,B,C,D}"]
+
+  empty --&gt; A
+  empty --&gt; B
+  empty --&gt; C
+  empty --&gt; D
+
+  A --&gt; AB
+  A --&gt; AC
+  A --&gt; AD
+  B --&gt; AB
+  B --&gt; BC
+  B --&gt; BD
+  C --&gt; AC
+  C --&gt; BC
+  C --&gt; CD
+  D --&gt; AD
+  D --&gt; BD
+  D --&gt; CD
+
+  AB --&gt; ABC
+  AB --&gt; ABD
+  AC --&gt; ABC
+  AC --&gt; ACD
+  AD --&gt; ABD
+  AD --&gt; ACD
+  BC --&gt; ABC
+  BC --&gt; BCD
+  BD --&gt; ABD
+  BD --&gt; BCD
+  CD --&gt; ACD
+  CD --&gt; BCD
+
+  ABC --&gt; ABCD
+  ABD --&gt; ABCD
+  ACD --&gt; ABCD
+  BCD --&gt; ABCD
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+
 <section id="candidate-reduction" class="title-slide slide level1 center">
 <h1>Candidate Reduction</h1>
 <p>The <strong>Apriori principle</strong>:</p>
@@ -498,12 +583,80 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="visualizing-the-apriori-principle" class="title-slide slide level1 center">
 <h1>Visualizing the Apriori Principle</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p>If an itemset is infrequent, none of its supersets can be frequent.</p>
-<p>For example, if <span class="math inline">\(AB\)</span> is infrequent:</p>
-<ul>
-<li>Supersets such as <span class="math inline">\(ABC\)</span>, <span class="math inline">\(ABD\)</span>, and <span class="math inline">\(ABE\)</span> cannot be frequent</li>
-<li>Larger supersets such as <span class="math inline">\(ABCD\)</span>, <span class="math inline">\(ABCE\)</span>, <span class="math inline">\(ABDE\)</span>, and <span class="math inline">\(ABCDE\)</span> can also be pruned</li>
-</ul>
+<p>For example, if <span class="math inline">\(AB\)</span> is infrequent, every superset containing <span class="math inline">\(AB\)</span> can be pruned.</p>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart BT
+  empty["{}"]
+
+  A["{A}"]
+  B["{B}"]
+  C["{C}"]
+  D["{D}"]
+
+  AB["{A,B}&lt;br/&gt;infrequent"]
+  AC["{A,C}"]
+  AD["{A,D}"]
+  BC["{B,C}"]
+  BD["{B,D}"]
+  CD["{C,D}"]
+
+  ABC["{A,B,C}&lt;br/&gt;pruned"]
+  ABD["{A,B,D}&lt;br/&gt;pruned"]
+  ACD["{A,C,D}"]
+  BCD["{B,C,D}"]
+
+  ABCD["{A,B,C,D}&lt;br/&gt;pruned"]
+
+  empty --&gt; A
+  empty --&gt; B
+  empty --&gt; C
+  empty --&gt; D
+  A --&gt; AB
+  B --&gt; AB
+  A --&gt; AC
+  C --&gt; AC
+  A --&gt; AD
+  D --&gt; AD
+  B --&gt; BC
+  C --&gt; BC
+  B --&gt; BD
+  D --&gt; BD
+  C --&gt; CD
+  D --&gt; CD
+  AB --&gt; ABC
+  AB --&gt; ABD
+  AC --&gt; ABC
+  AD --&gt; ABD
+  AC --&gt; ACD
+  AD --&gt; ACD
+  BC --&gt; ABC
+  BD --&gt; ABD
+  BC --&gt; BCD
+  BD --&gt; BCD
+  CD --&gt; ACD
+  CD --&gt; BCD
+  ABC --&gt; ABCD
+  ABD --&gt; ABCD
+  ACD --&gt; ABCD
+  BCD --&gt; ABCD
+
+  classDef infrequent fill:#f3f4f6,stroke:#6b7280,color:#4b5563,stroke-dasharray: 5 5
+  class AB,ABC,ABD,ABCD infrequent
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
 <p>Apriori uses this property to avoid exploring branches of the itemset lattice that cannot satisfy <code>minsup</code>.</p>
 </section>
 
@@ -544,7 +697,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Frequent 1-itemsets are Bread, Milk, Beer, and Diaper.</p>
+Frequent 1-itemsets are
+<details>
+<summary>
+Suggested answer
+</summary>
+Bread, Milk, Beer, and Diaper.
+</details>
 </section>
 
 <section id="apriori-example-frequent-2-itemsets" class="title-slide slide level1 center">
@@ -584,7 +743,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Frequent 2-itemsets are those with count at least 3.</p>
+Frequent 2-itemsets are
+<details>
+<summary>
+Suggested answer
+</summary>
+those with count at least 3.
+</details>
 </section>
 
 <section id="the-apriori-algorithm" class="title-slide slide level1 center">
@@ -605,6 +770,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="frequent-maximal-itemset" class="title-slide slide level1 center">
 <h1>Frequent Maximal Itemset</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p>A frequent itemset is <strong>maximal</strong> if none of its adjacent supersets is frequent.</p>
 <p>Maximal frequent itemsets define the border between:</p>
 <ul>
@@ -612,11 +779,87 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Infrequent itemsets</li>
 </ul>
 <p>They provide a compact representation because all subsets of a maximal frequent itemset are also frequent, but their exact support values are not retained.</p>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart BT
+  empty["{}"]
+
+  A["{A}"]
+  B["{B}"]
+  C["{C}"]
+  D["{D}"]
+
+  AB["{A,B}"]
+  AC["{A,C}"]
+  AD["{A,D}"]
+  BC["{B,C}"]
+  BD["{B,D}&lt;br/&gt;maximal"]
+  CD["{C,D}"]
+
+  ABC["{A,B,C}&lt;br/&gt;maximal"]
+  ABD["{A,B,D}&lt;br/&gt;infrequent"]
+  ACD["{A,C,D}&lt;br/&gt;infrequent"]
+  BCD["{B,C,D}&lt;br/&gt;infrequent"]
+
+  ABCD["{A,B,C,D}&lt;br/&gt;infrequent"]
+
+  empty --&gt; A
+  empty --&gt; B
+  empty --&gt; C
+  empty --&gt; D
+  A --&gt; AB
+  A --&gt; AC
+  A --&gt; AD
+  B --&gt; AB
+  B --&gt; BC
+  B --&gt; BD
+  C --&gt; AC
+  C --&gt; BC
+  C --&gt; CD
+  D --&gt; AD
+  D --&gt; BD
+  D --&gt; CD
+  AB --&gt; ABC
+  AB --&gt; ABD
+  AC --&gt; ABC
+  AC --&gt; ACD
+  AD --&gt; ABD
+  AD --&gt; ACD
+  BC --&gt; ABC
+  BC --&gt; BCD
+  BD --&gt; ABD
+  BD --&gt; BCD
+  CD --&gt; ACD
+  CD --&gt; BCD
+  ABC --&gt; ABCD
+  ABD --&gt; ABCD
+  ACD --&gt; ABCD
+  BCD --&gt; ABCD
+
+  classDef frequent fill:#dcfce7,stroke:#15803d,color:#14532d
+  classDef infrequent fill:#f3f4f6,stroke:#6b7280,color:#4b5563,stroke-dasharray: 5 5
+  classDef maximal fill:#fef3c7,stroke:#d97706,color:#451a03,stroke-width:3px
+  class empty,A,B,C,D,AB,AC,AD,BC,CD frequent
+  class BD,ABC maximal
+  class ABD,ACD,BCD,ABCD infrequent
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
 </section>
 
 <section id="closed-itemset" class="title-slide slide level1 center">
 <h1>Closed Itemset</h1>
 <p>An itemset is <strong>closed</strong> if none of its adjacent supersets has the same support.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p>Example transaction set:</p>
 <table class="caption-top">
 <thead>
@@ -648,32 +891,79 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Itemset</th>
-<th style="text-align: right;">Support</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(\{A\}\)</span></td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\{B\}\)</span></td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\{C\}\)</span></td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\{D\}\)</span></td>
-<td style="text-align: right;">4</td>
-</tr>
-</tbody>
-</table>
+<p>In this example, itemsets are closed only when every adjacent superset has lower support.</p>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart BT
+  empty["{}"]
+
+  A["{A}&lt;br/&gt;s=4"]
+  B["{B}&lt;br/&gt;s=5&lt;br/&gt;closed"]
+  C["{C}&lt;br/&gt;s=3"]
+  D["{D}&lt;br/&gt;s=4"]
+
+  AB["{A,B}&lt;br/&gt;s=4&lt;br/&gt;closed"]
+  AC["{A,C}&lt;br/&gt;s=2"]
+  AD["{A,D}&lt;br/&gt;s=3"]
+  BC["{B,C}&lt;br/&gt;s=3"]
+  BD["{B,D}&lt;br/&gt;s=4&lt;br/&gt;closed"]
+  CD["{C,D}&lt;br/&gt;s=3"]
+
+  ABC["{A,B,C}&lt;br/&gt;s=2"]
+  ABD["{A,B,D}&lt;br/&gt;s=3&lt;br/&gt;closed"]
+  ACD["{A,C,D}&lt;br/&gt;s=2"]
+  BCD["{B,C,D}&lt;br/&gt;s=3&lt;br/&gt;closed"]
+
+  ABCD["{A,B,C,D}&lt;br/&gt;s=2&lt;br/&gt;closed"]
+
+  empty --&gt; A
+  empty --&gt; B
+  empty --&gt; C
+  empty --&gt; D
+  A --&gt; AB
+  A --&gt; AC
+  A --&gt; AD
+  B --&gt; AB
+  B --&gt; BC
+  B --&gt; BD
+  C --&gt; AC
+  C --&gt; BC
+  C --&gt; CD
+  D --&gt; AD
+  D --&gt; BD
+  D --&gt; CD
+  AB --&gt; ABC
+  AB --&gt; ABD
+  AC --&gt; ABC
+  AC --&gt; ACD
+  AD --&gt; ABD
+  AD --&gt; ACD
+  BC --&gt; ABC
+  BC --&gt; BCD
+  BD --&gt; ABD
+  BD --&gt; BCD
+  CD --&gt; ACD
+  CD --&gt; BCD
+  ABC --&gt; ABCD
+  ABD --&gt; ABCD
+  ACD --&gt; ABCD
+  BCD --&gt; ABCD
+
+  classDef nonclosed fill:#ffffff,stroke:#9ca3af,color:#374151
+  classDef closed fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:3px
+  class empty,A,C,D,AC,AD,BC,CD,ABC,ACD nonclosed
+  class B,AB,BD,ABD,BCD,ABCD closed
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
 </section>
 
 <section id="closed-vs-maximal-itemsets-example" class="title-slide slide level1 center">
@@ -748,6 +1038,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="closed-vs-maximal-itemsets-minimal-support-2" class="title-slide slide level1 center">
 <h1>Closed vs Maximal Itemsets: Minimal Support 2</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p>With minimal support equal to 2:</p>
 <ul>
 <li>Number of closed frequent itemsets: 9</li>
@@ -755,6 +1047,65 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 <p>Closed itemsets preserve enough information to recover support for all frequent patterns.</p>
 <p>Maximal itemsets preserve a more compact description of the largest frequent patterns, but lose detailed support information for their subsets.</p>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart BT
+  A["{A}&lt;br/&gt;s=3"]
+  B["{B}&lt;br/&gt;s=3"]
+  C["{C}&lt;br/&gt;s=4&lt;br/&gt;closed"]
+  D["{D}&lt;br/&gt;s=3&lt;br/&gt;closed"]
+  E["{E}&lt;br/&gt;s=3&lt;br/&gt;closed"]
+
+  AB["{A,B}&lt;br/&gt;s=2"]
+  AC["{A,C}&lt;br/&gt;s=3&lt;br/&gt;closed"]
+  AD["{A,D}&lt;br/&gt;s=2"]
+  BC["{B,C}&lt;br/&gt;s=3&lt;br/&gt;closed"]
+  CD["{C,D}&lt;br/&gt;s=2"]
+  CE["{C,E}&lt;br/&gt;s=2&lt;br/&gt;closed + maximal"]
+  DE["{D,E}&lt;br/&gt;s=2&lt;br/&gt;closed + maximal"]
+
+  ABC["{A,B,C}&lt;br/&gt;s=2&lt;br/&gt;closed + maximal"]
+  ACD["{A,C,D}&lt;br/&gt;s=2&lt;br/&gt;closed + maximal"]
+
+  A --&gt; AB
+  A --&gt; AC
+  A --&gt; AD
+  B --&gt; AB
+  B --&gt; BC
+  C --&gt; AC
+  C --&gt; BC
+  C --&gt; CD
+  C --&gt; CE
+  D --&gt; AD
+  D --&gt; CD
+  D --&gt; DE
+  E --&gt; CE
+  E --&gt; DE
+
+  AB --&gt; ABC
+  AC --&gt; ABC
+  BC --&gt; ABC
+  AC --&gt; ACD
+  AD --&gt; ACD
+  CD --&gt; ACD
+
+  classDef frequent fill:#dcfce7,stroke:#15803d,color:#14532d
+  classDef closed fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:2px
+  classDef closedMaximal fill:#fef3c7,stroke:#1d4ed8,color:#451a03,stroke-width:3px
+  class A,B,AB,AD,CD frequent
+  class C,D,E,AC,BC closed
+  class CE,DE,ABC,ACD closedMaximal
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
 </section>
 
 <section id="closed-vs-maximal-itemsets-efficiency" class="title-slide slide level1 center">
@@ -797,31 +1148,31 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
-<td>a, b, d, e</td>
+<td>A, B, D, E</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
-<td>b, c, d</td>
+<td>B, C, D</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
-<td>a, b, d, e</td>
+<td>A, B, D, E</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
-<td>a, c, d, e</td>
+<td>A, C, D, E</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
-<td>b, c, d, e</td>
+<td>B, C, D, E</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">6</td>
-<td>b, d, e</td>
+<td>B, D, E</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">7</td>
-<td>c, d</td>
+<td>C, D</td>
 </tr>
 </tbody>
 </table>
@@ -829,8 +1180,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="rule-generation" class="title-slide slide level1 center">
 <h1>Rule Generation</h1>
-<p>Given a frequent itemset <span class="math inline">\(L\)</span>, find all non-empty subsets <span class="math inline">\(f \subset L\)</span> such that:</p>
-<p><span class="math display">\[f \to L - f\]</span></p>
+<p>Once we have a frequent itemset <span class="math inline">\(L\)</span>, every association rule made from it is obtained by choosing a non-empty proper subset <span class="math inline">\(f\)</span> as the <strong>antecedent</strong>, and putting the remaining items <span class="math inline">\(L \setminus f\)</span> as the <strong>consequent</strong>.</p>
+<p>In compact notation:</p>
+<p><span class="math display">\[f \to L \setminus f\]</span></p>
 <p>and the rule satisfies the minimum confidence constraint.</p>
 <p>For <span class="math inline">\(L=\{A,B,C,D\}\)</span>, candidate rules include:</p>
 <ul>
@@ -843,67 +1195,145 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="rule-generation-confidence-pruning" class="title-slide slide level1 center">
 <h1>Rule Generation: Confidence Pruning</h1>
-<p>Confidence is not anti-monotonic with respect to the whole rule.</p>
-<ul>
-<li><span class="math inline">\(c(ABC \to D)\)</span> can be higher or lower than <span class="math inline">\(c(AB \to D)\)</span></li>
-</ul>
-<p>However, confidence is anti-monotonic with respect to the left-hand side for rules generated from the same itemset.</p>
-<p>Given itemset <span class="math inline">\(Y\)</span> and two rules:</p>
-<ul>
-<li><span class="math inline">\(r_1: X \to Y-X\)</span></li>
-<li><span class="math inline">\(r_2: X' \to Y-X'\)</span></li>
-</ul>
-<p>with <span class="math inline">\(X' \subset X \subset Y\)</span>, then:</p>
-<p><span class="math display">\[c(r_1) \geq c(r_2)\]</span></p>
+<p>When rules are generated from the same frequent itemset, the numerator is always the same.</p>
+<p>For <span class="math inline">\(L=\{A,B,C,D\}\)</span>, assume:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Itemset</th>
+<th style="text-align: right;">Support count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(ABCD\)</span></td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(ABC\)</span></td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(AB\)</span></td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(A\)</span></td>
+<td style="text-align: right;">20</td>
+</tr>
+</tbody>
+</table>
+<p>Then:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th style="text-align: right;">Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(ABC \to D\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(6/8 = 75\%\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(AB \to CD\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(6/12 = 50\%\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(A \to BCD\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(6/20 = 30\%\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>As the consequent gets larger, the antecedent gets smaller and its support count cannot decrease, so confidence cannot increase.</p>
 </section>
 
-<section id="confidence-pruning-proof" class="title-slide slide level1 center">
-<h1>Confidence Pruning: Proof</h1>
-<p>Confidence is defined as:</p>
-<p><span class="math display">\[c(r_1)=\frac{\sigma(Y)}{\sigma(X)}\]</span></p>
-<p><span class="math display">\[c(r_2)=\frac{\sigma(Y)}{\sigma(X')}\]</span></p>
-<p>Since <span class="math inline">\(X' \subset X\)</span>, the anti-monotonic support property gives:</p>
-<p><span class="math display">\[\sigma(X') \geq \sigma(X)\]</span></p>
-<p>Therefore:</p>
-<p><span class="math display">\[c(r_1) \geq c(r_2)\]</span></p>
-<p>For <span class="math inline">\(L=\{A,B,C,D\}\)</span>:</p>
+<section id="confidence-pruning-example" class="title-slide slide level1 center">
+<h1>Confidence Pruning: Example</h1>
+<p>Suppose <code>minconf = 60%</code>.</p>
+<ul>
+<li><span class="math inline">\(ABC \to D\)</span> passes because <span class="math inline">\(75\% \geq 60\%\)</span></li>
+<li><span class="math inline">\(AB \to CD\)</span> fails because <span class="math inline">\(50\% &lt; 60\%\)</span></li>
+<li><span class="math inline">\(A \to BCD\)</span> can be pruned because its confidence is at most that of <span class="math inline">\(AB \to CD\)</span></li>
+</ul>
+<p>The pruning rule is:</p>
+<blockquote>
+<p>If a rule fails, any rule obtained by moving more items from the antecedent to the consequent also fails.</p>
+</blockquote>
+<p>For rules generated from <span class="math inline">\(ABCD\)</span>:</p>
 <p><span class="math display">\[c(ABC \to D) \geq c(AB \to CD) \geq c(A \to BCD)\]</span></p>
 </section>
 
 <section id="rule-generation-lattice" class="title-slide slide level1 center">
 <h1>Rule Generation Lattice</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p>For itemset <span class="math inline">\(ABCD\)</span>, rules can be organized by consequent size.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 57%">
-<col style="width: 42%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">Consequent size</th>
-<th>Candidate rules</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0</td>
-<td><span class="math inline">\(ABCD \to \{\}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td><span class="math inline">\(BCD \to A\)</span>, <span class="math inline">\(ACD \to B\)</span>, <span class="math inline">\(ABD \to C\)</span>, <span class="math inline">\(ABC \to D\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td><span class="math inline">\(BC \to AD\)</span>, <span class="math inline">\(BD \to AC\)</span>, <span class="math inline">\(CD \to AB\)</span>, <span class="math inline">\(AD \to BC\)</span>, <span class="math inline">\(AC \to BD\)</span>, <span class="math inline">\(AB \to CD\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td><span class="math inline">\(D \to ABC\)</span>, <span class="math inline">\(C \to ABD\)</span>, <span class="math inline">\(B \to ACD\)</span>, <span class="math inline">\(A \to BCD\)</span></td>
-</tr>
-</tbody>
-</table>
 <p>Low-confidence rules prune more general rules below them.</p>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+  R0["ABCD -&gt; {}"]
+
+  R1A["BCD -&gt; A"]
+  R1B["ACD -&gt; B"]
+  R1C["ABD -&gt; C"]
+  R1D["ABC -&gt; D"]
+
+  R2A["BC -&gt; AD"]
+  R2B["BD -&gt; AC"]
+  R2C["CD -&gt; AB"]
+  R2D["AD -&gt; BC"]
+  R2E["AC -&gt; BD"]
+  R2F["AB -&gt; CD"]
+
+  R3A["D -&gt; ABC"]
+  R3B["C -&gt; ABD"]
+  R3C["B -&gt; ACD"]
+  R3D["A -&gt; BCD"]
+
+  R0 --&gt; R1A
+  R0 --&gt; R1B
+  R0 --&gt; R1C
+  R0 --&gt; R1D
+
+  R1A --&gt; R2A
+  R1A --&gt; R2B
+  R1A --&gt; R2C
+  R1B --&gt; R2C
+  R1B --&gt; R2D
+  R1B --&gt; R2E
+  R1C --&gt; R2B
+  R1C --&gt; R2D
+  R1C --&gt; R2F
+  R1D --&gt; R2A
+  R1D --&gt; R2E
+  R1D --&gt; R2F
+
+  R2A --&gt; R3A
+  R2A --&gt; R3B
+  R2B --&gt; R3A
+  R2B --&gt; R3C
+  R2C --&gt; R3A
+  R2C --&gt; R3D
+  R2D --&gt; R3B
+  R2D --&gt; R3C
+  R2E --&gt; R3B
+  R2E --&gt; R3D
+  R2F --&gt; R3C
+  R2F --&gt; R3D
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
 </section>
 
 <section id="rule-generation-tiered-approach" class="title-slide slide level1 center">
