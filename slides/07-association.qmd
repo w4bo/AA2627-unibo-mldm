@@ -2,11 +2,7 @@
 subtitle: Association rules
 ---
 
-# Basics
-
-Given a set of transactions, find rules that signal the presence of an item based on the presence of other items in the same transaction.
-
-## The Walmart "market basket" use case
+# The Walmart "market basket" use case
 
 | TID | Items |
 |---:|---|
@@ -70,11 +66,19 @@ Association rules are evaluated using:
 - **Support**: fraction of transactions that include $X \cup Y$
 - **Confidence**: fraction of transactions containing $X$ that also contain $Y$
 
+# Association Rules
+
 For $\{\text{Milk}, \text{Diaper}\} \to \{\text{Beer}\}$:
 
 $$s = \frac{\sigma(\text{Milk}, \text{Diaper}, \text{Beer})}{|T|} = \frac{2}{5} = 0.4$$
 
 $$c = \frac{\sigma(\text{Milk}, \text{Diaper}, \text{Beer})}{\sigma(\text{Milk}, \text{Diaper})} = \frac{2}{3} = 0.67$$
+
+Read the confidence as:
+
+> Among the 3 transactions that contain Milk and Diaper, 2 also contain Beer.
+
+So the rule is correct for two thirds of the transactions where the antecedent appears.
 
 # Support and Confidence: Statistical Interpretation
 
@@ -90,20 +94,20 @@ $$c(X \to Y)=P(Y \mid X)=\frac{P(X \cup Y)}{P(X)}$$
 
 Given the following transactions, compute:
 
-- The itemset support for $\{e\}$, $\{b,d\}$, and $\{b,d,e\}$
-- The rule confidence for $\{b,d\} \to \{e\}$ and $\{e\} \to \{b,d\}$
+- The itemset support for $\{E\}$, $\{B,D\}$, and $\{B,D,E\}$
+- The rule confidence for $\{B,D\} \to \{E\}$ and $\{E\} \to \{B,D\}$
 
 | Transaction | Items |
 |---:|---|
-| 1 | $\{a,d,e\}$ |
-| 2 | $\{a,b,c,e\}$ |
-| 3 | $\{a,b,d,e\}$ |
-| 4 | $\{a,c,d,e\}$ |
-| 5 | $\{b,c,e\}$ |
-| 6 | $\{b,d,e\}$ |
-| 7 | $\{c,d\}$ |
-| 8 | $\{a,b,c\}$ |
-| 9 | $\{a,d,e\}$ |
+| 1 | $\{A,D,E\}$ |
+| 2 | $\{A,B,C,E\}$ |
+| 3 | $\{A,B,D,E\}$ |
+| 4 | $\{A,C,D,E\}$ |
+| 5 | $\{B,C,E\}$ |
+| 6 | $\{B,D,E\}$ |
+| 7 | $\{C,D\}$ |
+| 8 | $\{A,B,C\}$ |
+| 9 | $\{A,D,E\}$ |
 
 # Problem Formulation
 
@@ -165,6 +169,80 @@ The search space contains:
 
 $$\sum_{k=1}^{d}\binom{d}{k}=2^d-1$$
 
+# Itemset Lattice
+
+::::{.columns}
+:::{.column width="50%"}
+
+An itemset lattice organizes candidates by set inclusion.
+
+:::
+:::{.column width="50%"}
+
+```{mermaid}
+%%| echo: false
+
+flowchart BT
+  empty["{}"]
+
+  A["{A}"]
+  B["{B}"]
+  C["{C}"]
+  D["{D}"]
+
+  AB["{A,B}"]
+  AC["{A,C}"]
+  AD["{A,D}"]
+  BC["{B,C}"]
+  BD["{B,D}"]
+  CD["{C,D}"]
+
+  ABC["{A,B,C}"]
+  ABD["{A,B,D}"]
+  ACD["{A,C,D}"]
+  BCD["{B,C,D}"]
+
+  ABCD["{A,B,C,D}"]
+
+  empty --> A
+  empty --> B
+  empty --> C
+  empty --> D
+
+  A --> AB
+  A --> AC
+  A --> AD
+  B --> AB
+  B --> BC
+  B --> BD
+  C --> AC
+  C --> BC
+  C --> CD
+  D --> AD
+  D --> BD
+  D --> CD
+
+  AB --> ABC
+  AB --> ABD
+  AC --> ABC
+  AC --> ACD
+  AD --> ABD
+  AD --> ACD
+  BC --> ABC
+  BC --> BCD
+  BD --> ABD
+  BD --> BCD
+  CD --> ACD
+  CD --> BCD
+
+  ABC --> ABCD
+  ABD --> ABCD
+  ACD --> ABCD
+  BCD --> ABCD
+```
+:::
+::::
+
 # Candidate Reduction
 
 The **Apriori principle**:
@@ -179,12 +257,79 @@ The support of an itemset cannot exceed the support of its subsets.
 
 # Visualizing the Apriori Principle
 
+::::{.columns}
+:::{.column width="50%"}
+
 If an itemset is infrequent, none of its supersets can be frequent.
 
-For example, if $AB$ is infrequent:
+For example, if $AB$ is infrequent, every superset containing $AB$ can be pruned.
 
-- Supersets such as $ABC$, $ABD$, and $ABE$ cannot be frequent
-- Larger supersets such as $ABCD$, $ABCE$, $ABDE$, and $ABCDE$ can also be pruned
+:::
+:::{.column width="50%"}
+
+```{mermaid}
+%%| echo: false
+
+flowchart BT
+  empty["{}"]
+
+  A["{A}"]
+  B["{B}"]
+  C["{C}"]
+  D["{D}"]
+
+  AB["{A,B}<br/>infrequent"]
+  AC["{A,C}"]
+  AD["{A,D}"]
+  BC["{B,C}"]
+  BD["{B,D}"]
+  CD["{C,D}"]
+
+  ABC["{A,B,C}<br/>pruned"]
+  ABD["{A,B,D}<br/>pruned"]
+  ACD["{A,C,D}"]
+  BCD["{B,C,D}"]
+
+  ABCD["{A,B,C,D}<br/>pruned"]
+
+  empty --> A
+  empty --> B
+  empty --> C
+  empty --> D
+  A --> AB
+  B --> AB
+  A --> AC
+  C --> AC
+  A --> AD
+  D --> AD
+  B --> BC
+  C --> BC
+  B --> BD
+  D --> BD
+  C --> CD
+  D --> CD
+  AB --> ABC
+  AB --> ABD
+  AC --> ABC
+  AD --> ABD
+  AC --> ACD
+  AD --> ACD
+  BC --> ABC
+  BD --> ABD
+  BC --> BCD
+  BD --> BCD
+  CD --> ACD
+  CD --> BCD
+  ABC --> ABCD
+  ABD --> ABCD
+  ACD --> ABCD
+  BCD --> ABCD
+
+  classDef infrequent fill:#f3f4f6,stroke:#6b7280,color:#4b5563,stroke-dasharray: 5 5
+  class AB,ABC,ABD,ABCD infrequent
+```
+:::
+::::
 
 Apriori uses this property to avoid exploring branches of the itemset lattice that cannot satisfy `minsup`.
 
@@ -201,7 +346,11 @@ With `minsup = 3`, first count individual items.
 | Diaper | 4 |
 | Eggs | 1 |
 
-Frequent 1-itemsets are Bread, Milk, Beer, and Diaper.
+Frequent 1-itemsets are 
+<details>
+<summary>Suggested answer</summary>
+Bread, Milk, Beer, and Diaper.
+</details>
 
 # Apriori Example: Frequent 2-Itemsets
 
@@ -216,7 +365,11 @@ From the frequent 1-itemsets, count candidate 2-itemsets.
 | $\{\text{Milk}, \text{Diaper}\}$ | 3 |
 | $\{\text{Beer}, \text{Diaper}\}$ | 3 |
 
-Frequent 2-itemsets are those with count at least 3.
+Frequent 2-itemsets are 
+<details>
+<summary>Suggested answer</summary>
+those with count at least 3.
+</details>
 
 # The Apriori Algorithm
 
@@ -241,6 +394,9 @@ Stop when no new frequent itemsets are generated.
 
 # Frequent Maximal Itemset
 
+::::{.columns}
+:::{.column width="50%"}
+
 A frequent itemset is **maximal** if none of its adjacent supersets is frequent.
 
 Maximal frequent itemsets define the border between:
@@ -250,9 +406,83 @@ Maximal frequent itemsets define the border between:
 
 They provide a compact representation because all subsets of a maximal frequent itemset are also frequent, but their exact support values are not retained.
 
+:::
+:::{.column width="50%"}
+
+```{mermaid}
+%%| echo: false
+
+flowchart BT
+  empty["{}"]
+
+  A["{A}"]
+  B["{B}"]
+  C["{C}"]
+  D["{D}"]
+
+  AB["{A,B}"]
+  AC["{A,C}"]
+  AD["{A,D}"]
+  BC["{B,C}"]
+  BD["{B,D}<br/>maximal"]
+  CD["{C,D}"]
+
+  ABC["{A,B,C}<br/>maximal"]
+  ABD["{A,B,D}<br/>infrequent"]
+  ACD["{A,C,D}<br/>infrequent"]
+  BCD["{B,C,D}<br/>infrequent"]
+
+  ABCD["{A,B,C,D}<br/>infrequent"]
+
+  empty --> A
+  empty --> B
+  empty --> C
+  empty --> D
+  A --> AB
+  A --> AC
+  A --> AD
+  B --> AB
+  B --> BC
+  B --> BD
+  C --> AC
+  C --> BC
+  C --> CD
+  D --> AD
+  D --> BD
+  D --> CD
+  AB --> ABC
+  AB --> ABD
+  AC --> ABC
+  AC --> ACD
+  AD --> ABD
+  AD --> ACD
+  BC --> ABC
+  BC --> BCD
+  BD --> ABD
+  BD --> BCD
+  CD --> ACD
+  CD --> BCD
+  ABC --> ABCD
+  ABD --> ABCD
+  ACD --> ABCD
+  BCD --> ABCD
+
+  classDef frequent fill:#dcfce7,stroke:#15803d,color:#14532d
+  classDef infrequent fill:#f3f4f6,stroke:#6b7280,color:#4b5563,stroke-dasharray: 5 5
+  classDef maximal fill:#fef3c7,stroke:#d97706,color:#451a03,stroke-width:3px
+  class empty,A,B,C,D,AB,AC,AD,BC,CD frequent
+  class BD,ABC maximal
+  class ABD,ACD,BCD,ABCD infrequent
+```
+:::
+::::
+
 # Closed Itemset
 
 An itemset is **closed** if none of its adjacent supersets has the same support.
+
+::::{.columns}
+:::{.column width="50%"}
 
 Example transaction set:
 
@@ -264,12 +494,76 @@ Example transaction set:
 | 4 | $\{A,B,D\}$ |
 | 5 | $\{A,B,C,D\}$ |
 
-| Itemset | Support |
-|---|---:|
-| $\{A\}$ | 4 |
-| $\{B\}$ | 5 |
-| $\{C\}$ | 3 |
-| $\{D\}$ | 4 |
+In this example, itemsets are closed only when every adjacent superset has lower support.
+
+:::
+:::{.column width="50%"}
+
+```{mermaid}
+%%| echo: false
+
+flowchart BT
+  empty["{}"]
+
+  A["{A}<br/>s=4"]
+  B["{B}<br/>s=5<br/>closed"]
+  C["{C}<br/>s=3"]
+  D["{D}<br/>s=4"]
+
+  AB["{A,B}<br/>s=4<br/>closed"]
+  AC["{A,C}<br/>s=2"]
+  AD["{A,D}<br/>s=3"]
+  BC["{B,C}<br/>s=3"]
+  BD["{B,D}<br/>s=4<br/>closed"]
+  CD["{C,D}<br/>s=3"]
+
+  ABC["{A,B,C}<br/>s=2"]
+  ABD["{A,B,D}<br/>s=3<br/>closed"]
+  ACD["{A,C,D}<br/>s=2"]
+  BCD["{B,C,D}<br/>s=3<br/>closed"]
+
+  ABCD["{A,B,C,D}<br/>s=2<br/>closed"]
+
+  empty --> A
+  empty --> B
+  empty --> C
+  empty --> D
+  A --> AB
+  A --> AC
+  A --> AD
+  B --> AB
+  B --> BC
+  B --> BD
+  C --> AC
+  C --> BC
+  C --> CD
+  D --> AD
+  D --> BD
+  D --> CD
+  AB --> ABC
+  AB --> ABD
+  AC --> ABC
+  AC --> ACD
+  AD --> ABD
+  AD --> ACD
+  BC --> ABC
+  BC --> BCD
+  BD --> ABD
+  BD --> BCD
+  CD --> ACD
+  CD --> BCD
+  ABC --> ABCD
+  ABD --> ABCD
+  ACD --> ABCD
+  BCD --> ABCD
+
+  classDef nonclosed fill:#ffffff,stroke:#9ca3af,color:#374151
+  classDef closed fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:3px
+  class empty,A,C,D,AC,AD,BC,CD,ABC,ACD nonclosed
+  class B,AB,BD,ABD,BCD,ABCD closed
+```
+:::
+::::
 
 # Closed vs Maximal Itemsets: Example
 
@@ -296,6 +590,9 @@ Selected transaction id sets:
 
 # Closed vs Maximal Itemsets: Minimal Support 2
 
+::::{.columns}
+:::{.column width="50%"}
+
 With minimal support equal to 2:
 
 - Number of closed frequent itemsets: 9
@@ -304,6 +601,62 @@ With minimal support equal to 2:
 Closed itemsets preserve enough information to recover support for all frequent patterns.
 
 Maximal itemsets preserve a more compact description of the largest frequent patterns, but lose detailed support information for their subsets.
+
+:::
+:::{.column width="50%"}
+
+```{mermaid}
+%%| echo: false
+
+flowchart BT
+  A["{A}<br/>s=3"]
+  B["{B}<br/>s=3"]
+  C["{C}<br/>s=4<br/>closed"]
+  D["{D}<br/>s=3<br/>closed"]
+  E["{E}<br/>s=3<br/>closed"]
+
+  AB["{A,B}<br/>s=2"]
+  AC["{A,C}<br/>s=3<br/>closed"]
+  AD["{A,D}<br/>s=2"]
+  BC["{B,C}<br/>s=3<br/>closed"]
+  CD["{C,D}<br/>s=2"]
+  CE["{C,E}<br/>s=2<br/>closed + maximal"]
+  DE["{D,E}<br/>s=2<br/>closed + maximal"]
+
+  ABC["{A,B,C}<br/>s=2<br/>closed + maximal"]
+  ACD["{A,C,D}<br/>s=2<br/>closed + maximal"]
+
+  A --> AB
+  A --> AC
+  A --> AD
+  B --> AB
+  B --> BC
+  C --> AC
+  C --> BC
+  C --> CD
+  C --> CE
+  D --> AD
+  D --> CD
+  D --> DE
+  E --> CE
+  E --> DE
+
+  AB --> ABC
+  AC --> ABC
+  BC --> ABC
+  AC --> ACD
+  AD --> ACD
+  CD --> ACD
+
+  classDef frequent fill:#dcfce7,stroke:#15803d,color:#14532d
+  classDef closed fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:2px
+  classDef closedMaximal fill:#fef3c7,stroke:#1d4ed8,color:#451a03,stroke-width:3px
+  class A,B,AB,AD,CD frequent
+  class C,D,E,AC,BC closed
+  class CE,DE,ABC,ACD closedMaximal
+```
+:::
+::::
 
 # Closed vs Maximal Itemsets: Efficiency
 
@@ -333,19 +686,21 @@ Given the lattice and transaction list, label each node assuming $s()=30\%$:
 
 | TID | Items |
 |---:|---|
-| 1 | a, b, d, e |
-| 2 | b, c, d |
-| 3 | a, b, d, e |
-| 4 | a, c, d, e |
-| 5 | b, c, d, e |
-| 6 | b, d, e |
-| 7 | c, d |
+| 1 | A, B, D, E |
+| 2 | B, C, D |
+| 3 | A, B, D, E |
+| 4 | A, C, D, E |
+| 5 | B, C, D, E |
+| 6 | B, D, E |
+| 7 | C, D |
 
 # Rule Generation
 
-Given a frequent itemset $L$, find all non-empty subsets $f \subset L$ such that:
+Once we have a frequent itemset $L$, every association rule made from it is obtained by choosing a non-empty proper subset $f$ as the **antecedent**, and putting the remaining items $L \setminus f$ as the **consequent**.
 
-$$f \to L - f$$
+In compact notation:
+
+$$f \to L \setminus f$$
 
 and the rule satisfies the minimum confidence constraint.
 
@@ -359,53 +714,111 @@ If $|L|=k$, there are $2^k-2$ candidate association rules, excluding $L \to \emp
 
 # Rule Generation: Confidence Pruning
 
-Confidence is not anti-monotonic with respect to the whole rule.
+When rules are generated from the same frequent itemset, the numerator is always the same.
 
-- $c(ABC \to D)$ can be higher or lower than $c(AB \to D)$
+For $L=\{A,B,C,D\}$, assume:
 
-However, confidence is anti-monotonic with respect to the left-hand side for rules generated from the same itemset.
+| Itemset | Support count |
+|---|---:|
+| $ABCD$ | 6 |
+| $ABC$ | 8 |
+| $AB$ | 12 |
+| $A$ | 20 |
 
-Given itemset $Y$ and two rules:
+Then:
 
-- $r_1: X \to Y-X$
-- $r_2: X' \to Y-X'$
+| Rule | Confidence |
+|---|---:|
+| $ABC \to D$ | $6/8 = 75\%$ |
+| $AB \to CD$ | $6/12 = 50\%$ |
+| $A \to BCD$ | $6/20 = 30\%$ |
 
-with $X' \subset X \subset Y$, then:
+As the consequent gets larger, the antecedent gets smaller and its support count cannot decrease, so confidence cannot increase.
 
-$$c(r_1) \geq c(r_2)$$
+# Confidence Pruning: Example
 
-# Confidence Pruning: Proof
+Suppose `minconf = 60%`.
 
-Confidence is defined as:
+- $ABC \to D$ passes because $75\% \geq 60\%$
+- $AB \to CD$ fails because $50\% < 60\%$
+- $A \to BCD$ can be pruned because its confidence is at most that of $AB \to CD$
 
-$$c(r_1)=\frac{\sigma(Y)}{\sigma(X)}$$
+The pruning rule is:
 
-$$c(r_2)=\frac{\sigma(Y)}{\sigma(X')}$$
+> If a rule fails, any rule obtained by moving more items from the antecedent to the consequent also fails.
 
-Since $X' \subset X$, the anti-monotonic support property gives:
-
-$$\sigma(X') \geq \sigma(X)$$
-
-Therefore:
-
-$$c(r_1) \geq c(r_2)$$
-
-For $L=\{A,B,C,D\}$:
+For rules generated from $ABCD$:
 
 $$c(ABC \to D) \geq c(AB \to CD) \geq c(A \to BCD)$$
 
 # Rule Generation Lattice
 
+::::{.columns}
+:::{.column width="50%"}
+
 For itemset $ABCD$, rules can be organized by consequent size.
 
-| Consequent size | Candidate rules |
-|---:|---|
-| 0 | $ABCD \to \{\}$ |
-| 1 | $BCD \to A$, $ACD \to B$, $ABD \to C$, $ABC \to D$ |
-| 2 | $BC \to AD$, $BD \to AC$, $CD \to AB$, $AD \to BC$, $AC \to BD$, $AB \to CD$ |
-| 3 | $D \to ABC$, $C \to ABD$, $B \to ACD$, $A \to BCD$ |
-
 Low-confidence rules prune more general rules below them.
+
+:::
+:::{.column width="50%"}
+
+```{mermaid}
+%%| echo: false
+
+flowchart TB
+  R0["ABCD -> {}"]
+
+  R1A["BCD -> A"]
+  R1B["ACD -> B"]
+  R1C["ABD -> C"]
+  R1D["ABC -> D"]
+
+  R2A["BC -> AD"]
+  R2B["BD -> AC"]
+  R2C["CD -> AB"]
+  R2D["AD -> BC"]
+  R2E["AC -> BD"]
+  R2F["AB -> CD"]
+
+  R3A["D -> ABC"]
+  R3B["C -> ABD"]
+  R3C["B -> ACD"]
+  R3D["A -> BCD"]
+
+  R0 --> R1A
+  R0 --> R1B
+  R0 --> R1C
+  R0 --> R1D
+
+  R1A --> R2A
+  R1A --> R2B
+  R1A --> R2C
+  R1B --> R2C
+  R1B --> R2D
+  R1B --> R2E
+  R1C --> R2B
+  R1C --> R2D
+  R1C --> R2F
+  R1D --> R2A
+  R1D --> R2E
+  R1D --> R2F
+
+  R2A --> R3A
+  R2A --> R3B
+  R2B --> R3A
+  R2B --> R3C
+  R2C --> R3A
+  R2C --> R3D
+  R2D --> R3B
+  R2D --> R3C
+  R2E --> R3B
+  R2E --> R3D
+  R2F --> R3C
+  R2F --> R3D
+```
+:::
+::::
 
 # Rule Generation: Tiered Approach
 
