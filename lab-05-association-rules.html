@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="lab-05-association-rules_files/libs/quarto-html/tabby.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-05-association-rules_files/libs/quarto-html/tabby.min.js"></script>
 <script src="lab-05-association-rules_files/libs/quarto-html/popper.min.js"></script>
 <script src="lab-05-association-rules_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lab-05-association-rules_files/libs/quarto-html/tippy.css" rel="stylesheet">
@@ -9,7 +9,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
-  <title>Association rules with Python - solutions</title>
+  <title>Machine Learning and Data Mining (Module I)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -100,7 +100,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="lab-05-association-rules_files/libs/revealjs/dist/theme/quarto-2a4b070768aef88e7992984127cace11.css">
+  <link rel="stylesheet" href="lab-05-association-rules_files/libs/revealjs/dist/theme/quarto-16bc8fc46cf16bb45dbb7941de0fb807.css">
   <link href="lab-05-association-rules_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="lab-05-association-rules_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="lab-05-association-rules_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -192,13 +192,16 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Association rules with Python - solutions</h1>
+  <h1 class="title">Machine Learning and Data Mining (Module I)</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -209,10 +212,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section>
-<section id="association-rules-with-python---solutions" class="title-slide slide level1 center">
-<h1>Association rules with Python - solutions</h1>
-<p>This laboratory closely follows <strong>13-Association rules with Weka - Solutions</strong>, translating the Weka workflow to Python while using only the local ARFF files in <code>datasets/</code>.</p>
+<section class="slide level2">
+
+<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-mldm/blob/master/slides/lab-05-association-rules.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+</section>
+<section id="association-rules-with-python" class="title-slide slide level1 center">
+<h1>Association rules with Python</h1>
 <p>We will:</p>
 <ul>
 <li>discretize the Census attributes and mine frequent itemsets;</li>
@@ -222,19 +227,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>perform Market Basket Analysis at several support and confidence thresholds;</li>
 <li>use lift to interpret the link among hamburger, hamburger buns, and white bread.</li>
 </ul>
-<blockquote>
-<p><strong>Weka to Python:</strong> scikit-learn does not provide Apriori or association-rule generation. We therefore use <code>mlxtend.frequent_patterns.apriori</code> and <code>association_rules</code>, whose definitions of support, confidence, lift, leverage, and conviction match Weka’s. The remaining analysis follows the familiar pandas/scikit-learn workflow.</p>
-</blockquote>
 </section>
-<section id="setup-and-arff-loader" class="slide level2">
-<h2>Setup and ARFF loader</h2>
-<p>Run the notebook from either the repository root or the <code>slides/</code> directory. The path helper deliberately uses the <strong>local</strong> <code>slides/datasets</code> folder; no dataset is downloaded.</p>
-<p>If needed, uncomment the installation line in the next cell.</p>
-</section>
-<section id="reusable-apriori-helpers" class="slide level2">
-<h2>Reusable Apriori helpers</h2>
-<p>The following utilities load ARFF data, format itemsets and rules, and reproduce Weka’s decreasing-support search.</p>
-</section></section>
+
 <section>
 <section id="census-data" class="title-slide slide level1 center">
 <h1>Census data</h1>
@@ -243,7 +237,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="dataset-overview" class="slide level2">
 <h2>Dataset overview</h2>
 <p>The warm-up uses <code>CensusTraining.arff</code>, a 1,000-row sample of US census records. Its 15 attributes describe age, employment, education, household role, demographics, capital gains/losses, working hours, country, and whether total income exceeds $50K.</p>
-<div id="234b5bda" class="cell">
+<div id="6e60d361" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.205648Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.205478Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.227535Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.226721Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>census, census_meta <span class="op">=</span> load_arff_frame(<span class="st">"CensusTraining.arff"</span>)</span>
@@ -251,101 +245,651 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <span id="cb1-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="ss">f"Instances: </span><span class="sc">{</span><span class="bu">len</span>(census)<span class="sc">:,}</span><span class="ss">"</span>)</span>
 <span id="cb1-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="ss">f"Attributes: </span><span class="sc">{</span>census<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Instances: 1,000
+Attributes: 15</code></pre>
+</div>
 </div>
 </section>
 <section id="census-sample" class="slide level2">
 <h2>Census sample</h2>
-<div id="14eb6392" class="cell">
+<div id="f628d3b0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.229385Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.229183Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.243179Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.242387Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>census.head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>census.head()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">workclass</th>
+<th data-quarto-table-cell-role="th">fnlwgt</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">education-num</th>
+<th data-quarto-table-cell-role="th">marital-status</th>
+<th data-quarto-table-cell-role="th">occupation</th>
+<th data-quarto-table-cell-role="th">relationship</th>
+<th data-quarto-table-cell-role="th">race</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">capital-gain</th>
+<th data-quarto-table-cell-role="th">capital-loss</th>
+<th data-quarto-table-cell-role="th">hours-per-week</th>
+<th data-quarto-table-cell-role="th">native-country</th>
+<th data-quarto-table-cell-role="th">class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>39.0</td>
+<td>State-gov</td>
+<td>77516.0</td>
+<td>Bachelors</td>
+<td>13.0</td>
+<td>Never-married</td>
+<td>Adm-clerical</td>
+<td>Not-in-family</td>
+<td>White</td>
+<td>Male</td>
+<td>2174.0</td>
+<td>0.0</td>
+<td>40.0</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>50.0</td>
+<td>Self-emp-not-inc</td>
+<td>83311.0</td>
+<td>Bachelors</td>
+<td>13.0</td>
+<td>Married-civ-spouse</td>
+<td>Exec-managerial</td>
+<td>Husband</td>
+<td>White</td>
+<td>Male</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>13.0</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>38.0</td>
+<td>Private</td>
+<td>215646.0</td>
+<td>HS-grad</td>
+<td>9.0</td>
+<td>Divorced</td>
+<td>Handlers-cleaners</td>
+<td>Not-in-family</td>
+<td>White</td>
+<td>Male</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>40.0</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>53.0</td>
+<td>Private</td>
+<td>234721.0</td>
+<td>11th</td>
+<td>7.0</td>
+<td>Married-civ-spouse</td>
+<td>Handlers-cleaners</td>
+<td>Husband</td>
+<td>Black</td>
+<td>Male</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>40.0</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>28.0</td>
+<td>Private</td>
+<td>338409.0</td>
+<td>Bachelors</td>
+<td>13.0</td>
+<td>Married-civ-spouse</td>
+<td>Prof-specialty</td>
+<td>Wife</td>
+<td>Black</td>
+<td>Female</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>40.0</td>
+<td>Cuba</td>
+<td>&lt;=50K</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-dtypes" class="slide level2">
 <h2>Census dtypes</h2>
-<div id="e87b0694" class="cell">
+<div id="e3e5454b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.245076Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.244888Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.251309Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.250702Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>census.dtypes.to_frame(<span class="st">"dtype"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>census.dtypes.to_frame(<span class="st">"dtype"</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">dtype</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">age</th>
+<td>float64</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">workclass</th>
+<td>str</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">fnlwgt</th>
+<td>float64</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">education</th>
+<td>str</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">education-num</th>
+<td>float64</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">marital-status</th>
+<td>str</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">occupation</th>
+<td>str</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">relationship</th>
+<td>str</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">race</th>
+<td>str</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">sex</th>
+<td>str</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">capital-gain</th>
+<td>float64</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">capital-loss</th>
+<td>float64</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">hours-per-week</th>
+<td>float64</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">native-country</th>
+<td>str</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">class</th>
+<td>str</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-preprocessing" class="slide level2">
 <h2>Census preprocessing</h2>
-<p>Weka’s association-rule search requires discrete attributes. As in the slides, we:</p>
+<p>Association-rule search requires discrete attributes. As in the slides, we:</p>
 <ol type="1">
 <li>discretize every numeric attribute into <strong>10 equal-frequency bins</strong>;</li>
 <li>remove <code>fnlwgt</code> (the final sampling weight);</li>
 <li>retain one item per observed <code>attribute=value</code> pair.</li>
 </ol>
-<p>Missing values are not turned into items. The helper preserves ties and places each equal-frequency cut point halfway between distinct observed values, matching Weka’s behavior for attributes with many repeated zeros (notably capital gain/loss).</p>
+<p>Missing values are not turned into items.</p>
 </section>
 <section id="manual-correlation-check" class="slide level2">
 <h2>Manual correlation check</h2>
 <p>In association analysis there is no privileged class unless we deliberately choose one. A pairwise check reveals the strongest expected relationship: <code>education</code> and <code>education-num</code> encode nearly the same concept. Normalized mutual information (NMI) is 0 for independence and 1 for a deterministic correspondence.</p>
-<div id="646ce0ad" class="cell">
+<div id="5fe0b7aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.309057Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.308875Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.333808Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.332944Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>education_pairs <span class="op">=</span> census[[<span class="st">"education"</span>, <span class="st">"education-num"</span>]].dropna()</span>
-<span id="cb4-2"><a href="" aria-label="2"></a>education_nmi <span class="op">=</span> normalized_mutual_info_score(</span>
-<span id="cb4-3"><a href="" aria-label="3"></a>    education_pairs[<span class="st">"education"</span>].astype(<span class="bu">str</span>), education_pairs[<span class="st">"education-num"</span>].astype(<span class="bu">str</span>)</span>
-<span id="cb4-4"><a href="" aria-label="4"></a>)</span>
-<span id="cb4-5"><a href="" aria-label="5"></a></span>
-<span id="cb4-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"NMI(education, education-num) = </span><span class="sc">{</span>education_nmi<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb4-7"><a href="" aria-label="7"></a>pd.crosstab(education_pairs[<span class="st">"education"</span>], education_pairs[<span class="st">"education-num"</span>])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>education_pairs <span class="op">=</span> census[[<span class="st">"education"</span>, <span class="st">"education-num"</span>]].dropna()</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>education_nmi <span class="op">=</span> normalized_mutual_info_score(</span>
+<span id="cb5-3"><a href="" aria-label="3"></a>    education_pairs[<span class="st">"education"</span>].astype(<span class="bu">str</span>), education_pairs[<span class="st">"education-num"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb5-4"><a href="" aria-label="4"></a>)</span>
+<span id="cb5-5"><a href="" aria-label="5"></a></span>
+<span id="cb5-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"NMI(education, education-num) = </span><span class="sc">{</span>education_nmi<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb5-7"><a href="" aria-label="7"></a>pd.crosstab(education_pairs[<span class="st">"education"</span>], education_pairs[<span class="st">"education-num"</span>])</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>NMI(education, education-num) = 1.000</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th">education-num</th>
+<th data-quarto-table-cell-role="th">1.0</th>
+<th data-quarto-table-cell-role="th">2.0</th>
+<th data-quarto-table-cell-role="th">3.0</th>
+<th data-quarto-table-cell-role="th">4.0</th>
+<th data-quarto-table-cell-role="th">5.0</th>
+<th data-quarto-table-cell-role="th">6.0</th>
+<th data-quarto-table-cell-role="th">7.0</th>
+<th data-quarto-table-cell-role="th">8.0</th>
+<th data-quarto-table-cell-role="th">9.0</th>
+<th data-quarto-table-cell-role="th">10.0</th>
+<th data-quarto-table-cell-role="th">11.0</th>
+<th data-quarto-table-cell-role="th">12.0</th>
+<th data-quarto-table-cell-role="th">13.0</th>
+<th data-quarto-table-cell-role="th">14.0</th>
+<th data-quarto-table-cell-role="th">15.0</th>
+<th data-quarto-table-cell-role="th">16.0</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10th</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>21</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11th</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>46</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12th</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1st-4th</th>
+<td>0</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5th-6th</th>
+<td>0</td>
+<td>0</td>
+<td>11</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7th-8th</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>15</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">9th</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Assoc-acdm</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Assoc-voc</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>48</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Bachelors</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>166</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Doctorate</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>14</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">HS-grad</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>321</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Masters</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Preschool</th>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Prof-school</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>10</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Some-college</th>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>225</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section></section>
 <section>
 <section id="apriori" class="title-slide slide level1 center">
 <h1>Apriori</h1>
-
-</section>
-<section id="parameters-and-rule-metrics" class="slide level2">
-<h2>Parameters and rule metrics</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Weka Apriori option</th>
-<th>Python equivalent in this notebook</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>car</code></td>
-<td>filter rules so the chosen class attribute is the consequent</td>
-</tr>
-<tr class="even">
-<td><code>lowerBoundMinSupport</code></td>
-<td>lowest <code>min_support</code> tried</td>
-</tr>
-<tr class="odd">
-<td><code>upperBoundMinSupport</code></td>
-<td>first <code>min_support</code> tried</td>
-</tr>
-<tr class="even">
-<td><code>delta</code></td>
-<td>decrement between support rounds</td>
-</tr>
-<tr class="odd">
-<td><code>metricType</code></td>
-<td><code>metric</code> in <code>association_rules</code></td>
-</tr>
-<tr class="even">
-<td><code>minMetric</code></td>
-<td><code>min_threshold</code> in <code>association_rules</code></td>
-</tr>
-<tr class="odd">
-<td><code>numRules</code></td>
-<td>stop once enough rules exist, then return the best ones</td>
-</tr>
-<tr class="even">
-<td><code>outputItemSets</code></td>
-<td>display the frequent-itemset table</td>
-</tr>
-</tbody>
-</table>
 <p>Allowed metrics include confidence, lift, leverage, and conviction. Rules are ordered by the selected metric. For a rule <span class="math inline">\(A \Rightarrow B\)</span>:</p>
 <ul>
 <li><strong>antecedent support</strong> is <span class="math inline">\(s(A)\)</span>;</li>
@@ -359,144 +903,1236 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="default-search-with-decreasing-support" class="slide level2">
 <h2>Default search with decreasing support</h2>
 <p>Start at the upper support bound, decrease it by <code>delta</code>, and stop once ten confidence-qualified rules are available.</p>
-<div id="89cfa8f0" class="cell">
+<div id="e0fa3fda" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.335624Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.335444Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.360431Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.359459Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>census_itemsets_10, census_rules_10, census_history_10 <span class="op">=</span> weka_like_search(</span>
-<span id="cb5-2"><a href="" aria-label="2"></a>    census_items,</span>
-<span id="cb5-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
-<span id="cb5-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
-<span id="cb5-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
-<span id="cb5-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
-<span id="cb5-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
-<span id="cb5-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb5-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb5-10"><a href="" aria-label="10"></a></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>census_itemsets_10, census_rules_10, census_history_10 <span class="op">=</span> weka_like_search(</span>
+<span id="cb7-2"><a href="" aria-label="2"></a>    census_items,</span>
+<span id="cb7-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
+<span id="cb7-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
+<span id="cb7-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb7-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
+<span id="cb7-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
+<span id="cb7-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb7-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb7-10"><a href="" aria-label="10"></a></span></code></pre></div>
 </details>
 </div>
 </section>
 <section id="census-decreasing-support-rounds" class="slide level2">
 <h2>Census decreasing-support rounds</h2>
-<div id="de3a8cd3" class="cell">
+<div id="48921e43" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.362466Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.362269Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.368900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.368074Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>census_history_10</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>census_history_10</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">min support</th>
+<th data-quarto-table-cell-role="th">itemsets</th>
+<th data-quarto-table-cell-role="th">rules</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1.00</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.95</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.90</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.85</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>0.80</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>0.75</td>
+<td>12</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-frequent-itemsets-at-the-stopping-round" class="slide level2">
 <h2>Census frequent itemsets at the stopping round</h2>
-<div id="23a72e67" class="cell">
+<div id="e3518617" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.370849Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.370667Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.380016Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.379224Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>itemset_table(census_itemsets_10)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>itemset_table(census_itemsets_10)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">length</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">itemset</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>1</td>
+<td>0.950</td>
+<td>capital-loss=(-inf, 326.5]</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>1</td>
+<td>0.919</td>
+<td>capital-gain=(-inf, 297.0]</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>1</td>
+<td>0.902</td>
+<td>native-country=United-States</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1</td>
+<td>0.847</td>
+<td>race=White</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1</td>
+<td>0.768</td>
+<td>class=&lt;=50K</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">8</th>
+<td>2</td>
+<td>0.869</td>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5]</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>2</td>
+<td>0.861</td>
+<td>capital-loss=(-inf, 326.5], native-country=United-States</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>2</td>
+<td>0.826</td>
+<td>capital-gain=(-inf, 297.0], native-country=United-States</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>2</td>
+<td>0.805</td>
+<td>capital-loss=(-inf, 326.5], race=White</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>2</td>
+<td>0.778</td>
+<td>native-country=United-States, race=White</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>2</td>
+<td>0.774</td>
+<td>capital-gain=(-inf, 297.0], race=White</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>3</td>
+<td>0.785</td>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5], native-country=United-States</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-best-rules" class="slide level2">
 <h2>Census best rules</h2>
-<div id="27c25b98" class="cell">
+<div id="2f82cb7f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.382231Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.382015Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.396559Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.395634Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>readable_rules(census_rules_10)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>readable_rules(census_rules_10)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>native-country=United-States</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>2</td>
+<td>0.902</td>
+<td>0.950</td>
+<td>0.861</td>
+<td>0.9545</td>
+<td>1.0048</td>
+<td>0.0041</td>
+<td>1.1000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>race=White</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>2</td>
+<td>0.847</td>
+<td>0.950</td>
+<td>0.805</td>
+<td>0.9504</td>
+<td>1.0004</td>
+<td>0.0004</td>
+<td>1.0083</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>capital-gain=(-inf, 297.0], native-country=United-States</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.826</td>
+<td>0.950</td>
+<td>0.785</td>
+<td>0.9504</td>
+<td>1.0004</td>
+<td>0.0003</td>
+<td>1.0073</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>2</td>
+<td>0.919</td>
+<td>0.950</td>
+<td>0.869</td>
+<td>0.9456</td>
+<td>0.9954</td>
+<td>-0.0040</td>
+<td>0.9190</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>race=White</td>
+<td>native-country=United-States</td>
+<td>2</td>
+<td>0.847</td>
+<td>0.902</td>
+<td>0.778</td>
+<td>0.9185</td>
+<td>1.0183</td>
+<td>0.0140</td>
+<td>1.2030</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>native-country=United-States</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>2</td>
+<td>0.902</td>
+<td>0.919</td>
+<td>0.826</td>
+<td>0.9157</td>
+<td>0.9965</td>
+<td>-0.0029</td>
+<td>0.9613</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>2</td>
+<td>0.950</td>
+<td>0.919</td>
+<td>0.869</td>
+<td>0.9147</td>
+<td>0.9954</td>
+<td>-0.0040</td>
+<td>0.9500</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>race=White</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>2</td>
+<td>0.847</td>
+<td>0.919</td>
+<td>0.774</td>
+<td>0.9138</td>
+<td>0.9944</td>
+<td>-0.0044</td>
+<td>0.9398</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>capital-loss=(-inf, 326.5], native-country=United-States</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>3</td>
+<td>0.861</td>
+<td>0.919</td>
+<td>0.785</td>
+<td>0.9117</td>
+<td>0.9921</td>
+<td>-0.0063</td>
+<td>0.9176</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>native-country=United-States</td>
+<td>2</td>
+<td>0.950</td>
+<td>0.902</td>
+<td>0.861</td>
+<td>0.9063</td>
+<td>1.0048</td>
+<td>0.0041</td>
+<td>1.0461</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="reading-antecedent-and-rule-support" class="slide level2">
 <h2>Reading antecedent and rule support</h2>
 <p>The rule support must never exceed either side’s support; the check below verifies the anti-monotone relationship numerically.</p>
-<div id="b3deb3e1" class="cell">
+<div id="402c7457" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.398551Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.398370Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.408937Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.408016Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="cf">if</span> <span class="kw">not</span> census_rules_10.empty:</span>
-<span id="cb9-2"><a href="" aria-label="2"></a>    check <span class="op">=</span> census_rules_10.assign(</span>
-<span id="cb9-3"><a href="" aria-label="3"></a>        anti_monotone_ok<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">"support"</span>] <span class="op">&lt;=</span> x[<span class="st">"antecedent support"</span>] <span class="op">+</span> <span class="fl">1e-12</span>)</span>
-<span id="cb9-4"><a href="" aria-label="4"></a>        <span class="op">&amp;</span> (x[<span class="st">"support"</span>] <span class="op">&lt;=</span> x[<span class="st">"consequent support"</span>] <span class="op">+</span> <span class="fl">1e-12</span>)</span>
-<span id="cb9-5"><a href="" aria-label="5"></a>    )[[<span class="st">"antecedent support"</span>, <span class="st">"consequent support"</span>, <span class="st">"support"</span>, <span class="st">"anti_monotone_ok"</span>]]</span>
-<span id="cb9-6"><a href="" aria-label="6"></a>    <span class="cf">assert</span> check[<span class="st">"anti_monotone_ok"</span>].<span class="bu">all</span>()</span>
-<span id="cb9-7"><a href="" aria-label="7"></a></span>
-<span id="cb9-8"><a href="" aria-label="8"></a>check.<span class="bu">round</span>(<span class="dv">4</span>) <span class="cf">if</span> <span class="kw">not</span> census_rules_10.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="cf">if</span> <span class="kw">not</span> census_rules_10.empty:</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>    check <span class="op">=</span> census_rules_10.assign(</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>        anti_monotone_ok<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">"support"</span>] <span class="op">&lt;=</span> x[<span class="st">"antecedent support"</span>]) <span class="op">&amp;</span> (x[<span class="st">"support"</span>] <span class="op">&lt;=</span> x[<span class="st">"consequent support"</span>])</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>    )[[<span class="st">"antecedent support"</span>, <span class="st">"consequent support"</span>, <span class="st">"support"</span>, <span class="st">"anti_monotone_ok"</span>]]</span>
+<span id="cb11-5"><a href="" aria-label="5"></a>    <span class="cf">assert</span> check[<span class="st">"anti_monotone_ok"</span>].<span class="bu">all</span>()</span>
+<span id="cb11-6"><a href="" aria-label="6"></a></span>
+<span id="cb11-7"><a href="" aria-label="7"></a>check.<span class="bu">round</span>(<span class="dv">4</span>) <span class="cf">if</span> <span class="kw">not</span> census_rules_10.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">anti_monotone_ok</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>0.902</td>
+<td>0.950</td>
+<td>0.861</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.847</td>
+<td>0.950</td>
+<td>0.805</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.826</td>
+<td>0.950</td>
+<td>0.785</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.919</td>
+<td>0.950</td>
+<td>0.869</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>0.847</td>
+<td>0.902</td>
+<td>0.778</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>0.902</td>
+<td>0.919</td>
+<td>0.826</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>0.950</td>
+<td>0.919</td>
+<td>0.869</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>0.847</td>
+<td>0.919</td>
+<td>0.774</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>0.861</td>
+<td>0.919</td>
+<td>0.785</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>0.950</td>
+<td>0.902</td>
+<td>0.861</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="iterative-search-with-decreasing-support" class="slide level2">
 <h2>Iterative search with decreasing support</h2>
-<p>Weka starts at the upper support bound and lowers it by <code>delta</code>. Each round returns rules above <code>minMetric</code>; the cycle stops when it reaches the lower bound or has found <code>numRules</code> rules. Increasing <code>numRules</code> therefore permits more rounds and can reveal lower-support but higher-confidence rules.</p>
-<div id="293098ee" class="cell">
+<p>Start at the upper support bound and lowers it by <code>delta</code>. Each round returns rules above <code>minMetric</code>; the cycle stops when it reaches the lower bound or has found <code>numRules</code> rules. Increasing <code>numRules</code> therefore permits more rounds and can reveal lower-support but higher-confidence rules.</p>
+<div id="7e2e3b64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.410913Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.410588Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.472895Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.471968Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>census_itemsets_100, census_rules_100, census_history_100 <span class="op">=</span> weka_like_search(</span>
-<span id="cb10-2"><a href="" aria-label="2"></a>    census_items,</span>
-<span id="cb10-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
-<span id="cb10-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
-<span id="cb10-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
-<span id="cb10-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
-<span id="cb10-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
-<span id="cb10-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb10-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb10-10"><a href="" aria-label="10"></a></span>
-<span id="cb10-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="ss">f"Stopping support: </span><span class="sc">{</span>census_history_100<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>][<span class="st">'min support'</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb10-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="ss">f"Rules returned: </span><span class="sc">{</span><span class="bu">len</span>(census_rules_100)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>census_itemsets_100, census_rules_100, census_history_100 <span class="op">=</span> weka_like_search(</span>
+<span id="cb12-2"><a href="" aria-label="2"></a>    census_items,</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
+<span id="cb12-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb12-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
+<span id="cb12-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb12-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb12-10"><a href="" aria-label="10"></a></span>
+<span id="cb12-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="ss">f"Stopping support: </span><span class="sc">{</span>census_history_100<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>][<span class="st">'min support'</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb12-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="ss">f"Rules returned: </span><span class="sc">{</span><span class="bu">len</span>(census_rules_100)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Stopping support: 0.45
+Rules returned: 100</code></pre>
+</div>
 </div>
 </section>
 <section id="census-broad-rule-search-history" class="slide level2">
 <h2>Census broad rule search history</h2>
-<div id="95897b7b" class="cell">
+<div id="1f73bb52" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.474748Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.474550Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.481353Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.480577Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>census_history_100</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>census_history_100</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">min support</th>
+<th data-quarto-table-cell-role="th">itemsets</th>
+<th data-quarto-table-cell-role="th">rules</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1.00</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.95</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.90</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.85</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>0.80</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>0.75</td>
+<td>12</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>0.70</td>
+<td>18</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>0.65</td>
+<td>25</td>
+<td>30</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>0.60</td>
+<td>35</td>
+<td>42</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>0.55</td>
+<td>48</td>
+<td>59</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>0.50</td>
+<td>63</td>
+<td>84</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>0.45</td>
+<td>78</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-broad-rule-search-results" class="slide level2">
 <h2>Census broad rule search results</h2>
-<div id="b4c330c4" class="cell">
+<div id="649b4666" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.483438Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.483256Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.497098Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.496351Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>readable_rules(census_rules_100, top<span class="op">=</span><span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>readable_rules(census_rules_100, top<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>class=&lt;=50K, race=White</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.640</td>
+<td>0.95</td>
+<td>0.619</td>
+<td>0.9672</td>
+<td>1.0181</td>
+<td>0.0110</td>
+<td>1.5238</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>class=&lt;=50K, native-country=United-States</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.693</td>
+<td>0.95</td>
+<td>0.670</td>
+<td>0.9668</td>
+<td>1.0177</td>
+<td>0.0117</td>
+<td>1.5065</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>class=&lt;=50K, native-country=United-States, race=White</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>4</td>
+<td>0.584</td>
+<td>0.95</td>
+<td>0.564</td>
+<td>0.9658</td>
+<td>1.0166</td>
+<td>0.0092</td>
+<td>1.4600</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>capital-gain=(-inf, 297.0], class=&lt;=50K, race=White</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>4</td>
+<td>0.610</td>
+<td>0.95</td>
+<td>0.589</td>
+<td>0.9656</td>
+<td>1.0164</td>
+<td>0.0095</td>
+<td>1.4524</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>capital-gain=(-inf, 297.0], class=&lt;=50K, native-country=United-States</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>4</td>
+<td>0.658</td>
+<td>0.95</td>
+<td>0.635</td>
+<td>0.9650</td>
+<td>1.0158</td>
+<td>0.0099</td>
+<td>1.4304</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>capital-gain=(-inf, 297.0], class=&lt;=50K, native-country=United-States, race=White</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>5</td>
+<td>0.554</td>
+<td>0.95</td>
+<td>0.534</td>
+<td>0.9639</td>
+<td>1.0146</td>
+<td>0.0077</td>
+<td>1.3850</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>class=&lt;=50K</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>2</td>
+<td>0.768</td>
+<td>0.95</td>
+<td>0.740</td>
+<td>0.9635</td>
+<td>1.0143</td>
+<td>0.0104</td>
+<td>1.3714</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>capital-gain=(-inf, 297.0], class=&lt;=50K</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.732</td>
+<td>0.95</td>
+<td>0.704</td>
+<td>0.9617</td>
+<td>1.0124</td>
+<td>0.0086</td>
+<td>1.3071</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>class=&lt;=50K, native-country=United-States, workclass=Private</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>4</td>
+<td>0.486</td>
+<td>0.95</td>
+<td>0.467</td>
+<td>0.9609</td>
+<td>1.0115</td>
+<td>0.0053</td>
+<td>1.2789</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>class=&lt;=50K, sex=Male</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.480</td>
+<td>0.95</td>
+<td>0.461</td>
+<td>0.9604</td>
+<td>1.0110</td>
+<td>0.0050</td>
+<td>1.2632</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="interpreting-the-broad-rule-search" class="slide level2">
 <h2>Interpreting the broad rule search</h2>
 <p>The first returned rules maximize confidence, even when their support is lower. Limiting the support interval is useful when we want patterns at a particular prevalence and want to avoid rules driven only by extremely common single attributes.</p>
 </section>
-<section id="calibrating-support-for-rules-of-length-3" class="slide level2">
-<h2>Calibrating support for rules of length 3</h2>
-<p>The reference solution suggests a lower support near <strong>0.70</strong>. At that level, only very frequent items survive, so the remaining 3-item sets generate several different rules while longer, rarer combinations disappear.</p>
-<div id="dc83822d" class="cell">
+<section id="calibrating-support-for-longer-rules" class="slide level2">
+<h2>Calibrating support for longer rules</h2>
+<details>
+<summary>
+Suggested answer
+</summary>
+A lower support near <strong>0.70</strong> is a useful reference point. At that level, only very frequent items survive, so the remaining three-item sets generate several different rules while longer, rarer combinations disappear.
+</details>
+<div id="a2583734" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.498929Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.498756Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.509818Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.508885Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>census_itemsets_70, census_rules_70 <span class="op">=</span> mine_rules(</span>
-<span id="cb13-2"><a href="" aria-label="2"></a>    census_items, min_support<span class="op">=</span><span class="fl">0.70</span>, metric<span class="op">=</span><span class="st">"confidence"</span>, min_metric<span class="op">=</span><span class="fl">0.90</span></span>
-<span id="cb13-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb13-4"><a href="" aria-label="4"></a></span>
-<span id="cb13-5"><a href="" aria-label="5"></a>length_summary_70 <span class="op">=</span> (</span>
-<span id="cb13-6"><a href="" aria-label="6"></a>    census_itemsets_70.assign(length<span class="op">=</span>census_itemsets_70[<span class="st">"itemsets"</span>].<span class="bu">map</span>(<span class="bu">len</span>))</span>
-<span id="cb13-7"><a href="" aria-label="7"></a>    .groupby(<span class="st">"length"</span>).size().rename(<span class="st">"frequent itemsets"</span>).to_frame()</span>
-<span id="cb13-8"><a href="" aria-label="8"></a>)</span>
-<span id="cb13-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="ss">f"Frequent itemsets: </span><span class="sc">{</span><span class="bu">len</span>(census_itemsets_70)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb13-10"><a href="" aria-label="10"></a><span class="bu">print</span>(<span class="ss">f"Rules generated: </span><span class="sc">{</span><span class="bu">len</span>(census_rules_70)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>census_itemsets_70, census_rules_70 <span class="op">=</span> mine_rules(</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>    census_items, min_support<span class="op">=</span><span class="fl">0.70</span>, metric<span class="op">=</span><span class="st">"confidence"</span>, min_metric<span class="op">=</span><span class="fl">0.90</span></span>
+<span id="cb16-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb16-4"><a href="" aria-label="4"></a></span>
+<span id="cb16-5"><a href="" aria-label="5"></a>length_summary_70 <span class="op">=</span> (</span>
+<span id="cb16-6"><a href="" aria-label="6"></a>    census_itemsets_70.assign(length<span class="op">=</span>census_itemsets_70[<span class="st">"itemsets"</span>].<span class="bu">map</span>(<span class="bu">len</span>))</span>
+<span id="cb16-7"><a href="" aria-label="7"></a>    .groupby(<span class="st">"length"</span>).size().rename(<span class="st">"frequent itemsets"</span>).to_frame()</span>
+<span id="cb16-8"><a href="" aria-label="8"></a>)</span>
+<span id="cb16-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="ss">f"Frequent itemsets: </span><span class="sc">{</span><span class="bu">len</span>(census_itemsets_70)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-10"><a href="" aria-label="10"></a><span class="bu">print</span>(<span class="ss">f"Rules generated: </span><span class="sc">{</span><span class="bu">len</span>(census_rules_70)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Frequent itemsets: 18
+Rules generated: 22</code></pre>
+</div>
 </div>
 </section>
 <section id="census-high-support-itemset-lengths" class="slide level2">
 <h2>Census high-support itemset lengths</h2>
-<div id="866c5b0b" class="cell">
+<div id="76e2b13a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.511632Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.511457Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.517034Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.516134Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>length_summary_70</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>length_summary_70</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">frequent itemsets</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">length</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>8</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-high-support-rules" class="slide level2">
 <h2>Census high-support rules</h2>
-<div id="73619725" class="cell">
+<div id="96d6f033" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.518727Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.518550Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.535503Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.534593Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>readable_rules(census_rules_70)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>readable_rules(census_rules_70)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>class=&lt;=50K</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>2</td>
+<td>0.768</td>
+<td>0.950</td>
+<td>0.740</td>
+<td>0.9635</td>
+<td>1.0143</td>
+<td>0.0104</td>
+<td>1.3714</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>capital-gain=(-inf, 297.0], class=&lt;=50K</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.732</td>
+<td>0.950</td>
+<td>0.704</td>
+<td>0.9617</td>
+<td>1.0124</td>
+<td>0.0086</td>
+<td>1.3071</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>native-country=United-States</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>2</td>
+<td>0.902</td>
+<td>0.950</td>
+<td>0.861</td>
+<td>0.9545</td>
+<td>1.0048</td>
+<td>0.0041</td>
+<td>1.1000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>class=&lt;=50K</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>2</td>
+<td>0.768</td>
+<td>0.919</td>
+<td>0.732</td>
+<td>0.9531</td>
+<td>1.0371</td>
+<td>0.0262</td>
+<td>1.7280</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>capital-loss=(-inf, 326.5], class=&lt;=50K</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>3</td>
+<td>0.740</td>
+<td>0.919</td>
+<td>0.704</td>
+<td>0.9514</td>
+<td>1.0352</td>
+<td>0.0239</td>
+<td>1.6650</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>native-country=United-States, race=White</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.778</td>
+<td>0.950</td>
+<td>0.740</td>
+<td>0.9512</td>
+<td>1.0012</td>
+<td>0.0009</td>
+<td>1.0237</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>race=White</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>2</td>
+<td>0.847</td>
+<td>0.950</td>
+<td>0.805</td>
+<td>0.9504</td>
+<td>1.0004</td>
+<td>0.0004</td>
+<td>1.0083</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>capital-gain=(-inf, 297.0], native-country=United-States</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.826</td>
+<td>0.950</td>
+<td>0.785</td>
+<td>0.9504</td>
+<td>1.0004</td>
+<td>0.0003</td>
+<td>1.0073</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>capital-gain=(-inf, 297.0], race=White</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.774</td>
+<td>0.950</td>
+<td>0.732</td>
+<td>0.9457</td>
+<td>0.9955</td>
+<td>-0.0033</td>
+<td>0.9214</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>2</td>
+<td>0.919</td>
+<td>0.950</td>
+<td>0.869</td>
+<td>0.9456</td>
+<td>0.9954</td>
+<td>-0.0040</td>
+<td>0.9190</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>capital-loss=(-inf, 326.5], race=White</td>
+<td>native-country=United-States</td>
+<td>3</td>
+<td>0.805</td>
+<td>0.902</td>
+<td>0.740</td>
+<td>0.9193</td>
+<td>1.0191</td>
+<td>0.0139</td>
+<td>1.2137</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>race=White</td>
+<td>native-country=United-States</td>
+<td>2</td>
+<td>0.847</td>
+<td>0.902</td>
+<td>0.778</td>
+<td>0.9185</td>
+<td>1.0183</td>
+<td>0.0140</td>
+<td>1.2030</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>class=&lt;=50K</td>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5]</td>
+<td>3</td>
+<td>0.768</td>
+<td>0.869</td>
+<td>0.704</td>
+<td>0.9167</td>
+<td>1.0549</td>
+<td>0.0366</td>
+<td>1.5720</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>native-country=United-States</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>2</td>
+<td>0.902</td>
+<td>0.919</td>
+<td>0.826</td>
+<td>0.9157</td>
+<td>0.9965</td>
+<td>-0.0029</td>
+<td>0.9613</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>2</td>
+<td>0.950</td>
+<td>0.919</td>
+<td>0.869</td>
+<td>0.9147</td>
+<td>0.9954</td>
+<td>-0.0040</td>
+<td>0.9500</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>capital-gain=(-inf, 297.0], race=White</td>
+<td>native-country=United-States</td>
+<td>3</td>
+<td>0.774</td>
+<td>0.902</td>
+<td>0.708</td>
+<td>0.9147</td>
+<td>1.0141</td>
+<td>0.0099</td>
+<td>1.1493</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>race=White</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>2</td>
+<td>0.847</td>
+<td>0.919</td>
+<td>0.774</td>
+<td>0.9138</td>
+<td>0.9944</td>
+<td>-0.0044</td>
+<td>0.9398</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">17</th>
+<td>capital-loss=(-inf, 326.5], native-country=United-States</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>3</td>
+<td>0.861</td>
+<td>0.919</td>
+<td>0.785</td>
+<td>0.9117</td>
+<td>0.9921</td>
+<td>-0.0063</td>
+<td>0.9176</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">18</th>
+<td>native-country=United-States, race=White</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>3</td>
+<td>0.778</td>
+<td>0.919</td>
+<td>0.708</td>
+<td>0.9100</td>
+<td>0.9902</td>
+<td>-0.0070</td>
+<td>0.9003</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">19</th>
+<td>capital-loss=(-inf, 326.5], race=White</td>
+<td>capital-gain=(-inf, 297.0]</td>
+<td>3</td>
+<td>0.805</td>
+<td>0.919</td>
+<td>0.732</td>
+<td>0.9093</td>
+<td>0.9895</td>
+<td>-0.0078</td>
+<td>0.8932</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">20</th>
+<td>capital-loss=(-inf, 326.5]</td>
+<td>native-country=United-States</td>
+<td>2</td>
+<td>0.950</td>
+<td>0.902</td>
+<td>0.861</td>
+<td>0.9063</td>
+<td>1.0048</td>
+<td>0.0041</td>
+<td>1.0461</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">21</th>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5]</td>
+<td>native-country=United-States</td>
+<td>3</td>
+<td>0.869</td>
+<td>0.902</td>
+<td>0.785</td>
+<td>0.9033</td>
+<td>1.0015</td>
+<td>0.0012</td>
+<td>1.0138</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="why-rules-can-outnumber-itemsets" class="slide level2">
@@ -506,61 +2142,566 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="rules-for-a-target-attribute-cartrue" class="slide level2">
 <h2>Rules for a target attribute (<code>car=True</code>)</h2>
 <p>Weka’s <code>car=True</code> constrains the chosen class attribute to the consequent. Here the original class (attribute 15 in Python’s one-based counting; Weka may show a zero-based index) is represented by items beginning with <code>class=</code>.</p>
-<div id="f62ea7b6" class="cell">
+<div id="08e7a597" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.537274Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.537060Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.684014Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.683106Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>car_itemsets, car_rules, car_history <span class="op">=</span> weka_like_search(</span>
-<span id="cb16-2"><a href="" aria-label="2"></a>    census_items,</span>
-<span id="cb16-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
-<span id="cb16-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
-<span id="cb16-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
-<span id="cb16-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
-<span id="cb16-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
-<span id="cb16-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb16-9"><a href="" aria-label="9"></a>    consequent_prefix<span class="op">=</span><span class="st">"class="</span>,</span>
-<span id="cb16-10"><a href="" aria-label="10"></a>)</span>
-<span id="cb16-11"><a href="" aria-label="11"></a></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>car_itemsets, car_rules, car_history <span class="op">=</span> weka_like_search(</span>
+<span id="cb20-2"><a href="" aria-label="2"></a>    census_items,</span>
+<span id="cb20-3"><a href="" aria-label="3"></a>    lower_bound<span class="op">=</span><span class="fl">0.10</span>,</span>
+<span id="cb20-4"><a href="" aria-label="4"></a>    upper_bound<span class="op">=</span><span class="fl">1.00</span>,</span>
+<span id="cb20-5"><a href="" aria-label="5"></a>    delta<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb20-6"><a href="" aria-label="6"></a>    metric<span class="op">=</span><span class="st">"confidence"</span>,</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>    min_metric<span class="op">=</span><span class="fl">0.90</span>,</span>
+<span id="cb20-8"><a href="" aria-label="8"></a>    num_rules<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb20-9"><a href="" aria-label="9"></a>    consequent_prefix<span class="op">=</span><span class="st">"class="</span>,</span>
+<span id="cb20-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb20-11"><a href="" aria-label="11"></a></span></code></pre></div>
 </details>
 </div>
 </section>
 <section id="census-class-consequent-search-history" class="slide level2">
 <h2>Census class-consequent search history</h2>
-<div id="ee7a5efe" class="cell">
+<div id="ca887e98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.685936Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.685747Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.693046Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.692210Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>car_history</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>car_history</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">min support</th>
+<th data-quarto-table-cell-role="th">itemsets</th>
+<th data-quarto-table-cell-role="th">rules</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1.00</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.95</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.90</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.85</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>0.80</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>0.75</td>
+<td>12</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>0.70</td>
+<td>18</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>0.65</td>
+<td>25</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>0.60</td>
+<td>35</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>0.55</td>
+<td>48</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>0.50</td>
+<td>63</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>0.45</td>
+<td>78</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>0.40</td>
+<td>100</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>0.35</td>
+<td>141</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>0.30</td>
+<td>236</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>0.25</td>
+<td>388</td>
+<td>17</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>0.20</td>
+<td>674</td>
+<td>51</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-class-consequent-rules" class="slide level2">
 <h2>Census class-consequent rules</h2>
-<div id="3a316459" class="cell">
+<div id="ce53d810" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.694798Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.694612Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.710634Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.709858Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>readable_rules(car_rules)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>readable_rules(car_rules)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5], marital-status=Never-married, native-country=United-States, ...</td>
+<td>class=&lt;=50K</td>
+<td>6</td>
+<td>0.249</td>
+<td>0.768</td>
+<td>0.240</td>
+<td>0.9639</td>
+<td>1.2550</td>
+<td>0.0488</td>
+<td>6.4187</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5], marital-status=Never-married, native-country=United-States</td>
+<td>class=&lt;=50K</td>
+<td>5</td>
+<td>0.292</td>
+<td>0.768</td>
+<td>0.281</td>
+<td>0.9623</td>
+<td>1.2530</td>
+<td>0.0567</td>
+<td>6.1585</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5], marital-status=Never-married, race=White</td>
+<td>class=&lt;=50K</td>
+<td>5</td>
+<td>0.264</td>
+<td>0.768</td>
+<td>0.254</td>
+<td>0.9621</td>
+<td>1.2528</td>
+<td>0.0512</td>
+<td>6.1248</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5], marital-status=Never-married</td>
+<td>class=&lt;=50K</td>
+<td>4</td>
+<td>0.313</td>
+<td>0.768</td>
+<td>0.301</td>
+<td>0.9617</td>
+<td>1.2522</td>
+<td>0.0606</td>
+<td>6.0513</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>capital-gain=(-inf, 297.0], marital-status=Never-married, native-country=United-States, race=White</td>
+<td>class=&lt;=50K</td>
+<td>5</td>
+<td>0.259</td>
+<td>0.768</td>
+<td>0.249</td>
+<td>0.9614</td>
+<td>1.2518</td>
+<td>0.0501</td>
+<td>6.0088</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>capital-gain=(-inf, 297.0], marital-status=Never-married, native-country=United-States</td>
+<td>class=&lt;=50K</td>
+<td>4</td>
+<td>0.304</td>
+<td>0.768</td>
+<td>0.292</td>
+<td>0.9605</td>
+<td>1.2507</td>
+<td>0.0585</td>
+<td>5.8773</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>capital-gain=(-inf, 297.0], marital-status=Never-married</td>
+<td>class=&lt;=50K</td>
+<td>3</td>
+<td>0.326</td>
+<td>0.768</td>
+<td>0.313</td>
+<td>0.9601</td>
+<td>1.2502</td>
+<td>0.0626</td>
+<td>5.8178</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>capital-gain=(-inf, 297.0], marital-status=Never-married, race=White</td>
+<td>class=&lt;=50K</td>
+<td>4</td>
+<td>0.274</td>
+<td>0.768</td>
+<td>0.263</td>
+<td>0.9599</td>
+<td>1.2498</td>
+<td>0.0526</td>
+<td>5.7789</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5], marital-status=Never-married, race=White, workclass=Private</td>
+<td>class=&lt;=50K</td>
+<td>6</td>
+<td>0.211</td>
+<td>0.768</td>
+<td>0.202</td>
+<td>0.9573</td>
+<td>1.2465</td>
+<td>0.0400</td>
+<td>5.4391</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5], marital-status=Never-married, native-country=United-States, ...</td>
+<td>class=&lt;=50K</td>
+<td>6</td>
+<td>0.233</td>
+<td>0.768</td>
+<td>0.223</td>
+<td>0.9571</td>
+<td>1.2462</td>
+<td>0.0441</td>
+<td>5.4056</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>capital-gain=(-inf, 297.0], capital-loss=(-inf, 326.5], marital-status=Never-married, workclass=Private</td>
+<td>class=&lt;=50K</td>
+<td>5</td>
+<td>0.250</td>
+<td>0.768</td>
+<td>0.239</td>
+<td>0.9560</td>
+<td>1.2448</td>
+<td>0.0470</td>
+<td>5.2727</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>capital-loss=(-inf, 326.5], marital-status=Never-married, native-country=United-States</td>
+<td>class=&lt;=50K</td>
+<td>4</td>
+<td>0.310</td>
+<td>0.768</td>
+<td>0.296</td>
+<td>0.9548</td>
+<td>1.2433</td>
+<td>0.0579</td>
+<td>5.1371</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>capital-gain=(-inf, 297.0], marital-status=Never-married, native-country=United-States, workclass=Private</td>
+<td>class=&lt;=50K</td>
+<td>5</td>
+<td>0.243</td>
+<td>0.768</td>
+<td>0.232</td>
+<td>0.9547</td>
+<td>1.2431</td>
+<td>0.0454</td>
+<td>5.1251</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>capital-loss=(-inf, 326.5], marital-status=Never-married, native-country=United-States, race=White</td>
+<td>class=&lt;=50K</td>
+<td>5</td>
+<td>0.265</td>
+<td>0.768</td>
+<td>0.253</td>
+<td>0.9547</td>
+<td>1.2431</td>
+<td>0.0495</td>
+<td>5.1233</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>capital-loss=(-inf, 326.5], marital-status=Never-married</td>
+<td>class=&lt;=50K</td>
+<td>3</td>
+<td>0.331</td>
+<td>0.768</td>
+<td>0.316</td>
+<td>0.9547</td>
+<td>1.2431</td>
+<td>0.0618</td>
+<td>5.1195</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>capital-gain=(-inf, 297.0], marital-status=Never-married, race=White, workclass=Private</td>
+<td>class=&lt;=50K</td>
+<td>5</td>
+<td>0.219</td>
+<td>0.768</td>
+<td>0.209</td>
+<td>0.9543</td>
+<td>1.2426</td>
+<td>0.0408</td>
+<td>5.0808</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>capital-gain=(-inf, 297.0], marital-status=Never-married, workclass=Private</td>
+<td>class=&lt;=50K</td>
+<td>4</td>
+<td>0.261</td>
+<td>0.768</td>
+<td>0.249</td>
+<td>0.9540</td>
+<td>1.2422</td>
+<td>0.0486</td>
+<td>5.0460</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">17</th>
+<td>capital-loss=(-inf, 326.5], marital-status=Never-married, race=White</td>
+<td>class=&lt;=50K</td>
+<td>4</td>
+<td>0.280</td>
+<td>0.768</td>
+<td>0.267</td>
+<td>0.9536</td>
+<td>1.2416</td>
+<td>0.0520</td>
+<td>4.9969</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">18</th>
+<td>marital-status=Never-married</td>
+<td>class=&lt;=50K</td>
+<td>2</td>
+<td>0.344</td>
+<td>0.768</td>
+<td>0.328</td>
+<td>0.9535</td>
+<td>1.2415</td>
+<td>0.0638</td>
+<td>4.9880</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">19</th>
+<td>marital-status=Never-married, native-country=United-States</td>
+<td>class=&lt;=50K</td>
+<td>3</td>
+<td>0.322</td>
+<td>0.768</td>
+<td>0.307</td>
+<td>0.9534</td>
+<td>1.2414</td>
+<td>0.0597</td>
+<td>4.9803</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-class-consequent-rule-counts" class="slide level2">
 <h2>Census class-consequent rule counts</h2>
-<div id="4587d2f7" class="cell">
+<div id="e34e3032" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.712493Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.712308Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.718617Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.717850Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>car_rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(item_label).value_counts().to_frame(<span class="st">"rules"</span>) <span class="cf">if</span> <span class="kw">not</span> car_rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>car_rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(item_label).value_counts().to_frame(<span class="st">"rules"</span>) <span class="cf">if</span> <span class="kw">not</span> car_rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">rules</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">consequents</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">class=&lt;=50K</th>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="interpreting-class-association-rules" class="slide level2">
 <h2>Interpreting class-association rules</h2>
 <p>All returned rules have income class as the consequent. The dominant consequent is <code>class=&lt;=50K</code>, because that is by far the more frequent class in this sample. Weka-style CAR search constrains the <em>attribute</em>, not a specific value; filtering to one value is an additional step:</p>
-<div id="daf3615b" class="cell">
+<div id="75667133" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.720679Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.720505Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.727818Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.727037Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>target_over_50k <span class="op">=</span> car_rules[</span>
-<span id="cb20-2"><a href="" aria-label="2"></a>    car_rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> values: <span class="st">"class=&gt;50K"</span> <span class="kw">in</span> values)</span>
-<span id="cb20-3"><a href="" aria-label="3"></a>]</span>
-<span id="cb20-4"><a href="" aria-label="4"></a>readable_rules(target_over_50k)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>target_over_50k <span class="op">=</span> car_rules[</span>
+<span id="cb24-2"><a href="" aria-label="2"></a>    car_rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> values: <span class="st">"class=&gt;50K"</span> <span class="kw">in</span> values)</span>
+<span id="cb24-3"><a href="" aria-label="3"></a>]</span>
+<span id="cb24-4"><a href="" aria-label="4"></a>readable_rules(target_over_50k)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section></section>
 <section>
@@ -572,36 +2713,190 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h2>Dataset overview</h2>
 <p>Market Basket Analysis identifies buying habits that can inform promotions, shelf placement, and advertising. <code>MarketBasket.arff</code> contains 651 transactions and 56 binary product attributes.</p>
 <p>The local file uses Weka’s dense asymmetric encoding: <code>t</code> means purchased, while <code>f</code> or <code>?</code> means absent. Treating absence as a regular item would produce unhelpful rules about products <em>not</em> being bought, so only <code>t</code> becomes <code>True</code> in the transaction matrix.</p>
-<div id="18752782" class="cell">
+<div id="0bcbb631" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.729860Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.729690Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:39.786208Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:39.785368Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>market_raw, market_meta <span class="op">=</span> load_arff_frame(<span class="st">"MarketBasket.arff"</span>)</span>
-<span id="cb21-2"><a href="" aria-label="2"></a>market_raw.columns <span class="op">=</span> market_raw.columns.<span class="bu">str</span>.strip()</span>
-<span id="cb21-3"><a href="" aria-label="3"></a>market <span class="op">=</span> market_raw.eq(<span class="st">"t"</span>).astype(<span class="bu">bool</span>)</span>
-<span id="cb21-4"><a href="" aria-label="4"></a></span>
-<span id="cb21-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="ss">f"Instances: </span><span class="sc">{</span><span class="bu">len</span>(market)<span class="sc">:,}</span><span class="ss">"</span>)</span>
-<span id="cb21-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Products: </span><span class="sc">{</span>market<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb21-7"><a href="" aria-label="7"></a><span class="bu">print</span>(<span class="ss">f"Average products per transaction: </span><span class="sc">{</span>market<span class="sc">.</span><span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb21-8"><a href="" aria-label="8"></a>market.head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>market_raw, market_meta <span class="op">=</span> load_arff_frame(<span class="st">"MarketBasket.arff"</span>)</span>
+<span id="cb25-2"><a href="" aria-label="2"></a>market_raw.columns <span class="op">=</span> market_raw.columns.<span class="bu">str</span>.strip()</span>
+<span id="cb25-3"><a href="" aria-label="3"></a>market <span class="op">=</span> market_raw.eq(<span class="st">"t"</span>).astype(<span class="bu">bool</span>)</span>
+<span id="cb25-4"><a href="" aria-label="4"></a></span>
+<span id="cb25-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="ss">f"Instances: </span><span class="sc">{</span><span class="bu">len</span>(market)<span class="sc">:,}</span><span class="ss">, Products: </span><span class="sc">{</span>market<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">, Average products per transaction: </span><span class="sc">{</span>market<span class="sc">.</span><span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb25-6"><a href="" aria-label="6"></a>market.head()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Instances: 651, Products: 56, Average products per transaction: 4.79</code></pre>
 </div>
-</section>
-<section id="dense-and-sparse-arff-formats" class="slide level2">
-<h2>Dense and sparse ARFF formats</h2>
-<p>With one attribute per product, each row is a transaction. Weka supports:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb22-1"><a href="" aria-label="1"></a>% Dense: missing means not purchased</span>
-<span id="cb22-2"><a href="" aria-label="2"></a>@attribute product1 {t}</span>
-<span id="cb22-3"><a href="" aria-label="3"></a>@attribute product2 {t}</span>
-<span id="cb22-4"><a href="" aria-label="4"></a>@data</span>
-<span id="cb22-5"><a href="" aria-label="5"></a>?,t</span>
-<span id="cb22-6"><a href="" aria-label="6"></a>t,?</span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb23-1"><a href="" aria-label="1"></a>% Sparse: include only purchased product index/value pairs</span>
-<span id="cb23-2"><a href="" aria-label="2"></a>@attribute product1 {f,t}</span>
-<span id="cb23-3"><a href="" aria-label="3"></a>@attribute product2 {f,t}</span>
-<span id="cb23-4"><a href="" aria-label="4"></a>@data</span>
-<span id="cb23-5"><a href="" aria-label="5"></a>{1 t}</span>
-<span id="cb23-6"><a href="" aria-label="6"></a>{0 t, 1 t}</span></code></pre></div>
-<p>Both map to the same Boolean transaction matrix used below.</p>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Lemons</th>
+<th data-quarto-table-cell-role="th">Standard coffee</th>
+<th data-quarto-table-cell-role="th">Frozen Chicken Wings</th>
+<th data-quarto-table-cell-role="th">98pct. Fat Free Hamburger</th>
+<th data-quarto-table-cell-role="th">Sugar Cookies</th>
+<th data-quarto-table-cell-role="th">Onions</th>
+<th data-quarto-table-cell-role="th">Vanilla Ice Cream</th>
+<th data-quarto-table-cell-role="th">Potato Chips</th>
+<th data-quarto-table-cell-role="th">Cheese Crackers</th>
+<th data-quarto-table-cell-role="th">Chocolate Bar</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Chicken Legs</th>
+<th data-quarto-table-cell-role="th">Regular Coffee</th>
+<th data-quarto-table-cell-role="th">Cookies</th>
+<th data-quarto-table-cell-role="th">Aspirin</th>
+<th data-quarto-table-cell-role="th">Sweet Potatoes</th>
+<th data-quarto-table-cell-role="th">Strawberry Waffles</th>
+<th data-quarto-table-cell-role="th">Green Beans</th>
+<th data-quarto-table-cell-role="th">Imported Beer</th>
+<th data-quarto-table-cell-role="th">Small Eggs</th>
+<th data-quarto-table-cell-role="th">Silver Cleaner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 56 columns</p>
+</div>
+</div>
+</div>
 </section>
 <section id="threshold-experiments" class="slide level2">
 <h2>Threshold experiments</h2>
@@ -612,6 +2907,73 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>support 0.05, confidence 0.90;</li>
 <li>support 0.05, confidence 0.70.</li>
 </ol>
+<div id="9fd4293b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:39.788114Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:39.787927Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.654670Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.653716Z&quot;}}" data-execution_count="26">
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">min support</th>
+<th data-quarto-table-cell-role="th">min confidence</th>
+<th data-quarto-table-cell-role="th">frequent itemsets</th>
+<th data-quarto-table-cell-role="th">maximum itemset length</th>
+<th data-quarto-table-cell-role="th">rules</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>0.10</td>
+<td>0.9</td>
+<td>23</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.01</td>
+<td>0.9</td>
+<td>30381</td>
+<td>9</td>
+<td>33114</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.05</td>
+<td>0.9</td>
+<td>163</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.05</td>
+<td>0.7</td>
+<td>163</td>
+<td>4</td>
+<td>41</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="rules-returned-by-each-threshold" class="slide level2">
 <h2>Rules returned by each threshold</h2>
@@ -619,46 +2981,450 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="market-rules-with-default-thresholds" class="slide level2">
 <h2>Market rules with default thresholds</h2>
-<div id="12f2eb77" class="cell">
+<div id="b1ed9321" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.656580Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.656396Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.662318Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.661443Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.10</span>, <span class="fl">0.90</span>)]</span>
-<span id="cb24-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"No association rules found."</span> <span class="cf">if</span> rules.empty <span class="cf">else</span> <span class="ss">f"Rules: </span><span class="sc">{</span><span class="bu">len</span>(rules)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb24-3"><a href="" aria-label="3"></a>readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>) <span class="cf">if</span> <span class="kw">not</span> rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.10</span>, <span class="fl">0.90</span>)]</span>
+<span id="cb27-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"No association rules found."</span> <span class="cf">if</span> rules.empty <span class="cf">else</span> <span class="ss">f"Rules: </span><span class="sc">{</span><span class="bu">len</span>(rules)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb27-3"><a href="" aria-label="3"></a>readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>) <span class="cf">if</span> <span class="kw">not</span> rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>No association rules found.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="market-rules-with-lower-support" class="slide level2">
 <h2>Market rules with lower support</h2>
-<div id="0223eac5" class="cell">
+<div id="84f6f4d4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.664066Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.663890Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.748890Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.748009Z&quot;}}" data-execution_count="28">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.01</span>, <span class="fl">0.90</span>)]</span>
-<span id="cb25-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"No association rules found."</span> <span class="cf">if</span> rules.empty <span class="cf">else</span> <span class="ss">f"Rules: </span><span class="sc">{</span><span class="bu">len</span>(rules)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb25-3"><a href="" aria-label="3"></a>readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>) <span class="cf">if</span> <span class="kw">not</span> rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.01</span>, <span class="fl">0.90</span>)]</span>
+<span id="cb29-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"No association rules found."</span> <span class="cf">if</span> rules.empty <span class="cf">else</span> <span class="ss">f"Rules: </span><span class="sc">{</span><span class="bu">len</span>(rules)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb29-3"><a href="" aria-label="3"></a>readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>) <span class="cf">if</span> <span class="kw">not</span> rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rules: 33114</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2pct. Milk, 98pct. Fat Free Hamburger, Eggs, Onions</td>
+<td>Potato Chips</td>
+<td>5</td>
+<td>0.0323</td>
+<td>0.2043</td>
+<td>0.0323</td>
+<td>1.0</td>
+<td>4.8947</td>
+<td>0.0257</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2pct. Milk, 98pct. Fat Free Hamburger, Apples, Potato Chips</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0307</td>
+<td>0.2565</td>
+<td>0.0307</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0228</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2pct. Milk, 98pct. Fat Free Hamburger, Apples, Eggs</td>
+<td>Potato Chips</td>
+<td>5</td>
+<td>0.0307</td>
+<td>0.2043</td>
+<td>0.0307</td>
+<td>1.0</td>
+<td>4.8947</td>
+<td>0.0244</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Apples, Onions, Potato Chips</td>
+<td>2pct. Milk</td>
+<td>4</td>
+<td>0.0292</td>
+<td>0.2289</td>
+<td>0.0292</td>
+<td>1.0</td>
+<td>4.3691</td>
+<td>0.0225</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Apples, Eggs, Onions</td>
+<td>2pct. Milk</td>
+<td>4</td>
+<td>0.0292</td>
+<td>0.2289</td>
+<td>0.0292</td>
+<td>1.0</td>
+<td>4.3691</td>
+<td>0.0225</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>Frozen Carrots, Potato Chips</td>
+<td>White Bread</td>
+<td>3</td>
+<td>0.0276</td>
+<td>0.2488</td>
+<td>0.0276</td>
+<td>1.0</td>
+<td>4.0185</td>
+<td>0.0208</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>Cola, Sugar Cookies, Tomatoes</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0276</td>
+<td>0.2565</td>
+<td>0.0276</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0206</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>Sugar Cookies, Sweet Relish, Tomatoes</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0276</td>
+<td>0.2565</td>
+<td>0.0276</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0206</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>Cola, Sugar Cookies, Tomatoes</td>
+<td>White Bread</td>
+<td>4</td>
+<td>0.0276</td>
+<td>0.2488</td>
+<td>0.0276</td>
+<td>1.0</td>
+<td>4.0185</td>
+<td>0.0208</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>Cola, Sugar Cookies, Tomatoes, White Bread</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0276</td>
+<td>0.2565</td>
+<td>0.0276</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0206</td>
+<td>inf</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="market-rules-with-moderate-support" class="slide level2">
 <h2>Market rules with moderate support</h2>
-<div id="bc13a6ce" class="cell">
+<div id="c2d017c1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.750773Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.750587Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.756158Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.755248Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.05</span>, <span class="fl">0.90</span>)]</span>
-<span id="cb26-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"No association rules found."</span> <span class="cf">if</span> rules.empty <span class="cf">else</span> <span class="ss">f"Rules: </span><span class="sc">{</span><span class="bu">len</span>(rules)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb26-3"><a href="" aria-label="3"></a>readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>) <span class="cf">if</span> <span class="kw">not</span> rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.05</span>, <span class="fl">0.90</span>)]</span>
+<span id="cb31-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"No association rules found."</span> <span class="cf">if</span> rules.empty <span class="cf">else</span> <span class="ss">f"Rules: </span><span class="sc">{</span><span class="bu">len</span>(rules)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb31-3"><a href="" aria-label="3"></a>readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>) <span class="cf">if</span> <span class="kw">not</span> rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>No association rules found.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="market-rules-with-lower-confidence" class="slide level2">
 <h2>Market rules with lower confidence</h2>
-<div id="d02b05f0" class="cell">
+<div id="11620777" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.757875Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.757692Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.771993Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.771275Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.05</span>, <span class="fl">0.70</span>)]</span>
-<span id="cb27-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"No association rules found."</span> <span class="cf">if</span> rules.empty <span class="cf">else</span> <span class="ss">f"Rules: </span><span class="sc">{</span><span class="bu">len</span>(rules)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb27-3"><a href="" aria-label="3"></a>readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>) <span class="cf">if</span> <span class="kw">not</span> rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.05</span>, <span class="fl">0.70</span>)]</span>
+<span id="cb33-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"No association rules found."</span> <span class="cf">if</span> rules.empty <span class="cf">else</span> <span class="ss">f"Rules: </span><span class="sc">{</span><span class="bu">len</span>(rules)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb33-3"><a href="" aria-label="3"></a>readable_rules(rules, top<span class="op">=</span><span class="dv">10</span>) <span class="cf">if</span> <span class="kw">not</span> rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rules: 41</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2pct. Milk, Cola, Eggs</td>
+<td>White Bread</td>
+<td>4</td>
+<td>0.0614</td>
+<td>0.2488</td>
+<td>0.0507</td>
+<td>0.8250</td>
+<td>3.3153</td>
+<td>0.0354</td>
+<td>4.2923</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2pct. Milk, Cola, White Bread</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0630</td>
+<td>0.2565</td>
+<td>0.0507</td>
+<td>0.8049</td>
+<td>3.1376</td>
+<td>0.0345</td>
+<td>3.8103</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Cola, Eggs, White Bread</td>
+<td>2pct. Milk</td>
+<td>4</td>
+<td>0.0630</td>
+<td>0.2289</td>
+<td>0.0507</td>
+<td>0.8049</td>
+<td>3.5166</td>
+<td>0.0363</td>
+<td>3.9520</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2pct. Milk, Potato Chips, White Bread</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0691</td>
+<td>0.2565</td>
+<td>0.0553</td>
+<td>0.8000</td>
+<td>3.1186</td>
+<td>0.0376</td>
+<td>3.7174</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Potato Chips, Tomatoes</td>
+<td>White Bread</td>
+<td>3</td>
+<td>0.0676</td>
+<td>0.2488</td>
+<td>0.0538</td>
+<td>0.7955</td>
+<td>3.1965</td>
+<td>0.0369</td>
+<td>3.6723</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>2pct. Milk, Tomatoes</td>
+<td>Eggs</td>
+<td>3</td>
+<td>0.0676</td>
+<td>0.2565</td>
+<td>0.0538</td>
+<td>0.7955</td>
+<td>3.1008</td>
+<td>0.0364</td>
+<td>3.6347</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>2pct. Milk, Tomatoes</td>
+<td>White Bread</td>
+<td>3</td>
+<td>0.0676</td>
+<td>0.2488</td>
+<td>0.0538</td>
+<td>0.7955</td>
+<td>3.1965</td>
+<td>0.0369</td>
+<td>3.6723</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>2pct. Milk, Aspirin</td>
+<td>White Bread</td>
+<td>3</td>
+<td>0.0722</td>
+<td>0.2488</td>
+<td>0.0568</td>
+<td>0.7872</td>
+<td>3.1635</td>
+<td>0.0389</td>
+<td>3.5304</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>2pct. Milk, Eggs, Potato Chips</td>
+<td>White Bread</td>
+<td>4</td>
+<td>0.0707</td>
+<td>0.2488</td>
+<td>0.0553</td>
+<td>0.7826</td>
+<td>3.1449</td>
+<td>0.0377</td>
+<td>3.4553</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>Eggs, Potato Chips, White Bread</td>
+<td>2pct. Milk</td>
+<td>4</td>
+<td>0.0707</td>
+<td>0.2289</td>
+<td>0.0553</td>
+<td>0.7826</td>
+<td>3.4193</td>
+<td>0.0391</td>
+<td>3.5472</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="interpreting-the-threshold-experiments" class="slide level2">
@@ -668,34 +3434,72 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="why-confidence-can-be-misleading" class="slide level2">
 <h2>Why confidence can be misleading</h2>
 <p>Frequently purchased staples can appear in high-confidence rules even without a strong association. The reference highlights 2% milk, eggs, cola, and white bread.</p>
-<div id="af73b8fa" class="cell">
+<div id="ccf37319" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.774015Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.773847Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.780972Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.780211Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a>staples <span class="op">=</span> [<span class="st">"2pct. Milk"</span>, <span class="st">"Eggs"</span>, <span class="st">"Cola"</span>, <span class="st">"White Bread"</span>]</span>
-<span id="cb28-2"><a href="" aria-label="2"></a>staple_support <span class="op">=</span> market[staples].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>).to_frame(<span class="st">"support"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a>staples <span class="op">=</span> [<span class="st">"2pct. Milk"</span>, <span class="st">"Eggs"</span>, <span class="st">"Cola"</span>, <span class="st">"White Bread"</span>]</span>
+<span id="cb35-2"><a href="" aria-label="2"></a>staple_support <span class="op">=</span> market[staples].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>).to_frame(<span class="st">"support"</span>)</span>
+<span id="cb35-3"><a href="" aria-label="3"></a>staple_support.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">support</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Eggs</th>
+<td>0.257</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">White Bread</th>
+<td>0.249</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2pct. Milk</th>
+<td>0.229</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Cola</th>
+<td>0.163</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-</section>
-<section id="market-staple-support-table" class="slide level2">
-<h2>Market staple support table</h2>
-<div id="6178ddce" class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>staple_support.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
+</div>
 </div>
 </section>
 <section id="market-staple-support-chart" class="slide level2">
 <h2>Market staple support chart</h2>
-<div id="6f47f070" class="cell">
+<div id="f6b0a801" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.782800Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.782612Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.889620Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.888728Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> staple_support.sort_values(<span class="st">"support"</span>).plot.barh(legend<span class="op">=</span><span class="va">False</span>, color<span class="op">=</span><span class="st">"#4C9BC6"</span>)</span>
-<span id="cb30-2"><a href="" aria-label="2"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"support"</span>, ylabel<span class="op">=</span><span class="st">""</span>, title<span class="op">=</span><span class="st">"Support of frequently purchased products"</span>)</span>
-<span id="cb30-3"><a href="" aria-label="3"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> staple_support.sort_values(<span class="st">"support"</span>).plot.barh(legend<span class="op">=</span><span class="va">False</span>, color<span class="op">=</span><span class="st">"#4C9BC6"</span>)</span>
+<span id="cb36-2"><a href="" aria-label="2"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"support"</span>, ylabel<span class="op">=</span><span class="st">""</span>, title<span class="op">=</span><span class="st">"Support of frequently purchased products"</span>)</span>
+<span id="cb36-3"><a href="" aria-label="3"></a>plt.show()</span></code></pre></div>
 </details>
+
 </div>
-</section>
+<img data-src="lab-05-association-rules_files/figure-revealjs/cell-33-output-1.png" class="r-stretch"></section>
 <section id="from-frequent-staples-to-target-rules" class="slide level2">
 <h2>From frequent staples to target rules</h2>
 <p>These products are bought often regardless of other items. Rare combinations can therefore imply a staple with high confidence while having very low support. Raising support removes many accidental combinations, but we then need to accept lower confidence and shorter patterns.</p>
@@ -703,25 +3507,254 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="rules-with-a-specific-consequent-eggs" class="slide level2">
 <h2>Rules with a specific consequent: Eggs</h2>
 <p>To imitate a target-item search, retain only rules whose consequent is exactly <code>Eggs</code>. The high-confidence rules are based on small joint counts, confirming that eggs are frequent but not tightly linked to one particular basket.</p>
-<div id="6f877bf0" class="cell">
+<div id="66693a1b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.891443Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.891249Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.931958Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.931140Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>market_itemsets_01, market_rules_01 <span class="op">=</span> market_results[(<span class="fl">0.01</span>, <span class="fl">0.90</span>)]</span>
-<span id="cb31-2"><a href="" aria-label="2"></a>egg_rules <span class="op">=</span> market_rules_01[</span>
-<span id="cb31-3"><a href="" aria-label="3"></a>    market_rules_01[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> values: values <span class="op">==</span> <span class="bu">frozenset</span>({<span class="st">"Eggs"</span>}))</span>
-<span id="cb31-4"><a href="" aria-label="4"></a>].copy()</span>
-<span id="cb31-5"><a href="" aria-label="5"></a></span>
-<span id="cb31-6"><a href="" aria-label="6"></a>readable_rules(egg_rules, top<span class="op">=</span><span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb37-1"><a href="" aria-label="1"></a>market_itemsets_01, market_rules_01 <span class="op">=</span> market_results[(<span class="fl">0.01</span>, <span class="fl">0.90</span>)]</span>
+<span id="cb37-2"><a href="" aria-label="2"></a>egg_rules <span class="op">=</span> market_rules_01[</span>
+<span id="cb37-3"><a href="" aria-label="3"></a>    market_rules_01[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> values: values <span class="op">==</span> <span class="bu">frozenset</span>({<span class="st">"Eggs"</span>}))</span>
+<span id="cb37-4"><a href="" aria-label="4"></a>].copy()</span>
+<span id="cb37-5"><a href="" aria-label="5"></a></span>
+<span id="cb37-6"><a href="" aria-label="6"></a>readable_rules(egg_rules, top<span class="op">=</span><span class="dv">15</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2pct. Milk, 98pct. Fat Free Hamburger, Apples, Potato Chips</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0307</td>
+<td>0.2565</td>
+<td>0.0307</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0228</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>Cola, Sugar Cookies, Tomatoes</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0276</td>
+<td>0.2565</td>
+<td>0.0276</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0206</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>Sugar Cookies, Sweet Relish, Tomatoes</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0276</td>
+<td>0.2565</td>
+<td>0.0276</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0206</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>Cola, Sugar Cookies, Tomatoes, White Bread</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0276</td>
+<td>0.2565</td>
+<td>0.0276</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0206</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>Cookies, Potato Chips</td>
+<td>Eggs</td>
+<td>3</td>
+<td>0.0261</td>
+<td>0.2565</td>
+<td>0.0261</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0194</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>Aspirin, Sugar Cookies, Tomatoes</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0261</td>
+<td>0.2565</td>
+<td>0.0261</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0194</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">19</th>
+<td>2pct. Milk, 98pct. Fat Free Hamburger, Apples, Potato Chips, White Bread</td>
+<td>Eggs</td>
+<td>6</td>
+<td>0.0261</td>
+<td>0.2565</td>
+<td>0.0261</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0194</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">24</th>
+<td>Sugar Cookies, Sweet Relish, Tomatoes, White Bread</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0246</td>
+<td>0.2565</td>
+<td>0.0246</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0183</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25</th>
+<td>Aspirin, Sugar Cookies, Tomatoes, White Bread</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0246</td>
+<td>0.2565</td>
+<td>0.0246</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0183</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">28</th>
+<td>2pct. Milk, Potato Chips, Sweet Relish, Tomatoes</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0246</td>
+<td>0.2565</td>
+<td>0.0246</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0183</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">35</th>
+<td>Baked Beans, Potato Chips, Tomatoes</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0230</td>
+<td>0.2565</td>
+<td>0.0230</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0171</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">36</th>
+<td>Cookies, Potato Chips, White Bread</td>
+<td>Eggs</td>
+<td>4</td>
+<td>0.0230</td>
+<td>0.2565</td>
+<td>0.0230</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0171</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">38</th>
+<td>2pct. Milk, 98pct. Fat Free Hamburger, Sugar Cookies, Tomatoes</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0230</td>
+<td>0.2565</td>
+<td>0.0230</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0171</td>
+<td>inf</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">39</th>
+<td>2pct. Milk, Cola, Sugar Cookies, Tomatoes</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0230</td>
+<td>0.2565</td>
+<td>0.0230</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0171</td>
+<td>inf</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">41</th>
+<td>2pct. Milk, Cola, Potato Chips, Tomatoes</td>
+<td>Eggs</td>
+<td>5</td>
+<td>0.0230</td>
+<td>0.2565</td>
+<td>0.0230</td>
+<td>1.0</td>
+<td>3.8982</td>
+<td>0.0171</td>
+<td>inf</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section></section>
 <section>
-<section id="lift" class="title-slide slide level1 center">
-<h1>Lift</h1>
-
-</section>
-<section id="use-lift-to-reveal-correlation" class="slide level2">
-<h2>Use lift to reveal correlation</h2>
+<section id="lift-revealing-correlation" class="title-slide slide level1 center">
+<h1>Lift: revealing correlation</h1>
 <p>Confidence <span class="math inline">\(P(B\mid A)\)</span> does not correct for how common <span class="math inline">\(B\)</span> already is. Lift does:</p>
 <p><span class="math display">\[
 \operatorname{lift}(A \Rightarrow B) = \frac{P(A \cap B)}{P(A)P(B)}
@@ -732,88 +3765,443 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>lift <span class="math inline">\(&lt;1\)</span>: negative association.</li>
 </ul>
 <p>Using support 0.10 keeps the comparison focused on well-supported product pairs.</p>
-<div id="5d374bd7" class="cell">
+</section>
+<section id="market-items-lift" class="slide level2">
+<h2>Market items lift</h2>
+<div id="f660c33c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.933826Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.933643Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.953966Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.953137Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>market_itemsets_lift, market_rules_lift <span class="op">=</span> mine_rules(</span>
-<span id="cb32-2"><a href="" aria-label="2"></a>    market, min_support<span class="op">=</span><span class="fl">0.10</span>, metric<span class="op">=</span><span class="st">"lift"</span>, min_metric<span class="op">=</span><span class="fl">1.0</span></span>
-<span id="cb32-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb32-4"><a href="" aria-label="4"></a></span>
-<span id="cb32-5"><a href="" aria-label="5"></a>readable_rules(market_rules_lift, top<span class="op">=</span><span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb38-1"><a href="" aria-label="1"></a>market_itemsets_lift, market_rules_lift <span class="op">=</span> mine_rules(market, min_support<span class="op">=</span><span class="fl">0.10</span>, metric<span class="op">=</span><span class="st">"lift"</span>, min_metric<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb38-2"><a href="" aria-label="2"></a>readable_rules(market_rules_lift, top<span class="op">=</span><span class="dv">15</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Hamburger Buns</td>
+<td>98pct. Fat Free Hamburger</td>
+<td>2</td>
+<td>0.1490</td>
+<td>0.1951</td>
+<td>0.1014</td>
+<td>0.6804</td>
+<td>3.4878</td>
+<td>0.0723</td>
+<td>2.5186</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>98pct. Fat Free Hamburger</td>
+<td>Hamburger Buns</td>
+<td>2</td>
+<td>0.1951</td>
+<td>0.1490</td>
+<td>0.1014</td>
+<td>0.5197</td>
+<td>3.4878</td>
+<td>0.0723</td>
+<td>1.7718</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>White Bread</td>
+<td>98pct. Fat Free Hamburger</td>
+<td>2</td>
+<td>0.2488</td>
+<td>0.1951</td>
+<td>0.1029</td>
+<td>0.4136</td>
+<td>2.1200</td>
+<td>0.0544</td>
+<td>1.3726</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>98pct. Fat Free Hamburger</td>
+<td>White Bread</td>
+<td>2</td>
+<td>0.1951</td>
+<td>0.2488</td>
+<td>0.1029</td>
+<td>0.5276</td>
+<td>2.1200</td>
+<td>0.0544</td>
+<td>1.5899</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Potato Chips</td>
+<td>White Bread</td>
+<td>2</td>
+<td>0.2043</td>
+<td>0.2488</td>
+<td>0.1075</td>
+<td>0.5263</td>
+<td>2.1150</td>
+<td>0.0567</td>
+<td>1.5858</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>White Bread</td>
+<td>Potato Chips</td>
+<td>2</td>
+<td>0.2488</td>
+<td>0.2043</td>
+<td>0.1075</td>
+<td>0.4321</td>
+<td>2.1150</td>
+<td>0.0567</td>
+<td>1.4011</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>Eggs</td>
+<td>Potato Chips</td>
+<td>2</td>
+<td>0.2565</td>
+<td>0.2043</td>
+<td>0.1014</td>
+<td>0.3952</td>
+<td>1.9344</td>
+<td>0.0490</td>
+<td>1.3157</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>Potato Chips</td>
+<td>Eggs</td>
+<td>2</td>
+<td>0.2043</td>
+<td>0.2565</td>
+<td>0.1014</td>
+<td>0.4962</td>
+<td>1.9344</td>
+<td>0.0490</td>
+<td>1.4758</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>2pct. Milk</td>
+<td>White Bread</td>
+<td>2</td>
+<td>0.2289</td>
+<td>0.2488</td>
+<td>0.1075</td>
+<td>0.4698</td>
+<td>1.8879</td>
+<td>0.0506</td>
+<td>1.4167</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>White Bread</td>
+<td>2pct. Milk</td>
+<td>2</td>
+<td>0.2488</td>
+<td>0.2289</td>
+<td>0.1075</td>
+<td>0.4321</td>
+<td>1.8879</td>
+<td>0.0506</td>
+<td>1.3578</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>Eggs</td>
+<td>2pct. Milk</td>
+<td>2</td>
+<td>0.2565</td>
+<td>0.2289</td>
+<td>0.1091</td>
+<td>0.4251</td>
+<td>1.8575</td>
+<td>0.0503</td>
+<td>1.3414</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>2pct. Milk</td>
+<td>Eggs</td>
+<td>2</td>
+<td>0.2289</td>
+<td>0.2565</td>
+<td>0.1091</td>
+<td>0.4765</td>
+<td>1.8575</td>
+<td>0.0503</td>
+<td>1.4202</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>White Bread</td>
+<td>Eggs</td>
+<td>2</td>
+<td>0.2488</td>
+<td>0.2565</td>
+<td>0.1152</td>
+<td>0.4630</td>
+<td>1.8047</td>
+<td>0.0514</td>
+<td>1.3844</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>Eggs</td>
+<td>White Bread</td>
+<td>2</td>
+<td>0.2565</td>
+<td>0.2488</td>
+<td>0.1152</td>
+<td>0.4491</td>
+<td>1.8047</td>
+<td>0.0514</td>
+<td>1.3635</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="hamburger-buns-fat-free-hamburger-and-white-bread" class="slide level2">
 <h2>Hamburger buns, fat-free hamburger, and white bread</h2>
 <p>The strongest lifted pair is <code>98pct. Fat Free Hamburger</code> with <code>Hamburger Buns</code>; fat-free hamburger is also positively associated with <code>White Bread</code>. We now inspect the exact counts, including the three-way overlap that is hidden by pairwise rules.</p>
-<div id="39fa1d40" class="cell">
+<div id="d17694e7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.955887Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.955710Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.960989Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.960120Z&quot;}}" data-execution_count="35">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>hamburger <span class="op">=</span> <span class="st">"98pct. Fat Free Hamburger"</span></span>
-<span id="cb33-2"><a href="" aria-label="2"></a>buns <span class="op">=</span> <span class="st">"Hamburger Buns"</span></span>
-<span id="cb33-3"><a href="" aria-label="3"></a>bread <span class="op">=</span> <span class="st">"White Bread"</span></span>
-<span id="cb33-4"><a href="" aria-label="4"></a></span>
-<span id="cb33-5"><a href="" aria-label="5"></a>counts <span class="op">=</span> pd.Series({</span>
-<span id="cb33-6"><a href="" aria-label="6"></a>    <span class="st">"Hamburger"</span>: <span class="bu">int</span>(market[hamburger].<span class="bu">sum</span>()),</span>
-<span id="cb33-7"><a href="" aria-label="7"></a>    <span class="st">"Buns"</span>: <span class="bu">int</span>(market[buns].<span class="bu">sum</span>()),</span>
-<span id="cb33-8"><a href="" aria-label="8"></a>    <span class="st">"White bread"</span>: <span class="bu">int</span>(market[bread].<span class="bu">sum</span>()),</span>
-<span id="cb33-9"><a href="" aria-label="9"></a>    <span class="st">"Hamburger and buns"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[buns]).<span class="bu">sum</span>()),</span>
-<span id="cb33-10"><a href="" aria-label="10"></a>    <span class="st">"Hamburger and white bread"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[bread]).<span class="bu">sum</span>()),</span>
-<span id="cb33-11"><a href="" aria-label="11"></a>    <span class="st">"Hamburger, buns, and white bread"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[buns] <span class="op">&amp;</span> market[bread]).<span class="bu">sum</span>()),</span>
-<span id="cb33-12"><a href="" aria-label="12"></a>}, name<span class="op">=</span><span class="st">"transactions"</span>)</span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="hamburger-basket-counts" class="slide level2">
-<h2>Hamburger basket counts</h2>
-<div id="2e953718" class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a>counts.to_frame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb39-1"><a href="" aria-label="1"></a>hamburger <span class="op">=</span> <span class="st">"98pct. Fat Free Hamburger"</span></span>
+<span id="cb39-2"><a href="" aria-label="2"></a>buns <span class="op">=</span> <span class="st">"Hamburger Buns"</span></span>
+<span id="cb39-3"><a href="" aria-label="3"></a>bread <span class="op">=</span> <span class="st">"White Bread"</span></span>
+<span id="cb39-4"><a href="" aria-label="4"></a></span>
+<span id="cb39-5"><a href="" aria-label="5"></a>counts <span class="op">=</span> pd.Series({</span>
+<span id="cb39-6"><a href="" aria-label="6"></a>    <span class="st">"Hamburger"</span>: <span class="bu">int</span>(market[hamburger].<span class="bu">sum</span>()),</span>
+<span id="cb39-7"><a href="" aria-label="7"></a>    <span class="st">"Buns"</span>: <span class="bu">int</span>(market[buns].<span class="bu">sum</span>()),</span>
+<span id="cb39-8"><a href="" aria-label="8"></a>    <span class="st">"White bread"</span>: <span class="bu">int</span>(market[bread].<span class="bu">sum</span>()),</span>
+<span id="cb39-9"><a href="" aria-label="9"></a>    <span class="st">"Hamburger and buns"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[buns]).<span class="bu">sum</span>()),</span>
+<span id="cb39-10"><a href="" aria-label="10"></a>    <span class="st">"Hamburger and white bread"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[bread]).<span class="bu">sum</span>()),</span>
+<span id="cb39-11"><a href="" aria-label="11"></a>    <span class="st">"Hamburger, buns, and white bread"</span>: <span class="bu">int</span>((market[hamburger] <span class="op">&amp;</span> market[buns] <span class="op">&amp;</span> market[bread]).<span class="bu">sum</span>()),</span>
+<span id="cb39-12"><a href="" aria-label="12"></a>}, name<span class="op">=</span><span class="st">"transactions"</span>).to_frame()</span></code></pre></div>
 </details>
 </div>
 </section>
 <section id="hamburger-bun-and-bread-choices" class="slide level2">
 <h2>Hamburger bun and bread choices</h2>
-<div id="5960840a" class="cell">
+<div id="67e51b38" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.962690Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.962516Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.971461Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.970688Z&quot;}}" data-execution_count="36">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a>hamburger_baskets <span class="op">=</span> market.loc[market[hamburger], [buns, bread]]</span>
-<span id="cb35-2"><a href="" aria-label="2"></a>choice_table <span class="op">=</span> (</span>
-<span id="cb35-3"><a href="" aria-label="3"></a>    hamburger_baskets.value_counts()</span>
-<span id="cb35-4"><a href="" aria-label="4"></a>    .rename(<span class="st">"transactions"</span>)</span>
-<span id="cb35-5"><a href="" aria-label="5"></a>    .rename_axis([<span class="st">"buys buns"</span>, <span class="st">"buys white bread"</span>])</span>
-<span id="cb35-6"><a href="" aria-label="6"></a>    .to_frame()</span>
-<span id="cb35-7"><a href="" aria-label="7"></a>)</span>
-<span id="cb35-8"><a href="" aria-label="8"></a>choice_table</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-label="1"></a>hamburger_baskets <span class="op">=</span> market.loc[market[hamburger], [buns, bread]]</span>
+<span id="cb40-2"><a href="" aria-label="2"></a>choice_table <span class="op">=</span> (</span>
+<span id="cb40-3"><a href="" aria-label="3"></a>    hamburger_baskets.value_counts()</span>
+<span id="cb40-4"><a href="" aria-label="4"></a>    .rename(<span class="st">"transactions"</span>)</span>
+<span id="cb40-5"><a href="" aria-label="5"></a>    .rename_axis([<span class="st">"buys buns"</span>, <span class="st">"buys white bread"</span>])</span>
+<span id="cb40-6"><a href="" aria-label="6"></a>    .to_frame()</span>
+<span id="cb40-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb40-8"><a href="" aria-label="8"></a>choice_table</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">transactions</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">buys buns</th>
+<th data-quarto-table-cell-role="th">buys white bread</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">True</th>
+<th data-quarto-table-cell-role="th">True</th>
+<td>36</td>
+</tr>
+<tr class="even">
+<th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">False</th>
+<th data-quarto-table-cell-role="th">True</th>
+<td>31</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">False</th>
+<td>30</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">True</th>
+<th data-quarto-table-cell-role="th">False</th>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="pairwise-lift-rules-for-the-three-products" class="slide level2">
 <h2>Pairwise lift rules for the three products</h2>
 <p>Filter the lifted rules to the hamburger, buns, and white-bread subset before interpreting the relationship.</p>
-<div id="0823d681" class="cell">
+<div id="77d29297" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T12:04:41.973498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T12:04:41.973146Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T12:04:41.986350Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T12:04:41.985588Z&quot;}}" data-execution_count="37">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>focus_rules <span class="op">=</span> market_rules_lift[</span>
-<span id="cb36-2"><a href="" aria-label="2"></a>    market_rules_lift[<span class="st">"antecedents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> s: s.issubset({hamburger, buns, bread}))</span>
-<span id="cb36-3"><a href="" aria-label="3"></a>    <span class="op">&amp;</span> market_rules_lift[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> s: s.issubset({hamburger, buns, bread}))</span>
-<span id="cb36-4"><a href="" aria-label="4"></a>]</span>
-<span id="cb36-5"><a href="" aria-label="5"></a>readable_rules(focus_rules)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb41-1"><a href="" aria-label="1"></a>focus_rules <span class="op">=</span> market_rules_lift[</span>
+<span id="cb41-2"><a href="" aria-label="2"></a>    market_rules_lift[<span class="st">"antecedents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> s: s.issubset({hamburger, buns, bread}))</span>
+<span id="cb41-3"><a href="" aria-label="3"></a>    <span class="op">&amp;</span> market_rules_lift[<span class="st">"consequents"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> s: s.issubset({hamburger, buns, bread}))</span>
+<span id="cb41-4"><a href="" aria-label="4"></a>]</span>
+<span id="cb41-5"><a href="" aria-label="5"></a>readable_rules(focus_rules)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedent</th>
+<th data-quarto-table-cell-role="th">consequent</th>
+<th data-quarto-table-cell-role="th">rule length</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Hamburger Buns</td>
+<td>98pct. Fat Free Hamburger</td>
+<td>2</td>
+<td>0.1490</td>
+<td>0.1951</td>
+<td>0.1014</td>
+<td>0.6804</td>
+<td>3.4878</td>
+<td>0.0723</td>
+<td>2.5186</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>98pct. Fat Free Hamburger</td>
+<td>Hamburger Buns</td>
+<td>2</td>
+<td>0.1951</td>
+<td>0.1490</td>
+<td>0.1014</td>
+<td>0.5197</td>
+<td>3.4878</td>
+<td>0.0723</td>
+<td>1.7718</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>White Bread</td>
+<td>98pct. Fat Free Hamburger</td>
+<td>2</td>
+<td>0.2488</td>
+<td>0.1951</td>
+<td>0.1029</td>
+<td>0.4136</td>
+<td>2.1200</td>
+<td>0.0544</td>
+<td>1.3726</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>98pct. Fat Free Hamburger</td>
+<td>White Bread</td>
+<td>2</td>
+<td>0.1951</td>
+<td>0.2488</td>
+<td>0.1029</td>
+<td>0.5276</td>
+<td>2.1200</td>
+<td>0.0544</td>
+<td>1.5899</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
-<section id="solution-and-caveat" class="slide level2">
-<h2>Solution and caveat</h2>
-<p><strong>Solution.</strong> Buyers of the fat-free hamburger often pair it with either white bread or hamburger buns, and both pairwise associations have lift well above 1. The three-way combination has support only <span class="math inline">\(36/651 \approx 0.055\)</span>, so it is absent from the itemsets at the chosen 0.10 support threshold. This supports the slide’s interpretation of the two bread products as alternatives at that threshold, but the direct count also shows that they are <strong>not literally mutually exclusive</strong>. Pairwise rules alone cannot establish exclusivity.</p>
+<section id="hamburger-basket-interpretation" class="slide level2">
+<h2>Hamburger basket interpretation</h2>
+<details>
+<summary>
+Suggested answer
+</summary>
+Buyers of the fat-free hamburger often pair it with either white bread or hamburger buns, and both pairwise associations have lift well above one. The three-way combination has support only <span class="math inline">\(36/651 \approx 0.055\)</span>, so it is absent from the itemsets at the chosen support threshold. This supports the slide’s interpretation of the two bread products as alternatives at that threshold, but the direct count also shows that they are <strong>not literally mutually exclusive</strong>. Pairwise rules alone cannot establish exclusivity.
+</details>
 </section></section>
-<section>
 <section id="takeaways" class="title-slide slide level1 center">
 <h1>Takeaways</h1>
-
-</section>
-<section id="association-rule-checklist" class="slide level2">
-<h2>Association-rule checklist</h2>
 <ul>
 <li>Apriori exploits the anti-monotone property of support to prune itemsets.</li>
 <li>Weka’s decreasing-support loop can be reproduced by repeated <code>mlxtend</code> Apriori calls.</li>
@@ -823,7 +4211,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Inspect the original counts before turning pairwise rules into a business conclusion.</li>
 </ul>
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
