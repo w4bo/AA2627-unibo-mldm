@@ -256,40 +256,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img data-src="img/multi/Immagine1.png" class="r-stretch quarto-figure-center"><p class="caption">Ensemble</p></section>
 
-<section id="majority-vote" class="title-slide slide level1 center">
-<h1>Majority vote</h1>
-<p>For classification, the final prediction is commonly obtained by <strong>voting</strong>.</p>
-<ul>
-<li>Assume three classifiers predict the class of the same record.</li>
-</ul>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    X["record x"] --&gt; C1["C1: yes"]
-    X --&gt; C2["C2: no"]
-    X --&gt; C3["C3: yes"]
-    C1 --&gt; V["vote"]
-    C2 --&gt; V
-    C3 --&gt; V
-    V --&gt; Y["ensemble: yes"]
-
-    style Y fill:#a3f7a3,stroke:#000
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>The ensemble assigns the class voted by most classifiers.</p>
-<ul>
-<li>This works best when classifiers are <strong>accurate enough</strong></li>
-<li>It also requires their errors to be <strong>not perfectly correlated</strong></li>
-</ul>
-</section>
-
 <section id="why-diversity-matters" class="title-slide slide level1 center">
 <h1>Why diversity matters</h1>
 <p>If all classifiers make the same errors, voting repeats the same mistake.</p>
@@ -324,6 +290,108 @@ P(error)=\sum_{i=13}^{25} {25 \choose i}\epsilon^i(1-\epsilon)^{25-i}
 <p><img data-src="img/multi/Immagine5.png"></p>
 </div></div>
 </section>
+
+<section id="decision-level-fusion" class="title-slide slide level1 center">
+<h1>Decision-level fusion</h1>
+<p>In <strong>decision-level fusion</strong>, each classifier outputs a class decision.</p>
+<p>The ensemble then combines these decisions.</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Common rules:</p>
+<ul>
+<li><strong>Majority vote</strong>: each classifier votes for one class</li>
+<li><strong>Weighted vote</strong>: more reliable classifiers have larger influence</li>
+<li><strong>Borda count</strong>: each classifier ranks classes, then ranks are converted into scores</li>
+</ul>
+<p>The selected class is the one with the highest final score.</p>
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/ensemble/decision-level-fusion.png"></p>
+<figcaption>Voting</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="majority-vote" class="title-slide slide level1 center">
+<h1>Majority vote</h1>
+<p>For classification, the final prediction is commonly obtained by <strong>voting</strong>.</p>
+<ul>
+<li>Assume three classifiers predict the class of the same record.</li>
+</ul>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    X["record x"] --&gt; C1["C1: yes"]
+    X --&gt; C2["C2: no"]
+    X --&gt; C3["C3: yes"]
+    C1 --&gt; V["vote"]
+    C2 --&gt; V
+    C3 --&gt; V
+    V --&gt; Y["ensemble: yes"]
+
+    style Y fill:#a3f7a3,stroke:#000
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The ensemble assigns the class voted by most classifiers.</p>
+<ul>
+<li>This works best when classifiers are <strong>accurate enough</strong></li>
+<li>It also requires their errors to be <strong>not perfectly correlated</strong></li>
+</ul>
+</section>
+
+<section id="weighted-voting" class="title-slide slide level1 center">
+<h1>Weighted voting</h1>
+<p>Class membership can be decided by a voting mechanism.</p>
+<ul>
+<li><strong>Unweighted vote</strong>: each classifier contributes one vote</li>
+<li><strong>Weighted vote</strong>: more reliable classifiers contribute more</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li>Classifier <span class="math inline">\(C_1\)</span> votes for class <span class="math inline">\(X\)</span> and made 25 errors out of 100 similar training cases</li>
+<li>Classifier <span class="math inline">\(C_2\)</span> votes for class <span class="math inline">\(Y\)</span> and made 10 errors out of 100 similar training cases</li>
+</ul>
+<p>With reliability-weighted voting, the record should be assigned to class <span class="math inline">\(Y\)</span>.</p>
+</section>
+
+<section id="borda-count" class="title-slide slide level1 center">
+<h1>Borda count</h1>
+<p>The <strong>Borda count</strong> is useful when classifiers produce a ranking of classes rather than a single class.</p>
+<ul>
+<li>Each classifier orders the candidate classes</li>
+<li>Positions in the ranking are converted into numerical scores</li>
+<li>Scores are summed across classifiers</li>
+<li>The class with the highest score is selected</li>
+</ul>
+<p>This is still a decision-level method: it merges symbolic decisions or rankings, not calibrated probabilities.</p>
+
+<img data-src="img/ensemble/borda-count.png" class="r-stretch quarto-figure-center"><p class="caption">Borda count</p></section>
+
+<section id="confidence-level-fusion" class="title-slide slide level1 center">
+<h1>Confidence-level fusion</h1>
+<p>In <strong>confidence-level fusion</strong>, each classifier outputs one confidence value per class.</p>
+<p>These values can be merged through different functions:</p>
+<ul>
+<li>Sum, Product, Minimum, Maximum, Weighted sum</li>
+</ul>
+<p>The sum is often more robust than the product. <em>Why?</em></p>
+<details>
+<summary>
+Suggested answer
+</summary>
+If one classifier assigns confidence 0, a product rule forces the whole combined confidence to 0.
+</details>
+
+<img data-src="img/ensemble/confidence-fusion.jpeg" class="r-stretch quarto-figure-center"><p class="caption">Confidence score</p></section>
 
 <section id="how-to-build-a-composite-classifier" class="title-slide slide level1 center">
 <h1>How to build a composite classifier</h1>
@@ -396,66 +464,10 @@ P(error)=\sum_{i=13}^{25} {25 \choose i}\epsilon^i(1-\epsilon)^{25-i}
 </ul>
 </section>
 
-<section id="weighted-voting" class="title-slide slide level1 center">
-<h1>Weighted voting</h1>
-<p>Class membership can be decided by a voting mechanism.</p>
-<ul>
-<li><strong>Unweighted vote</strong>: each classifier contributes one vote</li>
-<li><strong>Weighted vote</strong>: more reliable classifiers contribute more</li>
-</ul>
-<p>Example:</p>
-<ul>
-<li>Classifier <span class="math inline">\(C_1\)</span> votes for class <span class="math inline">\(X\)</span> and made 25 errors out of 100 similar training cases</li>
-<li>Classifier <span class="math inline">\(C_2\)</span> votes for class <span class="math inline">\(Y\)</span> and made 10 errors out of 100 similar training cases</li>
-</ul>
-<p>With reliability-weighted voting, the record should be assigned to class <span class="math inline">\(Y\)</span>.</p>
-</section>
+<section id="bagging-and-boosting" class="title-slide slide level1 center">
+<h1>Bagging and boosting</h1>
 
-<section id="decision-level-fusion" class="title-slide slide level1 center">
-<h1>Decision-level fusion</h1>
-<p>In <strong>decision-level fusion</strong>, each classifier outputs a class decision.</p>
-<p>The ensemble then combines these decisions.</p>
-<div class="columns">
-<div class="column" style="width:55%;">
-<p>Common rules:</p>
-<ul>
-<li><strong>Majority vote</strong>: each classifier votes for one class</li>
-<li><strong>Weighted vote</strong>: more reliable classifiers have larger influence</li>
-<li><strong>Borda count</strong>: each classifier ranks classes, then ranks are converted into scores</li>
-</ul>
-<p>The selected class is the one with the highest final score.</p>
-</div><div class="column" style="width:45%;">
-<p><img data-src="img/ensemble/decision-level-fusion.png"></p>
-</div></div>
-</section>
-
-<section id="borda-count" class="title-slide slide level1 center">
-<h1>Borda count</h1>
-<p>The <strong>Borda count</strong> is useful when classifiers produce a ranking of classes rather than a single class.</p>
-<ul>
-<li>Each classifier orders the candidate classes</li>
-<li>Positions in the ranking are converted into numerical scores</li>
-<li>Scores are summed across classifiers</li>
-<li>The class with the highest score is selected</li>
-</ul>
-<p>This is still a decision-level method: it merges symbolic decisions or rankings, not calibrated probabilities.</p>
-
-<img data-src="img/ensemble/borda-count.png" class="r-stretch"></section>
-
-<section id="confidence-level-fusion" class="title-slide slide level1 center">
-<h1>Confidence-level fusion</h1>
-<p>In <strong>confidence-level fusion</strong>, each classifier outputs one confidence value per class.</p>
-<p>These values can be merged through different functions:</p>
-<ul>
-<li>Sum</li>
-<li>Product</li>
-<li>Minimum</li>
-<li>Maximum</li>
-<li>Weighted sum</li>
-</ul>
-<p>The sum is often more robust than the product: if one classifier assigns confidence 0, a product rule forces the whole combined confidence to 0.</p>
-
-<img data-src="img/ensemble/confidence-fusion.jpeg" class="r-stretch"></section>
+<img data-src="img/ensemble/bagging-vs-boosting.png" class="r-stretch quarto-figure-center"><p class="caption">Both methods combine multiple models, but they create diversity in different ways.</p></section>
 
 <section id="bagging" class="title-slide slide level1 center">
 <h1>Bagging</h1>
@@ -587,6 +599,8 @@ x \le 0.7 \rightarrow -1,\qquad x&gt;0.7 \rightarrow +1
 
 <section id="random-forest" class="title-slide slide level1 center">
 <h1>Random forest</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
 <p>A <strong>random forest</strong> is a bagging ensemble of decision trees <span class="citation" data-cites="breiman2001random">(<a href="#/references" role="doc-biblioref" onclick=""><strong>breiman2001random?</strong></a>)</span>.</p>
 <p>It introduces randomness in two places:</p>
 <ul>
@@ -599,8 +613,15 @@ x \le 0.7 \rightarrow -1,\qquad x&gt;0.7 \rightarrow +1
 d' \approx \sqrt{d}
 \]</span></p>
 <p>where <span class="math inline">\(d\)</span> is the number of features and <span class="math inline">\(d'\)</span> is the number considered at each split.</p>
-
-<img data-src="img/ensemble/random-forest.png" class="r-stretch"></section>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/ensemble/random-forest.png"></p>
+<figcaption>Random forest</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
 
 <section id="boosting" class="title-slide slide level1 center">
 <h1>Boosting</h1>
@@ -668,9 +689,7 @@ d' \approx \sqrt{d}
 </tr>
 </tbody>
 </table>
-<p>Both methods combine multiple models, but they create diversity in different ways.</p>
-
-<img data-src="img/ensemble/bagging-vs-boosting.png" class="r-stretch quarto-figure-center"><p class="caption">Bagging vs boosting</p></section>
+</section>
 
 <section id="weak-learners" class="title-slide slide level1 center">
 <h1>Weak learners</h1>
@@ -791,8 +810,7 @@ C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsym
 <li>Return the weighted vote of all classifiers</li>
 </ol>
 <p>The process is adaptive because each round changes the learning problem faced by the next classifier.</p>
-
-<img data-src="img/ensemble/adaboost-flow.png" class="r-stretch"></section>
+</section>
 
 <section id="adaboost-algorithm-in-pseudocode" class="title-slide slide level1 center">
 <h1>AdaBoost algorithm in pseudocode</h1>
@@ -871,7 +889,13 @@ C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsym
 
 <section id="geometric-intuition" class="title-slide slide level1 center">
 <h1>Geometric intuition</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
 <p>Boosting can be viewed as repeatedly correcting the current decision boundary.</p>
+<ul>
+<li>With decision stumps, each individual classifier is simple, but their weighted sum can express a more flexible boundary.</li>
+</ul>
+</div><div class="column" style="width:40%;">
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -890,7 +914,7 @@ C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsym
 </div>
 </div>
 </div>
-<p>With decision stumps, each individual classifier is simple, but their weighted sum can express a more flexible boundary.</p>
+</div></div>
 </section>
 
 <section id="practical-cautions" class="title-slide slide level1 center">
