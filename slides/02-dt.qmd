@@ -2,6 +2,15 @@
 subtitle: Decision Trees
 ---
 
+# Learning objectives
+
+By the end of this lecture, you will be able to:
+
+- **Explain** how a decision tree turns feature tests into a prediction
+- **Build** a small classification tree by selecting and evaluating candidate splits
+- **Compute and interpret** impurity, gain, and classification metrics
+- **Diagnose** overfitting and choose an appropriate validation or pruning strategy
+
 # Motivating problem: who will churn?
 
 **Customer churn** is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.
@@ -14,12 +23,13 @@ subtitle: Decision Trees
 
 # Learn by doing!
 
-- This is a *supervised learning* task since the *dataset* contains a *label* (or *class*) to predict (**`churn`**)
+This is a *supervised learning* task since the *dataset* contains a *label* (or *class*) to predict (`churn`)
+
 - ... as a function of *other* customer suscriptions' attributes (`months_subscribed`, ..., `auto_pay`)
 
 Each *row* (or *data item/record*) is customer subscription, each *column* is an *attribute* (or *feature*)
 
-| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 2                 | 3                   | 2               | basic     | no       | *yes*   |
 | 4                 | 6                   | 1               | basic     | no       | *yes*   |
@@ -34,15 +44,6 @@ Each *row* (or *data item/record*) is customer subscription, each *column* is an
 | 2                 | 5                   | 2               | basic     | no       | *yes*   |
 | 9                 | 16                  | 0               | premium   | yes      | *no*    |
 
-# Learning objectives
-
-By the end of this lecture, you will be able to:
-
-- **Explain** how a decision tree turns feature tests into a prediction
-- **Build** a small classification tree by selecting and evaluating candidate splits
-- **Compute and interpret** impurity, gain, and classification metrics
-- **Diagnose** overfitting and choose an appropriate validation or pruning strategy
-
 # Training and test sets
 
 First we need to split the dataset into *training* and *test sets*
@@ -51,7 +52,7 @@ First we need to split the dataset into *training* and *test sets*
 
 **Holdout**
 
-- Randomly use $\frac{2}{3}$ (or $\frac{4}{5}$) of training and $\frac{1}{3}$ (or $\frac{1}{5}$) for testing.
+- **Randomly** use $\frac{2}{3}$ (or $\frac{4}{5}$) of training and $\frac{1}{3}$ (or $\frac{1}{5}$) for testing.
 - Training and test sets are not overlapping
 
 Disadvantages:
@@ -63,7 +64,7 @@ Disadvantages:
 
 *Training test*: used for training the model
 
-| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 2                 | 3                   | 2               | basic     | no       | *yes*   |
 | 4                 | 6                   | 1               | basic     | no       | *yes*   |
@@ -77,7 +78,7 @@ Disadvantages:
 
 *Test test*: used for testing the generalization capability of the model
 
-| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 7                 | 12                  | 1               | standard  | yes      | *no*    |
 | 2                 | 5                   | 2               | basic     | no       | *yes*   |
@@ -130,9 +131,10 @@ Predicted class
 
 ::::{.columns}
 :::{.column width=60%}
-A decision tree solves a difficult classification problem through a sequence of simpler questions.
+Decision trees solve difficult classification problems through sequences of simpler questions.
 
-- Each internal node asks one question about one feature: which question best separates customers who churn from those who stay?
+- Each internal node asks one question about one feature:
+    - *which question best separates customers who churn from those who stay?*
 - Each answer restricts the set of possible records
 - A root-to-leaf path behaves like an **if-then rule**
 - Training searches for questions that make the resulting groups as pure as possible
@@ -202,7 +204,7 @@ flowchart TD
 # Tree learned from the training data
 ::::{.columns}
 :::{.column width=70%}
-| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 2                 | 3                   | 2               | basic     | no       | yes   |
 | 4                 | 6                   | 1               | basic     | no       | yes   |
@@ -260,7 +262,7 @@ flowchart LR
 
 # What is the predicted class for the following test data?
 
-| `months_subscribed` | **`monthly_watch_hours`** | `tickets` | `type` | `auto_pay` | **`churn`** |
+| `months_subscribed` | **`monthly_watch_hours`** | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 1                 | **2**                   | 2               | basic     | no       | ?   |
 
@@ -287,7 +289,7 @@ flowchart TD
 
 # What is the predicted class for the following test data?
 
-| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | **`auto_pay`** | **`churn`** |
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | **`auto_pay`** | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 1                 | 2                   | 2               | basic     | **no**       | ?   |
 
@@ -316,7 +318,7 @@ flowchart TD
 
 # What is the predicted class for the following test data?
 
-| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | **`churn`** |
+| `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
 | 1                 | 2                   | 2               | basic     | no       | **yes**   |
 
@@ -656,20 +658,20 @@ The split criterion must allow you to determine more pure classes. It needs a me
 
 # Impurity measures
 
-Given a node $p$ with records belonging to $k$ classes and its partitioning into $n$ child nodes
+Given a parent node $p$ with records belonging to $k$ classes and a candidate partition into $n$ child nodes:
 
-* $M$ = record number in parent node $p$
-* $M_i$ = number of records in child node $i$
+* $m$ = number of records in parent node $p$
+* $m_i$ = number of records in child node $i$
 
 **ATTENTION: do not confuse the number of classes ($k$) and of the child nodes ($n$)**
 
-Several indices can be adopted.
+Several indices can be adopted to measure the impurity of one node $i$.
 
-* $GINI(i) = 1 - \sum_{j=1}^kp( j | i)^2$ (adopted in CART, SLIQ, and SPRINT)
-* $Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))$ (adopted in ID3 e C4.5)
-* $Misclassification~Error(i) = 1 - max_{j \in K} p(j|i)$
+* $Gini(i) = 1 - \sum_{j=1}^k p(j | i)^2$ (adopted in CART, SLIQ, and SPRINT)
+* $Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))$ (adopted in ID3 and C4.5)
+* $Misclassification~Error(i) = 1 - max_{j=1,\ldots,k} p(j|i)$
 
-The total impurity of the split is given by the following formula, where $meas$ is one of the measures introduced so far.
+The impurity of the whole split is the weighted average of the child impurities. Lower is better.
 
 * $Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)$
 
@@ -687,8 +689,11 @@ The total impurity of the split is given by the following formula, where $meas$ 
 
 # Computing Gini for *categorical* attributes
 
-It is usually more efficient to create a "count matrix" for each distinct value of the classification
-attribute and then perform calculations using that matrix
+It is usually more efficient to create a "count matrix" for each candidate split:
+
+- Rows represent the classes
+- Columns represent the child nodes created by the split
+- The reported Gini is the weighted impurity of the candidate split
 
 ::::{.columns}
 :::{.column width=33%}
@@ -727,7 +732,7 @@ It requires defining the split point using a binary condition.
 
 A naive approach:
 
-- For each split $v$ value, read the DB (with $N$ records) to build the count matrix and calculate the Gini index
+- For each split $v$ value, read the dataset (with $N$ records) to build the count matrix and calculate the Gini index
 - Computationally inefficient $O(N^2)$:
     - Scan DB: $O(N)$
     - Repeat for each value of $v$ (i.e., $v \cdot O(N)$)
@@ -738,7 +743,7 @@ A more efficient solution is to:
 
 - Sort records by attribute value
 - Read the values sorted and update the count matrix, then calculate the Gini index
-- Choose as the split point the value that minimizes the index
+- Choose as split point the value that minimizes the weighted Gini impurity
 
 ![Optimizing the split](./img/dt/image22.png)
 
@@ -746,40 +751,46 @@ Further optimizations?
 
 # Gain-based split
 
-Using class impurity measures such as Gini and Entropy requires choosing the split value that maximizes the "gain" in terms of reducing the impurity of the classes after the split.
+Using impurity measures such as Gini and Entropy requires comparing how much each split reduces impurity.
 
-For example, considering entropy, the gain of partitioning of a node into child nodes is:
+For entropy, this reduction is called **Information Gain**:
 
-$GAIN_{split}=Entropy(p)-(\sum_{i=1}^{n}\frac{m_i}{m}Entropy(i))$
+$Gain_{split}=Entropy(p)-(\sum_{i=1}^{n}\frac{m_i}{m}Entropy(i))$
 
-Selecting the split value that maximizes GAIN tends to determine split criteria that generate a very large number of very pure classes, but with few records.
+A good split has high gain because its child nodes are purer than the parent node.
+
+However, maximizing raw $Gain$ can favor attributes with many distinct values.
 
 - Partitioning students according to their enrollment guarantees that all classes (formed by only one student) are totally pure
 
 # Split based on $SplitInfo$
 
-To avoid the problem of spraying classes, it is preferable to maximize the $GainRATIO$:
+To avoid the problem of spraying records into many tiny branches, C4.5 maximizes the $GainRatio$:
 
-- $N$ = number of child nodes
-- $M$ = record number in father $p$
+- $n$ = number of child nodes
+- $m$ = number of records in parent node $p$
 - $m_i$ = number of records in child node $i$
 
-$GainRATIO_{split}=\frac{GAIN_{split}}{SplitINFO}$
+$GainRatio_{split}=\frac{Gain_{split}}{SplitInfo}$
 
-$SplitINFO=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}$
+$SplitInfo=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}$
 
-The higher the number of children, the greater the value of $SplitInfo$, with a consequent reduction in the $GainRATIO$
+$SplitInfo$ is the entropy of the **branch sizes**, not of the class labels.
+
+The more a split fragments the records, the larger $SplitInfo$ becomes, reducing the $GainRatio$.
 
 - For example, assuming that each child node contains the same number of records, $SplitInfo = log(n)$.
-- C4.5 uses the $SplitInfo$-based criterion
+- Thus, among splits with similar gain, $GainRatio$ prefers the less fragmented one
 
 # Split based on $SplitInfo$
 
-To avoid the problem of spraying classes, it is preferable to maximize the Gain Ratio:
+With balanced child nodes, $SplitInfo$ grows as the number of children grows:
 
 - $n \in [2, 64]$
 - $m = 100$
 - $m_i = \frac{m}{n}$
+
+For the same $Gain$, a larger $SplitInfo$ produces a smaller $GainRatio$.
 
 ![$SplitInfo$](./img/dt/image23.png)
 
@@ -1081,14 +1092,13 @@ $$
 :::
 ::::
 
-# Classification errors {background-color="#121011"}
+# Classification errors
 
 - **Training error:** are mistakes that are made on the training set
 - **Generalization error:** errors are made on the test set (i.e., records that have not been trained on the system).
 - **Underfitting:** The model is too simple and does not allow a good classification of the training set or test set
 - **Overfitting:** The model is too complex, it allows a good classification of the training set, but a poor classification of the test set
-
-    - The model fails to generalize because it is based on the specific peculiarities of the training set that are not found in the test set (e.g., noise present in the training set)
+    - The model fails to generalize because it is based on the specific peculiarities of the training set that are not found in the test set
 
 # Underfitting and overfitting
 
@@ -1155,7 +1165,7 @@ It requires new techniques to estimate generalization errors.
 
 # Estimating generalization error
 
-A decision tree should minimize the error on the real data set; unfortunately, during construction, only the training set is available.
+A decision tree should minimize the error on the real data set but, during construction, only the training set is available.
 
 Then the real-time data error must be estimated.
 
@@ -1261,29 +1271,15 @@ Pessimistic error (penalty 1)?
 :::
 ::::
 
-# Building the test set
-
-**Holdout**
-
-Use $\frac{2}{3}$ of the training records and $\frac{1}{3}$ for validation.
-
-Disadvantages:
-
-* It works with a reduced set of training
-* The result depends on the composition of the training set and test set
-
-**Random subsampling**
-
-It consists of a repeated execution of the holdout method, in which the training dataset is randomly selected.
-
-# Building the test set
+# Building the test set {visibility="hidden"}
 
 **Cross validation**
 
 - Partition the records into separate $k$ subdivisions
 - Run the training on $k-1$ partitions and test the remainder
 - Repeat the test $k$ times and calculate the average accuracy
-- CAUTION: cross-validation creates $k$ different classifiers. Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem
+- CAUTION: cross-validation creates $k$ different classifiers.
+    - Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem
 - Built decision trees can have different split attributes and conditions depending on the character of the $k$-th training set
 
 # Bootstrap
@@ -1308,16 +1304,16 @@ Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.
 
 **Features:**
 
-- Use $GainRATIO$ as a criterion for determining the split attribute
+- Use $GainRatio$ as a criterion for determining the split attribute
 - It manages the continuous attributes by determining a split point that divides the range of values into two
-- It manages data with missing values. Missing attributes are not considered to calculate $GainRATIO$.
+- It manages data with missing values. Missing attributes are not considered to calculate $GainRatio$.
 - It can handle attributes that are associated with different weights
 - Run post-pruning of the created tree
 
 **The tree construction stops when:**
 
 - The node contains records belonging to a single class
-- No attribute allows for determining a positive $GainRATIO$
+- No attribute allows for determining a positive $GainRatio$
 - Node does not contain records.
 
 # Summary: when should I use a decision tree?
