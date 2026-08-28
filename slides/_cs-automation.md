@@ -55,7 +55,6 @@ What insights would you return to describe the query result?
 
 # Our solution: VOOL {visibility="hidden"}
 
-
 :::: {.columns}
 ::: {.column width="60%"}
 
@@ -65,12 +64,10 @@ For instance, this has been done in VOOL [@DBLP:conf/adbis/FranciaGGR22] by:
 2. let each module compute its own insight (in a range that is shared by all modules)
 3. Compute a knapsack of the patterns extracted on time.
 
-
 > Grouped by product department and sex the average quantity is 6699.
 > All genders have similar quantity values.
 > Facts can be grouped into 3 clusters, the largest has 22 facts and 1803 as average quantity, the second has 12 facts and 8187 as average quantity, the third has 10 facts and 15686 as average quantity.
 > The 2 anomalous facts are (Produce, M) with 19076, and (Produce, F) with 18711.
-
 
 The reviewer #2 found it "good old fashioned AI", and asked us to compare against LLMs and LLM-based applications.
 

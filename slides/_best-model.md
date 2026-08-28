@@ -1,6 +1,5 @@
 # Choosing the "Right" ML model
 
-
 # The Perfect Model ... in 2D
 
 $Z = X + Y$

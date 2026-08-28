@@ -2,170 +2,671 @@
 subtitle: Association rules
 ---
 
----
+# Association rules
 
-![](img/association/slide-01.png){width=100% fig-alt="Association rules slide 1"}
+**Data Mining**
 
----
+Matteo Golfarelli
 
-![](img/association/slide-02.png){width=100% fig-alt="Association rules slide 2"}
+# Basics
 
----
+Given a set of transactions, find rules that signal the presence of an item based on the presence of other items in the same transaction.
 
-![](img/association/slide-03.png){width=100% fig-alt="Association rules slide 3"}
+## The Walmart "market basket" use case
 
----
+| TID | Items |
+|---:|---|
+| 1 | Bread, Milk |
+| 2 | Bread, Diaper, Beer, Eggs |
+| 3 | Milk, Diaper, Beer, Coke |
+| 4 | Bread, Milk, Diaper, Beer |
+| 5 | Bread, Milk, Diaper, Coke |
 
-![](img/association/slide-04.png){width=100% fig-alt="Association rules slide 4"}
+Example rules:
 
----
+- $\{\text{Diaper}\} \to \{\text{Beer}\}$
+- $\{\text{Milk}, \text{Bread}\} \to \{\text{Eggs}, \text{Coke}\}$
+- $\{\text{Beer}, \text{Bread}\} \to \{\text{Milk}\}$
 
-![](img/association/slide-05.png){width=100% fig-alt="Association rules slide 5"}
+Rules discover **co-occurrence**, not causality.
 
----
+# Association Rules Applications
 
-![](img/association/slide-06.png){width=100% fig-alt="Association rules slide 6"}
+Association rules are useful for marketing and sales promotion.
 
----
+- If $\{\text{Bagels}, \ldots\} \to \{\text{Potato Chips}\}$, potato chips as the consequent can suggest actions to increase potato chip sales
+- Bagels as the antecedent can suggest which products could be affected if the store interrupted bagel sales
 
-![](img/association/slide-07.png){width=100% fig-alt="Association rules slide 7"}
+They are also useful for arranging goods.
 
----
+- Goal: identify products bought together by a sufficiently large number of customers
+- Method: use receipt data to identify dependencies between products
 
-![](img/association/slide-08.png){width=100% fig-alt="Association rules slide 8"}
+# Frequent Itemsets
 
----
+An **itemset** is a collection of one or more items.
 
-![](img/association/slide-09.png){width=100% fig-alt="Association rules slide 9"}
+- Example: $\{\text{Milk}, \text{Bread}, \text{Diaper}\}$
+- A **k-itemset** contains $k$ elements
 
----
+The **support cardinality** $\sigma(X)$ is the number of transactions containing itemset $X$.
 
-![](img/association/slide-10.png){width=100% fig-alt="Association rules slide 10"}
+- Example: $\sigma(\{\text{Milk}, \text{Bread}, \text{Diaper}\}) = 2$
 
----
+The **support** $s(X)$ is the fraction of transactions containing $X$.
 
-![](img/association/slide-11.png){width=100% fig-alt="Association rules slide 11"}
+- Example: $s(\{\text{Milk}, \text{Bread}, \text{Diaper}\}) = 2/5$
 
----
+A **frequent itemset** has support greater than or equal to a threshold `minsup`.
 
-![](img/association/slide-12.png){width=100% fig-alt="Association rules slide 12"}
+# Association Rules
 
----
+An **association rule** is an implication of the form:
 
-![](img/association/slide-13.png){width=100% fig-alt="Association rules slide 13"}
+$$X \to Y$$
 
----
+where $X$ and $Y$ are itemsets.
 
-![](img/association/slide-14.png){width=100% fig-alt="Association rules slide 14"}
+Example:
 
----
+$$\{\text{Milk}, \text{Diaper}\} \to \{\text{Beer}\}$$
 
-![](img/association/slide-15.png){width=100% fig-alt="Association rules slide 15"}
+Association rules are evaluated using:
 
----
+- **Support**: fraction of transactions that include $X \cup Y$
+- **Confidence**: fraction of transactions containing $X$ that also contain $Y$
 
-![](img/association/slide-16.png){width=100% fig-alt="Association rules slide 16"}
+For $\{\text{Milk}, \text{Diaper}\} \to \{\text{Beer}\}$:
 
----
+$$s = \frac{\sigma(\text{Milk}, \text{Diaper}, \text{Beer})}{|T|} = \frac{2}{5} = 0.4$$
 
-![](img/association/slide-17.png){width=100% fig-alt="Association rules slide 17"}
+$$c = \frac{\sigma(\text{Milk}, \text{Diaper}, \text{Beer})}{\sigma(\text{Milk}, \text{Diaper})} = \frac{2}{3} = 0.67$$
 
----
+# Support and Confidence: Statistical Interpretation
 
-![](img/association/slide-18.png){width=100% fig-alt="Association rules slide 18"}
+Support indicates the probability that $X$ and $Y$ appear together in a transaction.
 
----
+$$s(X \to Y)=P(X \cup Y)$$
 
-![](img/association/slide-19.png){width=100% fig-alt="Association rules slide 19"}
+Confidence for $X \to Y$ models the conditional probability of $Y$ when $X$ is present.
 
----
+$$c(X \to Y)=P(Y \mid X)=\frac{P(X \cup Y)}{P(X)}$$
 
-![](img/association/slide-20.png){width=100% fig-alt="Association rules slide 20"}
+# Exercise
 
----
+Given the following transactions, compute:
 
-![](img/association/slide-21.png){width=100% fig-alt="Association rules slide 21"}
+- The itemset support for $\{e\}$, $\{b,d\}$, and $\{b,d,e\}$
+- The rule confidence for $\{b,d\} \to \{e\}$ and $\{e\} \to \{b,d\}$
 
----
+| Transaction | Items |
+|---:|---|
+| 1 | $\{a,d,e\}$ |
+| 2 | $\{a,b,c,e\}$ |
+| 3 | $\{a,b,d,e\}$ |
+| 4 | $\{a,c,d,e\}$ |
+| 5 | $\{b,c,e\}$ |
+| 6 | $\{b,d,e\}$ |
+| 7 | $\{c,d\}$ |
+| 8 | $\{a,b,c\}$ |
+| 9 | $\{a,d,e\}$ |
 
-![](img/association/slide-22.png){width=100% fig-alt="Association rules slide 22"}
+# Problem Formulation
 
----
+Given a set of transactions $T$, find all association rules such that:
 
-![](img/association/slide-23.png){width=100% fig-alt="Association rules slide 23"}
+- Support >= `minsup`
+- Confidence >= `minconf`
 
----
+Naive approach:
 
-![](img/association/slide-24.png){width=100% fig-alt="Association rules slide 24"}
+- List all possible association rules
+- For each rule, compute support and confidence
+- Remove rules that do not meet `minsup` and `minconf`
 
----
+This is computationally prohibitive.
 
-![](img/association/slide-25.png){width=100% fig-alt="Association rules slide 25"}
+# Searching Association Rules
 
----
+All rules below are binary partitions of the same itemset:
 
-![](img/association/slide-26.png){width=100% fig-alt="Association rules slide 26"}
+$$\{\text{Milk}, \text{Diaper}, \text{Beer}\}$$
 
----
+| Rule | Support | Confidence |
+|---|---:|---:|
+| $\{\text{Milk}, \text{Diaper}\} \to \{\text{Beer}\}$ | 0.4 | 0.67 |
+| $\{\text{Milk}, \text{Beer}\} \to \{\text{Diaper}\}$ | 0.4 | 1.00 |
+| $\{\text{Diaper}, \text{Beer}\} \to \{\text{Milk}\}$ | 0.4 | 0.67 |
+| $\{\text{Beer}\} \to \{\text{Milk}, \text{Diaper}\}$ | 0.4 | 0.67 |
+| $\{\text{Diaper}\} \to \{\text{Milk}, \text{Beer}\}$ | 0.4 | 0.50 |
+| $\{\text{Milk}\} \to \{\text{Diaper}, \text{Beer}\}$ | 0.4 | 0.50 |
 
-![](img/association/slide-27.png){width=100% fig-alt="Association rules slide 27"}
+# Searching Association Rules: Two Steps
 
----
+Association rule discovery is usually divided into two steps.
 
-![](img/association/slide-28.png){width=100% fig-alt="Association rules slide 28"}
+1. **Generate frequent itemsets**
+   - Generate all itemsets with support at least `minsup`
+2. **Generate rules**
+   - For each frequent itemset, generate rules with high confidence
+   - Each rule is a binary partition of the itemset
 
----
+Generating frequent itemsets is still computationally complex.
 
-![](img/association/slide-29.png){width=100% fig-alt="Association rules slide 29"}
+# Frequent Itemsets Generation
 
----
+Given $d$ elements, the number of candidate itemsets grows exponentially.
 
-![](img/association/slide-30.png){width=100% fig-alt="Association rules slide 30"}
+For items $\{A,B,C,D,E\}$:
 
----
+| Size | Candidate itemsets |
+|---:|---|
+| 1 | A, B, C, D, E |
+| 2 | AB, AC, AD, AE, BC, BD, BE, CD, CE, DE |
+| 3 | ABC, ABD, ABE, ACD, ACE, ADE, BCD, BCE, BDE, CDE |
+| 4 | ABCD, ABCE, ABDE, ACDE, BCDE |
+| 5 | ABCDE |
 
-![](img/association/slide-31.png){width=100% fig-alt="Association rules slide 31"}
+The search space contains:
 
----
+$$\sum_{k=1}^{d}\binom{d}{k}=2^d-1$$
 
-![](img/association/slide-32.png){width=100% fig-alt="Association rules slide 32"}
+# Candidate Reduction
 
----
+The **Apriori principle**:
 
-![](img/association/slide-33.png){width=100% fig-alt="Association rules slide 33"}
+> If an itemset is frequent, then all of its subsets must be frequent too.
 
----
+This follows from the anti-monotonic property of support:
 
-![](img/association/slide-34.png){width=100% fig-alt="Association rules slide 34"}
+$$\forall X,Y : (X \subseteq Y) \Rightarrow s(X) \geq s(Y)$$
 
----
+The support of an itemset cannot exceed the support of its subsets.
 
-![](img/association/slide-35.png){width=100% fig-alt="Association rules slide 35"}
+# Visualizing the Apriori Principle
 
----
+If an itemset is infrequent, none of its supersets can be frequent.
 
-![](img/association/slide-36.png){width=100% fig-alt="Association rules slide 36"}
+For example, if $AB$ is infrequent:
 
----
+- Supersets such as $ABC$, $ABD$, and $ABE$ cannot be frequent
+- Larger supersets such as $ABCD$, $ABCE$, $ABDE$, and $ABCDE$ can also be pruned
 
-![](img/association/slide-37.png){width=100% fig-alt="Association rules slide 37"}
+Apriori uses this property to avoid exploring branches of the itemset lattice that cannot satisfy `minsup`.
 
----
+# Apriori Example: Candidate Counts
 
-![](img/association/slide-38.png){width=100% fig-alt="Association rules slide 38"}
+With `minsup = 3`, first count individual items.
 
----
+| Item | Count |
+|---|---:|
+| Bread | 4 |
+| Coke | 2 |
+| Milk | 4 |
+| Beer | 3 |
+| Diaper | 4 |
+| Eggs | 1 |
 
-![](img/association/slide-39.png){width=100% fig-alt="Association rules slide 39"}
+Frequent 1-itemsets are Bread, Milk, Beer, and Diaper.
 
----
+# Apriori Example: Frequent 2-Itemsets
 
-![](img/association/slide-40.png){width=100% fig-alt="Association rules slide 40"}
+From the frequent 1-itemsets, count candidate 2-itemsets.
 
----
+| Itemset | Count |
+|---|---:|
+| $\{\text{Bread}, \text{Milk}\}$ | 3 |
+| $\{\text{Bread}, \text{Beer}\}$ | 2 |
+| $\{\text{Bread}, \text{Diaper}\}$ | 3 |
+| $\{\text{Milk}, \text{Beer}\}$ | 2 |
+| $\{\text{Milk}, \text{Diaper}\}$ | 3 |
+| $\{\text{Beer}, \text{Diaper}\}$ | 3 |
 
-![](img/association/slide-41.png){width=100% fig-alt="Association rules slide 41"}
+Frequent 2-itemsets are those with count at least 3.
 
----
+# The Apriori Algorithm
 
-![](img/association/slide-42.png){width=100% fig-alt="Association rules slide 42"}
+Initialize:
+
+$$F_1 = \{i \mid i \in I \land \sigma(\{i\}) \geq N \times \text{minsup}\}$$
+
+Then repeat for $k=2,3,\ldots$:
+
+```text
+Ck = apriori-gen(Fk-1)
+
+for each transaction t in T:
+    Ct = subset(Ck, t)
+    for each candidate itemset c in Ct:
+        sigma(c) = sigma(c) + 1
+
+Fk = {c | c in Ck and sigma(c) >= N * minsup}
+```
+
+Stop when no new frequent itemsets are generated.
+
+# Frequent Maximal Itemset
+
+A frequent itemset is **maximal** if none of its adjacent supersets is frequent.
+
+Maximal frequent itemsets define the border between:
+
+- Frequent itemsets
+- Infrequent itemsets
+
+They provide a compact representation because all subsets of a maximal frequent itemset are also frequent, but their exact support values are not retained.
+
+# Closed Itemset
+
+An itemset is **closed** if none of its adjacent supersets has the same support.
+
+Example transaction set:
+
+| TID | Items |
+|---:|---|
+| 1 | $\{A,B\}$ |
+| 2 | $\{B,C,D\}$ |
+| 3 | $\{A,B,C,D\}$ |
+| 4 | $\{A,B,D\}$ |
+| 5 | $\{A,B,C,D\}$ |
+
+| Itemset | Support |
+|---|---:|
+| $\{A\}$ | 4 |
+| $\{B\}$ | 5 |
+| $\{C\}$ | 3 |
+| $\{D\}$ | 4 |
+
+# Closed vs Maximal Itemsets: Example
+
+Transaction database:
+
+| TID | Items |
+|---:|---|
+| 1 | ABC |
+| 2 | ABCD |
+| 3 | BCE |
+| 4 | ACDE |
+| 5 | DE |
+
+Selected transaction id sets:
+
+| Itemset | TIDs |
+|---|---|
+| ABC | 1, 2 |
+| ACD | 2, 4 |
+| DE | 4, 5 |
+| BC | 1, 2, 3 |
+| CD | 2, 4 |
+| CE | 3, 4 |
+
+# Closed vs Maximal Itemsets: Minimal Support 2
+
+With minimal support equal to 2:
+
+- Number of closed frequent itemsets: 9
+- Number of maximal frequent itemsets: 4
+
+Closed itemsets preserve enough information to recover support for all frequent patterns.
+
+Maximal itemsets preserve a more compact description of the largest frequent patterns, but lose detailed support information for their subsets.
+
+# Closed vs Maximal Itemsets: Efficiency
+
+From an efficiency point of view, closed and maximal itemsets provide more compact representations than all frequent itemsets.
+
+- They are fewer than frequent itemsets
+- This matters when the number of itemsets is very high
+- Only closed itemsets determine a lossless compression of frequent patterns
+- Closed itemsets contain complete support information for the frequent itemsets they represent
+
+# Closed vs Maximal Itemsets: Semantics
+
+From the semantic point of view:
+
+- **Maximal itemsets** are the most complex events that characterize the domain for a given support threshold
+- Non-maximal itemsets can be considered partial descriptions or construction steps of the maximal event
+- **Closed itemsets** preserve support information and therefore provide a more faithful representation of the frequent-pattern structure
+
+# Frequent Itemset Exercise
+
+Given the lattice and transaction list, label each node assuming $s()=30\%$:
+
+- **M**: maximal frequent
+- **C**: closed frequent
+- **F**: frequent, but neither maximal nor closed
+- **I**: infrequent
+
+| TID | Items |
+|---:|---|
+| 1 | a, b, d, e |
+| 2 | b, c, d |
+| 3 | a, b, d, e |
+| 4 | a, c, d, e |
+| 5 | b, c, d, e |
+| 6 | b, d, e |
+| 7 | c, d |
+
+# Rule Generation
+
+Given a frequent itemset $L$, find all non-empty subsets $f \subset L$ such that:
+
+$$f \to L - f$$
+
+and the rule satisfies the minimum confidence constraint.
+
+For $L=\{A,B,C,D\}$, candidate rules include:
+
+- $ABC \to D$, $ABD \to C$, $ACD \to B$, $BCD \to A$
+- $A \to BCD$, $B \to ACD$, $C \to ABD$, $D \to ABC$
+- $AB \to CD$, $AC \to BD$, $AD \to BC$, $BC \to AD$, $BD \to AC$, $CD \to AB$
+
+If $|L|=k$, there are $2^k-2$ candidate association rules, excluding $L \to \emptyset$ and $\emptyset \to L$.
+
+# Rule Generation: Confidence Pruning
+
+Confidence is not anti-monotonic with respect to the whole rule.
+
+- $c(ABC \to D)$ can be higher or lower than $c(AB \to D)$
+
+However, confidence is anti-monotonic with respect to the left-hand side for rules generated from the same itemset.
+
+Given itemset $Y$ and two rules:
+
+- $r_1: X \to Y-X$
+- $r_2: X' \to Y-X'$
+
+with $X' \subset X \subset Y$, then:
+
+$$c(r_1) \geq c(r_2)$$
+
+# Confidence Pruning: Proof
+
+Confidence is defined as:
+
+$$c(r_1)=\frac{\sigma(Y)}{\sigma(X)}$$
+
+$$c(r_2)=\frac{\sigma(Y)}{\sigma(X')}$$
+
+Since $X' \subset X$, the anti-monotonic support property gives:
+
+$$\sigma(X') \geq \sigma(X)$$
+
+Therefore:
+
+$$c(r_1) \geq c(r_2)$$
+
+For $L=\{A,B,C,D\}$:
+
+$$c(ABC \to D) \geq c(AB \to CD) \geq c(A \to BCD)$$
+
+# Rule Generation Lattice
+
+For itemset $ABCD$, rules can be organized by consequent size.
+
+| Consequent size | Candidate rules |
+|---:|---|
+| 0 | $ABCD \to \{\}$ |
+| 1 | $BCD \to A$, $ACD \to B$, $ABD \to C$, $ABC \to D$ |
+| 2 | $BC \to AD$, $BD \to AC$, $CD \to AB$, $AD \to BC$, $AC \to BD$, $AB \to CD$ |
+| 3 | $D \to ABC$, $C \to ABD$, $B \to ACD$, $A \to BCD$ |
+
+Low-confidence rules prune more general rules below them.
+
+# Rule Generation: Tiered Approach
+
+To avoid generating rules with limited confidence, use a tiered approach.
+
+- Each tier is characterized by an increasing cardinality of the right-hand side
+- Candidate rules are generated by merging two rules that share the same prefix in the right-hand side
+- This avoids generating the same rule multiple times
+
+Example:
+
+- Rule $D \to ABC$ can be pruned if $AD \to BC$ has confidence below `minconf`
+
+# Interestingness
+
+**Objective measures** prioritize rules based on statistical criteria calculated from data.
+
+- Many formulas exist
+- Each formula has its own advantages and disadvantages
+
+**Subjective measures** prioritize rules based on user-defined criteria.
+
+A pattern is interesting if:
+
+- It contradicts the user's expectations
+- The user is interested in taking an action or making a decision involving its elements
+
+# Rules Are Interesting When Unexpected
+
+Unexpectedness requires a model of the user's expectations and of the application domain.
+
+Patterns can be classified by comparing:
+
+- Whether they were expected to be frequent or infrequent
+- Whether they actually turn out to be frequent or infrequent
+
+The most interesting cases are mismatches:
+
+- Expected infrequent, but actually frequent
+- Expected frequent, but actually infrequent
+
+# Datasets With Inhomogeneous Support
+
+Many datasets contain:
+
+- Itemsets with very high support
+- Itemsets with very low support
+
+Example: a large commercial chain sells products priced from 1 euro to 10,000 euro.
+
+- Low-price products appear in many more transactions
+- High-price products appear in fewer transactions
+- Associations among high-price products may still be important
+
+| Group | Support range | Number of items |
+|---|---:|---:|
+| G1 | < 1% | 1735 |
+| G2 | 1% to 90% | 358 |
+| G3 | > 90% | 20 |
+
+# Datasets With Inhomogeneous Support: Threshold Choice
+
+Setting `minsup` is difficult when item supports differ strongly.
+
+If the threshold is too high:
+
+- Associations among low-support items are missed
+
+If the threshold is too low:
+
+- Execution time increases
+- Too many rules are returned
+- Cross-support patterns become frequent
+
+# Cross-Support Pattern
+
+A **cross-support pattern** is an itemset:
+
+$$X=\{i_1,\ldots,i_k\}$$
+
+where the support ratio $r(X)$ is lower than a threshold `thr`.
+
+$$r(X)=\frac{\min(s(i_1),\ldots,s(i_k))}{\max(s(i_1),\ldots,s(i_k))}$$
+
+Example:
+
+- $s(\text{milk})=70\%$
+- $s(\text{sugar})=10\%$
+- $s(\text{caviar})=0.04\%$
+
+If `thr = 0.01`, then $\{\text{milk}, \text{sugar}, \text{caviar}\}$ is cross-support because:
+
+$$0.0004/0.7 = 0.00058 < 0.01$$
+
+# Cross-Support Pattern: Why It Matters
+
+With threshold `thr = 0.3`, itemsets such as $\{p,q,r\}$, $\{p,r\}$, and $\{p,q\}$ can become cross-support patterns.
+
+The related association rules may have high confidence but little practical interest.
+
+- $c(\{q\} \to \{p\})=4/5=80\%$
+- $s(\{p,q\})=4/30=13.3\%$
+- $s(\{q,r\})=5/30=16.7\%$
+- $c(\{p\} \to \{q\})=4/25=16\%$
+
+Support and confidence alone may not capture correlation or affinity among itemsets.
+
+# Handling Categorical and Continuous Attributes
+
+In the basic formulation, association rules work with binary asymmetric variables.
+
+- An item appears or does not appear in a transaction
+- The relevant information is presence, not absence
+
+How can we express rules such as:
+
+$$\{\text{Number of Pages} \in [5,10) \land \text{Browser}=\text{Firefox}\} \to \{\text{Buy}=\text{No}\}$$
+
+# Handling Categorical Attributes
+
+Binarization transforms categorical attributes into asymmetric binary attributes by introducing a new item for every possible attribute value.
+
+For example, `Browser Type` becomes:
+
+- Browser Type = Internet Explorer
+- Browser Type = Firefox
+- Browser Type = Chrome
+
+When the number of attribute values is high, this has a heavy impact on performance.
+
+# Handling Continuous Attributes
+
+Association rules that include continuous values are called **quantitative association rules**.
+
+Example:
+
+$$\text{Age} \in [21,35) \land \text{Salary} \in [70k,120k) \to \text{Buy}$$
+
+Continuous attributes can be handled using several approaches:
+
+- Based on discretization
+- Based on statistics
+- Without discretization, such as `minApriori`
+
+# Handling Continuous Attributes: Discretization
+
+Discretization raises the problem of how to choose the number and borders of intervals.
+
+The number of intervals is usually supplied by the user and can be expressed in terms of:
+
+- Interval range: equi-width discretization
+- Average number of transactions per interval: equi-depth or equi-frequency discretization
+- Number of clusters
+
+Interval width affects support and confidence:
+
+- Too large intervals reduce confidence
+- Too narrow intervals reduce support and tend to produce replicated rules
+
+# Handling Continuous Attributes: Interval Width
+
+Consider a dataset with two patterns:
+
+- $R_1: \text{Age} \in [16,24) \to \text{Chat online}=Y$ with $s=8.8\%$ and $c=81.5\%$
+- $R_2: \text{Age} \in [44,60) \to \text{Chat online}=N$ with $s=16.8\%$ and $c=81.5\%$
+
+Using `minsup = 5%` and `minconf = 65%`:
+
+- Large intervals reduce confidence because groups no longer capture homogeneous behavior
+- Narrow intervals reduce support because each group contains fewer transactions
+
+Examples with large intervals:
+
+- $R_1: \text{Age} \in [12,36) \to \text{Chat online}=Y$ with $s=30\%$ and $c=57.7\%$
+- $R_2: \text{Age} \in [36,60) \to \text{Chat online}=N$ with $s=28\%$ and $c=58.3\%$
+
+# Handling Continuous Attributes: Brute Force
+
+One possible solution is to try all possible intervals.
+
+- Start from an initial range size $k$
+- Gradually fuse intervals
+- Execution time can become prohibitive
+- The solution can generate many redundant rules
+
+Examples of redundant rules:
+
+- $\{\text{Refund}=\text{No}, \text{Income}=\$51{,}250\} \to \{\text{Cheat}=\text{No}\}$
+- $\{\text{Refund}=\text{No}, 51K \leq \text{Income} \leq 52K\} \to \{\text{Cheat}=\text{No}\}$
+- $\{\text{Refund}=\text{No}, 50K \leq \text{Income} \leq 60K\} \to \{\text{Cheat}=\text{No}\}$
+
+# Multi-Level Association Rules
+
+A hierarchy of concepts is a generalization hierarchy based on item semantics.
+
+Example hierarchy:
+
+```text
+Food
+|-- Bread
+|   |-- Whole wheat
+|   `-- White
+`-- Milk
+    |-- Skim
+    |-- Semi-skim
+    |-- 2%
+    `-- 10%
+
+Electronics
+|-- Computer
+|   |-- Desktop
+|   `-- Laptop
+|-- Housewares
+|-- TV
+|-- DVD
+|-- Printers
+|-- Scanner
+`-- Accessories
+```
+
+# Multi-Level Association Rules: Why Hierarchies Help
+
+Hierarchies can be incorporated because:
+
+- Rules at lower levels may not have enough support to appear in frequent itemsets
+- Rules at lower levels may be too specific
+
+Examples:
+
+- Skim milk $\to$ white bread
+- Partly skim milk $\to$ white bread
+- Skim milk $\to$ whole wheat bread
+
+These can all indicate a more general association between milk and bread.
+
+# Multi-Level Association Rules: Extended Transactions
+
+Multi-level association rules can be handled by extending each transaction with parent items.
+
+Original transaction:
+
+$$\{\text{skim milk}, \text{white bread}\}$$
+
+Extended transaction:
+
+$$\{\text{skim milk}, \text{white bread}, \text{milk}, \text{bread}, \text{food}\}$$
+
+The concept of association must be redefined to avoid useless associations.
+
+- $X \Rightarrow Y$
+- $X \cap Y = \emptyset$
+- $Y$ must not contain an ancestor of any element of $X$
+
+Consequences:
+
+- High-level items have very high support
+- Cross-support patterns may appear
+- The number of redundant associations increases

@@ -24,31 +24,6 @@ The central idea is simple:
 
 ![Ensemble](img/multi/Immagine1.png)
 
-# Majority vote
-
-For classification, the final prediction is commonly obtained by **voting**.
-
-- Assume three classifiers predict the class of the same record.
-
-```{mermaid}
-%%| echo: false
-flowchart LR
-    X["record x"] --> C1["C1: yes"]
-    X --> C2["C2: no"]
-    X --> C3["C3: yes"]
-    C1 --> V["vote"]
-    C2 --> V
-    C3 --> V
-    V --> Y["ensemble: yes"]
-
-    style Y fill:#a3f7a3,stroke:#000
-```
-
-The ensemble assigns the class voted by most classifiers.
-
-- This works best when classifiers are **accurate enough**
-- It also requires their errors to be **not perfectly correlated**
-
 # Why diversity matters
 
 If all classifiers make the same errors, voting repeats the same mistake.
@@ -89,6 +64,101 @@ For $\epsilon=0.35$, this is approximately $0.06$: much smaller than the individ
 
 :::
 ::::
+
+# Decision-level fusion
+
+In **decision-level fusion**, each classifier outputs a class decision.
+
+The ensemble then combines these decisions.
+
+:::: {.columns}
+::: {.column width="55%"}
+
+Common rules:
+
+- **Majority vote**: each classifier votes for one class
+- **Weighted vote**: more reliable classifiers have larger influence
+- **Borda count**: each classifier ranks classes, then ranks are converted into scores
+
+The selected class is the one with the highest final score.
+
+:::
+::: {.column width="45%"}
+
+![Voting](img/ensemble/decision-level-fusion.png)
+
+:::
+::::
+
+# Majority vote
+
+For classification, the final prediction is commonly obtained by **voting**.
+
+- Assume three classifiers predict the class of the same record.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    X["record x"] --> C1["C1: yes"]
+    X --> C2["C2: no"]
+    X --> C3["C3: yes"]
+    C1 --> V["vote"]
+    C2 --> V
+    C3 --> V
+    V --> Y["ensemble: yes"]
+
+    style Y fill:#a3f7a3,stroke:#000
+```
+
+The ensemble assigns the class voted by most classifiers.
+
+- This works best when classifiers are **accurate enough**
+- It also requires their errors to be **not perfectly correlated**
+
+# Weighted voting
+
+Class membership can be decided by a voting mechanism.
+
+- **Unweighted vote**: each classifier contributes one vote
+- **Weighted vote**: more reliable classifiers contribute more
+
+Example:
+
+- Classifier $C_1$ votes for class $X$ and made 25 errors out of 100 similar training cases
+- Classifier $C_2$ votes for class $Y$ and made 10 errors out of 100 similar training cases
+
+With reliability-weighted voting, the record should be assigned to class $Y$.
+
+# Borda count
+
+The **Borda count** is useful when classifiers produce a ranking of classes rather than a single class.
+
+- Each classifier orders the candidate classes
+- Positions in the ranking are converted into numerical scores
+- Scores are summed across classifiers
+- The class with the highest score is selected
+
+This is still a decision-level method: it merges symbolic decisions or rankings, not calibrated probabilities.
+
+![Borda count](img/ensemble/borda-count.png)
+
+# Confidence-level fusion
+
+In **confidence-level fusion**, each classifier outputs one confidence value per class.
+
+These values can be merged through different functions:
+
+- Sum, Product, Minimum, Maximum, Weighted sum
+
+The sum is often more robust than the product. *Why?*
+
+<details>
+<summary>Suggested answer</summary>
+If one classifier assigns confidence 0, a product rule forces the whole combined confidence to 0.
+</details>
+
+
+![Confidence score](img/ensemble/confidence-fusion.jpeg)
 
 # How to build a composite classifier
 
@@ -156,73 +226,9 @@ For example:
 - A 1-NN classifier may have low bias but high variance
 - Mislabeled records can hurt any classifier
 
-# Weighted voting
+# Bagging and boosting
 
-Class membership can be decided by a voting mechanism.
-
-- **Unweighted vote**: each classifier contributes one vote
-- **Weighted vote**: more reliable classifiers contribute more
-
-Example:
-
-- Classifier $C_1$ votes for class $X$ and made 25 errors out of 100 similar training cases
-- Classifier $C_2$ votes for class $Y$ and made 10 errors out of 100 similar training cases
-
-With reliability-weighted voting, the record should be assigned to class $Y$.
-
-# Decision-level fusion
-
-In **decision-level fusion**, each classifier outputs a class decision.
-
-The ensemble then combines these decisions.
-
-:::: {.columns}
-::: {.column width="55%"}
-
-Common rules:
-
-- **Majority vote**: each classifier votes for one class
-- **Weighted vote**: more reliable classifiers have larger influence
-- **Borda count**: each classifier ranks classes, then ranks are converted into scores
-
-The selected class is the one with the highest final score.
-
-:::
-::: {.column width="45%"}
-
-![](img/ensemble/decision-level-fusion.png)
-
-:::
-::::
-
-# Borda count
-
-The **Borda count** is useful when classifiers produce a ranking of classes rather than a single class.
-
-- Each classifier orders the candidate classes
-- Positions in the ranking are converted into numerical scores
-- Scores are summed across classifiers
-- The class with the highest score is selected
-
-This is still a decision-level method: it merges symbolic decisions or rankings, not calibrated probabilities.
-
-![](img/ensemble/borda-count.png)
-
-# Confidence-level fusion
-
-In **confidence-level fusion**, each classifier outputs one confidence value per class.
-
-These values can be merged through different functions:
-
-- Sum
-- Product
-- Minimum
-- Maximum
-- Weighted sum
-
-The sum is often more robust than the product: if one classifier assigns confidence 0, a product rule forces the whole combined confidence to 0.
-
-![](img/ensemble/confidence-fusion.jpeg)
+![Both methods combine multiple models, but they create diversity in different ways.](img/ensemble/bagging-vs-boosting.png)
 
 # Bagging
 
@@ -328,7 +334,9 @@ Bagging is less useful for very stable models, because bootstrap samples produce
 
 # Random forest
 
-A **random forest** is a bagging ensemble of decision trees @breiman2001random.
+::::{.columns}
+:::{.column width="60%"}
+A **random forest** is a bagging ensemble of decision trees [@breiman2001random].
 
 It introduces randomness in two places:
 
@@ -344,8 +352,11 @@ d' \approx \sqrt{d}
 $$
 
 where $d$ is the number of features and $d'$ is the number considered at each split.
-
-![](img/ensemble/random-forest.png)
+:::
+:::{.column width="40%"}
+![Random forest](img/ensemble/random-forest.png)
+:::
+::::
 
 # Boosting
 
@@ -378,10 +389,6 @@ Unlike bagging, boosting classifiers are not independent: each round depends on 
 | Main goal | Reduce variance | Improve weak learners |
 | Combination | Usually equal vote | Weighted vote |
 | Sensitivity | Robust to noise | Can emphasize noisy records |
-
-Both methods combine multiple models, but they create diversity in different ways.
-
-![Bagging vs boosting](img/ensemble/bagging-vs-boosting.png)
 
 # Weak learners
 
@@ -511,8 +518,6 @@ Each classifier contributes according to its reliability.
 
 The process is adaptive because each round changes the learning problem faced by the next classifier.
 
-![](img/ensemble/adaboost-flow.png)
-
 # AdaBoost algorithm in pseudocode
 
 ```text
@@ -571,7 +576,15 @@ After several rounds, the weighted combination can behave like a deeper tree.
 
 # Geometric intuition
 
+:::: {.columns}
+::: {.column width="60%"}
+
 Boosting can be viewed as repeatedly correcting the current decision boundary.
+
+- With decision stumps, each individual classifier is simple, but their weighted sum can express a more flexible boundary.
+
+:::
+::: {.column width="40%"}
 
 ```{mermaid}
 %%| echo: false
@@ -583,8 +596,8 @@ flowchart TD
 
     style E fill:#a3f7a3,stroke:#000
 ```
-
-With decision stumps, each individual classifier is simple, but their weighted sum can express a more flexible boundary.
+:::
+::::
 
 # Practical cautions
 
