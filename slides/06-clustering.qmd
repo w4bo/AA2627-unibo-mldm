@@ -1,16 +1,9 @@
 ---
 subtitle: Clustering
+jupyter: python3
+execute:
+  enabled: true
 ---
-
-# Motivating problem: discover customer segments
-
-A company has customer behavior data but no segment labels.
-
-- Some customers buy frequently but spend little
-- Others purchase rarely but place large orders
-- Some may not fit any stable segment
-
-Can we discover useful groups without being told the correct answer in advance?
 
 # Learning objectives
 
@@ -20,6 +13,30 @@ By the end of this lecture, you will be able to:
 - **Execute** the main steps of k-means, hierarchical clustering, and DBSCAN
 - **Select** an algorithm based on cluster shape, density, noise, and interpretability
 - **Evaluate** clustering results without assuming that every partition is meaningful
+
+# Roadmap
+
+We will separate three questions:
+
+1. **What is a cluster?** Separation, shape, density, and ambiguity
+2. **How does the algorithm define clusters?** Centroids, linkages, or density reachability
+3. **Can we trust the result?** Validation, stability, and domain usefulness
+
+# Motivating problem: discover customer segments
+
+A company has customer behavior data but no segment labels.
+
+- Some customers buy frequently but spend little
+- Others purchase rarely but place large orders
+- Some may not fit any stable segment
+
+The business question is not just "how many groups exist?"
+
+- Can we design different offers for different behaviors?
+- Are the groups stable enough to act on?
+- Which customers should be treated as exceptions rather than forced into a segment?
+
+Clustering proposes candidate groups; the domain question decides whether they are useful.
 
 # Intuition: similar objects form groups
 
@@ -79,11 +96,11 @@ How many clusters?
 
 # Type of clustering
 
-A clustering is a set of clusters. We distinguish between:
-
 __Partitioning clustering__: a division of objects into non-overlapping subsets (clusters). Each object belongs exactly to a cluster.
 
 ![Partitioning clustering](img/clustering/Immagine12.png)
+
+# Type of clustering
 
 __Hierarchical clustering__: a set of nested clusters organized as a hierarchical tree
 
@@ -154,22 +171,23 @@ Clusters with shared properties or in which the shared property derives from the
 
 # K-means Clustering
 
+::::{.columns}
+:::{.column width="50%"}
 Partitional clustering approach
 
 - Number of clusters, K, must be specified
 - Each cluster is associated with a centroid (center point)
 - Each point is assigned to the cluster with the closest centroid
-
+:::
+:::{.column width="50%"}
 ```
-function kmeans(k, points) is
+kmeans(k, points):
     // Initialize centroids
     centroids ← list of k starting centroids
     converged ← false
-
     while converged == false do
         // Create empty clusters
         clusters ← list of k empty lists
-
         // Assign each point to the nearest centroid
         for i ← 0 to length(points) - 1 do
             point ← points[i]
@@ -181,28 +199,27 @@ function kmeans(k, points) is
                     minDistance ← d
                     closestIndex ← j
             clusters[closestIndex].append(point)
-
         // Recalculate centroids as the mean of each cluster
         newCentroids ← empty list
         for i ← 0 to k - 1 do
             newCentroid ← calculateCentroid(clusters[i])
             newCentroids.append(newCentroid)
-
         // Check for convergence
         if newCentroids == centroids THEN
             converged ← true
         else
             centroids ← newCentroids
-
     return clusters
 ```
+:::
+::::
 
 # Worked example: one k-means iteration
 
 Let the one-dimensional observations be $\{1,2,3,8,9\}$, with $K=2$ and initial centroids $m_1=2$, $m_2=8$.
 
 1. **Assign:** $\{1,2,3\}\rightarrow C_1$ and $\{8,9\}\rightarrow C_2$
-2. **Update:** $m_1=(1+2+3)/3=2$ and $m_2=(8+9)/2=8.5$
+2. **Update:** $m_1=\frac{1+2+3}{3}=2$ and $m_2=\frac{8+9}{2}=8.5$
 3. **Repeat** assignment and update until assignments stop changing
 
 K-means monotonically reduces its objective, but the final solution can still depend on the initial centroids.
@@ -285,27 +302,81 @@ If there are real $K$ clusters, the probability of choosing a centroid from each
 
 * Assuming the clusters have the same cardinality  $n$ :
 
-$P=\frac{\# ways of choosing a centroid by cluster}{\# ways of choosing K centroids}=\frac{(n)^K \cdot K!}{(n \cdot K)^K}=\frac{K!}{K^K}$
+$P=\frac{\text{\# ways of choosing a centroid by cluster}}{\text{\# ways of choosing K centroids}}=\frac{(n)^K \cdot K!}{(n \cdot K)^K}=\frac{K!}{K^K}$
 
-* $K$ = 10, probability is 10!/1010 = 0.00036
+* $K$ = 10, probability is $\frac{10!}{10^{10}} \approx 0.00036$
 
 Sometimes the centroids will reposition themselves correctly, sometimes not...
 
 # 10 clusters example
 
-![Starting with clusters with 2 centroids and clusters with 0 centroids](img/clustering/Immagine24.svg)
+```{python}
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 11
+#| fig-height: 6
+#| dpi: 160
 
-# 10 clusters example
+import matplotlib.pyplot as plt
+import numpy as np
 
-![Starting with clusters with 2 centroids and clusters with 0 centroids](img/clustering/Immagine25.svg)
+rng = np.random.default_rng(42)
 
-# 10 clusters example
+# Ten natural clusters arranged as 5 columns and 2 rows.
+true_centers = np.array(
+    [(col * 4.0, row * 3.0) for row in range(2) for col in range(5)]
+)
+points_per_cluster = 45
+X = np.vstack([
+    rng.normal(loc=center, scale=0.38, size=(points_per_cluster, 2))
+    for center in true_centers
+])
+true_labels = np.repeat(np.arange(10), points_per_cluster)
 
-![Starting with a couple of clusters with 3 centroids and couple of clusters with 1 centroids](img/clustering/Immagine26.svg)
+# Bad but plausible initialization: the 10 initial centroids are sampled
+# from only 5 of the natural clusters, leaving the other 5 uncovered.
+initial_source_clusters = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]
+centroids = np.vstack([
+    X[np.flatnonzero(true_labels == cluster)[rng.integers(points_per_cluster)]]
+    for cluster in initial_source_clusters
+])
 
-# 10 clusters example
+fig, axes = plt.subplots(2, 2, figsize=(11, 6), sharex=True, sharey=True)
+colors = plt.cm.tab10(np.arange(10))
 
-![Starting with a couple of clusters with 3 centroids and couple of clusters with 1 centroids](img/clustering/Immagine27.svg)
+for iteration, ax in enumerate(axes.ravel(), start=1):
+    distances = np.linalg.norm(X[:, None, :] - centroids[None, :, :], axis=2)
+    assignments = distances.argmin(axis=1)
+
+    for cluster in range(10):
+        pts = X[assignments == cluster]
+        if len(pts) > 0:
+            ax.scatter(
+                pts[:, 0], pts[:, 1],
+                s=13, color=colors[cluster], alpha=0.65, edgecolors="none"
+            )
+
+    ax.scatter(
+        centroids[:, 0], centroids[:, 1],
+        s=120, c="black", marker="x", linewidths=2.2
+    )
+    ax.set_title(f"Iteration {iteration}")
+    ax.set_aspect("equal", adjustable="box")
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+    next_centroids = centroids.copy()
+    for cluster in range(10):
+        pts = X[assignments == cluster]
+        if len(pts) > 0:
+            next_centroids[cluster] = pts.mean(axis=0)
+    centroids = next_centroids
+
+fig.suptitle("K-means with K=10: first four iterations", y=0.98)
+fig.tight_layout()
+plt.show()
+```
 
 # Solution to the problems induced by the choice of initial centroids
 
@@ -390,14 +461,52 @@ More dense clusters lead to smaller intra-cluster distances, so less dense areas
 
 SSE is based on an Euclidean distance that does not take into account the shape of objects
 
-::::{.columns}
-:::{.column width="50%"}
-![Unclustered points & natural clusters](img/clustering/14-Clustering_47.png)
-:::
-:::{.column width="50%"}
-![K-means (2 Cluster)](img/clustering/14-Clustering_46.png)
-:::
-::::
+```{python}
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4.5
+#| dpi: 160
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+rng = np.random.default_rng(7)
+n = 180
+theta = np.linspace(0, np.pi, n // 2)
+
+upper = np.column_stack([np.cos(theta), np.sin(theta)])
+lower = np.column_stack([1 - np.cos(theta), 0.45 - np.sin(theta)])
+X = np.vstack([upper, lower])
+X += rng.normal(scale=0.06, size=X.shape)
+natural_labels = np.repeat([0, 1], n // 2)
+
+centroids = X[[20, 130]].copy()
+for _ in range(8):
+    distances = np.linalg.norm(X[:, None, :] - centroids[None, :, :], axis=2)
+    kmeans_labels = distances.argmin(axis=1)
+    for cluster in range(2):
+        centroids[cluster] = X[kmeans_labels == cluster].mean(axis=0)
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 4.5), sharex=True, sharey=True)
+for ax, labels, title in [
+    (axes[0], natural_labels, "Natural non-globular clusters"),
+    (axes[1], kmeans_labels, "K-means with K=2"),
+]:
+    ax.scatter(X[:, 0], X[:, 1], c=labels, cmap="Set2", s=20, edgecolors="none")
+    ax.set_title(title)
+    ax.set_aspect("equal", adjustable="box")
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+axes[1].scatter(
+    centroids[:, 0], centroids[:, 1],
+    c="black", marker="x", s=130, linewidths=2.2
+)
+fig.tight_layout()
+plt.show()
+```
 
 # K-means: possible solutions
 
@@ -449,8 +558,8 @@ The definition of "natural" clusters then requires a technique to bring together
 It consists of executing k-means several times with increasing values for k
 
 * SSE value will decrease
-* $k < #NaturalCluster$: SSE includes inter-cluster distances
-* $k >= #NaturalCluster$: SSE includes intra-cluster distances
+* $k < \#NaturalCluster$: SSE includes inter-cluster distances
+* $k \ge \#NaturalCluster$: SSE includes intra-cluster distances
 * The "elbow" occurs when SSE starts decreasing more slowly since it is generated only by intra-cluster distances
 
 ![The elbow method](img/clustering/14-Clustering_54.png)
@@ -602,7 +711,7 @@ __Centroids distance__
 :::
 ::::
 
-After step 2: $Dist(\{3,6\}, \{2,\5})=min(dist(\{2,3\}), dist(\{2,6\}), dist(\{5,3\}), dist(\{5,6\})) = min(0.15,0.25,0.28,0.39)=0.15$
+After step 2: $Dist(\{3,6\}, \{2,5\})=min\bigl(dist(\{2,3\}), dist(\{2,6\}), dist(\{5,3\}), dist(\{5,6\})\bigr) = min(0.15,0.25,0.28,0.39)=0.15$
 
 # MIN: pros and cons
 
@@ -616,6 +725,8 @@ It allows for managing non-spherical clusters too.
 ![](img/clustering/14-Clustering_60.png)
 :::
 ::::
+
+# MIN: pros and cons
 
 It is subject to outliers and noise.
 
@@ -651,9 +762,9 @@ It is subject to outliers and noise.
 
 After step 2...
 
-- $Dist(\{3,\6}, \{4 \})=max(dist(\{3,4\}), dist(\{6,4\})) = max(0.15,0.22)=0.22$
-- $Dist(\{3,\6}, \{2,5\})=max(dist(\{3,2\}), dist(\{3,5\}), dist(\{6,2\}) dist(\{6,5\})) = max(0.15,0.25,0.28,0.39)=0.39$
-- $Dist(\{3,\6}, \{1 \})=max(dist(\{3,1\}), dist(\{6,1\})) = max(0.22,0.23)=0.23$
+- $Dist\bigl(\{3,6\}, \{4 \}\bigr)=max\bigl(dist(\{3,4\}), dist(\{6,4\})\bigr) = max(0.15,0.22)=0.22$
+- $Dist\bigl(\{3,6\}, \{2,5\}\bigr)=max\bigl(dist(\{3,2\}), dist(\{3,5\}\bigr), dist(\{6,2\}), dist(\{6,5\})) = max(0.15,0.25,0.28,0.39)=0.39$
+- $Dist\bigl(\{3,6\}, \{1 \}\bigr)=max\bigl(dist(\{3,1\}), dist(\{6,1\})\bigr) = max(0.22,0.23)=0.23$
 
 # MAX: pros and cons
 
@@ -669,6 +780,8 @@ Less affected by noise
 ::::
 
 It tends to separate large clusters.
+
+# MAX: pros and cons
 
 Favor globular clusters
 
@@ -776,13 +889,14 @@ DBSCAN is a density-based approach
 
 # DBSCAN algorithm
 
-// Input:Dataset $D, MinPts, Eps$
-// Output set of cluster $C$
-
-1. Label points in $D$ as core, border or noise
-1. Drop all noise points
-1. Assign to cluster ci the core points with a distance < $Eps$ from one of the other points assigned to the same cluster
-1. Assign border points to one of the clusters that the corresponding core points belong to
+```
+dbscan(Dataset D, MinPts, Eps):
+    1. Label points in D as core, border or noise
+    2. Drop all noise points
+    3. Assign to cluster Ci core points with dist < Eps from one of the other points assigned to the same cluster
+    4. Assign border points to one of the clusters that the corresponding core points belong to
+    5. Output set of cluster C
+```
 
 # DBSCAN: Core, Border, and Noise Points
 
@@ -810,6 +924,8 @@ Cons
   * The key point is to properly define the density (i.e., choosing $Eps$ and $MinPts$)
   * Does not handle dataset variable density
 
+<div></div>
+
 ::::{.columns}
 :::{.column width="33%"}
 ![$MinPts$ = 4, $Eps=9.92$](img/clustering/Immagine45.svg)
@@ -835,7 +951,7 @@ So, plot the sorted distance of every point to its kth nearest neighbor.
 * The result depends on the value of $k$, but the trend of the curve remains similar for reasonable values of $k$
 * A value of $k$ normally used for two-dimensional datasets is 4
 
-![](img/clustering/14-Clustering_73.png)
+![Choosing Eps and MinPts](img/clustering/14-Clustering_73.png)
 
 # Cluster validity
 
@@ -852,7 +968,7 @@ This is not the case of clustering. So why evaluate clustering validity?
 
 # Cluster validity
 
-![](img/clustering/Immagine48.svg)
+![Examples of clusters](img/clustering/Immagine48.svg)
 
 # Validity measures
 
@@ -869,19 +985,13 @@ Numerical measures that are applied to judge various aspects of cluster validity
 
 Cluster Cohesion: Measures how closely related the objects in a cluster are.
 
-* Example: SSE
+* Cohesion is measured by the Within cluster Sum of Squares (WSS or SSE)
+* $SSE = WSS = \sum_{i=1}\sum_{x \in C_i} dist(x, m_i)^2$
 
 Cluster Separation: Measure how distinct or well-separated a cluster is from other clusters
 
-* Example: Squared Error
-
-* Cohesion is measured by the __W__ithin cluster __S__um of __S__quares (WSS or SSE)
-
-$SSE = WSS = \sum_{i=1}\sum_{x \in C_i} dist(x, m_i)^2$
-
-* Separation is measured by the __B__etween cluster __S__um of __S__quares (BSS)
-
-$BSS = \sum_{i=1} |C_i| \cdot dist(m_i, m)^2$
+* Separation is measured by the Between cluster Sum of Squares (BSS)
+* $BSS = \sum_{i=1} |C_i| \cdot dist(m_i, m)^2$
 
 # Internal Measures: Cohesion and Separation
 
@@ -947,7 +1057,15 @@ If the data is uniformly distributed, the matrix is more "shaded."
 
 ![K-means](img/clustering/Immagine53.svg)
 
+# Measuring Cluster Validity Via Correlation
+
+If the data is uniformly distributed, the matrix is more "shaded."
+
 ![DBSCAN](img/clustering/Immagine54.svg)
+
+# Measuring Cluster Validity Via Correlation
+
+If the data is uniformly distributed, the matrix is more "shaded."
 
 ![Complete link](img/clustering/Immagine55.svg)
 
@@ -959,7 +1077,7 @@ Associate similarity matrices with the data set
 :::{.column width="50%"}
 ![](img/clustering/14-Clustering_89.png)
 :::
-:::{.column width="350%"}
+:::{.column width="50%"}
 ![](img/clustering/14-Clustering_88.png)
 :::
 ::::
@@ -1099,8 +1217,8 @@ Two approaches are possible.
 
 Entropy: for each cluster $i$ let $p_{ij} = \frac{m_{ij}}{m_i}$ the probability that a member of cluster $i$ belongs to class $j$
 
-* $m_i = $ # of objects in cluster $i$
-* $m_{ij} = $ # of objects of class $j$ in cluster $i$
+* $m_i = \text{\# of objects in cluster i}$
+* $m_{ij} = \text{\# of objects of class j in cluster i}$
 
 Cluster $i$ entropy is $e_i$ while whole clustering entropy is $e$
 
@@ -1118,9 +1236,19 @@ Purity is computed as:
 
 # A final comment
 
-> " _The validation of clustering structures is the most difficult and frustrating part of cluster analysis. Without a strong effort in this direction, cluster analysis will remain a black art accessible only to those true believers who have experience and great courage."
+> "The validation of clustering structures is the most difficult and frustrating part of cluster analysis. Without a strong effort in this direction, cluster analysis will remain a black art accessible only to those true believers who have experience and great courage."
 >
 > cit. Algorithms for Clustering Data, Jain and Dubes
+
+# Practical workflow
+
+1. Define what "similar" should mean for the problem
+2. Scale numeric features before using distance-based methods
+3. Start with simple baselines and visualize when possible
+4. Compare algorithms using the same data representation
+5. Test sensitivity to parameters, samples, and initializations
+6. Validate the result against the domain question
+7. Check whether random data would produce a similar structure
 
 # Summary: when should I use each method?
 
