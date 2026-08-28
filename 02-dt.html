@@ -34,7 +34,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="02-dt_files/libs/revealjs/dist/theme/quarto-20cf3ed387c7343269facc3c851a8f66.css">
+  <link rel="stylesheet" href="02-dt_files/libs/revealjs/dist/theme/quarto-2a4b070768aef88e7992984127cace11.css">
   <link href="02-dt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02-dt_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02-dt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -173,9 +173,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Learn by doing!</h1>
 <p>This is a <em>supervised learning</em> task since the <em>dataset</em> contains a <em>label</em> (or <em>class</em>) to predict (<code>churn</code>)</p>
 <ul>
-<li>… as a function of <em>other</em> customer suscriptions’ attributes (<code>months_subscribed</code>, …, <code>auto_pay</code>)</li>
+<li>… as a function of <em>other</em> customer subscriptions’ attributes (<code>months_subscribed</code>, …, <code>auto_pay</code>)</li>
 </ul>
-<p>Each <em>row</em> (or <em>data item/record</em>) is customer subscription, each <em>column</em> is an <em>attribute</em> (or <em>feature</em>)</p>
+<p>Each <em>row</em> (or <em>data item/record</em>) is a customer subscription, each <em>column</em> is an <em>attribute</em> (or <em>feature</em>)</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 22%">
@@ -317,7 +317,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="training-and-test-sets-2" class="title-slide slide level1 center">
 <h1>Training and test sets</h1>
-<p><em>Training test</em>: used for training the model</p>
+<p><em>Training set</em>: used for training the model</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 22%">
@@ -412,7 +412,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p><em>Test test</em>: used for testing the generalization capability of the model</p>
+<p><em>Test set</em>: used for testing the generalization capability of the model</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 22%">
@@ -1369,11 +1369,20 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="how-do-we-determine-the-best-split-value" class="title-slide slide level1 center">
-<h1>How do we determine the best split value?</h1>
-<p>Before splitting a single class with 10 records in the C0 class and 10 records in the C1 class</p>
-
-<img data-src="./img/dt/image19.png" class="r-stretch"><p>The split criterion must allow you to determine more pure classes. It needs a measure of purity.</p>
+<section id="what-makes-a-split-good" class="title-slide slide level1 center">
+<h1>What makes a split good?</h1>
+<p>A good split creates child nodes that are more class-pure than the parent node.</p>
+<ul>
+<li>Before the split, the parent node contains mixed classes</li>
+<li>After the split, each child node should mostly contain one class</li>
+<li>We compare candidate splits by measuring how much impurity decreases</li>
+</ul>
+<p>Choose:</p>
+<ul>
+<li>the split with <strong>lowest weighted impurity</strong>, or equivalently</li>
+<li>the split with <strong>highest gain</strong></li>
+</ul>
+<p>The split criterion must allow you to determine more pure classes. It needs a measure of purity.</p>
 <ul>
 <li>Gini index</li>
 <li>Entropy</li>
@@ -1381,10 +1390,55 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
+<section id="how-do-we-determine-the-best-split-value" class="title-slide slide level1 center">
+<h1>How do we determine the best split value?</h1>
+<p>Before splitting the churn training set, the root contains 4 <code>yes</code> (churn) and 5 <code>no</code> (not churn) records.</p>
+<p><span class="math display">\[
+Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
+\]</span></p>
+</section>
+
 <section id="how-do-we-determine-the-best-split-value-1" class="title-slide slide level1 center">
 <h1>How do we determine the best split value?</h1>
-
-<img data-src="./img/dt/image20.png" class="r-stretch quarto-figure-center"><p class="caption">Gain = M0 - M12 vs M0 - M34</p></section>
+<p>For the training set, compare candidate questions for the root node:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Candidate split</th>
+<th style="text-align: left;">Child nodes</th>
+<th style="text-align: center;">Weighted Gini</th>
+<th style="text-align: center;">Gini gain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>auto_pay</code></td>
+<td style="text-align: left;"><code>no</code>: 4 (churn), 0 no (not churn); <code>yes</code>: 0 yes, 5 no</td>
+<td style="text-align: center;"><strong>0.000</strong></td>
+<td style="text-align: center;"><strong>0.494</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>monthly_watch_hours &lt;= 8</code></td>
+<td style="text-align: left;"><code>&lt;= 8</code>: 4 yes, 1 no; <code>&gt; 8</code>: 0 yes, 4 no</td>
+<td style="text-align: center;">0.178</td>
+<td style="text-align: center;">0.316</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>tickets &lt;= 1</code></td>
+<td style="text-align: left;"><code>&lt;= 1</code>: 1 yes, 5 no; <code>&gt; 1</code>: 3 yes, 0 no</td>
+<td style="text-align: center;">0.185</td>
+<td style="text-align: center;">0.309</td>
+</tr>
+</tbody>
+</table>
+<p>The best root split is <code>auto_pay</code> because it creates the purest child nodes.</p>
+</section>
 
 <section id="impurity-measures" class="title-slide slide level1 center">
 <h1>Impurity measures</h1>
@@ -1400,9 +1454,13 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li><span class="math inline">\(Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))\)</span> (adopted in ID3 and C4.5)</li>
 <li><span class="math inline">\(Misclassification~Error(i) = 1 - max_{j=1,\ldots,k} p(j|i)\)</span></li>
 </ul>
-<p>The impurity of the whole split is the weighted average of the child impurities. Lower is better.</p>
+<p>The impurity of the whole split is the weighted average of the child impurities. <strong>Lower is better.</strong></p>
 <ul>
 <li><span class="math inline">\(Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)\)</span></li>
+</ul>
+<p>The gain of a split is the improvement from the parent to the children. <strong>Higher is better.</strong></p>
+<ul>
+<li><span class="math inline">\(Gain_{split} = meas(p) - Impurity_{split}\)</span></li>
 </ul>
 </section>
 
@@ -1429,6 +1487,9 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li>Columns represent the child nodes created by the split</li>
 <li>The reported Gini is the weighted impurity of the candidate split</li>
 </ul>
+<div>
+
+</div>
 <div class="columns">
 <div class="column" style="width:33%;">
 <table class="caption-top">
@@ -1539,9 +1600,9 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p>It requires defining the split point using a binary condition.</p>
 <ul>
 <li>The number of possible conditions is equal to the number of distinct values of the attribute.</li>
-<li>Can calculate a matrix count for each split value.
+<li>We can calculate a count matrix for each split value.
 <ul>
-<li>The matrix will count the elements of each class for attribute values greater than or less than the split value.</li>
+<li>The matrix counts the elements of each class for attribute values greater than or less than the split value.</li>
 </ul></li>
 </ul>
 <p>A naive approach:</p>
@@ -1549,7 +1610,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li>For each split <span class="math inline">\(v\)</span> value, read the dataset (with <span class="math inline">\(N\)</span> records) to build the count matrix and calculate the Gini index</li>
 <li>Computationally inefficient <span class="math inline">\(O(N^2)\)</span>:
 <ul>
-<li>Scan DB: <span class="math inline">\(O(N)\)</span></li>
+<li>Scan dataset: <span class="math inline">\(O(N)\)</span></li>
 <li>Repeat for each value of <span class="math inline">\(v\)</span> (i.e., <span class="math inline">\(v \cdot O(N)\)</span>)</li>
 </ul></li>
 </ul>
@@ -1575,13 +1636,14 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p>A good split has high gain because its child nodes are purer than the parent node.</p>
 <p>However, maximizing raw <span class="math inline">\(Gain\)</span> can favor attributes with many distinct values.</p>
 <ul>
-<li>Partitioning students according to their enrollment guarantees that all classes (formed by only one student) are totally pure</li>
+<li>Splitting customers by a unique <code>customer_id</code> would create one child per customer</li>
+<li>Each child would be perfectly pure, but the rule would not generalize to future customers</li>
 </ul>
 </section>
 
 <section id="split-based-on-splitinfo" class="title-slide slide level1 center">
 <h1>Split based on <span class="math inline">\(SplitInfo\)</span></h1>
-<p>To avoid the problem of spraying records into many tiny branches, C4.5 maximizes the <span class="math inline">\(GainRatio\)</span>:</p>
+<p>To avoid the problem of spraying records into many tiny branches, C4.5 maximizes the <span class="math inline">\(GainRatio\)</span>.</p>
 <ul>
 <li><span class="math inline">\(n\)</span> = number of child nodes</li>
 <li><span class="math inline">\(m\)</span> = number of records in parent node <span class="math inline">\(p\)</span></li>
@@ -1599,7 +1661,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="split-based-on-splitinfo-1" class="title-slide slide level1 center">
 <h1>Split based on <span class="math inline">\(SplitInfo\)</span></h1>
-<p>With balanced child nodes, <span class="math inline">\(SplitInfo\)</span> grows as the number of children grows:</p>
+<p>With balanced child nodes, <span class="math inline">\(SplitInfo\)</span> grows as the number of children grows.</p>
 <ul>
 <li><span class="math inline">\(n \in [2, 64]\)</span></li>
 <li><span class="math inline">\(m = 100\)</span></li>
@@ -1608,6 +1670,39 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <p>For the same <span class="math inline">\(Gain\)</span>, a larger <span class="math inline">\(SplitInfo\)</span> produces a smaller <span class="math inline">\(GainRatio\)</span>.</p>
 
 <img data-src="./img/dt/image23.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(SplitInfo\)</span></p></section>
+
+<section id="split-based-on-splitinfo-2" class="title-slide slide level1 center">
+<h1>Split based on <span class="math inline">\(SplitInfo\)</span></h1>
+<p>In the churn example, a unique identifier would look perfect if we considered only raw gain.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Candidate split</th>
+<th style="text-align: center;">Children</th>
+<th style="text-align: center;">Entropy gain</th>
+<th style="text-align: center;">SplitInfo</th>
+<th style="text-align: center;">GainRatio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>auto_pay</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.991</td>
+<td style="text-align: center;">0.991</td>
+<td style="text-align: center;"><strong>1.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>customer_id</code></td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">0.991</td>
+<td style="text-align: center;">3.170</td>
+<td style="text-align: center;">0.313</td>
+</tr>
+</tbody>
+</table>
+<p>Both splits make pure leaves on the training set, but <code>customer_id</code> fragments the data into one-record branches. <span class="math inline">\(GainRatio\)</span> penalizes this behavior.</p>
+</section>
 
 <section id="characteristic-features-2" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Characteristic features</h1>
@@ -1937,7 +2032,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <ul>
 <li>Run all possible splits</li>
 <li>Examine the decision tree nodes obtained with a bottom-up logic</li>
-<li>Collate a sub tree in a leaf node if this allows to reduce the generalization error (i.e., on the validation set)
+<li>Replace a subtree with a leaf if this reduces the generalization error (i.e., on the validation set)
 <ul>
 <li>Choose to collapse the sub-tree that determines the maximum error reduction (N.B. greedy choice)</li>
 </ul></li>
@@ -1959,11 +2054,11 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="estimating-generalization-error" class="title-slide slide level1 center">
 <h1>Estimating generalization error</h1>
-<p>A decision tree should minimize the error on the real data set but, during construction, only the training set is available.</p>
+<p>A decision tree should minimize the error on real data but, during construction, only the training set is available.</p>
 <p>Then the real-time data error must be estimated.</p>
 <ul>
 <li><strong>Re-substitution error:</strong> number of errors in the training set</li>
-<li><strong>Generalization error:</strong> number of errors in the real data set</li>
+<li><strong>Generalization error:</strong> number of errors on real data</li>
 </ul>
 <p>The methods for estimating the generalization error are:</p>
 <ul>
@@ -2080,31 +2175,39 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="c4.5" class="title-slide slide level1 center">
 <h1>C4.5</h1>
-<p>Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.</p>
+<p>Widely used decision-tree algorithm. It extends ID3 and Hunt’s algorithm.</p>
 <p><strong>Features:</strong></p>
 <ul>
-<li>Use <span class="math inline">\(GainRatio\)</span> as a criterion for determining the split attribute</li>
-<li>It manages the continuous attributes by determining a split point that divides the range of values into two</li>
+<li>It uses <span class="math inline">\(GainRatio\)</span> as a criterion for determining the split attribute</li>
+<li>It manages continuous attributes by determining a split point that divides the range of values into two</li>
 <li>It manages data with missing values. Missing attributes are not considered to calculate <span class="math inline">\(GainRatio\)</span>.</li>
 <li>It can handle attributes that are associated with different weights</li>
-<li>Run post-pruning of the created tree</li>
+<li>It runs post-pruning on the created tree</li>
 </ul>
 <p><strong>The tree construction stops when:</strong></p>
 <ul>
 <li>The node contains records belonging to a single class</li>
 <li>No attribute allows for determining a positive <span class="math inline">\(GainRatio\)</span></li>
-<li>Node does not contain records.</li>
+<li>The node does not contain records</li>
 </ul>
+</section>
+
+<section id="decision-tree-checklist" class="title-slide slide level1 center">
+<h1>Decision-tree checklist</h1>
+<ol type="1">
+<li>Define the prediction target.</li>
+<li>Split data into training, validation, and test sets.</li>
+<li>Choose candidate split conditions.</li>
+<li>Score splits with Gini, Entropy, Gain, or GainRatio.</li>
+<li>Stop or prune to control overfitting.</li>
+<li>Evaluate on untouched test data.</li>
+</ol>
 </section>
 
 <section id="summary-when-should-i-use-a-decision-tree" class="title-slide slide level1 center">
 <h1>Summary: when should I use a decision tree?</h1>
-<p><strong>Use a decision tree when:</strong></p>
-<ul>
-<li>You need an interpretable model expressed as rules</li>
-<li>Non-linear interactions are likely, but extensive preprocessing is undesirable</li>
-</ul>
-<p><strong>Be careful when:</strong></p>
+<p>Use a decision tree when you need an interpretable model expressed as rules, especially when non-linear interactions are likely and extensive preprocessing is undesirable.</p>
+<p>Be careful when:</p>
 <ul>
 <li>Small data changes produce very different trees</li>
 <li>The tree grows deep enough to memorize noise</li>

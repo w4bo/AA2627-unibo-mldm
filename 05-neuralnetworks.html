@@ -121,7 +121,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="05-neuralnetworks_files/libs/revealjs/dist/theme/quarto-20cf3ed387c7343269facc3c851a8f66.css">
+  <link rel="stylesheet" href="05-neuralnetworks_files/libs/revealjs/dist/theme/quarto-2a4b070768aef88e7992984127cace11.css">
   <link href="05-neuralnetworks_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="05-neuralnetworks_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="05-neuralnetworks_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -837,7 +837,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div><div class="column" style="width:25%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Gradient_descent.svg/350px-Gradient_descent.svg.png"></p>
+<p><img data-src="./img/neuralnetworks/vanillagradient.png"></p>
 <figcaption>Gradient Descent</figcaption>
 </figure>
 </div>
@@ -847,7 +847,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="gradient-descent-1" class="title-slide slide level1 center">
 <h1>Gradient descent</h1>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:70%;">
 <p><strong>Vanilla Gradient Descent</strong></p>
 <ol type="1">
 <li>Start with random initial values for parameters (weights and biases)</li>
@@ -857,7 +857,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Adjust each parameter in the opposite direction of the gradient: <span class="math inline">\(\Theta = \Theta-\eta \cdot \nabla J(\Theta)\)</span></li>
 <li>Repeat steps 2-5 for each <em>epoch (i.e., iteration over the entire dataset)</em> until the loss converges or reaches a predefined number of epochs</li>
 </ol>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/neuralnetworks/3%20Model71.png"></p>
@@ -875,7 +875,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="gradient-descent-2" class="title-slide slide level1 center">
 <h1>Gradient descent</h1>
 <div class="columns">
-<div class="column" style="width:70%;">
+<div class="column" style="width:75%;">
 <p><strong>(Mini-batch) Stochastic Gradient Descent (SGD)</strong></p>
 <ol type="1">
 <li>Start with random values for parameters (e.g., weights and biases)</li>
@@ -887,9 +887,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Compute the gradient of the cost function with respect to each parameter</li>
 <li>Adjust each parameter. <span class="math inline">\(\Theta = \Theta−\eta \cdot \nabla J(\Theta; \mathbf{B})\)</span></li>
 </ol></li>
-<li>Go through all mini-batches until every sample in the dataset has been used once (one epoch), then shuffle the dataset and repeat the above process for the next epoch.</li>
+<li>Go through all mini-batches (one epoch), then shuffle the dataset and repeat the above process.</li>
 </ol>
-</div><div class="column" style="width:30%;">
+</div><div class="column" style="width:25%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/neuralnetworks/3%20Model72.jpg"></p>
@@ -974,7 +974,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 
 <img data-src="./img/neuralnetworks/3%20Model74.png" class="r-stretch quarto-figure-center"><p class="caption">Chain rule</p><ul>
-<li>Gradient descent uses these gradients to update the parameters</li>
 <li>The delta rule is a special case of the more general backpropagation algorithm</li>
 </ul>
 </section>
@@ -1091,7 +1090,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </div><div class="column" style="width:50%;">
 <p><strong>Layer 3 uses <span class="math inline">\(h_2\)</span> as its input</strong></p>
-<p><span class="math inline">\(h_2\)</span> is not a replacement for <span class="math inline">\(wx+b\)</span>.</p>
+<p><span class="math inline">\(h_2\)</span> is the value entering the next neuron.</p>
 <p><span class="math display">\[
 h_2=\sigma(z_2)
 \quad\rightarrow\quad
@@ -1099,7 +1098,7 @@ z_3=w_{31}h_2+b_3
 \quad\rightarrow\quad
 \hat{y}=\sigma(z_3)
 \]</span></p>
-<p>It is the value entering the next neuron, so:</p>
+<p>so:</p>
 <p><span class="math display">\[
 \frac{\partial z_3}{\partial w_{31}}
 =
