@@ -25,9 +25,9 @@ By the end of this lecture, you will be able to:
 
 This is a *supervised learning* task since the *dataset* contains a *label* (or *class*) to predict (`churn`)
 
-- ... as a function of *other* customer suscriptions' attributes (`months_subscribed`, ..., `auto_pay`)
+- ... as a function of *other* customer subscriptions' attributes (`months_subscribed`, ..., `auto_pay`)
 
-Each *row* (or *data item/record*) is customer subscription, each *column* is an *attribute* (or *feature*)
+Each *row* (or *data item/record*) is a customer subscription, each *column* is an *attribute* (or *feature*)
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
@@ -62,7 +62,7 @@ Disadvantages:
 
 # Training and test sets
 
-*Training test*: used for training the model
+*Training set*: used for training the model
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
@@ -76,7 +76,7 @@ Disadvantages:
 | 1                 | 2                   | 2               | basic     | no       | *yes*   |
 | 10                | 20                  | 0               | premium   | yes      | *no*    |
 
-*Test test*: used for testing the generalization capability of the model
+*Test set*: used for testing the generalization capability of the model
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
@@ -640,11 +640,18 @@ Starting from the basic logic to completely define an algorithm for building dec
 - **The criterion defining the best split**
 - The criterion for interrupting splitting
 
-# How do we determine the best split value?
+# What makes a split good?
 
-Before splitting a single class with 10 records in the C0 class and 10 records in the C1 class
+A good split creates child nodes that are more class-pure than the parent node.
 
-![](./img/dt/image19.png)
+- Before the split, the parent node contains mixed classes
+- After the split, each child node should mostly contain one class
+- We compare candidate splits by measuring how much impurity decreases
+
+Choose:
+
+- the split with **lowest weighted impurity**, or equivalently
+- the split with **highest gain**
 
 The split criterion must allow you to determine more pure classes. It needs a measure of purity.
 
@@ -654,7 +661,23 @@ The split criterion must allow you to determine more pure classes. It needs a me
 
 # How do we determine the best split value?
 
-![Gain = M0 - M12 vs M0 - M34](./img/dt/image20.png)
+Before splitting the churn training set, the root contains 4 `yes` (churn) and 5 `no` (not churn) records.
+
+$$
+Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
+$$
+
+# How do we determine the best split value?
+
+For the training set, compare candidate questions for the root node:
+
+| Candidate split | Child nodes | Weighted Gini | Gini gain |
+| :- | :- | :-: | :-: |
+| `auto_pay` | `no`: 4  (churn), 0 no (not churn); `yes`: 0 yes, 5 no | **0.000** | **0.494** |
+| `monthly_watch_hours <= 8` | `<= 8`: 4 yes, 1 no; `> 8`: 0 yes, 4 no | 0.178 | 0.316 |
+| `tickets <= 1` | `<= 1`: 1 yes, 5 no; `> 1`: 3 yes, 0 no | 0.185 | 0.309 |
+
+The best root split is `auto_pay` because it creates the purest child nodes.
 
 # Impurity measures
 
@@ -671,9 +694,13 @@ Several indices can be adopted to measure the impurity of one node $i$.
 * $Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))$ (adopted in ID3 and C4.5)
 * $Misclassification~Error(i) = 1 - max_{j=1,\ldots,k} p(j|i)$
 
-The impurity of the whole split is the weighted average of the child impurities. Lower is better.
+The impurity of the whole split is the weighted average of the child impurities. **Lower is better.**
 
 * $Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)$
+
+The gain of a split is the improvement from the parent to the children. **Higher is better.**
+
+* $Gain_{split} = meas(p) - Impurity_{split}$
 
 # Comparing impurity measures
 
@@ -694,6 +721,8 @@ It is usually more efficient to create a "count matrix" for each candidate split
 - Rows represent the classes
 - Columns represent the child nodes created by the split
 - The reported Gini is the weighted impurity of the candidate split
+
+<div></div>
 
 ::::{.columns}
 :::{.column width=33%}
@@ -727,14 +756,14 @@ It is usually more efficient to create a "count matrix" for each candidate split
 It requires defining the split point using a binary condition.
 
 - The number of possible conditions is equal to the number of distinct values of the attribute.
-- Can calculate a matrix count for each split value.
-    - The matrix will count the elements of each class for attribute values greater than or less than the split value.
+- We can calculate a count matrix for each split value.
+    - The matrix counts the elements of each class for attribute values greater than or less than the split value.
 
 A naive approach:
 
 - For each split $v$ value, read the dataset (with $N$ records) to build the count matrix and calculate the Gini index
 - Computationally inefficient $O(N^2)$:
-    - Scan DB: $O(N)$
+    - Scan dataset: $O(N)$
     - Repeat for each value of $v$ (i.e., $v \cdot O(N)$)
 
 # Computing Gini for *continuous* attributes
@@ -761,11 +790,12 @@ A good split has high gain because its child nodes are purer than the parent nod
 
 However, maximizing raw $Gain$ can favor attributes with many distinct values.
 
-- Partitioning students according to their enrollment guarantees that all classes (formed by only one student) are totally pure
+- Splitting customers by a unique `customer_id` would create one child per customer
+- Each child would be perfectly pure, but the rule would not generalize to future customers
 
 # Split based on $SplitInfo$
 
-To avoid the problem of spraying records into many tiny branches, C4.5 maximizes the $GainRatio$:
+To avoid the problem of spraying records into many tiny branches, C4.5 maximizes the $GainRatio$.
 
 - $n$ = number of child nodes
 - $m$ = number of records in parent node $p$
@@ -784,7 +814,7 @@ The more a split fragments the records, the larger $SplitInfo$ becomes, reducing
 
 # Split based on $SplitInfo$
 
-With balanced child nodes, $SplitInfo$ grows as the number of children grows:
+With balanced child nodes, $SplitInfo$ grows as the number of children grows.
 
 - $n \in [2, 64]$
 - $m = 100$
@@ -793,6 +823,17 @@ With balanced child nodes, $SplitInfo$ grows as the number of children grows:
 For the same $Gain$, a larger $SplitInfo$ produces a smaller $GainRatio$.
 
 ![$SplitInfo$](./img/dt/image23.png)
+
+# Split based on $SplitInfo$
+
+In the churn example, a unique identifier would look perfect if we considered only raw gain.
+
+| Candidate split | Children | Entropy gain | SplitInfo | GainRatio |
+| :- | :-: | :-: | :-: | :-: |
+| `auto_pay` | 2 | 0.991 | 0.991 | **1.000** |
+| `customer_id` | 9 | 0.991 | 3.170 | 0.313 |
+
+Both splits make pure leaves on the training set, but `customer_id` fragments the data into one-record branches. $GainRatio$ penalizes this behavior.
 
 # Characteristic features {background-color="#121011"}
 
@@ -1145,7 +1186,7 @@ More restrictive conditions potentially applicable are:
 
 - Run all possible splits
 - Examine the decision tree nodes obtained with a bottom-up logic
-- Collate a sub tree in a leaf node if this allows to reduce the generalization error (i.e., on the validation set)
+- Replace a subtree with a leaf if this reduces the generalization error (i.e., on the validation set)
     - Choose to collapse the sub-tree that determines the maximum error reduction (N.B. greedy choice)
 
 Instances in the new leaf can be tagged.
@@ -1165,12 +1206,12 @@ It requires new techniques to estimate generalization errors.
 
 # Estimating generalization error
 
-A decision tree should minimize the error on the real data set but, during construction, only the training set is available.
+A decision tree should minimize the error on real data but, during construction, only the training set is available.
 
 Then the real-time data error must be estimated.
 
 - **Re-substitution error:** number of errors in the training set
-- **Generalization error:** number of errors in the real data set
+- **Generalization error:** number of errors on real data
 
 The methods for estimating the generalization error are:
 
@@ -1300,30 +1341,36 @@ The bootstrap does not create a (new) dataset with more information, but it can 
 
 # C4.5
 
-Widely used Decision Tree algorithm. It extends ID3 and the Hunt Algorithm.
+Widely used decision-tree algorithm. It extends ID3 and Hunt's algorithm.
 
 **Features:**
 
-- Use $GainRatio$ as a criterion for determining the split attribute
-- It manages the continuous attributes by determining a split point that divides the range of values into two
+- It uses $GainRatio$ as a criterion for determining the split attribute
+- It manages continuous attributes by determining a split point that divides the range of values into two
 - It manages data with missing values. Missing attributes are not considered to calculate $GainRatio$.
 - It can handle attributes that are associated with different weights
-- Run post-pruning of the created tree
+- It runs post-pruning on the created tree
 
 **The tree construction stops when:**
 
 - The node contains records belonging to a single class
 - No attribute allows for determining a positive $GainRatio$
-- Node does not contain records.
+- The node does not contain records
+
+# Decision-tree checklist
+
+1. Define the prediction target.
+2. Split data into training, validation, and test sets.
+3. Choose candidate split conditions.
+4. Score splits with Gini, Entropy, Gain, or GainRatio.
+5. Stop or prune to control overfitting.
+6. Evaluate on untouched test data.
 
 # Summary: when should I use a decision tree?
 
-**Use a decision tree when:**
+Use a decision tree when you need an interpretable model expressed as rules, especially when non-linear interactions are likely and extensive preprocessing is undesirable.
 
-- You need an interpretable model expressed as rules
-- Non-linear interactions are likely, but extensive preprocessing is undesirable
-
-**Be careful when:**
+Be careful when:
 
 - Small data changes produce very different trees
 - The tree grows deep enough to memorize noise

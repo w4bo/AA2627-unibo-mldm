@@ -507,7 +507,7 @@ Intuition: if increasing a weight increases the loss, gradient descent decreases
 :::
 ::: {.column width="25%"}
 
-![Gradient Descent](https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Gradient_descent.svg/350px-Gradient_descent.svg.png)
+![Gradient Descent](./img/neuralnetworks/vanillagradient.png)
 
 :::
 ::::
@@ -515,7 +515,7 @@ Intuition: if increasing a weight increases the loss, gradient descent decreases
 # Gradient descent
 
 :::: {.columns}
-::: {.column width="60%"}
+::: {.column width="70%"}
 
 **Vanilla Gradient Descent**
 
@@ -527,7 +527,7 @@ Intuition: if increasing a weight increases the loss, gradient descent decreases
 6. Repeat steps 2-5 for each *epoch (i.e., iteration over the entire dataset)* until the loss converges or reaches a predefined number of epochs
 
 :::
-::: {.column width="40%"}
+::: {.column width="30%"}
 
 ![Vanilla Gradient Descent](./img/neuralnetworks/3 Model71.png)
 
@@ -542,7 +542,7 @@ Vanilla Gradient Descent
 # Gradient descent
 
 :::: {.columns}
-::: {.column width="70%"}
+::: {.column width="75%"}
 
 **(Mini-batch) Stochastic Gradient Descent (SGD)**
 
@@ -553,10 +553,10 @@ Vanilla Gradient Descent
     2. Calculate the cost or error for the mini-batch
     3. Compute the gradient of the cost function with respect to each parameter
     4. Adjust each parameter. $\Theta = \Theta−\eta \cdot \nabla J(\Theta; \mathbf{B})$
-4. Go through all mini-batches until every sample in the dataset has been used once (one epoch), then shuffle the dataset and repeat the above process for the next epoch.
+4. Go through all mini-batches (one epoch), then shuffle the dataset and repeat the above process.
 
 :::
-::: {.column width="30%"}
+::: {.column width="25%"}
 
 ![Stochastic Gradient Descent](./img/neuralnetworks/3 Model72.jpg)
 
@@ -631,7 +631,6 @@ $\Delta w_{ij} = \eta (y_i - \hat{y}_i)g'(h_j)x_i$
 
 ![Chain rule](./img/neuralnetworks/3 Model74.png)
 
-- Gradient descent uses these gradients to update the parameters
 - The delta rule is a special case of the more general backpropagation algorithm
 
 # Backpropagation
@@ -735,7 +734,7 @@ Backpropagation answers one question: **which parameters are responsible for the
 
 **Layer 3 uses $h_2$ as its input**
 
-$h_2$ is not a replacement for $wx+b$.
+$h_2$ is the value entering the next neuron.
 
 $$
 h_2=\sigma(z_2)
@@ -745,7 +744,7 @@ z_3=w_{31}h_2+b_3
 \hat{y}=\sigma(z_3)
 $$
 
-It is the value entering the next neuron, so:
+so:
 
 $$
 \frac{\partial z_3}{\partial w_{31}}
