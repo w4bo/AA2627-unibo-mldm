@@ -1,3 +1,14 @@
+## [1.0.20](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.19...1.0.20) (2026-08-31)
+
+### Bug Fixes
+
+* images ([76812d0](https://github.com/w4bo/AA2627-unibo-mldm/commit/76812d0979af5b05e9f3be48690d01319c662556))
+* lab titles ([c342689](https://github.com/w4bo/AA2627-unibo-mldm/commit/c34268928f369b2cf9c4220fd45d7fab9ba9eec2))
+* schedule ([428b4d8](https://github.com/w4bo/AA2627-unibo-mldm/commit/428b4d832230c2eee7c4c1490f81bf99123d456c))
+* sort slides on Gini index ([853cb7b](https://github.com/w4bo/AA2627-unibo-mldm/commit/853cb7b82fa13d333e3d496fdda434bec6438056))
+* working on lab association ([930935f](https://github.com/w4bo/AA2627-unibo-mldm/commit/930935f6cccd3e2b97688eecb8e6229c5509f347))
+* working on lab clustering ([51f950c](https://github.com/w4bo/AA2627-unibo-mldm/commit/51f950cb19543f3e1253cc442f88ec619218dda1))
+
 ## [1.0.19](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.18...1.0.19) (2026-08-31)
 
 ### Dependency updates
