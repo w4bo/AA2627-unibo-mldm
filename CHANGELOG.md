@@ -1,3 +1,24 @@
+## [1.0.19](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.18...1.0.19) (2026-08-31)
+
+### Dependency updates
+
+* **deps:** update slides/refs digest to 8bc4da8 ([#28](https://github.com/w4bo/AA2627-unibo-mldm/issues/28)) ([e89fe7a](https://github.com/w4bo/AA2627-unibo-mldm/commit/e89fe7a6c88e887de7caaf4edf3deaa53a741f3d))
+* **deps:** update slides/utils digest to 299d21a ([#29](https://github.com/w4bo/AA2627-unibo-mldm/issues/29)) ([a595fd0](https://github.com/w4bo/AA2627-unibo-mldm/commit/a595fd0942a15c9d6aa244027af1da195a88f3bc))
+
+### Bug Fixes
+
+* working on lab classification ([1eb6664](https://github.com/w4bo/AA2627-unibo-mldm/commit/1eb6664f5c43afea56c6e7bf38af26df43b4dcb0))
+
+### General maintenance
+
+* update thesis ([3360aa7](https://github.com/w4bo/AA2627-unibo-mldm/commit/3360aa723c4a2b8c0f3a11049ac391f5ffb6d5c1))
+* update thesis ([ec6df4c](https://github.com/w4bo/AA2627-unibo-mldm/commit/ec6df4c42789a545d1b6f3b1d34245d5730b1c59))
+* update thesis ([9610018](https://github.com/w4bo/AA2627-unibo-mldm/commit/961001875346e0ff3e2ebd46e9a4eb6bd2cd908b))
+* working on the slides ([aebb07b](https://github.com/w4bo/AA2627-unibo-mldm/commit/aebb07bf4891f35ac7d90cca8a7c8d049ae18648))
+* working on the slides ([11cae5e](https://github.com/w4bo/AA2627-unibo-mldm/commit/11cae5ecebfabebf14420b11f621842287b89e52))
+* working on the slides ([f637d59](https://github.com/w4bo/AA2627-unibo-mldm/commit/f637d59ec4fb0260584aa66938689f516400c824))
+* working on the slides ([ef9384f](https://github.com/w4bo/AA2627-unibo-mldm/commit/ef9384f165dd5f2439863bfe04a5d10ff645a5f1))
+
 ## [1.0.18](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.17...1.0.18) (2026-08-28)
 
 ### Bug Fixes
