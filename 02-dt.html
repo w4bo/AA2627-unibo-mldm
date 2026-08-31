@@ -1390,6 +1390,35 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
+<section id="impurity-measures" class="title-slide slide level1 center">
+<h1>Impurity measures</h1>
+<p>Given a parent node <span class="math inline">\(p\)</span> with records belonging to <span class="math inline">\(k\)</span> classes and a candidate partition into <span class="math inline">\(n\)</span> child nodes:</p>
+<ul>
+<li><span class="math inline">\(m\)</span> = number of records in parent node <span class="math inline">\(p\)</span></li>
+<li><span class="math inline">\(m_i\)</span> = number of records in child node <span class="math inline">\(i\)</span></li>
+</ul>
+<p><strong>ATTENTION: do not confuse the number of classes (<span class="math inline">\(k\)</span>) and of the child nodes (<span class="math inline">\(n\)</span>)</strong></p>
+<p>Several indices can be adopted to measure the impurity of one node <span class="math inline">\(i\)</span>.</p>
+<ul>
+<li><span class="math inline">\(Gini(i) = 1 - \sum_{j=1}^k p(j | i)^2\)</span> (adopted in CART, SLIQ, and SPRINT)</li>
+<li><span class="math inline">\(Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))\)</span> (adopted in ID3 and C4.5)</li>
+<li><span class="math inline">\(Misclassification~Error(i) = 1 - max_{j=1,\ldots,k} p(j|i)\)</span></li>
+</ul>
+<p>The impurity of the whole split is the weighted average of the child impurities. <strong>Lower is better.</strong></p>
+<ul>
+<li><span class="math inline">\(Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)\)</span></li>
+</ul>
+<p>The gain of a split is the improvement from the parent to the children. <strong>Higher is better.</strong></p>
+<ul>
+<li><span class="math inline">\(Gain_{split} = meas(p) - Impurity_{split}\)</span></li>
+</ul>
+</section>
+
+<section id="comparing-impurity-measures" class="title-slide slide level1 center">
+<h1>Comparing impurity measures</h1>
+
+<img data-src="img/dt/3-Decision%20Tree_48.png" class="r-stretch quarto-figure-center"><p class="caption">Impurity measures behavior for a two-class problem</p></section>
+
 <section id="how-do-we-determine-the-best-split-value" class="title-slide slide level1 center">
 <h1>How do we determine the best split value?</h1>
 <p>Before splitting the churn training set, the root contains 4 <code>yes</code> (churn) and 5 <code>no</code> (not churn) records.</p>
@@ -1439,35 +1468,6 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </table>
 <p>The best root split is <code>auto_pay</code> because it creates the purest child nodes.</p>
 </section>
-
-<section id="impurity-measures" class="title-slide slide level1 center">
-<h1>Impurity measures</h1>
-<p>Given a parent node <span class="math inline">\(p\)</span> with records belonging to <span class="math inline">\(k\)</span> classes and a candidate partition into <span class="math inline">\(n\)</span> child nodes:</p>
-<ul>
-<li><span class="math inline">\(m\)</span> = number of records in parent node <span class="math inline">\(p\)</span></li>
-<li><span class="math inline">\(m_i\)</span> = number of records in child node <span class="math inline">\(i\)</span></li>
-</ul>
-<p><strong>ATTENTION: do not confuse the number of classes (<span class="math inline">\(k\)</span>) and of the child nodes (<span class="math inline">\(n\)</span>)</strong></p>
-<p>Several indices can be adopted to measure the impurity of one node <span class="math inline">\(i\)</span>.</p>
-<ul>
-<li><span class="math inline">\(Gini(i) = 1 - \sum_{j=1}^k p(j | i)^2\)</span> (adopted in CART, SLIQ, and SPRINT)</li>
-<li><span class="math inline">\(Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))\)</span> (adopted in ID3 and C4.5)</li>
-<li><span class="math inline">\(Misclassification~Error(i) = 1 - max_{j=1,\ldots,k} p(j|i)\)</span></li>
-</ul>
-<p>The impurity of the whole split is the weighted average of the child impurities. <strong>Lower is better.</strong></p>
-<ul>
-<li><span class="math inline">\(Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)\)</span></li>
-</ul>
-<p>The gain of a split is the improvement from the parent to the children. <strong>Higher is better.</strong></p>
-<ul>
-<li><span class="math inline">\(Gain_{split} = meas(p) - Impurity_{split}\)</span></li>
-</ul>
-</section>
-
-<section id="comparing-impurity-measures" class="title-slide slide level1 center">
-<h1>Comparing impurity measures</h1>
-
-<img data-src="img/dt/3-Decision%20Tree_48.png" class="r-stretch quarto-figure-center"><p class="caption">Impurity measures behavior for a two-class problem</p></section>
 
 <section id="computing-gini-for-binary-attributes" class="title-slide slide level1 center">
 <h1>Computing Gini for <em>binary</em> attributes</h1>
