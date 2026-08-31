@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="lab-03-classification_files/libs/quarto-html/tabby.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-03-classification_files/libs/quarto-html/tabby.min.js"></script>
 <script src="lab-03-classification_files/libs/quarto-html/popper.min.js"></script>
 <script src="lab-03-classification_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lab-03-classification_files/libs/quarto-html/tippy.css" rel="stylesheet">
@@ -192,6 +192,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -249,13 +252,13 @@ ID12102,40,MALE,TOWN,30085.1,YES,3,YES,NO,YES,YES,NO</code></pre>
 <h1>Setup and reproducibility</h1>
 <p>The notebook uses packages included in standard Google Colab runtimes.</p>
 <p>If a local environment is missing one, run the installation command: <code>pip install -q numpy pandas matplotlib scikit-learn</code></p>
-<p>Run the notebook from top to bottom. All random operations use the same seed.</p>
+<p>Run the notebook from top to bottom. All random operations use the same seed. <em>Why?</em></p>
 </section>
 
 <section id="load-arff-files-without-extra-dependencies" class="title-slide slide level1 center">
 <h1>Load ARFF files without extra dependencies</h1>
 <p><code>find_dataset</code> makes paths work whether the notebook starts in the repository root or in <code>slides/</code>.</p>
-<div id="d48b2a2d" class="cell">
+<div id="d48b2a2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:13.345452Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:13.345286Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:13.814782Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:13.813976Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>bank <span class="op">=</span> load_dense_arff(<span class="st">"bank-data.arff"</span>)</span>
@@ -273,6 +276,61 @@ ID12102,40,MALE,TOWN,30085.1,YES,3,YES,NO,YES,YES,NO</code></pre>
 <span id="cb2-13"><a href="" aria-label="13"></a>)</span>
 <span id="cb2-14"><a href="" aria-label="14"></a>dataset_catalog</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">rows</th>
+<th data-quarto-table-cell-role="th">columns</th>
+<th data-quarto-table-cell-role="th">target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Bank</th>
+<td>600</td>
+<td>12</td>
+<td>pep</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Census train</th>
+<td>1000</td>
+<td>15</td>
+<td>class</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Census test</th>
+<td>31561</td>
+<td>15</td>
+<td>class</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Nursery</th>
+<td>10000</td>
+<td>9</td>
+<td>class</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 
@@ -297,61 +355,496 @@ Only Census has an explicit training/test pair. Looking at its test results whil
 
 <section id="bank-data-an-end-to-end-binary-classification-workflow" class="title-slide slide level1 center">
 <h1>Bank Data: an end-to-end binary classification workflow</h1>
-<p>The task is to predict whether a customer buys a personal equity plan (<code>pep</code>). We will reserve one test set, compare candidate workflows by cross-validation on the training set, tune one model, and evaluate it once on the test set.</p>
+<p>The task is to predict whether a customer buys a personal equity plan (<code>pep</code>). We will</p>
+<ol type="1">
+<li>reserve one test set,</li>
+<li>compare candidate workflows by cross-validation on the training set,</li>
+<li>tune one model, and</li>
+<li>evaluate it once on the test set.</li>
+</ol>
 </section>
 
 <section>
 <section id="audit-the-bank-dataset" class="title-slide slide level1 center">
 <h1>Audit the Bank dataset</h1>
-<p>A useful first audit checks shape, types, missingness, target balance, suspicious identifiers, and feature distributions. An identifier can let a model memorize rows without learning a reusable pattern.</p>
+<p>A useful first audit checks shape, types, missingness, target balance, suspicious identifiers, and feature distributions.</p>
+<ul>
+<li>An identifier can let a model memorize rows without learning a reusable pattern.</li>
+</ul>
 </section>
 <section id="bank-sample" class="slide level2">
 <h2>Bank sample</h2>
-<div id="c0772277" class="cell">
+<div id="c0772277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:13.817110Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:13.816901Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:13.826128Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:13.825204Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>bank.head()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">region</th>
+<th data-quarto-table-cell-role="th">income</th>
+<th data-quarto-table-cell-role="th">married</th>
+<th data-quarto-table-cell-role="th">children</th>
+<th data-quarto-table-cell-role="th">car</th>
+<th data-quarto-table-cell-role="th">save_act</th>
+<th data-quarto-table-cell-role="th">current_act</th>
+<th data-quarto-table-cell-role="th">mortgage</th>
+<th data-quarto-table-cell-role="th">pep</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>ID12101</td>
+<td>48</td>
+<td>FEMALE</td>
+<td>INNER_CITY</td>
+<td>17546.0</td>
+<td>NO</td>
+<td>1</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>ID12102</td>
+<td>40</td>
+<td>MALE</td>
+<td>TOWN</td>
+<td>30085.1</td>
+<td>YES</td>
+<td>3</td>
+<td>YES</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>ID12103</td>
+<td>51</td>
+<td>FEMALE</td>
+<td>INNER_CITY</td>
+<td>16575.4</td>
+<td>YES</td>
+<td>0</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>ID12104</td>
+<td>23</td>
+<td>FEMALE</td>
+<td>TOWN</td>
+<td>20375.4</td>
+<td>YES</td>
+<td>3</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>ID12105</td>
+<td>57</td>
+<td>FEMALE</td>
+<td>RURAL</td>
+<td>50576.3</td>
+<td>YES</td>
+<td>0</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section></section>
 <section id="data-profiling" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="a8cdbc99" class="cell">
+<div id="a8cdbc99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:13.827916Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:13.827732Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:13.836330Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:13.835535Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>bank.info()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 600 entries, 0 to 599
+Data columns (total 12 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   id           600 non-null    object 
+ 1   age          600 non-null    int64  
+ 2   sex          600 non-null    object 
+ 3   region       600 non-null    object 
+ 4   income       600 non-null    float64
+ 5   married      600 non-null    object 
+ 6   children     600 non-null    int64  
+ 7   car          600 non-null    object 
+ 8   save_act     600 non-null    object 
+ 9   current_act  600 non-null    object 
+ 10  mortgage     600 non-null    object 
+ 11  pep          600 non-null    object 
+dtypes: float64(1), int64(2), object(9)
+memory usage: 56.4+ KB</code></pre>
+</div>
 </div>
 </section>
 
 <section>
 <section id="data-profiling-1" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="60447248" class="cell">
+<div id="60447248" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:13.838092Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:13.837893Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:13.857474Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:13.856730Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>bank.describe(include<span class="op">=</span><span class="st">'all'</span>).T</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>bank.describe(include<span class="op">=</span><span class="st">'all'</span>).T</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">unique</th>
+<th data-quarto-table-cell-role="th">top</th>
+<th data-quarto-table-cell-role="th">freq</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">id</th>
+<td>600</td>
+<td>600</td>
+<td>ID12101</td>
+<td>1</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">age</th>
+<td>600.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>42.395</td>
+<td>14.424947</td>
+<td>18.0</td>
+<td>30.0</td>
+<td>42.0</td>
+<td>55.25</td>
+<td>67.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">sex</th>
+<td>600</td>
+<td>2</td>
+<td>FEMALE</td>
+<td>300</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">region</th>
+<td>600</td>
+<td>4</td>
+<td>INNER_CITY</td>
+<td>269</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">income</th>
+<td>600.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>27524.031217</td>
+<td>12899.468246</td>
+<td>5014.21</td>
+<td>17264.5</td>
+<td>24925.3</td>
+<td>36172.675</td>
+<td>63130.1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">married</th>
+<td>600</td>
+<td>2</td>
+<td>YES</td>
+<td>396</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">children</th>
+<td>600.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.011667</td>
+<td>1.056752</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">car</th>
+<td>600</td>
+<td>2</td>
+<td>NO</td>
+<td>304</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">save_act</th>
+<td>600</td>
+<td>2</td>
+<td>YES</td>
+<td>414</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">current_act</th>
+<td>600</td>
+<td>2</td>
+<td>YES</td>
+<td>455</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">mortgage</th>
+<td>600</td>
+<td>2</td>
+<td>NO</td>
+<td>391</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">pep</th>
+<td>600</td>
+<td>2</td>
+<td>NO</td>
+<td>326</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="bank-target-counts" class="slide level2">
 <h2>Bank target counts</h2>
-<div id="3756fc8f" class="cell">
+<div id="3756fc8f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:13.859441Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:13.859236Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:13.865263Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:13.864509Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">pep</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NO</th>
+<td>326</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">YES</th>
+<td>274</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-</section>
-<section id="bank-target-proportions" class="slide level2">
-<h2>Bank target proportions</h2>
-<div id="c27cb604" class="cell">
+</div>
+</div>
+<div id="c27cb604" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:13.867253Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:13.867075Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:13.873153Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:13.872420Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"proportion"</span>).to_frame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"proportion"</span>).to_frame()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">proportion</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">pep</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NO</th>
+<td>0.543333</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">YES</th>
+<td>0.456667</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
+<section id="data-understanding" class="slide level2">
+<h2>Data understanding</h2>
+
+<img data-src="lab-03-classification_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
 <section id="exercise---decide-what-enters-the-model" class="slide level2">
 <h2>Exercise - decide what enters the model</h2>
 <p>Before running the next cell:</p>
@@ -373,7 +866,61 @@ Answer
 </section>
 <section id="make-a-single-stratified-holdout-split" class="slide level2">
 <h2>Make a single stratified holdout split</h2>
-<p>The test set is placed “in a vault” until model selection is complete. Stratification preserves the target proportions in both partitions.</p>
+<p>The test set is placed “in a vault” until model selection is complete.</p>
+<ul>
+<li>Stratification preserves the target proportions in both partitions.</li>
+</ul>
+<div id="d842afad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:14.315049Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:14.314845Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:14.327733Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:14.326914Z&quot;}}" data-execution_count="10">
+<div class="cell-output cell-output-stdout">
+<pre><code>Training shape: (450, 10)
+Test shape: (150, 10)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">train</th>
+<th data-quarto-table-cell-role="th">test</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">pep</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NO</th>
+<td>0.542222</td>
+<td>0.546667</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">YES</th>
+<td>0.457778</td>
+<td>0.453333</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="build-leakage-safe-preprocessing" class="slide level2">
 <h2>Build leakage-safe preprocessing</h2>
@@ -384,23 +931,1470 @@ Answer
 <li>Unknown categories are ignored so prediction does not fail on a new category.</li>
 </ul>
 <p>Scaling matters for distance-based and linear models. It is unnecessary for a tree, but using a consistent transformer makes the comparison easy to audit.</p>
+<div id="83d4e32c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:14.329638Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:14.329462Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:14.388302Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:14.387493Z&quot;}}" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="11">
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+}
+
+#sk-container-id-1.light {
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: black;
+  --sklearn-color-background: white;
+  --sklearn-color-border-box: black;
+  --sklearn-color-icon: #696969;
+}
+
+#sk-container-id-1.dark {
+  --sklearn-color-text-on-default-background: white;
+  --sklearn-color-background: #111;
+  --sklearn-color-border-box: white;
+  --sklearn-color-icon: #878787;
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3) 1pt solid;
+  color: var(--sklearn-color-fitted-level-3);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-0);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-fitted-level-0);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table {
+    font-family: monospace;
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.estimator-table summary::marker {
+    font-size: 0.7rem;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+/*
+    `table td`is set in notebook with right text-align.
+    We need to overwrite it.
+*/
+.estimator-table table td.param {
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left !important;
+}
+
+.user-set td.value {
+    color:rgb(255, 94, 0);
+    background-color: transparent;
+}
+
+.default td {
+    color: black;
+    text-align: left !important;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+/*
+    Styles for parameter documentation links
+    We need styling for visited so jupyter doesn't overwrite it
+*/
+a.param-doc-link,
+a.param-doc-link:link,
+a.param-doc-link:visited {
+    text-decoration: underline dashed;
+    text-underline-offset: .3em;
+    color: inherit;
+    display: block;
+    padding: .5em;
+}
+
+/* "hack" to make the entire area of the cell containing the link clickable */
+a.param-doc-link::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+}
+
+.param-doc-description {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    padding: .5ex;
+    margin-left: 1.5em;
+    color: var(--sklearn-color-text);
+    box-shadow: .3em .3em .4em #999;
+    width: max-content;
+    text-align: left;
+    max-height: 10em;
+    overflow-y: auto;
+
+    /* unfitted */
+    background: var(--sklearn-color-unfitted-level-0);
+    border: thin solid var(--sklearn-color-unfitted-level-3);
+}
+
+/* Fitted state for parameter tooltips */
+.fitted .param-doc-description {
+    /* fitted */
+    background: var(--sklearn-color-fitted-level-0);
+    border: thin solid var(--sklearn-color-fitted-level-3);
+}
+
+.param-doc-link:hover .param-doc-description {
+    display: block;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[('preprocess',
+                 ColumnTransformer(transformers=[('numeric',
+                                                  Pipeline(steps=[('imputer',
+                                                                   SimpleImputer(strategy='median')),
+                                                                  ('scaler',
+                                                                   StandardScaler())]),
+                                                  ['age', 'income',
+                                                   'children']),
+                                                 ('categorical',
+                                                  Pipeline(steps=[('imputer',
+                                                                   SimpleImputer(strategy='most_frequent')),
+                                                                  ('onehot',
+                                                                   OneHotEncoder(handle_unknown='ignore'))]),
+                                                  ['car', 'current_act',
+                                                   'married', 'mortgage',
+                                                   'region', 'save_act',
+                                                   'sex'])])),
+                ('model', KNeighborsClassifier())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox"><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=steps,-list%20of%20tuples" class="param-doc-link" rel="noreferrer" target="_blank">steps <span class="param-doc-description">steps: list of tuples<br>
+<br>
+List of (name of step, estimator) tuples that are to be chained in<br>
+sequential order. To be compatible with the scikit-learn API, all steps<br>
+must define `fit`. All non-last steps must also define `transform`. See<br>
+:ref:`Combining Estimators <combining_estimators>` for more details.</combining_estimators></span></a></td>
+<td class="value">[('preprocess', ...), ('model', ...)]</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=transform_input,-list%20of%20str%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">transform_input <span class="param-doc-description">transform_input: list of str, default=None<br>
+<br>
+The names of the :term:`metadata` parameters that should be transformed by the<br>
+pipeline before passing it to the step consuming it.<br>
+<br>
+This enables transforming some input arguments to ``fit`` (other than ``X``)<br>
+to be transformed by the steps of the pipeline up to the step which requires<br>
+them. Requirement is defined via :ref:`metadata routing <metadata_routing>`.<br>
+For instance, this can be used to pass a validation set through the pipeline.<br>
+<br>
+You can only set this if metadata routing is enabled, which you<br>
+can enable using ``sklearn.set_config(enable_metadata_routing=True)``.<br>
+<br>
+.. versionadded:: 1.6</metadata_routing></span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=memory,-str%20or%20object%20with%20the%20joblib.Memory%20interface%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">memory <span class="param-doc-description">memory: str or object with the joblib.Memory interface, default=None<br>
+<br>
+Used to cache the fitted transformers of the pipeline. The last step<br>
+will never be cached, even if it is a transformer. By default, no<br>
+caching is performed. If a string is given, it is the path to the<br>
+caching directory. Enabling caching triggers a clone of the transformers<br>
+before fitting. Therefore, the transformer instance given to the<br>
+pipeline cannot be inspected directly. Use the attribute ``named_steps``<br>
+or ``steps`` to inspect estimators within the pipeline. Caching the<br>
+transformers is advantageous when fitting is time consuming. See<br>
+:ref:`sphx_glr_auto_examples_neighbors_plot_caching_nearest_neighbors.py`<br>
+for an example on how to enable caching.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: bool, default=False<br>
+<br>
+If True, the time elapsed while fitting each step will be printed as it<br>
+is completed.</span></a></td>
+<td class="value">False</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox"><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>preprocess: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocess: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformers,-list%20of%20tuples" class="param-doc-link" rel="noreferrer" target="_blank">transformers <span class="param-doc-description">transformers: list of tuples<br>
+<br>
+List of (name, transformer, columns) tuples specifying the<br>
+transformer objects to be applied to subsets of the data.<br>
+<br>
+name : str<br>
+Like in Pipeline and FeatureUnion, this allows the transformer and<br>
+its parameters to be set using ``set_params`` and searched in grid<br>
+search.<br>
+transformer : {'drop', 'passthrough'} or estimator<br>
+Estimator must support :term:`fit` and :term:`transform`.<br>
+Special-cased strings 'drop' and 'passthrough' are accepted as<br>
+well, to indicate to drop the columns or to pass them through<br>
+untransformed, respectively.<br>
+columns : str, array-like of str, int, array-like of int, array-like of bool, slice or callable<br>
+Indexes the data on its second axis. Integers are interpreted as<br>
+positional columns, while strings can reference DataFrame columns<br>
+by name. A scalar string or int should be used where<br>
+``transformer`` expects X to be a 1d array-like (vector),<br>
+otherwise a 2d array will be passed to the transformer.<br>
+A callable is passed the input data `X` and can return any of the<br>
+above. To select multiple columns by name or dtype, you can use<br>
+:obj:`make_column_selector`.</span></a></td>
+<td class="value">[('numeric', ...), ('categorical', ...)]</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=remainder,-%7B%27drop%27%2C%20%27passthrough%27%7D%20or%20estimator%2C%20default%3D%27drop%27" class="param-doc-link" rel="noreferrer" target="_blank">remainder <span class="param-doc-description">remainder: {'drop', 'passthrough'} or estimator, default='drop'<br>
+<br>
+By default, only the specified columns in `transformers` are<br>
+transformed and combined in the output, and the non-specified<br>
+columns are dropped. (default of ``'drop'``).<br>
+By specifying ``remainder='passthrough'``, all remaining columns that<br>
+were not specified in `transformers`, but present in the data passed<br>
+to `fit` will be automatically passed through. This subset of columns<br>
+is concatenated with the output of the transformers. For dataframes,<br>
+extra columns not seen during `fit` will be excluded from the output<br>
+of `transform`.<br>
+By setting ``remainder`` to be an estimator, the remaining<br>
+non-specified columns will use the ``remainder`` estimator. The<br>
+estimator must support :term:`fit` and :term:`transform`.<br>
+Note that using this feature requires that the DataFrame columns<br>
+input at :term:`fit` and :term:`transform` have identical order.</span></a></td>
+<td class="value">'drop'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=sparse_threshold,-float%2C%20default%3D0.3" class="param-doc-link" rel="noreferrer" target="_blank">sparse_threshold <span class="param-doc-description">sparse_threshold: float, default=0.3<br>
+<br>
+If the output of the different transformers contains sparse matrices,<br>
+these will be stacked as a sparse matrix if the overall density is<br>
+lower than this value. Use ``sparse_threshold=0`` to always return<br>
+dense. When the transformed output consists of all dense data, the<br>
+stacked result will be dense, and this keyword will be ignored.</span></a></td>
+<td class="value">0.3</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description">n_jobs: int, default=None<br>
+<br>
+Number of jobs to run in parallel.<br>
+``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.<br>
+``-1`` means using all processors. See :term:`Glossary <n_jobs>`<br>
+for more details.</n_jobs></span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformer_weights,-dict%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">transformer_weights <span class="param-doc-description">transformer_weights: dict, default=None<br>
+<br>
+Multiplicative weights for features per transformer. The output of the<br>
+transformer is multiplied by these weights. Keys are transformer names,<br>
+values the weights.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: bool, default=False<br>
+<br>
+If True, the time elapsed while fitting each transformer will be<br>
+printed as it is completed.</span></a></td>
+<td class="value">False</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose_feature_names_out,-bool%2C%20str%20or%20Callable%5B%5Bstr%2C%20str%5D%2C%20str%5D%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">verbose_feature_names_out <span class="param-doc-description">verbose_feature_names_out: bool, str or Callable[[str, str], str], default=True<br>
+<br>
+- If True, :meth:`ColumnTransformer.get_feature_names_out` will prefix<br>
+all feature names with the name of the transformer that generated that<br>
+feature. It is equivalent to setting<br>
+`verbose_feature_names_out="{transformer_name}__{feature_name}"`.<br>
+- If False, :meth:`ColumnTransformer.get_feature_names_out` will not<br>
+prefix any feature names and will error if feature names are not<br>
+unique.<br>
+- If ``Callable[[str, str], str]``,<br>
+:meth:`ColumnTransformer.get_feature_names_out` will rename all the features<br>
+using the name of the transformer. The first argument of the callable is the<br>
+transformer name and the second argument is the feature name. The returned<br>
+string will be the new feature name.<br>
+- If ``str``, it must be a string ready for formatting. The given string will<br>
+be formatted using two field names: ``transformer_name`` and ``feature_name``.<br>
+e.g. ``"{feature_name}__{transformer_name}"``. See :meth:`str.format` method<br>
+from the standard library for more info.<br>
+<br>
+.. versionadded:: 1.0<br>
+<br>
+.. versionchanged:: 1.6<br>
+`verbose_feature_names_out` can be a callable or a string to be formatted.</span></a></td>
+<td class="value">True</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=force_int_remainder_cols,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">force_int_remainder_cols <span class="param-doc-description">force_int_remainder_cols: bool, default=False<br>
+<br>
+This parameter has no effect.<br>
+<br>
+.. note::<br>
+If you do not access the list of columns for the remainder columns<br>
+in the `transformers_` fitted attribute, you do not need to set<br>
+this parameter.<br>
+<br>
+.. versionadded:: 1.5<br>
+<br>
+.. versionchanged:: 1.7<br>
+The default value for `force_int_remainder_cols` will change from<br>
+`True` to `False` in version 1.7.<br>
+<br>
+.. deprecated:: 1.7<br>
+`force_int_remainder_cols` is deprecated and will be removed in 1.9.</span></a></td>
+<td class="value">'deprecated'</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox"><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>numeric</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__numeric__"><pre>['age', 'income', 'children']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>SimpleImputer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html">?<span>Documentation for SimpleImputer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__numeric__imputer__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=missing_values,-int%2C%20float%2C%20str%2C%20np.nan%2C%20None%20or%20pandas.NA%2C%20default%3Dnp.nan" class="param-doc-link" rel="noreferrer" target="_blank">missing_values <span class="param-doc-description">missing_values: int, float, str, np.nan, None or pandas.NA, default=np.nan<br>
+<br>
+The placeholder for the missing values. All occurrences of<br>
+`missing_values` will be imputed. For pandas' dataframes with<br>
+nullable integer dtypes with missing values, `missing_values`<br>
+can be set to either `np.nan` or `pd.NA`.</span></a></td>
+<td class="value">nan</td>
+</tr>
+<tr class="user-set even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=strategy,-str%20or%20Callable%2C%20default%3D%27mean%27" class="param-doc-link" rel="noreferrer" target="_blank">strategy <span class="param-doc-description">strategy: str or Callable, default='mean'<br>
+<br>
+The imputation strategy.<br>
+<br>
+- If "mean", then replace missing values using the mean along<br>
+each column. Can only be used with numeric data.<br>
+- If "median", then replace missing values using the median along<br>
+each column. Can only be used with numeric data.<br>
+- If "most_frequent", then replace missing using the most frequent<br>
+value along each column. Can be used with strings or numeric data.<br>
+If there is more than one such value, only the smallest is returned.<br>
+- If "constant", then replace missing values with fill_value. Can be<br>
+used with strings or numeric data.<br>
+- If an instance of Callable, then replace missing values using the<br>
+scalar statistic returned by running the callable over a dense 1d<br>
+array containing non-missing values of each column.<br>
+<br>
+.. versionadded:: 0.20<br>
+strategy="constant" for fixed value imputation.<br>
+<br>
+.. versionadded:: 1.5<br>
+strategy=callable for custom value imputation.</span></a></td>
+<td class="value">'median'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=fill_value,-str%20or%20numerical%20value%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">fill_value <span class="param-doc-description">fill_value: str or numerical value, default=None<br>
+<br>
+When strategy == "constant", `fill_value` is used to replace all<br>
+occurrences of missing_values. For string or object data types,<br>
+`fill_value` must be a string.<br>
+If `None`, `fill_value` will be 0 when imputing numerical<br>
+data and "missing_value" for strings or object data types.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">copy <span class="param-doc-description">copy: bool, default=True<br>
+<br>
+If True, a copy of X will be created. If False, imputation will<br>
+be done in-place whenever possible. Note that, in the following cases,<br>
+a new copy will always be made, even if `copy=False`:<br>
+<br>
+- If `X` is not an array of floating values;<br>
+- If `X` is encoded as a CSR matrix;<br>
+- If `add_indicator=True`.</span></a></td>
+<td class="value">True</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=add_indicator,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">add_indicator <span class="param-doc-description">add_indicator: bool, default=False<br>
+<br>
+If True, a :class:`MissingIndicator` transform will stack onto output<br>
+of the imputer's transform. This allows a predictive estimator<br>
+to account for missingness despite imputation. If a feature has no<br>
+missing values at fit/train time, the feature won't appear on<br>
+the missing indicator even if there are missing values at<br>
+transform/test time.</span></a></td>
+<td class="value">False</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=keep_empty_features,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">keep_empty_features <span class="param-doc-description">keep_empty_features: bool, default=False<br>
+<br>
+If True, features that consist exclusively of missing values when<br>
+`fit` is called are returned in results when `transform` is called.<br>
+The imputed value is always `0` except when `strategy="constant"`<br>
+in which case `fill_value` will be used instead.<br>
+<br>
+.. versionadded:: 1.2</span></a></td>
+<td class="value">False</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__numeric__scaler__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">copy <span class="param-doc-description">copy: bool, default=True<br>
+<br>
+If False, try to avoid a copy and do inplace scaling instead.<br>
+This is not guaranteed to always work inplace; e.g. if the data is<br>
+not a NumPy array or scipy.sparse CSR matrix, a copy may still be<br>
+returned.</span></a></td>
+<td class="value">True</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_mean,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">with_mean <span class="param-doc-description">with_mean: bool, default=True<br>
+<br>
+If True, center the data before scaling.<br>
+This does not work (and will raise an exception) when attempted on<br>
+sparse matrices, because centering them entails building a dense<br>
+matrix which in common use cases is likely to be too large to fit in<br>
+memory.</span></a></td>
+<td class="value">True</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_std,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">with_std <span class="param-doc-description">with_std: bool, default=True<br>
+<br>
+If True, scale the data to unit variance (or equivalently,<br>
+unit standard deviation).</span></a></td>
+<td class="value">True</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>categorical</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__categorical__"><pre>['car', 'current_act', 'married', 'mortgage', 'region', 'save_act', 'sex']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>SimpleImputer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html">?<span>Documentation for SimpleImputer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__categorical__imputer__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=missing_values,-int%2C%20float%2C%20str%2C%20np.nan%2C%20None%20or%20pandas.NA%2C%20default%3Dnp.nan" class="param-doc-link" rel="noreferrer" target="_blank">missing_values <span class="param-doc-description">missing_values: int, float, str, np.nan, None or pandas.NA, default=np.nan<br>
+<br>
+The placeholder for the missing values. All occurrences of<br>
+`missing_values` will be imputed. For pandas' dataframes with<br>
+nullable integer dtypes with missing values, `missing_values`<br>
+can be set to either `np.nan` or `pd.NA`.</span></a></td>
+<td class="value">nan</td>
+</tr>
+<tr class="user-set even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=strategy,-str%20or%20Callable%2C%20default%3D%27mean%27" class="param-doc-link" rel="noreferrer" target="_blank">strategy <span class="param-doc-description">strategy: str or Callable, default='mean'<br>
+<br>
+The imputation strategy.<br>
+<br>
+- If "mean", then replace missing values using the mean along<br>
+each column. Can only be used with numeric data.<br>
+- If "median", then replace missing values using the median along<br>
+each column. Can only be used with numeric data.<br>
+- If "most_frequent", then replace missing using the most frequent<br>
+value along each column. Can be used with strings or numeric data.<br>
+If there is more than one such value, only the smallest is returned.<br>
+- If "constant", then replace missing values with fill_value. Can be<br>
+used with strings or numeric data.<br>
+- If an instance of Callable, then replace missing values using the<br>
+scalar statistic returned by running the callable over a dense 1d<br>
+array containing non-missing values of each column.<br>
+<br>
+.. versionadded:: 0.20<br>
+strategy="constant" for fixed value imputation.<br>
+<br>
+.. versionadded:: 1.5<br>
+strategy=callable for custom value imputation.</span></a></td>
+<td class="value">'most_frequent'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=fill_value,-str%20or%20numerical%20value%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">fill_value <span class="param-doc-description">fill_value: str or numerical value, default=None<br>
+<br>
+When strategy == "constant", `fill_value` is used to replace all<br>
+occurrences of missing_values. For string or object data types,<br>
+`fill_value` must be a string.<br>
+If `None`, `fill_value` will be 0 when imputing numerical<br>
+data and "missing_value" for strings or object data types.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">copy <span class="param-doc-description">copy: bool, default=True<br>
+<br>
+If True, a copy of X will be created. If False, imputation will<br>
+be done in-place whenever possible. Note that, in the following cases,<br>
+a new copy will always be made, even if `copy=False`:<br>
+<br>
+- If `X` is not an array of floating values;<br>
+- If `X` is encoded as a CSR matrix;<br>
+- If `add_indicator=True`.</span></a></td>
+<td class="value">True</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=add_indicator,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">add_indicator <span class="param-doc-description">add_indicator: bool, default=False<br>
+<br>
+If True, a :class:`MissingIndicator` transform will stack onto output<br>
+of the imputer's transform. This allows a predictive estimator<br>
+to account for missingness despite imputation. If a feature has no<br>
+missing values at fit/train time, the feature won't appear on<br>
+the missing indicator even if there are missing values at<br>
+transform/test time.</span></a></td>
+<td class="value">False</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.impute.SimpleImputer.html#:~:text=keep_empty_features,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">keep_empty_features <span class="param-doc-description">keep_empty_features: bool, default=False<br>
+<br>
+If True, features that consist exclusively of missing values when<br>
+`fit` is called are returned in results when `transform` is called.<br>
+The imputed value is always `0` except when `strategy="constant"`<br>
+in which case `fill_value` will be used instead.<br>
+<br>
+.. versionadded:: 1.2</span></a></td>
+<td class="value">False</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox"><label for="sk-estimator-id-8" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__categorical__onehot__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=categories,-%27auto%27%20or%20a%20list%20of%20array-like%2C%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">categories <span class="param-doc-description">categories: 'auto' or a list of array-like, default='auto'<br>
+<br>
+Categories (unique values) per feature:<br>
+<br>
+- 'auto' : Determine categories automatically from the training data.<br>
+- list : ``categories[i]`` holds the categories expected in the ith<br>
+column. The passed categories should not mix strings and numeric<br>
+values within a single feature, and should be sorted in case of<br>
+numeric values.<br>
+<br>
+The used categories can be found in the ``categories_`` attribute.<br>
+<br>
+.. versionadded:: 0.20</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=drop,-%7B%27first%27%2C%20%27if_binary%27%7D%20or%20an%20array-like%20of%20shape%20%28n_features%2C%29%2C%20%20%20%20%20%20%20%20%20%20%20%20%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">drop <span class="param-doc-description">drop: {'first', 'if_binary'} or an array-like of shape (n_features,), default=None<br>
+<br>
+Specifies a methodology to use to drop one of the categories per<br>
+feature. This is useful in situations where perfectly collinear<br>
+features cause problems, such as when feeding the resulting data<br>
+into an unregularized linear regression model.<br>
+<br>
+However, dropping one category breaks the symmetry of the original<br>
+representation and can therefore induce a bias in downstream models,<br>
+for instance for penalized linear classification or regression models.<br>
+<br>
+- None : retain all features (the default).<br>
+- 'first' : drop the first category in each feature. If only one<br>
+category is present, the feature will be dropped entirely.<br>
+- 'if_binary' : drop the first category in each feature with two<br>
+categories. Features with 1 or more than 2 categories are<br>
+left intact.<br>
+- array : ``drop[i]`` is the category in feature ``X[:, i]`` that<br>
+should be dropped.<br>
+<br>
+When `max_categories` or `min_frequency` is configured to group<br>
+infrequent categories, the dropping behavior is handled after the<br>
+grouping.<br>
+<br>
+.. versionadded:: 0.21<br>
+The parameter `drop` was added in 0.21.<br>
+<br>
+.. versionchanged:: 0.23<br>
+The option `drop='if_binary'` was added in 0.23.<br>
+<br>
+.. versionchanged:: 1.1<br>
+Support for dropping infrequent categories.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=sparse_output,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">sparse_output <span class="param-doc-description">sparse_output: bool, default=True<br>
+<br>
+When ``True``, it returns a :class:`scipy.sparse.csr_matrix`,<br>
+i.e. a sparse matrix in "Compressed Sparse Row" (CSR) format.<br>
+<br>
+.. versionadded:: 1.2<br>
+`sparse` was renamed to `sparse_output`</span></a></td>
+<td class="value">True</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=dtype,-number%20type%2C%20default%3Dnp.float64" class="param-doc-link" rel="noreferrer" target="_blank">dtype <span class="param-doc-description">dtype: number type, default=np.float64<br>
+<br>
+Desired dtype of output.</span></a></td>
+<td class="value">&lt;class 'numpy.float64'&gt;</td>
+</tr>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=handle_unknown,-%7B%27error%27%2C%20%27ignore%27%2C%20%27infrequent_if_exist%27%2C%20%27warn%27%7D%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20default%3D%27error%27" class="param-doc-link" rel="noreferrer" target="_blank">handle_unknown <span class="param-doc-description">handle_unknown: {'error', 'ignore', 'infrequent_if_exist', 'warn'}, default='error'<br>
+<br>
+Specifies the way unknown categories are handled during :meth:`transform`.<br>
+<br>
+- 'error' : Raise an error if an unknown category is present during transform.<br>
+- 'ignore' : When an unknown category is encountered during<br>
+transform, the resulting one-hot encoded columns for this feature<br>
+will be all zeros. In the inverse transform, an unknown category<br>
+will be denoted as None.<br>
+- 'infrequent_if_exist' : When an unknown category is encountered<br>
+during transform, the resulting one-hot encoded columns for this<br>
+feature will map to the infrequent category if it exists. The<br>
+infrequent category will be mapped to the last position in the<br>
+encoding. During inverse transform, an unknown category will be<br>
+mapped to the category denoted `'infrequent'` if it exists. If the<br>
+`'infrequent'` category does not exist, then :meth:`transform` and<br>
+:meth:`inverse_transform` will handle an unknown category as with<br>
+`handle_unknown='ignore'`. Infrequent categories exist based on<br>
+`min_frequency` and `max_categories`. Read more in the<br>
+:ref:`User Guide <encoder_infrequent_categories>`.<br>
+- 'warn' : When an unknown category is encountered during transform<br>
+a warning is issued, and the encoding then proceeds as described for<br>
+`handle_unknown="infrequent_if_exist"`.<br>
+<br>
+.. versionchanged:: 1.1<br>
+`'infrequent_if_exist'` was added to automatically handle unknown<br>
+categories and infrequent categories.<br>
+<br>
+.. versionadded:: 1.6<br>
+The option `"warn"` was added in 1.6.</encoder_infrequent_categories></span></a></td>
+<td class="value">'ignore'</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=min_frequency,-int%20or%20float%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">min_frequency <span class="param-doc-description">min_frequency: int or float, default=None<br>
+<br>
+Specifies the minimum frequency below which a category will be<br>
+considered infrequent.<br>
+<br>
+- If `int`, categories with a smaller cardinality will be considered<br>
+infrequent.<br>
+<br>
+- If `float`, categories with a smaller cardinality than<br>
+`min_frequency * n_samples` will be considered infrequent.<br>
+<br>
+.. versionadded:: 1.1<br>
+Read more in the :ref:`User Guide <encoder_infrequent_categories>`.</encoder_infrequent_categories></span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=max_categories,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_categories <span class="param-doc-description">max_categories: int, default=None<br>
+<br>
+Specifies an upper limit to the number of output features for each input<br>
+feature when considering infrequent categories. If there are infrequent<br>
+categories, `max_categories` includes the category representing the<br>
+infrequent categories along with the frequent categories. If `None`,<br>
+there is no limit to the number of output features.<br>
+<br>
+.. versionadded:: 1.1<br>
+Read more in the :ref:`User Guide <encoder_infrequent_categories>`.</encoder_infrequent_categories></span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=feature_name_combiner,-%22concat%22%20or%20callable%2C%20default%3D%22concat%22" class="param-doc-link" rel="noreferrer" target="_blank">feature_name_combiner <span class="param-doc-description">feature_name_combiner: "concat" or callable, default="concat"<br>
+<br>
+Callable with signature `def callable(input_feature, category)` that returns a<br>
+string. This is used to create feature names to be returned by<br>
+:meth:`get_feature_names_out`.<br>
+<br>
+`"concat"` concatenates encoded feature name and category with<br>
+`feature + "_" + str(category)`.E.g. feature X with values 1, 6, 7 create<br>
+feature names `X_1, X_6, X_7`.<br>
+<br>
+.. versionadded:: 1.3</span></a></td>
+<td class="value">'concat'</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox"><label for="sk-estimator-id-9" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>KNeighborsClassifier</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">?<span>Documentation for KNeighborsClassifier</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="model__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#:~:text=n_neighbors,-int%2C%20default%3D5" class="param-doc-link" rel="noreferrer" target="_blank">n_neighbors <span class="param-doc-description">n_neighbors: int, default=5<br>
+<br>
+Number of neighbors to use by default for :meth:`kneighbors` queries.</span></a></td>
+<td class="value">5</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#:~:text=weights,-%7B%27uniform%27%2C%20%27distance%27%7D%2C%20callable%20or%20None%2C%20default%3D%27uniform%27" class="param-doc-link" rel="noreferrer" target="_blank">weights <span class="param-doc-description">weights: {'uniform', 'distance'}, callable or None, default='uniform'<br>
+<br>
+Weight function used in prediction. Possible values:<br>
+<br>
+- 'uniform' : uniform weights. All points in each neighborhood<br>
+are weighted equally.<br>
+- 'distance' : weight points by the inverse of their distance.<br>
+in this case, closer neighbors of a query point will have a<br>
+greater influence than neighbors which are further away.<br>
+- [callable] : a user-defined function which accepts an<br>
+array of distances, and returns an array of the same shape<br>
+containing the weights.<br>
+<br>
+Refer to the example entitled<br>
+:ref:`sphx_glr_auto_examples_neighbors_plot_classification.py`<br>
+showing the impact of the `weights` parameter on the decision<br>
+boundary.</span></a></td>
+<td class="value">'uniform'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#:~:text=algorithm,-%7B%27auto%27%2C%20%27ball_tree%27%2C%20%27kd_tree%27%2C%20%27brute%27%7D%2C%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">algorithm <span class="param-doc-description">algorithm: {'auto', 'ball_tree', 'kd_tree', 'brute'}, default='auto'<br>
+<br>
+Algorithm used to compute the nearest neighbors:<br>
+<br>
+- 'ball_tree' will use :class:`BallTree`<br>
+- 'kd_tree' will use :class:`KDTree`<br>
+- 'brute' will use a brute-force search.<br>
+- 'auto' will attempt to decide the most appropriate algorithm<br>
+based on the values passed to :meth:`fit` method.<br>
+<br>
+Note: fitting on sparse input will override the setting of<br>
+this parameter, using brute force.</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#:~:text=leaf_size,-int%2C%20default%3D30" class="param-doc-link" rel="noreferrer" target="_blank">leaf_size <span class="param-doc-description">leaf_size: int, default=30<br>
+<br>
+Leaf size passed to BallTree or KDTree. This can affect the<br>
+speed of the construction and query, as well as the memory<br>
+required to store the tree. The optimal value depends on the<br>
+nature of the problem.</span></a></td>
+<td class="value">30</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#:~:text=p,-float%2C%20default%3D2" class="param-doc-link" rel="noreferrer" target="_blank">p <span class="param-doc-description">p: float, default=2<br>
+<br>
+Power parameter for the Minkowski metric. When p = 1, this is equivalent<br>
+to using manhattan_distance (l1), and euclidean_distance (l2) for p = 2.<br>
+For arbitrary p, minkowski_distance (l_p) is used. This parameter is expected<br>
+to be positive.</span></a></td>
+<td class="value">2</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#:~:text=metric,-str%20or%20callable%2C%20default%3D%27minkowski%27" class="param-doc-link" rel="noreferrer" target="_blank">metric <span class="param-doc-description">metric: str or callable, default='minkowski'<br>
+<br>
+Metric to use for distance computation. Default is "minkowski", which<br>
+results in the standard Euclidean distance when p = 2. See the<br>
+documentation of `scipy.spatial.distance<br>
+&lt; docs.scipy.org doc scipy reference spatial.distance.html&gt;`_ and<br>
+the metrics listed in<br>
+:class:`~sklearn.metrics.pairwise.distance_metrics` for valid metric<br>
+values.<br>
+<br>
+If metric is "precomputed", X is assumed to be a distance matrix and<br>
+must be square during fit. X may be a :term:`sparse graph`, in which<br>
+case only "nonzero" elements may be considered neighbors.<br>
+<br>
+If metric is a callable function, it takes two arrays representing 1D<br>
+vectors as inputs and must return one value indicating the distance<br>
+between those vectors. This works for Scipy's metrics, but is less<br>
+efficient than passing the metric name as a string.</span></a></td>
+<td class="value">'minkowski'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#:~:text=metric_params,-dict%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">metric_params <span class="param-doc-description">metric_params: dict, default=None<br>
+<br>
+Additional keyword arguments for the metric function.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description">n_jobs: int, default=None<br>
+<br>
+The number of parallel jobs to run for neighbors search.<br>
+``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.<br>
+``-1`` means using all processors. See :term:`Glossary <n_jobs>`<br>
+for more details.<br>
+Doesn't affect :meth:`fit` method.</n_jobs></span></a></td>
+<td class="value">None</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling
+        .textContent.trim().split(' ')[0];
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+
+
+/**
+ * Adapted from Skrub
+ * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
+ * @returns "light" or "dark"
+ */
+function detectTheme(element) {
+    const body = document.querySelector('body');
+
+    // Check VSCode theme
+    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
+    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
+
+    if (themeKindAttr && themeNameAttr) {
+        const themeKind = themeKindAttr.toLowerCase();
+        const themeName = themeNameAttr.toLowerCase();
+
+        if (themeKind.includes("dark") || themeName.includes("dark")) {
+            return "dark";
+        }
+        if (themeKind.includes("light") || themeName.includes("light")) {
+            return "light";
+        }
+    }
+
+    // Check Jupyter theme
+    if (body.getAttribute('data-jp-theme-light') === 'false') {
+        return 'dark';
+    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
+        return 'light';
+    }
+
+    // Guess based on a parent element's color
+    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
+    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+    if (match) {
+        const [r, g, b] = [
+            parseFloat(match[1]),
+            parseFloat(match[2]),
+            parseFloat(match[3])
+        ];
+
+        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        if (luma > 180) {
+            // If the text is very bright we have a dark theme
+            return 'dark';
+        }
+        if (luma < 75) {
+            // If the text is very dark we have a light theme
+            return 'light';
+        }
+        // Otherwise fall back to the next heuristic.
+    }
+
+    // Fallback to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+
+function forceTheme(elementId) {
+    const estimatorElement = document.querySelector(`#${elementId}`);
+    if (estimatorElement === null) {
+        console.error(`Element with id ${elementId} not found.`);
+    } else {
+        const theme = detectTheme(estimatorElement);
+        estimatorElement.classList.add(theme);
+    }
+}
+
+forceTheme('sk-container-id-1');</script>
+</div>
+</div>
 </section>
 <section id="compare-candidates-with-stratified-cross-validation" class="slide level2">
 <h2>Compare candidates with stratified cross-validation</h2>
-<p>Always include a simple baseline. <code>DummyClassifier</code> reveals whether a learned model improves on predicting the most common class.</p>
-<p>We report the mean and standard deviation across five folds. The same folds are used for every candidate.</p>
-<div id="13b30080" class="cell">
+<p>Always include a simple baseline.</p>
+<ul>
+<li><code>DummyClassifier</code> reveals whether a learned model improves on predicting the most common class.</li>
+<li>We report the mean and standard deviation across five folds. The same folds are used for every candidate.</li>
+</ul>
+<div id="13b30080" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:14.691859Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:14.691684Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:14.821233Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:14.820413Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> cv_results[[<span class="st">"accuracy_mean"</span>, <span class="st">"balanced_accuracy_mean"</span>, <span class="st">"f1_mean"</span>, <span class="st">"roc_auc_mean"</span>]].plot.bar(</span>
-<span id="cb8-2"><a href="" aria-label="2"></a>    figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>), ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>), rot<span class="op">=</span><span class="dv">20</span></span>
-<span id="cb8-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb8-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: five-fold cross-validation"</span>, ylabel<span class="op">=</span><span class="st">"Mean validation score"</span>, xlabel<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb8-5"><a href="" aria-label="5"></a>ax.legend()</span>
-<span id="cb8-6"><a href="" aria-label="6"></a>plt.tight_layout()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> cv_results[[<span class="st">"accuracy_mean"</span>, <span class="st">"balanced_accuracy_mean"</span>, <span class="st">"f1_mean"</span>]].plot.bar(</span>
+<span id="cb10-2"><a href="" aria-label="2"></a>    figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>), ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>), rot<span class="op">=</span><span class="dv">20</span></span>
+<span id="cb10-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb10-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: five-fold cross-validation"</span>, ylabel<span class="op">=</span><span class="st">"Mean validation score"</span>, xlabel<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb10-5"><a href="" aria-label="5"></a>ax.legend()</span>
+<span id="cb10-6"><a href="" aria-label="6"></a>plt.tight_layout()</span></code></pre></div>
 </details>
+
 </div>
-</section>
+<img data-src="lab-03-classification_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
 <section id="checkpoint---read-cross-validation-results" class="slide level2">
 <h2>Checkpoint - read cross-validation results</h2>
 <ol type="1">
@@ -409,15 +2403,176 @@ Answer
 <li>Why is the standard deviation useful?</li>
 <li>Why have we still not inspected test-set scores?</li>
 </ol>
-<p>The standard deviation describes sensitivity to the particular validation fold. Small mean differences accompanied by large fold variation should not be over-interpreted.</p>
+<p>The standard deviation describes sensitivity to the particular validation fold.</p>
+<ul>
+<li>Small mean differences accompanied by large fold variation should not be over-interpreted.</li>
+</ul>
 </section>
 <section id="tune-tree-complexity-using-training-data-only" class="slide level2">
 <h2>Tune tree complexity using training data only</h2>
 <p>An unconstrained tree can memorize the training set. Grid search evaluates combinations of depth and minimum leaf size inside cross-validation. We optimize balanced accuracy and do not touch <code>X_test</code>.</p>
+<div id="ded7c6e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:14.823223Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:14.823046Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:17.417489Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:17.416610Z&quot;}}" data-execution_count="14">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>tree_workflow <span class="op">=</span> classifier_pipeline(</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>    X_train,</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>    DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>    scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb11-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb11-6"><a href="" aria-label="6"></a></span>
+<span id="cb11-7"><a href="" aria-label="7"></a>tree_grid <span class="op">=</span> GridSearchCV(</span>
+<span id="cb11-8"><a href="" aria-label="8"></a>    tree_workflow,</span>
+<span id="cb11-9"><a href="" aria-label="9"></a>    param_grid<span class="op">=</span>{</span>
+<span id="cb11-10"><a href="" aria-label="10"></a>        <span class="st">"model__max_depth"</span>: [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="va">None</span>],</span>
+<span id="cb11-11"><a href="" aria-label="11"></a>        <span class="st">"model__min_samples_leaf"</span>: [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>],</span>
+<span id="cb11-12"><a href="" aria-label="12"></a>    },</span>
+<span id="cb11-13"><a href="" aria-label="13"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
+<span id="cb11-14"><a href="" aria-label="14"></a>    cv<span class="op">=</span>cv,</span>
+<span id="cb11-15"><a href="" aria-label="15"></a>    n_jobs<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb11-16"><a href="" aria-label="16"></a>    return_train_score<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb11-17"><a href="" aria-label="17"></a>)</span>
+<span id="cb11-18"><a href="" aria-label="18"></a>tree_grid.fit(X_train, y_train)</span>
+<span id="cb11-19"><a href="" aria-label="19"></a></span>
+<span id="cb11-20"><a href="" aria-label="20"></a><span class="bu">print</span>(<span class="st">"Best parameters:"</span>, tree_grid.best_params_)</span>
+<span id="cb11-21"><a href="" aria-label="21"></a><span class="bu">print</span>(<span class="st">"Best mean CV balanced accuracy:"</span>, <span class="bu">round</span>(tree_grid.best_score_, <span class="dv">3</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best parameters: {'model__max_depth': 7, 'model__min_samples_leaf': 5}
+Best mean CV balanced accuracy: 0.839</code></pre>
+</div>
+</div>
+</section>
+<section id="tune-tree-complexity-using-training-data-only-1" class="slide level2">
+<h2>Tune tree complexity using training data only</h2>
+<div id="c04d30ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:17.419397Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:17.419216Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:17.429165Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:17.428474Z&quot;}}" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">param_model__max_depth</th>
+<th data-quarto-table-cell-role="th">param_model__min_samples_leaf</th>
+<th data-quarto-table-cell-role="th">mean_train_score</th>
+<th data-quarto-table-cell-role="th">mean_test_score</th>
+<th data-quarto-table-cell-role="th">std_test_score</th>
+<th data-quarto-table-cell-role="th">rank_test_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">17</th>
+<td>7</td>
+<td>5</td>
+<td>0.902</td>
+<td>0.839</td>
+<td>0.040</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">21</th>
+<td>None</td>
+<td>5</td>
+<td>0.909</td>
+<td>0.837</td>
+<td>0.043</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>7</td>
+<td>1</td>
+<td>0.940</td>
+<td>0.805</td>
+<td>0.047</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">18</th>
+<td>7</td>
+<td>10</td>
+<td>0.861</td>
+<td>0.802</td>
+<td>0.026</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">22</th>
+<td>None</td>
+<td>10</td>
+<td>0.861</td>
+<td>0.802</td>
+<td>0.026</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">12</th>
+<td>5</td>
+<td>1</td>
+<td>0.852</td>
+<td>0.799</td>
+<td>0.039</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">13</th>
+<td>5</td>
+<td>5</td>
+<td>0.843</td>
+<td>0.793</td>
+<td>0.044</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">20</th>
+<td>None</td>
+<td>1</td>
+<td>1.000</td>
+<td>0.781</td>
+<td>0.047</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>5</td>
+<td>10</td>
+<td>0.822</td>
+<td>0.757</td>
+<td>0.019</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">19</th>
+<td>7</td>
+<td>20</td>
+<td>0.815</td>
+<td>0.756</td>
+<td>0.023</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="exercise---diagnose-overfitting" class="slide level2">
 <h2>Exercise - diagnose overfitting</h2>
-<p>Use <code>grid_view</code> to find a configuration with a large train–validation gap.</p>
 <ol type="1">
 <li>Which setting overfits most strongly?</li>
 <li>How do <code>max_depth</code> and <code>min_samples_leaf</code> control complexity?</li>
@@ -433,15 +2588,82 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 <section id="final-bank-evaluation" class="slide level2">
 <h2>Final Bank evaluation</h2>
 <p>Now evaluate the tuned workflow once on the held-out test set. The positive class is <code>YES</code>, so recall answers: “of customers who bought a PEP, how many did we find?”</p>
-<div id="f5de2950" class="cell">
+<div id="d7130671" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:17.431165Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:17.430982Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:17.456759Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:17.455963Z&quot;}}" data-execution_count="16">
+<div class="cell-output cell-output-stdout">
+<pre><code>              precision    recall  f1-score   support
+
+          NO      0.880     0.890     0.885        82
+         YES      0.866     0.853     0.859        68
+
+    accuracy                          0.873       150
+   macro avg      0.873     0.872     0.872       150
+weighted avg      0.873     0.873     0.873       150
+</code></pre>
+</div>
+</div>
+<div id="f5de2950" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:17.458538Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:17.458359Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:17.464056Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:17.463378Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>bank_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>bank_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">test_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">accuracy</th>
+<td>0.873</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">balanced_accuracy</th>
+<td>0.872</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">macro_f1</th>
+<td>0.872</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">roc_auc</th>
+<td>0.913</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">average_precision</th>
+<td>0.905</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
+<section id="final-bank-evaluation-1" class="slide level2">
+<h2>Final Bank evaluation</h2>
+
+<img data-src="lab-03-classification_files/figure-revealjs/cell-19-output-1.png" class="r-stretch"></section>
 <section id="metric-guide" class="slide level2">
 <h2>Metric guide</h2>
+<p>The right metric depends on the cost of errors. A business policy needs those costs; the dataset alone cannot supply them.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -493,55 +2715,324 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 </tr>
 </tbody>
 </table>
-<p>The right metric depends on the cost of errors. A business policy needs those costs; the dataset alone cannot supply them.</p>
 </section>
 <section id="inspect-the-model-not-just-its-score" class="slide level2">
 <h2>Inspect the model, not just its score</h2>
-<p>Permutation importance measures how much test performance drops after shuffling one feature. It works on the original columns and can expose reliance on a small number of inputs. Importance is predictive, not causal.</p>
+<p>Permutation importance measures how much test performance drops after shuffling one feature.</p>
+<ul>
+<li>It works on the original columns and can expose reliance on a small number of inputs. Importance is predictive, not causal.</li>
+</ul>
+<div id="a50f567d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:17.758244Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:17.758050Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:18.881583Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:18.880416Z&quot;}}" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">feature</th>
+<th data-quarto-table-cell-role="th">importance_mean</th>
+<th data-quarto-table-cell-role="th">importance_sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>children</td>
+<td>0.273879</td>
+<td>0.027382</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>income</td>
+<td>0.125520</td>
+<td>0.021961</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>married</td>
+<td>0.093203</td>
+<td>0.015204</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>mortgage</td>
+<td>0.062491</td>
+<td>0.016281</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>save_act</td>
+<td>0.051327</td>
+<td>0.013690</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>age</td>
+<td>0.017378</td>
+<td>0.004830</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>sex</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>region</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>car</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">8</th>
+<td>current_act</td>
+<td>-0.003354</td>
+<td>0.004079</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="bank-permutation-importance-chart" class="slide level2">
 <h2>Bank permutation importance chart</h2>
-<div id="7f116130" class="cell">
+<div id="7f116130" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:18.885246Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:18.884856Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:19.022546Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:19.021761Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> importance_df.sort_values(<span class="st">"importance_mean"</span>).plot.barh(</span>
-<span id="cb10-2"><a href="" aria-label="2"></a>    x<span class="op">=</span><span class="st">"feature"</span>, y<span class="op">=</span><span class="st">"importance_mean"</span>, xerr<span class="op">=</span><span class="st">"importance_sd"</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>)</span>
-<span id="cb10-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb10-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: permutation importance"</span>, xlabel<span class="op">=</span><span class="st">"Decrease in balanced accuracy"</span>, ylabel<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb10-5"><a href="" aria-label="5"></a>plt.tight_layout()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> importance_df.sort_values(<span class="st">"importance_mean"</span>).plot.barh(</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>    x<span class="op">=</span><span class="st">"feature"</span>, y<span class="op">=</span><span class="st">"importance_mean"</span>, xerr<span class="op">=</span><span class="st">"importance_sd"</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>)</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: permutation importance"</span>, xlabel<span class="op">=</span><span class="st">"Decrease in balanced accuracy"</span>, ylabel<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>plt.tight_layout()</span></code></pre></div>
 </details>
+
 </div>
-</section></section>
+<img data-src="lab-03-classification_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section></section>
 <section>
 <section id="fitted-tree" class="title-slide slide level1 center">
 <h1>Fitted tree</h1>
-<div id="6cdd6b7e" class="cell">
+<div id="6cdd6b7e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:19.024728Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:19.024525Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:19.295334Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:19.294431Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>fitted_tree <span class="op">=</span> best_bank_model.named_steps[<span class="st">"model"</span>]</span>
-<span id="cb11-2"><a href="" aria-label="2"></a>feature_names <span class="op">=</span> best_bank_model.named_steps[<span class="st">"preprocess"</span>].get_feature_names_out()</span>
-<span id="cb11-3"><a href="" aria-label="3"></a></span>
-<span id="cb11-4"><a href="" aria-label="4"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">9</span>))</span>
-<span id="cb11-5"><a href="" aria-label="5"></a>plot_tree(fitted_tree, feature_names<span class="op">=</span>feature_names, class_names<span class="op">=</span>fitted_tree.classes_, filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, max_depth<span class="op">=</span><span class="dv">3</span>, fontsize<span class="op">=</span><span class="dv">8</span>,)</span>
-<span id="cb11-6"><a href="" aria-label="6"></a>plt.title(<span class="st">"First levels of the selected Bank decision tree"</span>)</span>
-<span id="cb11-7"><a href="" aria-label="7"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>fitted_tree <span class="op">=</span> best_bank_model.named_steps[<span class="st">"model"</span>]</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>feature_names <span class="op">=</span> best_bank_model.named_steps[<span class="st">"preprocess"</span>].get_feature_names_out()</span>
+<span id="cb16-3"><a href="" aria-label="3"></a></span>
+<span id="cb16-4"><a href="" aria-label="4"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">9</span>))</span>
+<span id="cb16-5"><a href="" aria-label="5"></a>plot_tree(fitted_tree, feature_names<span class="op">=</span>feature_names, class_names<span class="op">=</span>fitted_tree.classes_, filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, max_depth<span class="op">=</span><span class="dv">3</span>, fontsize<span class="op">=</span><span class="dv">8</span>,)</span>
+<span id="cb16-6"><a href="" aria-label="6"></a>plt.title(<span class="st">"First levels of the selected Bank decision tree"</span>)</span>
+<span id="cb16-7"><a href="" aria-label="7"></a>plt.show()</span></code></pre></div>
 </details>
+
 </div>
-</section>
+<img data-src="lab-03-classification_files/figure-revealjs/cell-22-output-1.png" class="r-stretch"></section>
 <section id="exercise---error-analysis" class="slide level2">
 <h2>Exercise - error analysis</h2>
 <p>Inspect misclassified rows. Look for patterns, but do not treat a small test sample as proof.</p>
-<div id="f258d83f" class="cell">
+<div id="f258d83f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:19.297322Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:19.297138Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:19.310222Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:19.309552Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>bank_errors <span class="op">=</span> X_test.copy()</span>
-<span id="cb12-2"><a href="" aria-label="2"></a>bank_errors[<span class="st">"actual"</span>] <span class="op">=</span> y_test</span>
-<span id="cb12-3"><a href="" aria-label="3"></a>bank_errors[<span class="st">"predicted"</span>] <span class="op">=</span> bank_pred</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>bank_errors[<span class="st">"p_yes"</span>] <span class="op">=</span> bank_score</span>
-<span id="cb12-5"><a href="" aria-label="5"></a>bank_errors <span class="op">=</span> bank_errors[bank_errors[<span class="st">"actual"</span>] <span class="op">!=</span> bank_errors[<span class="st">"predicted"</span>]]</span>
-<span id="cb12-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Misclassified rows: </span><span class="sc">{</span><span class="bu">len</span>(bank_errors)<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(X_test)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb12-7"><a href="" aria-label="7"></a>bank_errors.sort_values(<span class="st">"p_yes"</span>).head(<span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>bank_errors <span class="op">=</span> X_test.copy()</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>bank_errors[<span class="st">"actual"</span>] <span class="op">=</span> y_test</span>
+<span id="cb17-3"><a href="" aria-label="3"></a>bank_errors[<span class="st">"predicted"</span>] <span class="op">=</span> bank_pred</span>
+<span id="cb17-4"><a href="" aria-label="4"></a>bank_errors[<span class="st">"p_yes"</span>] <span class="op">=</span> bank_score</span>
+<span id="cb17-5"><a href="" aria-label="5"></a>bank_errors <span class="op">=</span> bank_errors[bank_errors[<span class="st">"actual"</span>] <span class="op">!=</span> bank_errors[<span class="st">"predicted"</span>]]</span>
+<span id="cb17-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Misclassified rows: </span><span class="sc">{</span><span class="bu">len</span>(bank_errors)<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(X_test)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-7"><a href="" aria-label="7"></a>bank_errors.sort_values(<span class="st">"p_yes"</span>).head(<span class="dv">8</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Misclassified rows: 19 / 150</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">region</th>
+<th data-quarto-table-cell-role="th">income</th>
+<th data-quarto-table-cell-role="th">married</th>
+<th data-quarto-table-cell-role="th">children</th>
+<th data-quarto-table-cell-role="th">car</th>
+<th data-quarto-table-cell-role="th">save_act</th>
+<th data-quarto-table-cell-role="th">current_act</th>
+<th data-quarto-table-cell-role="th">mortgage</th>
+<th data-quarto-table-cell-role="th">actual</th>
+<th data-quarto-table-cell-role="th">predicted</th>
+<th data-quarto-table-cell-role="th">p_yes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">275</th>
+<td>18</td>
+<td>MALE</td>
+<td>RURAL</td>
+<td>9362.58</td>
+<td>YES</td>
+<td>0</td>
+<td>YES</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">539</th>
+<td>19</td>
+<td>MALE</td>
+<td>INNER_CITY</td>
+<td>10191.80</td>
+<td>YES</td>
+<td>0</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">524</th>
+<td>44</td>
+<td>MALE</td>
+<td>SUBURBAN</td>
+<td>18707.30</td>
+<td>YES</td>
+<td>0</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>0.048387</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">492</th>
+<td>61</td>
+<td>FEMALE</td>
+<td>TOWN</td>
+<td>27756.30</td>
+<td>YES</td>
+<td>0</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>0.048387</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">18</th>
+<td>62</td>
+<td>FEMALE</td>
+<td>INNER_CITY</td>
+<td>26909.20</td>
+<td>YES</td>
+<td>0</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+<td>0.048387</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">597</th>
+<td>31</td>
+<td>FEMALE</td>
+<td>TOWN</td>
+<td>15976.30</td>
+<td>YES</td>
+<td>0</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+<td>0.048387</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">418</th>
+<td>28</td>
+<td>FEMALE</td>
+<td>TOWN</td>
+<td>25699.40</td>
+<td>YES</td>
+<td>2</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+<td>0.187500</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">213</th>
+<td>28</td>
+<td>MALE</td>
+<td>TOWN</td>
+<td>13175.50</td>
+<td>NO</td>
+<td>1</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+<td>0.222222</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section></section>
 <section id="census-dataset" class="title-slide slide level1 center">
@@ -552,126 +3043,665 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 <section>
 <section id="census-data-supplied-test-data-and-imbalance" class="title-slide slide level1 center">
 <h1>Census data: supplied test data and imbalance</h1>
-<p>The Census task predicts whether annual income is <code>&gt;50K</code>. Unlike Bank, this dataset supplies separate training and test ARFF files. We use training-only cross-validation for decisions and the supplied test set for final evaluation.</p>
-</section>
-<section id="audit-traintest-compatibility" class="slide level2">
-<h2>Audit train/test compatibility</h2>
-<p>Check that schemas match, inspect missingness, and compare class prevalence. <code>fnlwgt</code> is a survey weight rather than a personal characteristic; we exclude it here. <code>education</code> and <code>education-num</code> encode closely related information, so we remove the numeric duplicate for a clearer teaching model.</p>
-<div id="8323f7ee" class="cell">
+<p>The Census task predicts whether annual income is <code>&gt;50K</code>.</p>
+<ul>
+<li>Unlike Bank, this dataset supplies separate training and test ARFF files.</li>
+<li>We use training-only cross-validation for decisions and the supplied test set for final evaluation.</li>
+</ul>
+<div id="cb3cf03a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:19.312111Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:19.311903Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:19.321796Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:19.321099Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>TARGET <span class="op">=</span> <span class="st">"class"</span></span>
-<span id="cb13-2"><a href="" aria-label="2"></a>drop_columns <span class="op">=</span> [<span class="st">"fnlwgt"</span>, <span class="st">"education-num"</span>]</span>
-<span id="cb13-3"><a href="" aria-label="3"></a></span>
-<span id="cb13-4"><a href="" aria-label="4"></a>census_summary <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb13-5"><a href="" aria-label="5"></a>    <span class="st">"train_missing"</span>: census_train.isna().<span class="bu">sum</span>(),</span>
-<span id="cb13-6"><a href="" aria-label="6"></a>    <span class="st">"test_missing"</span>: census_test.isna().<span class="bu">sum</span>(),</span>
-<span id="cb13-7"><a href="" aria-label="7"></a>    <span class="st">"train_unique"</span>: census_train.nunique(dropna<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb13-8"><a href="" aria-label="8"></a>    <span class="st">"test_unique"</span>: census_test.nunique(dropna<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb13-9"><a href="" aria-label="9"></a>})</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>census_train.head(<span class="dv">5</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">workclass</th>
+<th data-quarto-table-cell-role="th">fnlwgt</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">education-num</th>
+<th data-quarto-table-cell-role="th">marital-status</th>
+<th data-quarto-table-cell-role="th">occupation</th>
+<th data-quarto-table-cell-role="th">relationship</th>
+<th data-quarto-table-cell-role="th">race</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">capital-gain</th>
+<th data-quarto-table-cell-role="th">capital-loss</th>
+<th data-quarto-table-cell-role="th">hours-per-week</th>
+<th data-quarto-table-cell-role="th">native-country</th>
+<th data-quarto-table-cell-role="th">class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>39</td>
+<td>State-gov</td>
+<td>77516</td>
+<td>Bachelors</td>
+<td>13</td>
+<td>Never-married</td>
+<td>Adm-clerical</td>
+<td>Not-in-family</td>
+<td>White</td>
+<td>Male</td>
+<td>2174.0</td>
+<td>0.0</td>
+<td>40</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>50</td>
+<td>Self-emp-not-inc</td>
+<td>83311</td>
+<td>Bachelors</td>
+<td>13</td>
+<td>Married-civ-spouse</td>
+<td>Exec-managerial</td>
+<td>Husband</td>
+<td>White</td>
+<td>Male</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>13</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>38</td>
+<td>Private</td>
+<td>215646</td>
+<td>HS-grad</td>
+<td>9</td>
+<td>Divorced</td>
+<td>Handlers-cleaners</td>
+<td>Not-in-family</td>
+<td>White</td>
+<td>Male</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>40</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>53</td>
+<td>Private</td>
+<td>234721</td>
+<td>11th</td>
+<td>7</td>
+<td>Married-civ-spouse</td>
+<td>Handlers-cleaners</td>
+<td>Husband</td>
+<td>Black</td>
+<td>Male</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>40</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>28</td>
+<td>Private</td>
+<td>338409</td>
+<td>Bachelors</td>
+<td>13</td>
+<td>Married-civ-spouse</td>
+<td>Prof-specialty</td>
+<td>Wife</td>
+<td>Black</td>
+<td>Female</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>40</td>
+<td>Cuba</td>
+<td>&lt;=50K</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-</section>
-<section id="census-audit-summary" class="slide level2">
-<h2>Census audit summary</h2>
-<div id="63c7c3ca" class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>census_summary</span></code></pre></div>
-</details>
 </div>
-</section>
-<section id="census-target-prevalence" class="slide level2">
-<h2>Census target prevalence</h2>
-<div id="ec64e26e" class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>prevalence <span class="op">=</span> pd.concat(</span>
-<span id="cb15-2"><a href="" aria-label="2"></a>    [</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>        census_train[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"train"</span>),</span>
-<span id="cb15-4"><a href="" aria-label="4"></a>        census_test[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"test"</span>),</span>
-<span id="cb15-5"><a href="" aria-label="5"></a>    ],</span>
-<span id="cb15-6"><a href="" aria-label="6"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb15-7"><a href="" aria-label="7"></a>)</span>
-<span id="cb15-8"><a href="" aria-label="8"></a>prevalence</span></code></pre></div>
-</details>
-</div>
-<div id="b1291eaf" class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>X_census_train <span class="op">=</span> census_train.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
-<span id="cb16-2"><a href="" aria-label="2"></a>y_census_train <span class="op">=</span> census_train[TARGET]</span>
-<span id="cb16-3"><a href="" aria-label="3"></a>X_census_test <span class="op">=</span> census_test.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
-<span id="cb16-4"><a href="" aria-label="4"></a>y_census_test <span class="op">=</span> census_test[TARGET]</span>
-<span id="cb16-5"><a href="" aria-label="5"></a></span>
-<span id="cb16-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"Training:"</span>, X_census_train.shape, <span class="st">"Test:"</span>, X_census_test.shape)</span></code></pre></div>
-</details>
 </div>
 </section>
 <section id="checkpoint---distribution-shift" class="slide level2">
 <h2>Checkpoint - distribution shift</h2>
+<p>A supplied test set can be harder or easier than the training sample.</p>
 <ol type="1">
 <li>Are the schemas identical?</li>
 <li>Are missing values distributed identically?</li>
 <li>Are target proportions identical?</li>
 <li>If train and test distributions differ, what does that mean for interpretation?</li>
 </ol>
-<p>A supplied test set can be harder or easier than the training sample. Differences do not automatically invalidate it, but they should be reported because they affect which population the score represents.</p>
+</section>
+<section id="audit-traintest-compatibility" class="slide level2">
+<h2>Audit train/test compatibility</h2>
+<p>Check that schemas match, inspect missingness, and compare class prevalence. <code>fnlwgt</code> is a survey weight rather than a personal characteristic; we exclude it here. <code>education</code> and <code>education-num</code> encode closely related information, so we remove the numeric duplicate for a clearer teaching model.</p>
+<div id="8323f7ee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:19.323651Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:19.323473Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:19.401608Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:19.400847Z&quot;}}" data-execution_count="24">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>TARGET <span class="op">=</span> <span class="st">"class"</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a>drop_columns <span class="op">=</span> [<span class="st">"fnlwgt"</span>, <span class="st">"education-num"</span>]</span>
+<span id="cb20-3"><a href="" aria-label="3"></a>census_summary <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb20-4"><a href="" aria-label="4"></a>    <span class="st">"train_missing"</span>: census_train.isna().<span class="bu">sum</span>(),</span>
+<span id="cb20-5"><a href="" aria-label="5"></a>    <span class="st">"test_missing"</span>: census_test.isna().<span class="bu">sum</span>(),</span>
+<span id="cb20-6"><a href="" aria-label="6"></a>    <span class="st">"train_unique"</span>: census_train.nunique(dropna<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>    <span class="st">"test_unique"</span>: census_test.nunique(dropna<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb20-8"><a href="" aria-label="8"></a>})</span>
+<span id="cb20-9"><a href="" aria-label="9"></a>census_summary</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">train_missing</th>
+<th data-quarto-table-cell-role="th">test_missing</th>
+<th data-quarto-table-cell-role="th">train_unique</th>
+<th data-quarto-table-cell-role="th">test_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">age</th>
+<td>0</td>
+<td>0</td>
+<td>66</td>
+<td>73</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">workclass</th>
+<td>62</td>
+<td>1774</td>
+<td>6</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">fnlwgt</th>
+<td>0</td>
+<td>0</td>
+<td>987</td>
+<td>21176</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">education</th>
+<td>0</td>
+<td>0</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">education-num</th>
+<td>0</td>
+<td>0</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">marital-status</th>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">occupation</th>
+<td>62</td>
+<td>1781</td>
+<td>14</td>
+<td>14</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">relationship</th>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">race</th>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">sex</th>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">capital-gain</th>
+<td>1</td>
+<td>0</td>
+<td>36</td>
+<td>118</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">capital-loss</th>
+<td>1</td>
+<td>0</td>
+<td>30</td>
+<td>92</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">hours-per-week</th>
+<td>0</td>
+<td>0</td>
+<td>56</td>
+<td>94</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">native-country</th>
+<td>18</td>
+<td>565</td>
+<td>28</td>
+<td>41</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">class</th>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="census-target-prevalence" class="slide level2">
+<h2>Census target prevalence</h2>
+<div id="ec64e26e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:19.403557Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:19.403370Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:19.414504Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:19.413721Z&quot;}}" data-execution_count="25">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>prevalence <span class="op">=</span> pd.concat(</span>
+<span id="cb21-2"><a href="" aria-label="2"></a>    [</span>
+<span id="cb21-3"><a href="" aria-label="3"></a>        census_train[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"train"</span>),</span>
+<span id="cb21-4"><a href="" aria-label="4"></a>        census_test[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"test"</span>),</span>
+<span id="cb21-5"><a href="" aria-label="5"></a>    ],</span>
+<span id="cb21-6"><a href="" aria-label="6"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb21-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb21-8"><a href="" aria-label="8"></a>prevalence</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">train</th>
+<th data-quarto-table-cell-role="th">test</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">class</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">&lt;=50K</th>
+<td>0.768</td>
+<td>0.758911</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">&gt;50K</th>
+<td>0.232</td>
+<td>0.241089</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="b1291eaf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:19.416287Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:19.416108Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:19.420703Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:19.419964Z&quot;}}" data-execution_count="26">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>X_census_train <span class="op">=</span> census_train.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
+<span id="cb22-2"><a href="" aria-label="2"></a>y_census_train <span class="op">=</span> census_train[TARGET]</span>
+<span id="cb22-3"><a href="" aria-label="3"></a>X_census_test <span class="op">=</span> census_test.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
+<span id="cb22-4"><a href="" aria-label="4"></a>y_census_test <span class="op">=</span> census_test[TARGET]</span>
+<span id="cb22-5"><a href="" aria-label="5"></a></span>
+<span id="cb22-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"Training:"</span>, X_census_train.shape, <span class="st">"Test:"</span>, X_census_test.shape)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training: (1000, 12) Test: (31561, 12)</code></pre>
+</div>
+</div>
 </section>
 <section id="select-a-census-model-by-cross-validation" class="slide level2">
 <h2>Select a Census model by cross-validation</h2>
-<p>The positive class is the less frequent <code>&gt;50K</code> group. We compare a class-weighted logistic regression, a constrained decision tree, and a random forest. Class weighting asks the learner to penalize mistakes on the minority class more strongly; it does not change the evaluation data.</p>
+<p>The positive class is the less frequent <code>&gt;50K</code> group.</p>
+<ul>
+<li>We compare a class-weighted logistic regression, a constrained decision tree, and a random forest.</li>
+<li>Class weighting asks the learner to penalize mistakes on the minority class more strongly; it does not change the evaluation data.</li>
+</ul>
+<div id="43f6fb51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:19.422553Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:19.422372Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:22.032588Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:22.031687Z&quot;}}" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="27">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">accuracy_mean</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
+<th data-quarto-table-cell-role="th">f1_mean</th>
+<th data-quarto-table-cell-role="th">accuracy_sd</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_sd</th>
+<th data-quarto-table-cell-role="th">f1_sd</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">model</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Weighted random forest</th>
+<td>0.783</td>
+<td>0.796</td>
+<td>0.741</td>
+<td>0.022</td>
+<td>0.022</td>
+<td>0.021</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Weighted logistic regression</th>
+<td>0.791</td>
+<td>0.792</td>
+<td>0.745</td>
+<td>0.012</td>
+<td>0.029</td>
+<td>0.015</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Weighted decision tree</th>
+<td>0.748</td>
+<td>0.785</td>
+<td>0.712</td>
+<td>0.025</td>
+<td>0.032</td>
+<td>0.025</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Baseline</th>
+<td>0.768</td>
+<td>0.500</td>
+<td>0.434</td>
+<td>0.002</td>
+<td>0.000</td>
+<td>0.001</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="evaluate-the-selected-census-model-once" class="slide level2">
 <h2>Evaluate the selected Census model once</h2>
 <p>Choose the highest cross-validated balanced accuracy programmatically, refit it on all training rows, and evaluate it on the supplied test set.</p>
-</section>
-<section id="census-supplied-test-metrics" class="slide level2">
-<h2>Census supplied test metrics</h2>
-<div id="a14bbdfe" class="cell">
+<div id="47c10c8a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:22.034498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:22.034305Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:23.861312Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:23.860452Z&quot;}}" data-execution_count="28">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="st">"Selected by CV:"</span>, selected_name)</span>
-<span id="cb17-2"><a href="" aria-label="2"></a>census_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>selected_name <span class="op">=</span> census_cv_results[<span class="st">"balanced_accuracy_mean"</span>].idxmax()</span>
+<span id="cb24-2"><a href="" aria-label="2"></a>selected_census_model <span class="op">=</span> clone(census_models[selected_name]).fit(X_census_train, y_census_train)</span>
+<span id="cb24-3"><a href="" aria-label="3"></a></span>
+<span id="cb24-4"><a href="" aria-label="4"></a>census_pred <span class="op">=</span> selected_census_model.predict(X_census_test)</span>
+<span id="cb24-5"><a href="" aria-label="5"></a>census_proba <span class="op">=</span> selected_census_model.predict_proba(X_census_test)</span>
+<span id="cb24-6"><a href="" aria-label="6"></a>census_positive_index <span class="op">=</span> <span class="bu">list</span>(selected_census_model.classes_).index(<span class="st">"&gt;50K"</span>)</span>
+<span id="cb24-7"><a href="" aria-label="7"></a>census_score <span class="op">=</span> census_proba[:, census_positive_index]</span>
+<span id="cb24-8"><a href="" aria-label="8"></a>y_census_binary <span class="op">=</span> (y_census_test <span class="op">==</span> <span class="st">"&gt;50K"</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb24-9"><a href="" aria-label="9"></a></span>
+<span id="cb24-10"><a href="" aria-label="10"></a>census_test_metrics <span class="op">=</span> pd.Series({</span>
+<span id="cb24-11"><a href="" aria-label="11"></a>    <span class="st">"accuracy"</span>: accuracy_score(y_census_test, census_pred),</span>
+<span id="cb24-12"><a href="" aria-label="12"></a>    <span class="st">"balanced_accuracy"</span>: balanced_accuracy_score(y_census_test, census_pred),</span>
+<span id="cb24-13"><a href="" aria-label="13"></a>    <span class="st">"macro_f1"</span>: f1_score(y_census_test, census_pred, average<span class="op">=</span><span class="st">"macro"</span>),</span>
+<span id="cb24-14"><a href="" aria-label="14"></a>    <span class="st">"roc_auc"</span>: roc_auc_score(y_census_binary, census_score),</span>
+<span id="cb24-15"><a href="" aria-label="15"></a>    <span class="st">"average_precision"</span>: average_precision_score(y_census_binary, census_score),</span>
+<span id="cb24-16"><a href="" aria-label="16"></a>}, name<span class="op">=</span><span class="st">"supplied_test_score"</span>)</span>
+<span id="cb24-17"><a href="" aria-label="17"></a></span>
+<span id="cb24-18"><a href="" aria-label="18"></a><span class="bu">print</span>(<span class="st">"Selected by CV:"</span>, selected_name)</span>
+<span id="cb24-19"><a href="" aria-label="19"></a>census_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Selected by CV: Weighted random forest</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">supplied_test_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">accuracy</th>
+<td>0.779</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">balanced_accuracy</th>
+<td>0.796</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">macro_f1</th>
+<td>0.742</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">roc_auc</th>
+<td>0.890</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">average_precision</th>
+<td>0.723</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="census-supplied-test-report-and-confusion-matrix" class="slide level2">
 <h2>Census supplied test report and confusion matrix</h2>
-<div id="e974da16" class="cell">
+<div id="e974da16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:23.863136Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:23.862927Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:24.337689Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:24.336851Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="bu">print</span>(classification_report(y_census_test, census_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb18-2"><a href="" aria-label="2"></a>ConfusionMatrixDisplay.from_predictions(y_census_test, census_pred, labels<span class="op">=</span>[<span class="st">"&lt;=50K"</span>, <span class="st">"&gt;50K"</span>], cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span>,)</span>
-<span id="cb18-3"><a href="" aria-label="3"></a>plt.title(<span class="st">"Census: supplied test set"</span>)</span>
-<span id="cb18-4"><a href="" aria-label="4"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="bu">print</span>(classification_report(y_census_test, census_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb26-2"><a href="" aria-label="2"></a>ConfusionMatrixDisplay.from_predictions(y_census_test, census_pred, labels<span class="op">=</span>[<span class="st">"&lt;=50K"</span>, <span class="st">"&gt;50K"</span>], cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span>,)</span>
+<span id="cb26-3"><a href="" aria-label="3"></a>plt.title(<span class="st">"Census: supplied test set"</span>)</span>
+<span id="cb26-4"><a href="" aria-label="4"></a>plt.show()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              precision    recall  f1-score   support
+
+       &lt;=50K      0.934     0.762     0.839     23952
+        &gt;50K      0.526     0.830     0.644      7609
+
+    accuracy                          0.779     31561
+   macro avg      0.730     0.796     0.742     31561
+weighted avg      0.835     0.779     0.792     31561
+</code></pre>
 </div>
-</section>
+
+</div>
+<img data-src="lab-03-classification_files/figure-revealjs/cell-30-output-2.png" class="r-stretch"></section>
 <section id="slice-based-error-analysis" class="slide level2">
 <h2>Slice-based error analysis</h2>
-<p>Aggregate metrics can hide uneven performance. The next cell reports accuracy and positive-class recall by sex. This is a descriptive diagnostic, <strong>not</strong> a fairness verdict: subgroup sizes, label quality, history, deployment context, and the costs of errors all matter.</p>
-<div id="32792970" class="cell">
+<p>Aggregate metrics can hide uneven performance.</p>
+<ul>
+<li>E.g., the next cell reports accuracy and positive-class recall by <code>sex</code>.</li>
+<li>This is a descriptive diagnostic, <strong>not</strong> a fairness verdict: subgroup sizes, label quality, history, deployment context, and the costs of errors all matter.</li>
+</ul>
+<div id="32792970" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:24.339542Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:24.339358Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:24.364363Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:24.363642Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>census_diagnostics <span class="op">=</span> X_census_test[[<span class="st">"sex"</span>]].copy()</span>
-<span id="cb19-2"><a href="" aria-label="2"></a>census_diagnostics[<span class="st">"actual"</span>] <span class="op">=</span> y_census_test.to_numpy()</span>
-<span id="cb19-3"><a href="" aria-label="3"></a>census_diagnostics[<span class="st">"predicted"</span>] <span class="op">=</span> census_pred</span>
-<span id="cb19-4"><a href="" aria-label="4"></a></span>
-<span id="cb19-5"><a href="" aria-label="5"></a>slice_rows <span class="op">=</span> []</span>
-<span id="cb19-6"><a href="" aria-label="6"></a><span class="cf">for</span> group, frame <span class="kw">in</span> census_diagnostics.groupby(<span class="st">"sex"</span>):</span>
-<span id="cb19-7"><a href="" aria-label="7"></a>    actual_positive <span class="op">=</span> frame[<span class="st">"actual"</span>] <span class="op">==</span> <span class="st">"&gt;50K"</span></span>
-<span id="cb19-8"><a href="" aria-label="8"></a>    true_positive <span class="op">=</span> actual_positive <span class="op">&amp;</span> (frame[<span class="st">"predicted"</span>] <span class="op">==</span> <span class="st">"&gt;50K"</span>)</span>
-<span id="cb19-9"><a href="" aria-label="9"></a>    slice_rows.append({</span>
-<span id="cb19-10"><a href="" aria-label="10"></a>        <span class="st">"sex"</span>: group,</span>
-<span id="cb19-11"><a href="" aria-label="11"></a>        <span class="st">"n"</span>: <span class="bu">len</span>(frame),</span>
-<span id="cb19-12"><a href="" aria-label="12"></a>        <span class="st">"positive_prevalence"</span>: actual_positive.mean(),</span>
-<span id="cb19-13"><a href="" aria-label="13"></a>        <span class="st">"accuracy"</span>: (frame[<span class="st">"actual"</span>] <span class="op">==</span> frame[<span class="st">"predicted"</span>]).mean(),</span>
-<span id="cb19-14"><a href="" aria-label="14"></a>        <span class="st">"positive_recall"</span>: true_positive.<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">max</span>(actual_positive.<span class="bu">sum</span>(), <span class="dv">1</span>),</span>
-<span id="cb19-15"><a href="" aria-label="15"></a>    })</span>
-<span id="cb19-16"><a href="" aria-label="16"></a></span>
-<span id="cb19-17"><a href="" aria-label="17"></a>pd.DataFrame(slice_rows).set_index(<span class="st">"sex"</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a>census_diagnostics <span class="op">=</span> X_census_test[[<span class="st">"sex"</span>]].copy()</span>
+<span id="cb28-2"><a href="" aria-label="2"></a>census_diagnostics[<span class="st">"actual"</span>] <span class="op">=</span> y_census_test.to_numpy()</span>
+<span id="cb28-3"><a href="" aria-label="3"></a>census_diagnostics[<span class="st">"predicted"</span>] <span class="op">=</span> census_pred</span>
+<span id="cb28-4"><a href="" aria-label="4"></a></span>
+<span id="cb28-5"><a href="" aria-label="5"></a>slice_rows <span class="op">=</span> []</span>
+<span id="cb28-6"><a href="" aria-label="6"></a><span class="cf">for</span> group, frame <span class="kw">in</span> census_diagnostics.groupby(<span class="st">"sex"</span>):</span>
+<span id="cb28-7"><a href="" aria-label="7"></a>    actual_positive <span class="op">=</span> frame[<span class="st">"actual"</span>] <span class="op">==</span> <span class="st">"&gt;50K"</span></span>
+<span id="cb28-8"><a href="" aria-label="8"></a>    true_positive <span class="op">=</span> actual_positive <span class="op">&amp;</span> (frame[<span class="st">"predicted"</span>] <span class="op">==</span> <span class="st">"&gt;50K"</span>)</span>
+<span id="cb28-9"><a href="" aria-label="9"></a>    slice_rows.append({</span>
+<span id="cb28-10"><a href="" aria-label="10"></a>        <span class="st">"sex"</span>: group,</span>
+<span id="cb28-11"><a href="" aria-label="11"></a>        <span class="st">"n"</span>: <span class="bu">len</span>(frame),</span>
+<span id="cb28-12"><a href="" aria-label="12"></a>        <span class="st">"positive_prevalence"</span>: actual_positive.mean(),</span>
+<span id="cb28-13"><a href="" aria-label="13"></a>        <span class="st">"accuracy"</span>: (frame[<span class="st">"actual"</span>] <span class="op">==</span> frame[<span class="st">"predicted"</span>]).mean(),</span>
+<span id="cb28-14"><a href="" aria-label="14"></a>        <span class="st">"positive_recall"</span>: true_positive.<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">max</span>(actual_positive.<span class="bu">sum</span>(), <span class="dv">1</span>),</span>
+<span id="cb28-15"><a href="" aria-label="15"></a>    })</span>
+<span id="cb28-16"><a href="" aria-label="16"></a></span>
+<span id="cb28-17"><a href="" aria-label="17"></a>pd.DataFrame(slice_rows).set_index(<span class="st">"sex"</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">n</th>
+<th data-quarto-table-cell-role="th">positive_prevalence</th>
+<th data-quarto-table-cell-role="th">accuracy</th>
+<th data-quarto-table-cell-role="th">positive_recall</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Female</th>
+<td>10442</td>
+<td>0.109</td>
+<td>0.912</td>
+<td>0.609</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Male</th>
+<td>21119</td>
+<td>0.306</td>
+<td>0.713</td>
+<td>0.868</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="exercise---make-a-recommendation" class="slide level2">
@@ -685,6 +3715,12 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 <li>one additional check required before deployment.</li>
 </ol>
 <p>Avoid saying the model is “good” based on accuracy alone.</p>
+<div id="7d824b95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:24.366465Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:24.366282Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:24.368847Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:24.368187Z&quot;}}" data-execution_count="31">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="co"># Your code here</span></span></code></pre></div>
+</details>
+</div>
 </section></section>
 <section id="nursery-dataset" class="title-slide slide level1 center">
 <h1>Nursery dataset</h1>
@@ -694,37 +3730,190 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 <section>
 <section id="nursery-multiclass-extension" class="title-slide slide level1 center">
 <h1>Nursery: multiclass extension</h1>
-<p>Nursery contains categorical features and five target classes. The same pipeline pattern works, but evaluation must account for multiple classes and strong imbalance.</p>
+<p>Nursery contains categorical features and five target classes.</p>
+<ul>
+<li>The same pipeline pattern works, but evaluation must account for multiple classes and strong imbalance.</li>
+</ul>
 </section>
 <section id="nursery-sample" class="slide level2">
 <h2>Nursery sample</h2>
-<div id="dbd33a92" class="cell">
+<div id="dbd33a92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:24.370819Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:24.370652Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:24.378236Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:24.377502Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>nursery.head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>nursery.head()</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">parents</th>
+<th data-quarto-table-cell-role="th">has_nurs</th>
+<th data-quarto-table-cell-role="th">form</th>
+<th data-quarto-table-cell-role="th">children</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">finance</th>
+<th data-quarto-table-cell-role="th">social</th>
+<th data-quarto-table-cell-role="th">health</th>
+<th data-quarto-table-cell-role="th">class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>usual</td>
+<td>proper</td>
+<td>complete</td>
+<td>1</td>
+<td>convenient</td>
+<td>convenient</td>
+<td>nonprob</td>
+<td>recommended</td>
+<td>recommend</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>usual</td>
+<td>proper</td>
+<td>complete</td>
+<td>1</td>
+<td>convenient</td>
+<td>convenient</td>
+<td>nonprob</td>
+<td>priority</td>
+<td>priority</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>usual</td>
+<td>proper</td>
+<td>complete</td>
+<td>1</td>
+<td>convenient</td>
+<td>convenient</td>
+<td>nonprob</td>
+<td>not_recom</td>
+<td>not_recom</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>usual</td>
+<td>proper</td>
+<td>complete</td>
+<td>1</td>
+<td>convenient</td>
+<td>convenient</td>
+<td>slightly_prob</td>
+<td>recommended</td>
+<td>recommend</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>usual</td>
+<td>proper</td>
+<td>complete</td>
+<td>1</td>
+<td>convenient</td>
+<td>convenient</td>
+<td>slightly_prob</td>
+<td>priority</td>
+<td>priority</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="nursery-class-counts" class="slide level2">
 <h2>Nursery class counts</h2>
-<div id="0c56671f" class="cell">
+<div id="0c56671f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:24.380241Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:24.380043Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:24.387544Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:24.386749Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>nursery[<span class="st">"class"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>nursery[<span class="st">"class"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">class</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">priority</th>
+<td>3951</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">not_recom</th>
+<td>3333</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">spec_prior</th>
+<td>2386</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">very_recom</th>
+<td>328</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">recommend</th>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="d2633366" class="cell">
+</div>
+</div>
+<div id="d2633366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:24.389181Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:24.389020Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:24.404407Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:24.403726Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>X_nursery <span class="op">=</span> nursery.drop(columns<span class="op">=</span><span class="st">"class"</span>)</span>
-<span id="cb22-2"><a href="" aria-label="2"></a>y_nursery <span class="op">=</span> nursery[<span class="st">"class"</span>]</span>
-<span id="cb22-3"><a href="" aria-label="3"></a>X_nursery_train, X_nursery_test, y_nursery_train, y_nursery_test <span class="op">=</span> train_test_split(</span>
-<span id="cb22-4"><a href="" aria-label="4"></a>    X_nursery,</span>
-<span id="cb22-5"><a href="" aria-label="5"></a>    y_nursery,</span>
-<span id="cb22-6"><a href="" aria-label="6"></a>    test_size<span class="op">=</span><span class="fl">0.25</span>,</span>
-<span id="cb22-7"><a href="" aria-label="7"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb22-8"><a href="" aria-label="8"></a>    stratify<span class="op">=</span>y_nursery,</span>
-<span id="cb22-9"><a href="" aria-label="9"></a>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>X_nursery <span class="op">=</span> nursery.drop(columns<span class="op">=</span><span class="st">"class"</span>)</span>
+<span id="cb32-2"><a href="" aria-label="2"></a>y_nursery <span class="op">=</span> nursery[<span class="st">"class"</span>]</span>
+<span id="cb32-3"><a href="" aria-label="3"></a>X_nursery_train, X_nursery_test, y_nursery_train, y_nursery_test <span class="op">=</span> train_test_split(</span>
+<span id="cb32-4"><a href="" aria-label="4"></a>    X_nursery,</span>
+<span id="cb32-5"><a href="" aria-label="5"></a>    y_nursery,</span>
+<span id="cb32-6"><a href="" aria-label="6"></a>    test_size<span class="op">=</span><span class="fl">0.25</span>,</span>
+<span id="cb32-7"><a href="" aria-label="7"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
+<span id="cb32-8"><a href="" aria-label="8"></a>    stratify<span class="op">=</span>y_nursery,</span>
+<span id="cb32-9"><a href="" aria-label="9"></a>)</span></code></pre></div>
 </details>
 </div>
 </section>
@@ -738,86 +3927,73 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 <li>Identify the class with the lowest recall.</li>
 </ol>
 <p>Why might accuracy and macro F1 rank models differently?</p>
-<div id="f4dd5a2a" class="cell">
+<div id="f4dd5a2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:24.406178Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:24.406006Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:24.409514Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:24.408702Z&quot;}}" data-execution_count="35">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add at least two learned models.</span></span>
-<span id="cb23-2"><a href="" aria-label="2"></a>nursery_models <span class="op">=</span> {</span>
-<span id="cb23-3"><a href="" aria-label="3"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
-<span id="cb23-4"><a href="" aria-label="4"></a>        X_nursery_train,</span>
-<span id="cb23-5"><a href="" aria-label="5"></a>        DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>),</span>
-<span id="cb23-6"><a href="" aria-label="6"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb23-7"><a href="" aria-label="7"></a>    ),</span>
-<span id="cb23-8"><a href="" aria-label="8"></a>    <span class="co"># "Decision tree": classifier_pipeline(...),</span></span>
-<span id="cb23-9"><a href="" aria-label="9"></a>    <span class="co"># "Logistic regression": classifier_pipeline(...),</span></span>
-<span id="cb23-10"><a href="" aria-label="10"></a>}</span>
-<span id="cb23-11"><a href="" aria-label="11"></a></span>
-<span id="cb23-12"><a href="" aria-label="12"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: use cross_validate(..., scoring={"accuracy": "accuracy", "macro_f1": "f1_macro"})</span></span>
-<span id="cb23-13"><a href="" aria-label="13"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: select, fit, predict, and show classification_report and a confusion matrix.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add at least two learned models.</span></span>
+<span id="cb33-2"><a href="" aria-label="2"></a>nursery_models <span class="op">=</span> {</span>
+<span id="cb33-3"><a href="" aria-label="3"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
+<span id="cb33-4"><a href="" aria-label="4"></a>        X_nursery_train,</span>
+<span id="cb33-5"><a href="" aria-label="5"></a>        DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>),</span>
+<span id="cb33-6"><a href="" aria-label="6"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb33-7"><a href="" aria-label="7"></a>    ),</span>
+<span id="cb33-8"><a href="" aria-label="8"></a>    <span class="co"># "Decision tree": classifier_pipeline(...),</span></span>
+<span id="cb33-9"><a href="" aria-label="9"></a>    <span class="co"># "Logistic regression": classifier_pipeline(...),</span></span>
+<span id="cb33-10"><a href="" aria-label="10"></a>}</span>
+<span id="cb33-11"><a href="" aria-label="11"></a></span>
+<span id="cb33-12"><a href="" aria-label="12"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: use cross_validate(..., scoring={"accuracy": "accuracy", "macro_f1": "f1_macro"})</span></span>
+<span id="cb33-13"><a href="" aria-label="13"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: select, fit, predict, and show classification_report and a confusion matrix.</span></span></code></pre></div>
 </details>
 </div>
 <details>
 <summary>
-One possible Nursery solution
+Answer
 </summary>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>nursery_models <span class="op">=</span> {</span>
-<span id="cb24-2"><a href="" aria-label="2"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
-<span id="cb24-3"><a href="" aria-label="3"></a>        X_nursery_train, DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>), scale_numeric<span class="op">=</span><span class="va">False</span></span>
-<span id="cb24-4"><a href="" aria-label="4"></a>    ),</span>
-<span id="cb24-5"><a href="" aria-label="5"></a>    <span class="st">"Decision tree"</span>: classifier_pipeline(</span>
-<span id="cb24-6"><a href="" aria-label="6"></a>        X_nursery_train,</span>
-<span id="cb24-7"><a href="" aria-label="7"></a>        DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">12</span>, min_samples_leaf<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
-<span id="cb24-8"><a href="" aria-label="8"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb24-9"><a href="" aria-label="9"></a>    ),</span>
-<span id="cb24-10"><a href="" aria-label="10"></a>    <span class="st">"Logistic regression"</span>: classifier_pipeline(</span>
-<span id="cb24-11"><a href="" aria-label="11"></a>        X_nursery_train,</span>
-<span id="cb24-12"><a href="" aria-label="12"></a>        LogisticRegression(max_iter<span class="op">=</span><span class="dv">3000</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
-<span id="cb24-13"><a href="" aria-label="13"></a>    ),</span>
-<span id="cb24-14"><a href="" aria-label="14"></a>}</span>
-<span id="cb24-15"><a href="" aria-label="15"></a></span>
-<span id="cb24-16"><a href="" aria-label="16"></a>rows <span class="op">=</span> []</span>
-<span id="cb24-17"><a href="" aria-label="17"></a><span class="cf">for</span> name, workflow <span class="kw">in</span> nursery_models.items():</span>
-<span id="cb24-18"><a href="" aria-label="18"></a>    scores <span class="op">=</span> cross_validate(</span>
-<span id="cb24-19"><a href="" aria-label="19"></a>        workflow,</span>
-<span id="cb24-20"><a href="" aria-label="20"></a>        X_nursery_train,</span>
-<span id="cb24-21"><a href="" aria-label="21"></a>        y_nursery_train,</span>
-<span id="cb24-22"><a href="" aria-label="22"></a>        cv<span class="op">=</span>cv,</span>
-<span id="cb24-23"><a href="" aria-label="23"></a>        scoring<span class="op">=</span>{<span class="st">"accuracy"</span>: <span class="st">"accuracy"</span>, <span class="st">"macro_f1"</span>: <span class="st">"f1_macro"</span>},</span>
-<span id="cb24-24"><a href="" aria-label="24"></a>    )</span>
-<span id="cb24-25"><a href="" aria-label="25"></a>    rows.append({</span>
-<span id="cb24-26"><a href="" aria-label="26"></a>        <span class="st">"model"</span>: name,</span>
-<span id="cb24-27"><a href="" aria-label="27"></a>        <span class="st">"accuracy"</span>: scores[<span class="st">"test_accuracy"</span>].mean(),</span>
-<span id="cb24-28"><a href="" aria-label="28"></a>        <span class="st">"macro_f1"</span>: scores[<span class="st">"test_macro_f1"</span>].mean(),</span>
-<span id="cb24-29"><a href="" aria-label="29"></a>    })</span>
-<span id="cb24-30"><a href="" aria-label="30"></a></span>
-<span id="cb24-31"><a href="" aria-label="31"></a>nursery_results <span class="op">=</span> pd.DataFrame(rows).set_index(<span class="st">"model"</span>)</span>
-<span id="cb24-32"><a href="" aria-label="32"></a>nursery_results.sort_values(<span class="st">"macro_f1"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb24-33"><a href="" aria-label="33"></a></span>
-<span id="cb24-34"><a href="" aria-label="34"></a>winner <span class="op">=</span> nursery_results[<span class="st">"macro_f1"</span>].idxmax()</span>
-<span id="cb24-35"><a href="" aria-label="35"></a>final_nursery <span class="op">=</span> clone(nursery_models[winner]).fit(X_nursery_train, y_nursery_train)</span>
-<span id="cb24-36"><a href="" aria-label="36"></a>nursery_pred <span class="op">=</span> final_nursery.predict(X_nursery_test)</span>
-<span id="cb24-37"><a href="" aria-label="37"></a><span class="bu">print</span>(classification_report(y_nursery_test, nursery_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb24-38"><a href="" aria-label="38"></a>ConfusionMatrixDisplay.from_predictions(</span>
-<span id="cb24-39"><a href="" aria-label="39"></a>    y_nursery_test, nursery_pred, xticks_rotation<span class="op">=</span><span class="dv">45</span>, cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span></span>
-<span id="cb24-40"><a href="" aria-label="40"></a>)</span>
-<span id="cb24-41"><a href="" aria-label="41"></a>plt.title(<span class="ss">f"Nursery test set — </span><span class="sc">{</span>winner<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb24-42"><a href="" aria-label="42"></a>plt.tight_layout()</span>
-<span id="cb24-43"><a href="" aria-label="43"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a>nursery_models <span class="op">=</span> {</span>
+<span id="cb34-2"><a href="" aria-label="2"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
+<span id="cb34-3"><a href="" aria-label="3"></a>        X_nursery_train, DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>), scale_numeric<span class="op">=</span><span class="va">False</span></span>
+<span id="cb34-4"><a href="" aria-label="4"></a>    ),</span>
+<span id="cb34-5"><a href="" aria-label="5"></a>    <span class="st">"Decision tree"</span>: classifier_pipeline(</span>
+<span id="cb34-6"><a href="" aria-label="6"></a>        X_nursery_train,</span>
+<span id="cb34-7"><a href="" aria-label="7"></a>        DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">12</span>, min_samples_leaf<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
+<span id="cb34-8"><a href="" aria-label="8"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb34-9"><a href="" aria-label="9"></a>    ),</span>
+<span id="cb34-10"><a href="" aria-label="10"></a>    <span class="st">"Logistic regression"</span>: classifier_pipeline(</span>
+<span id="cb34-11"><a href="" aria-label="11"></a>        X_nursery_train,</span>
+<span id="cb34-12"><a href="" aria-label="12"></a>        LogisticRegression(max_iter<span class="op">=</span><span class="dv">3000</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
+<span id="cb34-13"><a href="" aria-label="13"></a>    ),</span>
+<span id="cb34-14"><a href="" aria-label="14"></a>}</span>
+<span id="cb34-15"><a href="" aria-label="15"></a></span>
+<span id="cb34-16"><a href="" aria-label="16"></a>rows <span class="op">=</span> []</span>
+<span id="cb34-17"><a href="" aria-label="17"></a><span class="cf">for</span> name, workflow <span class="kw">in</span> nursery_models.items():</span>
+<span id="cb34-18"><a href="" aria-label="18"></a>    scores <span class="op">=</span> cross_validate(</span>
+<span id="cb34-19"><a href="" aria-label="19"></a>        workflow,</span>
+<span id="cb34-20"><a href="" aria-label="20"></a>        X_nursery_train,</span>
+<span id="cb34-21"><a href="" aria-label="21"></a>        y_nursery_train,</span>
+<span id="cb34-22"><a href="" aria-label="22"></a>        cv<span class="op">=</span>cv,</span>
+<span id="cb34-23"><a href="" aria-label="23"></a>        scoring<span class="op">=</span>{<span class="st">"accuracy"</span>: <span class="st">"accuracy"</span>, <span class="st">"macro_f1"</span>: <span class="st">"f1_macro"</span>},</span>
+<span id="cb34-24"><a href="" aria-label="24"></a>    )</span>
+<span id="cb34-25"><a href="" aria-label="25"></a>    rows.append({</span>
+<span id="cb34-26"><a href="" aria-label="26"></a>        <span class="st">"model"</span>: name,</span>
+<span id="cb34-27"><a href="" aria-label="27"></a>        <span class="st">"accuracy"</span>: scores[<span class="st">"test_accuracy"</span>].mean(),</span>
+<span id="cb34-28"><a href="" aria-label="28"></a>        <span class="st">"macro_f1"</span>: scores[<span class="st">"test_macro_f1"</span>].mean(),</span>
+<span id="cb34-29"><a href="" aria-label="29"></a>    })</span>
+<span id="cb34-30"><a href="" aria-label="30"></a></span>
+<span id="cb34-31"><a href="" aria-label="31"></a>nursery_results <span class="op">=</span> pd.DataFrame(rows).set_index(<span class="st">"model"</span>)</span>
+<span id="cb34-32"><a href="" aria-label="32"></a>nursery_results.sort_values(<span class="st">"macro_f1"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb34-33"><a href="" aria-label="33"></a></span>
+<span id="cb34-34"><a href="" aria-label="34"></a>winner <span class="op">=</span> nursery_results[<span class="st">"macro_f1"</span>].idxmax()</span>
+<span id="cb34-35"><a href="" aria-label="35"></a>final_nursery <span class="op">=</span> clone(nursery_models[winner]).fit(X_nursery_train, y_nursery_train)</span>
+<span id="cb34-36"><a href="" aria-label="36"></a>nursery_pred <span class="op">=</span> final_nursery.predict(X_nursery_test)</span>
+<span id="cb34-37"><a href="" aria-label="37"></a><span class="bu">print</span>(classification_report(y_nursery_test, nursery_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb34-38"><a href="" aria-label="38"></a>ConfusionMatrixDisplay.from_predictions(</span>
+<span id="cb34-39"><a href="" aria-label="39"></a>    y_nursery_test, nursery_pred, xticks_rotation<span class="op">=</span><span class="dv">45</span>, cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span></span>
+<span id="cb34-40"><a href="" aria-label="40"></a>)</span>
+<span id="cb34-41"><a href="" aria-label="41"></a>plt.title(<span class="ss">f"Nursery test set — </span><span class="sc">{</span>winner<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb34-42"><a href="" aria-label="42"></a>plt.tight_layout()</span>
+<span id="cb34-43"><a href="" aria-label="43"></a>plt.show()</span></code></pre></div>
 Accuracy is dominated by frequent classes. Macro F1 computes F1 per class and averages them equally, so failure on a rare class has a much larger effect.
 </details>
-</section>
-<section id="what-to-submit" class="slide level2">
-<h2>What to submit</h2>
-<p>Submit the executed notebook plus a concise conclusion containing:</p>
-<ul>
-<li>the selected Bank model and why it was selected;</li>
-<li>its held-out confusion matrix and two metrics appropriate to the task;</li>
-<li>one example of overfitting from the grid-search results;</li>
-<li>the selected Census model and its supplied-test result;</li>
-<li>one limitation revealed by Census slice analysis;</li>
-<li>the completed Nursery multiclass challenge.</li>
-</ul>
-<p>Do not report only the best number. Explain the evaluation design that makes the number credible.</p>
 </section>
 <section id="key-takeaways" class="slide level2">
 <h2>Key takeaways</h2>
@@ -830,19 +4006,6 @@ Accuracy is dominated by frequent classes. Macro F1 computes F1 per class and av
 <li>Treat feature importance as a diagnostic of predictive reliance, not a causal explanation.</li>
 <li>A supplied external test set measures generalization to that dataset’s population, which may differ from training.</li>
 </ul>
-</section>
-<section id="kaggle-assignment-diabetes-classification" class="slide level2">
-<h2>Kaggle assignment: diabetes classification</h2>
-<p>Use the public Kaggle dataset <a href="https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database">Pima Indians Diabetes Database</a> to build and evaluate a binary classifier.</p>
-<p>Your task:</p>
-<ol type="1">
-<li>Load the dataset and identify the target variable and predictors. Treat biologically impossible zero values in medical measurements as missing where appropriate, then choose and justify an imputation strategy.</li>
-<li>Build a preprocessing and modeling pipeline that compares at least a baseline, logistic regression, decision tree, and one ensemble model.</li>
-<li>Use cross-validation on the training set for model selection, then report final performance on a held-out test set. Include accuracy, precision, recall, F1, ROC AUC, and a confusion matrix.</li>
-<li>Explain which metric should matter most if false negatives are more costly than false positives.</li>
-<li>Inspect feature importance or coefficients for the selected model, and discuss one limitation of interpreting them causally.</li>
-</ol>
-<p>Submit the executed notebook plus a short conclusion that names the selected model, justifies the metric choice, and explains the main error pattern from the confusion matrix.</p>
 
 </section></section>
     </div>
