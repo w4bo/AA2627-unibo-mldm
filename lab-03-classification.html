@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-03-classification_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lab-03-classification_files/libs/quarto-html/tabby.min.js"></script>
 <script src="lab-03-classification_files/libs/quarto-html/popper.min.js"></script>
 <script src="lab-03-classification_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lab-03-classification_files/libs/quarto-html/tippy.css" rel="stylesheet">
@@ -192,9 +192,6 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-  
-  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -258,7 +255,7 @@ ID12102,40,MALE,TOWN,30085.1,YES,3,YES,NO,YES,YES,NO</code></pre>
 <section id="load-arff-files-without-extra-dependencies" class="title-slide slide level1 center">
 <h1>Load ARFF files without extra dependencies</h1>
 <p><code>find_dataset</code> makes paths work whether the notebook starts in the repository root or in <code>slides/</code>.</p>
-<div id="d48b2a2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:14.923655Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:14.923524Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.428084Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.427511Z&quot;}}" data-execution_count="3">
+<div id="d48b2a2d" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>bank <span class="op">=</span> load_dense_arff(<span class="st">"bank-data.arff"</span>)</span>
@@ -276,61 +273,6 @@ ID12102,40,MALE,TOWN,30085.1,YES,3,YES,NO,YES,YES,NO</code></pre>
 <span id="cb2-13"><a href="" aria-label="13"></a>)</span>
 <span id="cb2-14"><a href="" aria-label="14"></a>dataset_catalog</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">rows</th>
-<th data-quarto-table-cell-role="th">columns</th>
-<th data-quarto-table-cell-role="th">target</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Bank</th>
-<td>600</td>
-<td>12</td>
-<td>pep</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Census train</th>
-<td>1000</td>
-<td>15</td>
-<td>class</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Census test</th>
-<td>31561</td>
-<td>15</td>
-<td>class</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Nursery</th>
-<td>10000</td>
-<td>9</td>
-<td>class</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section>
 
@@ -342,10 +284,15 @@ ID12102,40,MALE,TOWN,30085.1,YES,3,YES,NO,YES,YES,NO</code></pre>
 </ol>
 <details>
 <summary>
-Suggested answer
+Answer
 </summary>
 Only Census has an explicit training/test pair. Looking at its test results while choosing features or hyperparameters leaks test information into the model-selection process and makes the final estimate optimistic.
 </details>
+</section>
+
+<section id="bank-dataset" class="title-slide slide level1 center">
+<h1>Bank dataset</h1>
+
 </section>
 
 <section id="bank-data-an-end-to-end-binary-classification-workflow" class="title-slide slide level1 center">
@@ -360,477 +307,51 @@ Only Census has an explicit training/test pair. Looking at its test results whil
 </section>
 <section id="bank-sample" class="slide level2">
 <h2>Bank sample</h2>
-<div id="c0772277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.430108Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.429965Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.436913Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.436014Z&quot;}}" data-execution_count="4">
+<div id="c0772277" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>bank.head()</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">id</th>
-<th data-quarto-table-cell-role="th">age</th>
-<th data-quarto-table-cell-role="th">sex</th>
-<th data-quarto-table-cell-role="th">region</th>
-<th data-quarto-table-cell-role="th">income</th>
-<th data-quarto-table-cell-role="th">married</th>
-<th data-quarto-table-cell-role="th">children</th>
-<th data-quarto-table-cell-role="th">car</th>
-<th data-quarto-table-cell-role="th">save_act</th>
-<th data-quarto-table-cell-role="th">current_act</th>
-<th data-quarto-table-cell-role="th">mortgage</th>
-<th data-quarto-table-cell-role="th">pep</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>ID12101</td>
-<td>48</td>
-<td>FEMALE</td>
-<td>INNER_CITY</td>
-<td>17546.0</td>
-<td>NO</td>
-<td>1</td>
-<td>NO</td>
-<td>NO</td>
-<td>NO</td>
-<td>NO</td>
-<td>YES</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>ID12102</td>
-<td>40</td>
-<td>MALE</td>
-<td>TOWN</td>
-<td>30085.1</td>
-<td>YES</td>
-<td>3</td>
-<td>YES</td>
-<td>NO</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
-<td>ID12103</td>
-<td>51</td>
-<td>FEMALE</td>
-<td>INNER_CITY</td>
-<td>16575.4</td>
-<td>YES</td>
-<td>0</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-<td>NO</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>ID12104</td>
-<td>23</td>
-<td>FEMALE</td>
-<td>TOWN</td>
-<td>20375.4</td>
-<td>YES</td>
-<td>3</td>
-<td>NO</td>
-<td>NO</td>
-<td>YES</td>
-<td>NO</td>
-<td>NO</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>ID12105</td>
-<td>57</td>
-<td>FEMALE</td>
-<td>RURAL</td>
-<td>50576.3</td>
-<td>YES</td>
-<td>0</td>
-<td>NO</td>
-<td>YES</td>
-<td>NO</td>
-<td>NO</td>
-<td>NO</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section></section>
 <section id="data-profiling" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="a8cdbc99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.438191Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.438061Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.444096Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.443708Z&quot;}}" data-execution_count="5">
+<div id="a8cdbc99" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>bank.info()</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;class 'pandas.DataFrame'&gt;
-RangeIndex: 600 entries, 0 to 599
-Data columns (total 12 columns):
- #   Column       Non-Null Count  Dtype  
----  ------       --------------  -----  
- 0   id           600 non-null    object 
- 1   age          600 non-null    int64  
- 2   sex          600 non-null    object 
- 3   region       600 non-null    object 
- 4   income       600 non-null    float64
- 5   married      600 non-null    object 
- 6   children     600 non-null    int64  
- 7   car          600 non-null    object 
- 8   save_act     600 non-null    object 
- 9   current_act  600 non-null    object 
- 10  mortgage     600 non-null    object 
- 11  pep          600 non-null    object 
-dtypes: float64(1), int64(2), object(9)
-memory usage: 56.4+ KB</code></pre>
-</div>
 </div>
 </section>
 
 <section>
 <section id="data-profiling-1" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="60447248" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.445774Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.445641Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.458696Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.458199Z&quot;}}" data-execution_count="6">
+<div id="60447248" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>bank.describe(include<span class="op">=</span><span class="st">'all'</span>).T</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>bank.describe(include<span class="op">=</span><span class="st">'all'</span>).T</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">count</th>
-<th data-quarto-table-cell-role="th">unique</th>
-<th data-quarto-table-cell-role="th">top</th>
-<th data-quarto-table-cell-role="th">freq</th>
-<th data-quarto-table-cell-role="th">mean</th>
-<th data-quarto-table-cell-role="th">std</th>
-<th data-quarto-table-cell-role="th">min</th>
-<th data-quarto-table-cell-role="th">25%</th>
-<th data-quarto-table-cell-role="th">50%</th>
-<th data-quarto-table-cell-role="th">75%</th>
-<th data-quarto-table-cell-role="th">max</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">id</th>
-<td>600</td>
-<td>600</td>
-<td>ID12101</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">age</th>
-<td>600.0</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>42.395</td>
-<td>14.424947</td>
-<td>18.0</td>
-<td>30.0</td>
-<td>42.0</td>
-<td>55.25</td>
-<td>67.0</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">sex</th>
-<td>600</td>
-<td>2</td>
-<td>FEMALE</td>
-<td>300</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">region</th>
-<td>600</td>
-<td>4</td>
-<td>INNER_CITY</td>
-<td>269</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">income</th>
-<td>600.0</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>27524.031217</td>
-<td>12899.468246</td>
-<td>5014.21</td>
-<td>17264.5</td>
-<td>24925.3</td>
-<td>36172.675</td>
-<td>63130.1</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">married</th>
-<td>600</td>
-<td>2</td>
-<td>YES</td>
-<td>396</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">children</th>
-<td>600.0</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>1.011667</td>
-<td>1.056752</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>1.0</td>
-<td>2.0</td>
-<td>3.0</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">car</th>
-<td>600</td>
-<td>2</td>
-<td>NO</td>
-<td>304</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">save_act</th>
-<td>600</td>
-<td>2</td>
-<td>YES</td>
-<td>414</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">current_act</th>
-<td>600</td>
-<td>2</td>
-<td>YES</td>
-<td>455</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">mortgage</th>
-<td>600</td>
-<td>2</td>
-<td>NO</td>
-<td>391</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">pep</th>
-<td>600</td>
-<td>2</td>
-<td>NO</td>
-<td>326</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section>
 <section id="bank-target-counts" class="slide level2">
 <h2>Bank target counts</h2>
-<div id="3756fc8f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.460249Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.460127Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.464794Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.464008Z&quot;}}" data-execution_count="7">
+<div id="3756fc8f" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">count</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">pep</th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">NO</th>
-<td>326</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">YES</th>
-<td>274</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section>
 <section id="bank-target-proportions" class="slide level2">
 <h2>Bank target proportions</h2>
-<div id="c27cb604" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.466017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.465905Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.470330Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.469871Z&quot;}}" data-execution_count="8">
+<div id="c27cb604" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"proportion"</span>).to_frame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"proportion"</span>).to_frame()</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">proportion</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">pep</th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">NO</th>
-<td>0.543333</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">YES</th>
-<td>0.456667</td>
-</tr>
-</tbody>
-</table>
-
 </div>
-</div>
-</div>
-
-<img data-src="lab-03-classification_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+</section>
 <section id="exercise---decide-what-enters-the-model" class="slide level2">
 <h2>Exercise - decide what enters the model</h2>
 <p>Before running the next cell:</p>
@@ -841,7 +362,7 @@ memory usage: 56.4+ KB</code></pre>
 </ol>
 <details>
 <summary>
-Suggested answer
+Answer
 </summary>
 <ul>
 <li><code>id</code> should be removed: it uniquely names records and has no intended predictive meaning.</li>
@@ -853,57 +374,6 @@ Suggested answer
 <section id="make-a-single-stratified-holdout-split" class="slide level2">
 <h2>Make a single stratified holdout split</h2>
 <p>The test set is placed “in a vault” until model selection is complete. Stratification preserves the target proportions in both partitions.</p>
-<div id="d842afad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.789017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.788825Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.799517Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.798784Z&quot;}}" data-execution_count="10">
-<div class="cell-output cell-output-stdout">
-<pre><code>Training shape: (450, 10)
-Test shape: (150, 10)</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">train</th>
-<th data-quarto-table-cell-role="th">test</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">pep</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">NO</th>
-<td>0.542222</td>
-<td>0.546667</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">YES</th>
-<td>0.457778</td>
-<td>0.453333</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
 </section>
 <section id="build-leakage-safe-preprocessing" class="slide level2">
 <h2>Build leakage-safe preprocessing</h2>
@@ -919,19 +389,18 @@ Test shape: (150, 10)</code></pre>
 <h2>Compare candidates with stratified cross-validation</h2>
 <p>Always include a simple baseline. <code>DummyClassifier</code> reveals whether a learned model improves on predicting the most common class.</p>
 <p>We report the mean and standard deviation across five folds. The same folds are used for every candidate.</p>
-<div id="13b30080" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:16.073000Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:16.072838Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:16.167867Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:16.167279Z&quot;}}" data-execution_count="13">
+<div id="13b30080" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> cv_results[[<span class="st">"accuracy_mean"</span>, <span class="st">"balanced_accuracy_mean"</span>, <span class="st">"f1_mean"</span>, <span class="st">"roc_auc_mean"</span>]].plot.bar(</span>
-<span id="cb10-2"><a href="" aria-label="2"></a>    figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>), ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>), rot<span class="op">=</span><span class="dv">20</span></span>
-<span id="cb10-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb10-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: five-fold cross-validation"</span>, ylabel<span class="op">=</span><span class="st">"Mean validation score"</span>, xlabel<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb10-5"><a href="" aria-label="5"></a>ax.legend()</span>
-<span id="cb10-6"><a href="" aria-label="6"></a>plt.tight_layout()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> cv_results[[<span class="st">"accuracy_mean"</span>, <span class="st">"balanced_accuracy_mean"</span>, <span class="st">"f1_mean"</span>, <span class="st">"roc_auc_mean"</span>]].plot.bar(</span>
+<span id="cb8-2"><a href="" aria-label="2"></a>    figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>), ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>), rot<span class="op">=</span><span class="dv">20</span></span>
+<span id="cb8-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: five-fold cross-validation"</span>, ylabel<span class="op">=</span><span class="st">"Mean validation score"</span>, xlabel<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb8-5"><a href="" aria-label="5"></a>ax.legend()</span>
+<span id="cb8-6"><a href="" aria-label="6"></a>plt.tight_layout()</span></code></pre></div>
 </details>
-
 </div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
+</section>
 <section id="checkpoint---read-cross-validation-results" class="slide level2">
 <h2>Checkpoint - read cross-validation results</h2>
 <ol type="1">
@@ -945,88 +414,6 @@ Test shape: (150, 10)</code></pre>
 <section id="tune-tree-complexity-using-training-data-only" class="slide level2">
 <h2>Tune tree complexity using training data only</h2>
 <p>An unconstrained tree can memorize the training set. Grid search evaluates combinations of depth and minimum leaf size inside cross-validation. We optimize balanced accuracy and do not touch <code>X_test</code>.</p>
-<div id="ded7c6e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:16.169436Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:16.169298Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:17.882422Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:17.881665Z&quot;}}" data-execution_count="14">
-<div class="cell-output cell-output-stdout">
-<pre><code>Best parameters: {'model__max_depth': 7, 'model__min_samples_leaf': 5}
-Best mean CV balanced accuracy: 0.839</code></pre>
-</div>
-</div>
-<div id="c04d30ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:17.883987Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:17.883841Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:17.890566Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:17.890065Z&quot;}}" data-execution_count="15">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>grid_results <span class="op">=</span> pd.DataFrame(tree_grid.cv_results_)</span>
-<span id="cb12-2"><a href="" aria-label="2"></a>grid_view <span class="op">=</span> grid_results[[</span>
-<span id="cb12-3"><a href="" aria-label="3"></a>    <span class="st">"param_model__max_depth"</span>,</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>    <span class="st">"param_model__min_samples_leaf"</span>,</span>
-<span id="cb12-5"><a href="" aria-label="5"></a>    <span class="st">"mean_train_score"</span>,</span>
-<span id="cb12-6"><a href="" aria-label="6"></a>    <span class="st">"mean_test_score"</span>,</span>
-<span id="cb12-7"><a href="" aria-label="7"></a>    <span class="st">"std_test_score"</span>,</span>
-<span id="cb12-8"><a href="" aria-label="8"></a>    <span class="st">"rank_test_score"</span>,</span>
-<span id="cb12-9"><a href="" aria-label="9"></a>]].sort_values(<span class="st">"rank_test_score"</span>)</span>
-<span id="cb12-10"><a href="" aria-label="10"></a>grid_view.head(<span class="dv">3</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">param_model__max_depth</th>
-<th data-quarto-table-cell-role="th">param_model__min_samples_leaf</th>
-<th data-quarto-table-cell-role="th">mean_train_score</th>
-<th data-quarto-table-cell-role="th">mean_test_score</th>
-<th data-quarto-table-cell-role="th">std_test_score</th>
-<th data-quarto-table-cell-role="th">rank_test_score</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">17</th>
-<td>7</td>
-<td>5</td>
-<td>0.902</td>
-<td>0.839</td>
-<td>0.040</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">21</th>
-<td>None</td>
-<td>5</td>
-<td>0.909</td>
-<td>0.837</td>
-<td>0.043</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">16</th>
-<td>7</td>
-<td>1</td>
-<td>0.940</td>
-<td>0.805</td>
-<td>0.047</td>
-<td>3</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
 </section>
 <section id="exercise---diagnose-overfitting" class="slide level2">
 <h2>Exercise - diagnose overfitting</h2>
@@ -1038,7 +425,7 @@ Best mean CV balanced accuracy: 0.839</code></pre>
 </ol>
 <details>
 <summary>
-Suggested answer
+Answer
 </summary>
 Deep trees with very small leaves usually have the largest gap. Restricting depth limits sequential splits; increasing minimum leaf size prevents rules based on very few rows. Grid search selects the highest mean validation score, not the highest training score.
 </details>
@@ -1046,89 +433,13 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 <section id="final-bank-evaluation" class="slide level2">
 <h2>Final Bank evaluation</h2>
 <p>Now evaluate the tuned workflow once on the held-out test set. The positive class is <code>YES</code>, so recall answers: “of customers who bought a PEP, how many did we find?”</p>
-<div id="d7130671" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:17.892052Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:17.891926Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:17.911971Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:17.911509Z&quot;}}" data-execution_count="16">
+<div id="f5de2950" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>best_bank_model <span class="op">=</span> tree_grid.best_estimator_</span>
-<span id="cb13-2"><a href="" aria-label="2"></a>bank_pred <span class="op">=</span> best_bank_model.predict(X_test)</span>
-<span id="cb13-3"><a href="" aria-label="3"></a>bank_proba <span class="op">=</span> best_bank_model.predict_proba(X_test)</span>
-<span id="cb13-4"><a href="" aria-label="4"></a>positive_index <span class="op">=</span> <span class="bu">list</span>(best_bank_model.classes_).index(<span class="st">"YES"</span>)</span>
-<span id="cb13-5"><a href="" aria-label="5"></a>bank_score <span class="op">=</span> bank_proba[:, positive_index]</span>
-<span id="cb13-6"><a href="" aria-label="6"></a></span>
-<span id="cb13-7"><a href="" aria-label="7"></a>bank_test_metrics <span class="op">=</span> pd.Series({</span>
-<span id="cb13-8"><a href="" aria-label="8"></a>    <span class="st">"accuracy"</span>: accuracy_score(y_test, bank_pred),</span>
-<span id="cb13-9"><a href="" aria-label="9"></a>    <span class="st">"balanced_accuracy"</span>: balanced_accuracy_score(y_test, bank_pred),</span>
-<span id="cb13-10"><a href="" aria-label="10"></a>    <span class="st">"macro_f1"</span>: f1_score(y_test, bank_pred, average<span class="op">=</span><span class="st">"macro"</span>),</span>
-<span id="cb13-11"><a href="" aria-label="11"></a>    <span class="st">"roc_auc"</span>: roc_auc_score((y_test <span class="op">==</span> <span class="st">"YES"</span>).astype(<span class="bu">int</span>), bank_score),</span>
-<span id="cb13-12"><a href="" aria-label="12"></a>    <span class="st">"average_precision"</span>: average_precision_score((y_test <span class="op">==</span> <span class="st">"YES"</span>).astype(<span class="bu">int</span>), bank_score),</span>
-<span id="cb13-13"><a href="" aria-label="13"></a>}, name<span class="op">=</span><span class="st">"test_score"</span>)</span>
-<span id="cb13-14"><a href="" aria-label="14"></a></span>
-<span id="cb13-15"><a href="" aria-label="15"></a><span class="bu">print</span>(classification_report(y_test, bank_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb13-16"><a href="" aria-label="16"></a>bank_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>bank_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>              precision    recall  f1-score   support
-
-          NO      0.880     0.890     0.885        82
-         YES      0.866     0.853     0.859        68
-
-    accuracy                          0.873       150
-   macro avg      0.873     0.872     0.872       150
-weighted avg      0.873     0.873     0.873       150
-</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">test_score</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">accuracy</th>
-<td>0.873</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">balanced_accuracy</th>
-<td>0.872</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">macro_f1</th>
-<td>0.872</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">roc_auc</th>
-<td>0.913</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">average_precision</th>
-<td>0.905</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-
-<img data-src="lab-03-classification_files/figure-revealjs/cell-18-output-1.png" class="r-stretch"></section>
+</section>
 <section id="metric-guide" class="slide level2">
 <h2>Metric guide</h2>
 <table class="caption-top">
@@ -1187,589 +498,114 @@ weighted avg      0.873     0.873     0.873       150
 <section id="inspect-the-model-not-just-its-score" class="slide level2">
 <h2>Inspect the model, not just its score</h2>
 <p>Permutation importance measures how much test performance drops after shuffling one feature. It works on the original columns and can expose reliance on a small number of inputs. Importance is predictive, not causal.</p>
-<div id="a50f567d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:18.109321Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:18.109177Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:18.865900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:18.865429Z&quot;}}" data-execution_count="18">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>importance <span class="op">=</span> permutation_importance(</span>
-<span id="cb15-2"><a href="" aria-label="2"></a>    best_bank_model,</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>    X_test,</span>
-<span id="cb15-4"><a href="" aria-label="4"></a>    y_test,</span>
-<span id="cb15-5"><a href="" aria-label="5"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
-<span id="cb15-6"><a href="" aria-label="6"></a>    n_repeats<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb15-7"><a href="" aria-label="7"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb15-8"><a href="" aria-label="8"></a>    n_jobs<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb15-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb15-10"><a href="" aria-label="10"></a></span>
-<span id="cb15-11"><a href="" aria-label="11"></a>importance_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb15-12"><a href="" aria-label="12"></a>    <span class="st">"feature"</span>: X_test.columns,</span>
-<span id="cb15-13"><a href="" aria-label="13"></a>    <span class="st">"importance_mean"</span>: importance.importances_mean,</span>
-<span id="cb15-14"><a href="" aria-label="14"></a>    <span class="st">"importance_sd"</span>: importance.importances_std,</span>
-<span id="cb15-15"><a href="" aria-label="15"></a>}).sort_values(<span class="st">"importance_mean"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb15-16"><a href="" aria-label="16"></a></span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="bank-permutation-importance-table" class="slide level2">
-<h2>Bank permutation importance table</h2>
-<div id="8be3edd0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:18.868022Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:18.867879Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:18.873295Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:18.872565Z&quot;}}" data-execution_count="19">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>importance_df.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="19">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">feature</th>
-<th data-quarto-table-cell-role="th">importance_mean</th>
-<th data-quarto-table-cell-role="th">importance_sd</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">5</th>
-<td>children</td>
-<td>0.274</td>
-<td>0.027</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>income</td>
-<td>0.126</td>
-<td>0.022</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>married</td>
-<td>0.093</td>
-<td>0.015</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">9</th>
-<td>mortgage</td>
-<td>0.062</td>
-<td>0.016</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">7</th>
-<td>save_act</td>
-<td>0.051</td>
-<td>0.014</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">0</th>
-<td>age</td>
-<td>0.017</td>
-<td>0.005</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">1</th>
-<td>sex</td>
-<td>0.000</td>
-<td>0.000</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">2</th>
-<td>region</td>
-<td>0.000</td>
-<td>0.000</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">6</th>
-<td>car</td>
-<td>0.000</td>
-<td>0.000</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">8</th>
-<td>current_act</td>
-<td>-0.003</td>
-<td>0.004</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
 </section>
 <section id="bank-permutation-importance-chart" class="slide level2">
 <h2>Bank permutation importance chart</h2>
-<div id="7f116130" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:18.875171Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:18.875030Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:18.967756Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:18.967079Z&quot;}}" data-execution_count="20">
+<div id="7f116130" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> importance_df.sort_values(<span class="st">"importance_mean"</span>).plot.barh(</span>
-<span id="cb17-2"><a href="" aria-label="2"></a>    x<span class="op">=</span><span class="st">"feature"</span>, y<span class="op">=</span><span class="st">"importance_mean"</span>, xerr<span class="op">=</span><span class="st">"importance_sd"</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>)</span>
-<span id="cb17-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb17-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: permutation importance"</span>, xlabel<span class="op">=</span><span class="st">"Decrease in balanced accuracy"</span>, ylabel<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb17-5"><a href="" aria-label="5"></a>plt.tight_layout()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> importance_df.sort_values(<span class="st">"importance_mean"</span>).plot.barh(</span>
+<span id="cb10-2"><a href="" aria-label="2"></a>    x<span class="op">=</span><span class="st">"feature"</span>, y<span class="op">=</span><span class="st">"importance_mean"</span>, xerr<span class="op">=</span><span class="st">"importance_sd"</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>)</span>
+<span id="cb10-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb10-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: permutation importance"</span>, xlabel<span class="op">=</span><span class="st">"Decrease in balanced accuracy"</span>, ylabel<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb10-5"><a href="" aria-label="5"></a>plt.tight_layout()</span></code></pre></div>
 </details>
-
-</div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section></section>
-<section>
-<section id="fitted-tree" class="title-slide slide level1 center">
-<h1>Fitted tree</h1>
-<div id="6cdd6b7e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:18.969110Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:18.968964Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.145114Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.144627Z&quot;}}" data-execution_count="21">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>fitted_tree <span class="op">=</span> best_bank_model.named_steps[<span class="st">"model"</span>]</span>
-<span id="cb18-2"><a href="" aria-label="2"></a>feature_names <span class="op">=</span> best_bank_model.named_steps[<span class="st">"preprocess"</span>].get_feature_names_out()</span>
-<span id="cb18-3"><a href="" aria-label="3"></a></span>
-<span id="cb18-4"><a href="" aria-label="4"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">9</span>))</span>
-<span id="cb18-5"><a href="" aria-label="5"></a>plot_tree(fitted_tree, feature_names<span class="op">=</span>feature_names, class_names<span class="op">=</span>fitted_tree.classes_, filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, max_depth<span class="op">=</span><span class="dv">3</span>, fontsize<span class="op">=</span><span class="dv">8</span>,)</span>
-<span id="cb18-6"><a href="" aria-label="6"></a>plt.title(<span class="st">"First levels of the selected Bank decision tree"</span>)</span>
-<span id="cb18-7"><a href="" aria-label="7"></a>plt.show()</span></code></pre></div>
-</details>
-
-</div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-22-output-1.png" class="r-stretch"></section>
-<section id="exercise---error-analysis" class="slide level2">
-<h2>Exercise - error analysis</h2>
-<p>Inspect misclassified rows. Look for patterns, but do not treat a small test sample as proof.</p>
-<div id="f258d83f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.146807Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.146648Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.156545Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.155671Z&quot;}}" data-execution_count="22">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>bank_errors <span class="op">=</span> X_test.copy()</span>
-<span id="cb19-2"><a href="" aria-label="2"></a>bank_errors[<span class="st">"actual"</span>] <span class="op">=</span> y_test</span>
-<span id="cb19-3"><a href="" aria-label="3"></a>bank_errors[<span class="st">"predicted"</span>] <span class="op">=</span> bank_pred</span>
-<span id="cb19-4"><a href="" aria-label="4"></a>bank_errors[<span class="st">"p_yes"</span>] <span class="op">=</span> bank_score</span>
-<span id="cb19-5"><a href="" aria-label="5"></a>bank_errors <span class="op">=</span> bank_errors[bank_errors[<span class="st">"actual"</span>] <span class="op">!=</span> bank_errors[<span class="st">"predicted"</span>]]</span>
-<span id="cb19-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Misclassified rows: </span><span class="sc">{</span><span class="bu">len</span>(bank_errors)<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(X_test)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb19-7"><a href="" aria-label="7"></a>bank_errors.sort_values(<span class="st">"p_yes"</span>).head(<span class="dv">8</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Misclassified rows: 19 / 150</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="22">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">age</th>
-<th data-quarto-table-cell-role="th">sex</th>
-<th data-quarto-table-cell-role="th">region</th>
-<th data-quarto-table-cell-role="th">income</th>
-<th data-quarto-table-cell-role="th">married</th>
-<th data-quarto-table-cell-role="th">children</th>
-<th data-quarto-table-cell-role="th">car</th>
-<th data-quarto-table-cell-role="th">save_act</th>
-<th data-quarto-table-cell-role="th">current_act</th>
-<th data-quarto-table-cell-role="th">mortgage</th>
-<th data-quarto-table-cell-role="th">actual</th>
-<th data-quarto-table-cell-role="th">predicted</th>
-<th data-quarto-table-cell-role="th">p_yes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">275</th>
-<td>18</td>
-<td>MALE</td>
-<td>RURAL</td>
-<td>9362.58</td>
-<td>YES</td>
-<td>0</td>
-<td>YES</td>
-<td>NO</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-<td>0.000000</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">539</th>
-<td>19</td>
-<td>MALE</td>
-<td>INNER_CITY</td>
-<td>10191.80</td>
-<td>YES</td>
-<td>0</td>
-<td>NO</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-<td>0.000000</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">524</th>
-<td>44</td>
-<td>MALE</td>
-<td>SUBURBAN</td>
-<td>18707.30</td>
-<td>YES</td>
-<td>0</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-<td>0.048387</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">492</th>
-<td>61</td>
-<td>FEMALE</td>
-<td>TOWN</td>
-<td>27756.30</td>
-<td>YES</td>
-<td>0</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-<td>0.048387</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">18</th>
-<td>62</td>
-<td>FEMALE</td>
-<td>INNER_CITY</td>
-<td>26909.20</td>
-<td>YES</td>
-<td>0</td>
-<td>NO</td>
-<td>YES</td>
-<td>NO</td>
-<td>NO</td>
-<td>YES</td>
-<td>NO</td>
-<td>0.048387</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">597</th>
-<td>31</td>
-<td>FEMALE</td>
-<td>TOWN</td>
-<td>15976.30</td>
-<td>YES</td>
-<td>0</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-<td>NO</td>
-<td>YES</td>
-<td>NO</td>
-<td>0.048387</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">418</th>
-<td>28</td>
-<td>FEMALE</td>
-<td>TOWN</td>
-<td>25699.40</td>
-<td>YES</td>
-<td>2</td>
-<td>YES</td>
-<td>YES</td>
-<td>NO</td>
-<td>NO</td>
-<td>YES</td>
-<td>NO</td>
-<td>0.187500</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">213</th>
-<td>28</td>
-<td>MALE</td>
-<td>TOWN</td>
-<td>13175.50</td>
-<td>NO</td>
-<td>1</td>
-<td>NO</td>
-<td>NO</td>
-<td>YES</td>
-<td>NO</td>
-<td>YES</td>
-<td>NO</td>
-<td>0.222222</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section></section>
 <section>
-<section id="census-supplied-test-data-and-imbalance" class="title-slide slide level1 center">
-<h1>Census: supplied test data and imbalance</h1>
+<section id="fitted-tree" class="title-slide slide level1 center">
+<h1>Fitted tree</h1>
+<div id="6cdd6b7e" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>fitted_tree <span class="op">=</span> best_bank_model.named_steps[<span class="st">"model"</span>]</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>feature_names <span class="op">=</span> best_bank_model.named_steps[<span class="st">"preprocess"</span>].get_feature_names_out()</span>
+<span id="cb11-3"><a href="" aria-label="3"></a></span>
+<span id="cb11-4"><a href="" aria-label="4"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">9</span>))</span>
+<span id="cb11-5"><a href="" aria-label="5"></a>plot_tree(fitted_tree, feature_names<span class="op">=</span>feature_names, class_names<span class="op">=</span>fitted_tree.classes_, filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, max_depth<span class="op">=</span><span class="dv">3</span>, fontsize<span class="op">=</span><span class="dv">8</span>,)</span>
+<span id="cb11-6"><a href="" aria-label="6"></a>plt.title(<span class="st">"First levels of the selected Bank decision tree"</span>)</span>
+<span id="cb11-7"><a href="" aria-label="7"></a>plt.show()</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="exercise---error-analysis" class="slide level2">
+<h2>Exercise - error analysis</h2>
+<p>Inspect misclassified rows. Look for patterns, but do not treat a small test sample as proof.</p>
+<div id="f258d83f" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>bank_errors <span class="op">=</span> X_test.copy()</span>
+<span id="cb12-2"><a href="" aria-label="2"></a>bank_errors[<span class="st">"actual"</span>] <span class="op">=</span> y_test</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>bank_errors[<span class="st">"predicted"</span>] <span class="op">=</span> bank_pred</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>bank_errors[<span class="st">"p_yes"</span>] <span class="op">=</span> bank_score</span>
+<span id="cb12-5"><a href="" aria-label="5"></a>bank_errors <span class="op">=</span> bank_errors[bank_errors[<span class="st">"actual"</span>] <span class="op">!=</span> bank_errors[<span class="st">"predicted"</span>]]</span>
+<span id="cb12-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Misclassified rows: </span><span class="sc">{</span><span class="bu">len</span>(bank_errors)<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(X_test)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>bank_errors.sort_values(<span class="st">"p_yes"</span>).head(<span class="dv">8</span>)</span></code></pre></div>
+</details>
+</div>
+</section></section>
+<section id="census-dataset" class="title-slide slide level1 center">
+<h1>Census dataset</h1>
+
+</section>
+
+<section>
+<section id="census-data-supplied-test-data-and-imbalance" class="title-slide slide level1 center">
+<h1>Census data: supplied test data and imbalance</h1>
 <p>The Census task predicts whether annual income is <code>&gt;50K</code>. Unlike Bank, this dataset supplies separate training and test ARFF files. We use training-only cross-validation for decisions and the supplied test set for final evaluation.</p>
 </section>
 <section id="audit-traintest-compatibility" class="slide level2">
 <h2>Audit train/test compatibility</h2>
 <p>Check that schemas match, inspect missingness, and compare class prevalence. <code>fnlwgt</code> is a survey weight rather than a personal characteristic; we exclude it here. <code>education</code> and <code>education-num</code> encode closely related information, so we remove the numeric duplicate for a clearer teaching model.</p>
-<div id="8323f7ee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.157926Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.157789Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.181434Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.180952Z&quot;}}" data-execution_count="23">
+<div id="8323f7ee" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>TARGET <span class="op">=</span> <span class="st">"class"</span></span>
-<span id="cb21-2"><a href="" aria-label="2"></a>drop_columns <span class="op">=</span> [<span class="st">"fnlwgt"</span>, <span class="st">"education-num"</span>]</span>
-<span id="cb21-3"><a href="" aria-label="3"></a></span>
-<span id="cb21-4"><a href="" aria-label="4"></a>census_summary <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb21-5"><a href="" aria-label="5"></a>    <span class="st">"train_missing"</span>: census_train.isna().<span class="bu">sum</span>(),</span>
-<span id="cb21-6"><a href="" aria-label="6"></a>    <span class="st">"test_missing"</span>: census_test.isna().<span class="bu">sum</span>(),</span>
-<span id="cb21-7"><a href="" aria-label="7"></a>    <span class="st">"train_unique"</span>: census_train.nunique(dropna<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb21-8"><a href="" aria-label="8"></a>    <span class="st">"test_unique"</span>: census_test.nunique(dropna<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb21-9"><a href="" aria-label="9"></a>})</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>TARGET <span class="op">=</span> <span class="st">"class"</span></span>
+<span id="cb13-2"><a href="" aria-label="2"></a>drop_columns <span class="op">=</span> [<span class="st">"fnlwgt"</span>, <span class="st">"education-num"</span>]</span>
+<span id="cb13-3"><a href="" aria-label="3"></a></span>
+<span id="cb13-4"><a href="" aria-label="4"></a>census_summary <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb13-5"><a href="" aria-label="5"></a>    <span class="st">"train_missing"</span>: census_train.isna().<span class="bu">sum</span>(),</span>
+<span id="cb13-6"><a href="" aria-label="6"></a>    <span class="st">"test_missing"</span>: census_test.isna().<span class="bu">sum</span>(),</span>
+<span id="cb13-7"><a href="" aria-label="7"></a>    <span class="st">"train_unique"</span>: census_train.nunique(dropna<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb13-8"><a href="" aria-label="8"></a>    <span class="st">"test_unique"</span>: census_test.nunique(dropna<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb13-9"><a href="" aria-label="9"></a>})</span></code></pre></div>
 </details>
 </div>
 </section>
 <section id="census-audit-summary" class="slide level2">
 <h2>Census audit summary</h2>
-<div id="63c7c3ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.183049Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.182926Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.187505Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.186989Z&quot;}}" data-execution_count="24">
+<div id="63c7c3ca" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>census_summary</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>census_summary</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="24">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">train_missing</th>
-<th data-quarto-table-cell-role="th">test_missing</th>
-<th data-quarto-table-cell-role="th">train_unique</th>
-<th data-quarto-table-cell-role="th">test_unique</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">age</th>
-<td>0</td>
-<td>0</td>
-<td>66</td>
-<td>73</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">workclass</th>
-<td>62</td>
-<td>1774</td>
-<td>6</td>
-<td>8</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">fnlwgt</th>
-<td>0</td>
-<td>0</td>
-<td>987</td>
-<td>21176</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">education</th>
-<td>0</td>
-<td>0</td>
-<td>16</td>
-<td>16</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">education-num</th>
-<td>0</td>
-<td>0</td>
-<td>16</td>
-<td>16</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">marital-status</th>
-<td>0</td>
-<td>0</td>
-<td>7</td>
-<td>7</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">occupation</th>
-<td>62</td>
-<td>1781</td>
-<td>14</td>
-<td>14</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">relationship</th>
-<td>0</td>
-<td>0</td>
-<td>6</td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">race</th>
-<td>0</td>
-<td>0</td>
-<td>5</td>
-<td>5</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">sex</th>
-<td>0</td>
-<td>0</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">capital-gain</th>
-<td>1</td>
-<td>0</td>
-<td>36</td>
-<td>118</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">capital-loss</th>
-<td>1</td>
-<td>0</td>
-<td>30</td>
-<td>92</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">hours-per-week</th>
-<td>0</td>
-<td>0</td>
-<td>56</td>
-<td>94</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">native-country</th>
-<td>18</td>
-<td>565</td>
-<td>28</td>
-<td>41</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">class</th>
-<td>0</td>
-<td>0</td>
-<td>2</td>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section>
 <section id="census-target-prevalence" class="slide level2">
 <h2>Census target prevalence</h2>
-<div id="ec64e26e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.188953Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.188822Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.195123Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.194757Z&quot;}}" data-execution_count="25">
+<div id="ec64e26e" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>prevalence <span class="op">=</span> pd.concat(</span>
-<span id="cb23-2"><a href="" aria-label="2"></a>    [</span>
-<span id="cb23-3"><a href="" aria-label="3"></a>        census_train[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"train"</span>),</span>
-<span id="cb23-4"><a href="" aria-label="4"></a>        census_test[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"test"</span>),</span>
-<span id="cb23-5"><a href="" aria-label="5"></a>    ],</span>
-<span id="cb23-6"><a href="" aria-label="6"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb23-7"><a href="" aria-label="7"></a>)</span>
-<span id="cb23-8"><a href="" aria-label="8"></a>prevalence</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>prevalence <span class="op">=</span> pd.concat(</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>    [</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>        census_train[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"train"</span>),</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>        census_test[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"test"</span>),</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>    ],</span>
+<span id="cb15-6"><a href="" aria-label="6"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb15-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb15-8"><a href="" aria-label="8"></a>prevalence</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="25">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">train</th>
-<th data-quarto-table-cell-role="th">test</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">class</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">&lt;=50K</th>
-<td>0.768</td>
-<td>0.758911</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">&gt;50K</th>
-<td>0.232</td>
-<td>0.241089</td>
-</tr>
-</tbody>
-</table>
-
 </div>
-</div>
-</div>
-<div id="b1291eaf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.196642Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.196513Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.199878Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.199485Z&quot;}}" data-execution_count="26">
+<div id="b1291eaf" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>X_census_train <span class="op">=</span> census_train.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
-<span id="cb24-2"><a href="" aria-label="2"></a>y_census_train <span class="op">=</span> census_train[TARGET]</span>
-<span id="cb24-3"><a href="" aria-label="3"></a>X_census_test <span class="op">=</span> census_test.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
-<span id="cb24-4"><a href="" aria-label="4"></a>y_census_test <span class="op">=</span> census_test[TARGET]</span>
-<span id="cb24-5"><a href="" aria-label="5"></a></span>
-<span id="cb24-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"Training:"</span>, X_census_train.shape, <span class="st">"Test:"</span>, X_census_test.shape)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>X_census_train <span class="op">=</span> census_train.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>y_census_train <span class="op">=</span> census_train[TARGET]</span>
+<span id="cb16-3"><a href="" aria-label="3"></a>X_census_test <span class="op">=</span> census_test.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
+<span id="cb16-4"><a href="" aria-label="4"></a>y_census_test <span class="op">=</span> census_test[TARGET]</span>
+<span id="cb16-5"><a href="" aria-label="5"></a></span>
+<span id="cb16-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"Training:"</span>, X_census_train.shape, <span class="st">"Test:"</span>, X_census_test.shape)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Training: (1000, 12) Test: (31561, 12)</code></pre>
-</div>
 </div>
 </section>
 <section id="checkpoint---distribution-shift" class="slide level2">
@@ -1785,99 +621,6 @@ weighted avg      0.873     0.873     0.873       150
 <section id="select-a-census-model-by-cross-validation" class="slide level2">
 <h2>Select a Census model by cross-validation</h2>
 <p>The positive class is the less frequent <code>&gt;50K</code> group. We compare a class-weighted logistic regression, a constrained decision tree, and a random forest. Class weighting asks the learner to penalize mistakes on the minority class more strongly; it does not change the evaluation data.</p>
-<div id="43f6fb51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.201425Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.201295Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:21.079351Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:21.078529Z&quot;}}" data-execution_count="27">
-<div class="cell-output cell-output-display" data-execution_count="27">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">accuracy_mean</th>
-<th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
-<th data-quarto-table-cell-role="th">f1_mean</th>
-<th data-quarto-table-cell-role="th">roc_auc_mean</th>
-<th data-quarto-table-cell-role="th">accuracy_sd</th>
-<th data-quarto-table-cell-role="th">balanced_accuracy_sd</th>
-<th data-quarto-table-cell-role="th">f1_sd</th>
-<th data-quarto-table-cell-role="th">roc_auc_sd</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">model</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Weighted random forest</th>
-<td>0.783</td>
-<td>0.796</td>
-<td>0.741</td>
-<td>0.884</td>
-<td>0.022</td>
-<td>0.022</td>
-<td>0.021</td>
-<td>0.017</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Weighted logistic regression</th>
-<td>0.791</td>
-<td>0.792</td>
-<td>0.745</td>
-<td>0.883</td>
-<td>0.012</td>
-<td>0.029</td>
-<td>0.015</td>
-<td>0.014</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Weighted decision tree</th>
-<td>0.748</td>
-<td>0.785</td>
-<td>0.712</td>
-<td>0.836</td>
-<td>0.025</td>
-<td>0.032</td>
-<td>0.025</td>
-<td>0.028</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Baseline</th>
-<td>0.768</td>
-<td>0.500</td>
-<td>0.434</td>
-<td>0.500</td>
-<td>0.002</td>
-<td>0.000</td>
-<td>0.001</td>
-<td>0.000</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
 </section>
 <section id="evaluate-the-selected-census-model-once" class="slide level2">
 <h2>Evaluate the selected Census model once</h2>
@@ -1885,167 +628,50 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="census-supplied-test-metrics" class="slide level2">
 <h2>Census supplied test metrics</h2>
-<div id="a14bbdfe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.274545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.274397Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.280036Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.279151Z&quot;}}" data-execution_count="29">
+<div id="a14bbdfe" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="st">"Selected by CV:"</span>, selected_name)</span>
-<span id="cb26-2"><a href="" aria-label="2"></a>census_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="st">"Selected by CV:"</span>, selected_name)</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>census_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Selected by CV: Weighted random forest</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="29">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">supplied_test_score</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">accuracy</th>
-<td>0.779</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">balanced_accuracy</th>
-<td>0.796</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">macro_f1</th>
-<td>0.742</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">roc_auc</th>
-<td>0.890</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">average_precision</th>
-<td>0.723</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section>
 <section id="census-supplied-test-report-and-confusion-matrix" class="slide level2">
 <h2>Census supplied test report and confusion matrix</h2>
-<div id="e974da16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.281619Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.281494Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.564414Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.563553Z&quot;}}" data-execution_count="30">
+<div id="e974da16" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a><span class="bu">print</span>(classification_report(y_census_test, census_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb28-2"><a href="" aria-label="2"></a>ConfusionMatrixDisplay.from_predictions(y_census_test, census_pred, labels<span class="op">=</span>[<span class="st">"&lt;=50K"</span>, <span class="st">"&gt;50K"</span>], cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span>,)</span>
-<span id="cb28-3"><a href="" aria-label="3"></a>plt.title(<span class="st">"Census: supplied test set"</span>)</span>
-<span id="cb28-4"><a href="" aria-label="4"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="bu">print</span>(classification_report(y_census_test, census_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb18-2"><a href="" aria-label="2"></a>ConfusionMatrixDisplay.from_predictions(y_census_test, census_pred, labels<span class="op">=</span>[<span class="st">"&lt;=50K"</span>, <span class="st">"&gt;50K"</span>], cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span>,)</span>
+<span id="cb18-3"><a href="" aria-label="3"></a>plt.title(<span class="st">"Census: supplied test set"</span>)</span>
+<span id="cb18-4"><a href="" aria-label="4"></a>plt.show()</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>              precision    recall  f1-score   support
-
-       &lt;=50K      0.934     0.762     0.839     23952
-        &gt;50K      0.526     0.830     0.644      7609
-
-    accuracy                          0.779     31561
-   macro avg      0.730     0.796     0.742     31561
-weighted avg      0.835     0.779     0.792     31561
-</code></pre>
 </div>
-
-</div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-31-output-2.png" class="r-stretch"></section>
+</section>
 <section id="slice-based-error-analysis" class="slide level2">
 <h2>Slice-based error analysis</h2>
 <p>Aggregate metrics can hide uneven performance. The next cell reports accuracy and positive-class recall by sex. This is a descriptive diagnostic, <strong>not</strong> a fairness verdict: subgroup sizes, label quality, history, deployment context, and the costs of errors all matter.</p>
-<div id="32792970" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.566250Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.566101Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.583203Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.582588Z&quot;}}" data-execution_count="31">
+<div id="32792970" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>census_diagnostics <span class="op">=</span> X_census_test[[<span class="st">"sex"</span>]].copy()</span>
-<span id="cb30-2"><a href="" aria-label="2"></a>census_diagnostics[<span class="st">"actual"</span>] <span class="op">=</span> y_census_test.to_numpy()</span>
-<span id="cb30-3"><a href="" aria-label="3"></a>census_diagnostics[<span class="st">"predicted"</span>] <span class="op">=</span> census_pred</span>
-<span id="cb30-4"><a href="" aria-label="4"></a></span>
-<span id="cb30-5"><a href="" aria-label="5"></a>slice_rows <span class="op">=</span> []</span>
-<span id="cb30-6"><a href="" aria-label="6"></a><span class="cf">for</span> group, frame <span class="kw">in</span> census_diagnostics.groupby(<span class="st">"sex"</span>):</span>
-<span id="cb30-7"><a href="" aria-label="7"></a>    actual_positive <span class="op">=</span> frame[<span class="st">"actual"</span>] <span class="op">==</span> <span class="st">"&gt;50K"</span></span>
-<span id="cb30-8"><a href="" aria-label="8"></a>    true_positive <span class="op">=</span> actual_positive <span class="op">&amp;</span> (frame[<span class="st">"predicted"</span>] <span class="op">==</span> <span class="st">"&gt;50K"</span>)</span>
-<span id="cb30-9"><a href="" aria-label="9"></a>    slice_rows.append({</span>
-<span id="cb30-10"><a href="" aria-label="10"></a>        <span class="st">"sex"</span>: group,</span>
-<span id="cb30-11"><a href="" aria-label="11"></a>        <span class="st">"n"</span>: <span class="bu">len</span>(frame),</span>
-<span id="cb30-12"><a href="" aria-label="12"></a>        <span class="st">"positive_prevalence"</span>: actual_positive.mean(),</span>
-<span id="cb30-13"><a href="" aria-label="13"></a>        <span class="st">"accuracy"</span>: (frame[<span class="st">"actual"</span>] <span class="op">==</span> frame[<span class="st">"predicted"</span>]).mean(),</span>
-<span id="cb30-14"><a href="" aria-label="14"></a>        <span class="st">"positive_recall"</span>: true_positive.<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">max</span>(actual_positive.<span class="bu">sum</span>(), <span class="dv">1</span>),</span>
-<span id="cb30-15"><a href="" aria-label="15"></a>    })</span>
-<span id="cb30-16"><a href="" aria-label="16"></a></span>
-<span id="cb30-17"><a href="" aria-label="17"></a>pd.DataFrame(slice_rows).set_index(<span class="st">"sex"</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>census_diagnostics <span class="op">=</span> X_census_test[[<span class="st">"sex"</span>]].copy()</span>
+<span id="cb19-2"><a href="" aria-label="2"></a>census_diagnostics[<span class="st">"actual"</span>] <span class="op">=</span> y_census_test.to_numpy()</span>
+<span id="cb19-3"><a href="" aria-label="3"></a>census_diagnostics[<span class="st">"predicted"</span>] <span class="op">=</span> census_pred</span>
+<span id="cb19-4"><a href="" aria-label="4"></a></span>
+<span id="cb19-5"><a href="" aria-label="5"></a>slice_rows <span class="op">=</span> []</span>
+<span id="cb19-6"><a href="" aria-label="6"></a><span class="cf">for</span> group, frame <span class="kw">in</span> census_diagnostics.groupby(<span class="st">"sex"</span>):</span>
+<span id="cb19-7"><a href="" aria-label="7"></a>    actual_positive <span class="op">=</span> frame[<span class="st">"actual"</span>] <span class="op">==</span> <span class="st">"&gt;50K"</span></span>
+<span id="cb19-8"><a href="" aria-label="8"></a>    true_positive <span class="op">=</span> actual_positive <span class="op">&amp;</span> (frame[<span class="st">"predicted"</span>] <span class="op">==</span> <span class="st">"&gt;50K"</span>)</span>
+<span id="cb19-9"><a href="" aria-label="9"></a>    slice_rows.append({</span>
+<span id="cb19-10"><a href="" aria-label="10"></a>        <span class="st">"sex"</span>: group,</span>
+<span id="cb19-11"><a href="" aria-label="11"></a>        <span class="st">"n"</span>: <span class="bu">len</span>(frame),</span>
+<span id="cb19-12"><a href="" aria-label="12"></a>        <span class="st">"positive_prevalence"</span>: actual_positive.mean(),</span>
+<span id="cb19-13"><a href="" aria-label="13"></a>        <span class="st">"accuracy"</span>: (frame[<span class="st">"actual"</span>] <span class="op">==</span> frame[<span class="st">"predicted"</span>]).mean(),</span>
+<span id="cb19-14"><a href="" aria-label="14"></a>        <span class="st">"positive_recall"</span>: true_positive.<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">max</span>(actual_positive.<span class="bu">sum</span>(), <span class="dv">1</span>),</span>
+<span id="cb19-15"><a href="" aria-label="15"></a>    })</span>
+<span id="cb19-16"><a href="" aria-label="16"></a></span>
+<span id="cb19-17"><a href="" aria-label="17"></a>pd.DataFrame(slice_rows).set_index(<span class="st">"sex"</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="31">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">n</th>
-<th data-quarto-table-cell-role="th">positive_prevalence</th>
-<th data-quarto-table-cell-role="th">accuracy</th>
-<th data-quarto-table-cell-role="th">positive_recall</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">sex</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Female</th>
-<td>10442</td>
-<td>0.109</td>
-<td>0.912</td>
-<td>0.609</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Male</th>
-<td>21119</td>
-<td>0.306</td>
-<td>0.713</td>
-<td>0.868</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section>
 <section id="exercise---make-a-recommendation" class="slide level2">
@@ -2060,6 +686,11 @@ weighted avg      0.835     0.779     0.792     31561
 </ol>
 <p>Avoid saying the model is “good” based on accuracy alone.</p>
 </section></section>
+<section id="nursery-dataset" class="title-slide slide level1 center">
+<h1>Nursery dataset</h1>
+
+</section>
+
 <section>
 <section id="nursery-multiclass-extension" class="title-slide slide level1 center">
 <h1>Nursery: multiclass extension</h1>
@@ -2067,183 +698,33 @@ weighted avg      0.835     0.779     0.792     31561
 </section>
 <section id="nursery-sample" class="slide level2">
 <h2>Nursery sample</h2>
-<div id="dbd33a92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.584896Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.584740Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.591261Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.590469Z&quot;}}" data-execution_count="32">
+<div id="dbd33a92" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>nursery.head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>nursery.head()</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="32">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">parents</th>
-<th data-quarto-table-cell-role="th">has_nurs</th>
-<th data-quarto-table-cell-role="th">form</th>
-<th data-quarto-table-cell-role="th">children</th>
-<th data-quarto-table-cell-role="th">housing</th>
-<th data-quarto-table-cell-role="th">finance</th>
-<th data-quarto-table-cell-role="th">social</th>
-<th data-quarto-table-cell-role="th">health</th>
-<th data-quarto-table-cell-role="th">class</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>usual</td>
-<td>proper</td>
-<td>complete</td>
-<td>1</td>
-<td>convenient</td>
-<td>convenient</td>
-<td>nonprob</td>
-<td>recommended</td>
-<td>recommend</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>usual</td>
-<td>proper</td>
-<td>complete</td>
-<td>1</td>
-<td>convenient</td>
-<td>convenient</td>
-<td>nonprob</td>
-<td>priority</td>
-<td>priority</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
-<td>usual</td>
-<td>proper</td>
-<td>complete</td>
-<td>1</td>
-<td>convenient</td>
-<td>convenient</td>
-<td>nonprob</td>
-<td>not_recom</td>
-<td>not_recom</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>usual</td>
-<td>proper</td>
-<td>complete</td>
-<td>1</td>
-<td>convenient</td>
-<td>convenient</td>
-<td>slightly_prob</td>
-<td>recommended</td>
-<td>recommend</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>usual</td>
-<td>proper</td>
-<td>complete</td>
-<td>1</td>
-<td>convenient</td>
-<td>convenient</td>
-<td>slightly_prob</td>
-<td>priority</td>
-<td>priority</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 </section>
 <section id="nursery-class-counts" class="slide level2">
 <h2>Nursery class counts</h2>
-<div id="0c56671f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.592927Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.592806Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.598279Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.597476Z&quot;}}" data-execution_count="33">
+<div id="0c56671f" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>nursery[<span class="st">"class"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>nursery[<span class="st">"class"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="33">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">count</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">class</th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">priority</th>
-<td>3951</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">not_recom</th>
-<td>3333</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">spec_prior</th>
-<td>2386</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">very_recom</th>
-<td>328</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">recommend</th>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-
 </div>
-</div>
-</div>
-<div id="d2633366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.599862Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.599703Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.611305Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.610717Z&quot;}}" data-execution_count="34">
+<div id="d2633366" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>X_nursery <span class="op">=</span> nursery.drop(columns<span class="op">=</span><span class="st">"class"</span>)</span>
-<span id="cb33-2"><a href="" aria-label="2"></a>y_nursery <span class="op">=</span> nursery[<span class="st">"class"</span>]</span>
-<span id="cb33-3"><a href="" aria-label="3"></a>X_nursery_train, X_nursery_test, y_nursery_train, y_nursery_test <span class="op">=</span> train_test_split(</span>
-<span id="cb33-4"><a href="" aria-label="4"></a>    X_nursery,</span>
-<span id="cb33-5"><a href="" aria-label="5"></a>    y_nursery,</span>
-<span id="cb33-6"><a href="" aria-label="6"></a>    test_size<span class="op">=</span><span class="fl">0.25</span>,</span>
-<span id="cb33-7"><a href="" aria-label="7"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb33-8"><a href="" aria-label="8"></a>    stratify<span class="op">=</span>y_nursery,</span>
-<span id="cb33-9"><a href="" aria-label="9"></a>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>X_nursery <span class="op">=</span> nursery.drop(columns<span class="op">=</span><span class="st">"class"</span>)</span>
+<span id="cb22-2"><a href="" aria-label="2"></a>y_nursery <span class="op">=</span> nursery[<span class="st">"class"</span>]</span>
+<span id="cb22-3"><a href="" aria-label="3"></a>X_nursery_train, X_nursery_test, y_nursery_train, y_nursery_test <span class="op">=</span> train_test_split(</span>
+<span id="cb22-4"><a href="" aria-label="4"></a>    X_nursery,</span>
+<span id="cb22-5"><a href="" aria-label="5"></a>    y_nursery,</span>
+<span id="cb22-6"><a href="" aria-label="6"></a>    test_size<span class="op">=</span><span class="fl">0.25</span>,</span>
+<span id="cb22-7"><a href="" aria-label="7"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
+<span id="cb22-8"><a href="" aria-label="8"></a>    stratify<span class="op">=</span>y_nursery,</span>
+<span id="cb22-9"><a href="" aria-label="9"></a>)</span></code></pre></div>
 </details>
 </div>
 </section>
@@ -2257,71 +738,71 @@ weighted avg      0.835     0.779     0.792     31561
 <li>Identify the class with the lowest recall.</li>
 </ol>
 <p>Why might accuracy and macro F1 rank models differently?</p>
-<div id="f4dd5a2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.612661Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.612537Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.615096Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.614524Z&quot;}}" data-execution_count="35">
+<div id="f4dd5a2a" class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add at least two learned models.</span></span>
-<span id="cb34-2"><a href="" aria-label="2"></a>nursery_models <span class="op">=</span> {</span>
-<span id="cb34-3"><a href="" aria-label="3"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
-<span id="cb34-4"><a href="" aria-label="4"></a>        X_nursery_train,</span>
-<span id="cb34-5"><a href="" aria-label="5"></a>        DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>),</span>
-<span id="cb34-6"><a href="" aria-label="6"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb34-7"><a href="" aria-label="7"></a>    ),</span>
-<span id="cb34-8"><a href="" aria-label="8"></a>    <span class="co"># "Decision tree": classifier_pipeline(...),</span></span>
-<span id="cb34-9"><a href="" aria-label="9"></a>    <span class="co"># "Logistic regression": classifier_pipeline(...),</span></span>
-<span id="cb34-10"><a href="" aria-label="10"></a>}</span>
-<span id="cb34-11"><a href="" aria-label="11"></a></span>
-<span id="cb34-12"><a href="" aria-label="12"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: use cross_validate(..., scoring={"accuracy": "accuracy", "macro_f1": "f1_macro"})</span></span>
-<span id="cb34-13"><a href="" aria-label="13"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: select, fit, predict, and show classification_report and a confusion matrix.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add at least two learned models.</span></span>
+<span id="cb23-2"><a href="" aria-label="2"></a>nursery_models <span class="op">=</span> {</span>
+<span id="cb23-3"><a href="" aria-label="3"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
+<span id="cb23-4"><a href="" aria-label="4"></a>        X_nursery_train,</span>
+<span id="cb23-5"><a href="" aria-label="5"></a>        DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>),</span>
+<span id="cb23-6"><a href="" aria-label="6"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb23-7"><a href="" aria-label="7"></a>    ),</span>
+<span id="cb23-8"><a href="" aria-label="8"></a>    <span class="co"># "Decision tree": classifier_pipeline(...),</span></span>
+<span id="cb23-9"><a href="" aria-label="9"></a>    <span class="co"># "Logistic regression": classifier_pipeline(...),</span></span>
+<span id="cb23-10"><a href="" aria-label="10"></a>}</span>
+<span id="cb23-11"><a href="" aria-label="11"></a></span>
+<span id="cb23-12"><a href="" aria-label="12"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: use cross_validate(..., scoring={"accuracy": "accuracy", "macro_f1": "f1_macro"})</span></span>
+<span id="cb23-13"><a href="" aria-label="13"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: select, fit, predict, and show classification_report and a confusion matrix.</span></span></code></pre></div>
 </details>
 </div>
 <details>
 <summary>
 One possible Nursery solution
 </summary>
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a>nursery_models <span class="op">=</span> {</span>
-<span id="cb35-2"><a href="" aria-label="2"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
-<span id="cb35-3"><a href="" aria-label="3"></a>        X_nursery_train, DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>), scale_numeric<span class="op">=</span><span class="va">False</span></span>
-<span id="cb35-4"><a href="" aria-label="4"></a>    ),</span>
-<span id="cb35-5"><a href="" aria-label="5"></a>    <span class="st">"Decision tree"</span>: classifier_pipeline(</span>
-<span id="cb35-6"><a href="" aria-label="6"></a>        X_nursery_train,</span>
-<span id="cb35-7"><a href="" aria-label="7"></a>        DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">12</span>, min_samples_leaf<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
-<span id="cb35-8"><a href="" aria-label="8"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb35-9"><a href="" aria-label="9"></a>    ),</span>
-<span id="cb35-10"><a href="" aria-label="10"></a>    <span class="st">"Logistic regression"</span>: classifier_pipeline(</span>
-<span id="cb35-11"><a href="" aria-label="11"></a>        X_nursery_train,</span>
-<span id="cb35-12"><a href="" aria-label="12"></a>        LogisticRegression(max_iter<span class="op">=</span><span class="dv">3000</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
-<span id="cb35-13"><a href="" aria-label="13"></a>    ),</span>
-<span id="cb35-14"><a href="" aria-label="14"></a>}</span>
-<span id="cb35-15"><a href="" aria-label="15"></a></span>
-<span id="cb35-16"><a href="" aria-label="16"></a>rows <span class="op">=</span> []</span>
-<span id="cb35-17"><a href="" aria-label="17"></a><span class="cf">for</span> name, workflow <span class="kw">in</span> nursery_models.items():</span>
-<span id="cb35-18"><a href="" aria-label="18"></a>    scores <span class="op">=</span> cross_validate(</span>
-<span id="cb35-19"><a href="" aria-label="19"></a>        workflow,</span>
-<span id="cb35-20"><a href="" aria-label="20"></a>        X_nursery_train,</span>
-<span id="cb35-21"><a href="" aria-label="21"></a>        y_nursery_train,</span>
-<span id="cb35-22"><a href="" aria-label="22"></a>        cv<span class="op">=</span>cv,</span>
-<span id="cb35-23"><a href="" aria-label="23"></a>        scoring<span class="op">=</span>{<span class="st">"accuracy"</span>: <span class="st">"accuracy"</span>, <span class="st">"macro_f1"</span>: <span class="st">"f1_macro"</span>},</span>
-<span id="cb35-24"><a href="" aria-label="24"></a>    )</span>
-<span id="cb35-25"><a href="" aria-label="25"></a>    rows.append({</span>
-<span id="cb35-26"><a href="" aria-label="26"></a>        <span class="st">"model"</span>: name,</span>
-<span id="cb35-27"><a href="" aria-label="27"></a>        <span class="st">"accuracy"</span>: scores[<span class="st">"test_accuracy"</span>].mean(),</span>
-<span id="cb35-28"><a href="" aria-label="28"></a>        <span class="st">"macro_f1"</span>: scores[<span class="st">"test_macro_f1"</span>].mean(),</span>
-<span id="cb35-29"><a href="" aria-label="29"></a>    })</span>
-<span id="cb35-30"><a href="" aria-label="30"></a></span>
-<span id="cb35-31"><a href="" aria-label="31"></a>nursery_results <span class="op">=</span> pd.DataFrame(rows).set_index(<span class="st">"model"</span>)</span>
-<span id="cb35-32"><a href="" aria-label="32"></a>nursery_results.sort_values(<span class="st">"macro_f1"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb35-33"><a href="" aria-label="33"></a></span>
-<span id="cb35-34"><a href="" aria-label="34"></a>winner <span class="op">=</span> nursery_results[<span class="st">"macro_f1"</span>].idxmax()</span>
-<span id="cb35-35"><a href="" aria-label="35"></a>final_nursery <span class="op">=</span> clone(nursery_models[winner]).fit(X_nursery_train, y_nursery_train)</span>
-<span id="cb35-36"><a href="" aria-label="36"></a>nursery_pred <span class="op">=</span> final_nursery.predict(X_nursery_test)</span>
-<span id="cb35-37"><a href="" aria-label="37"></a><span class="bu">print</span>(classification_report(y_nursery_test, nursery_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb35-38"><a href="" aria-label="38"></a>ConfusionMatrixDisplay.from_predictions(</span>
-<span id="cb35-39"><a href="" aria-label="39"></a>    y_nursery_test, nursery_pred, xticks_rotation<span class="op">=</span><span class="dv">45</span>, cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span></span>
-<span id="cb35-40"><a href="" aria-label="40"></a>)</span>
-<span id="cb35-41"><a href="" aria-label="41"></a>plt.title(<span class="ss">f"Nursery test set — </span><span class="sc">{</span>winner<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb35-42"><a href="" aria-label="42"></a>plt.tight_layout()</span>
-<span id="cb35-43"><a href="" aria-label="43"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>nursery_models <span class="op">=</span> {</span>
+<span id="cb24-2"><a href="" aria-label="2"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
+<span id="cb24-3"><a href="" aria-label="3"></a>        X_nursery_train, DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>), scale_numeric<span class="op">=</span><span class="va">False</span></span>
+<span id="cb24-4"><a href="" aria-label="4"></a>    ),</span>
+<span id="cb24-5"><a href="" aria-label="5"></a>    <span class="st">"Decision tree"</span>: classifier_pipeline(</span>
+<span id="cb24-6"><a href="" aria-label="6"></a>        X_nursery_train,</span>
+<span id="cb24-7"><a href="" aria-label="7"></a>        DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">12</span>, min_samples_leaf<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
+<span id="cb24-8"><a href="" aria-label="8"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb24-9"><a href="" aria-label="9"></a>    ),</span>
+<span id="cb24-10"><a href="" aria-label="10"></a>    <span class="st">"Logistic regression"</span>: classifier_pipeline(</span>
+<span id="cb24-11"><a href="" aria-label="11"></a>        X_nursery_train,</span>
+<span id="cb24-12"><a href="" aria-label="12"></a>        LogisticRegression(max_iter<span class="op">=</span><span class="dv">3000</span>, class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
+<span id="cb24-13"><a href="" aria-label="13"></a>    ),</span>
+<span id="cb24-14"><a href="" aria-label="14"></a>}</span>
+<span id="cb24-15"><a href="" aria-label="15"></a></span>
+<span id="cb24-16"><a href="" aria-label="16"></a>rows <span class="op">=</span> []</span>
+<span id="cb24-17"><a href="" aria-label="17"></a><span class="cf">for</span> name, workflow <span class="kw">in</span> nursery_models.items():</span>
+<span id="cb24-18"><a href="" aria-label="18"></a>    scores <span class="op">=</span> cross_validate(</span>
+<span id="cb24-19"><a href="" aria-label="19"></a>        workflow,</span>
+<span id="cb24-20"><a href="" aria-label="20"></a>        X_nursery_train,</span>
+<span id="cb24-21"><a href="" aria-label="21"></a>        y_nursery_train,</span>
+<span id="cb24-22"><a href="" aria-label="22"></a>        cv<span class="op">=</span>cv,</span>
+<span id="cb24-23"><a href="" aria-label="23"></a>        scoring<span class="op">=</span>{<span class="st">"accuracy"</span>: <span class="st">"accuracy"</span>, <span class="st">"macro_f1"</span>: <span class="st">"f1_macro"</span>},</span>
+<span id="cb24-24"><a href="" aria-label="24"></a>    )</span>
+<span id="cb24-25"><a href="" aria-label="25"></a>    rows.append({</span>
+<span id="cb24-26"><a href="" aria-label="26"></a>        <span class="st">"model"</span>: name,</span>
+<span id="cb24-27"><a href="" aria-label="27"></a>        <span class="st">"accuracy"</span>: scores[<span class="st">"test_accuracy"</span>].mean(),</span>
+<span id="cb24-28"><a href="" aria-label="28"></a>        <span class="st">"macro_f1"</span>: scores[<span class="st">"test_macro_f1"</span>].mean(),</span>
+<span id="cb24-29"><a href="" aria-label="29"></a>    })</span>
+<span id="cb24-30"><a href="" aria-label="30"></a></span>
+<span id="cb24-31"><a href="" aria-label="31"></a>nursery_results <span class="op">=</span> pd.DataFrame(rows).set_index(<span class="st">"model"</span>)</span>
+<span id="cb24-32"><a href="" aria-label="32"></a>nursery_results.sort_values(<span class="st">"macro_f1"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb24-33"><a href="" aria-label="33"></a></span>
+<span id="cb24-34"><a href="" aria-label="34"></a>winner <span class="op">=</span> nursery_results[<span class="st">"macro_f1"</span>].idxmax()</span>
+<span id="cb24-35"><a href="" aria-label="35"></a>final_nursery <span class="op">=</span> clone(nursery_models[winner]).fit(X_nursery_train, y_nursery_train)</span>
+<span id="cb24-36"><a href="" aria-label="36"></a>nursery_pred <span class="op">=</span> final_nursery.predict(X_nursery_test)</span>
+<span id="cb24-37"><a href="" aria-label="37"></a><span class="bu">print</span>(classification_report(y_nursery_test, nursery_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb24-38"><a href="" aria-label="38"></a>ConfusionMatrixDisplay.from_predictions(</span>
+<span id="cb24-39"><a href="" aria-label="39"></a>    y_nursery_test, nursery_pred, xticks_rotation<span class="op">=</span><span class="dv">45</span>, cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span></span>
+<span id="cb24-40"><a href="" aria-label="40"></a>)</span>
+<span id="cb24-41"><a href="" aria-label="41"></a>plt.title(<span class="ss">f"Nursery test set — </span><span class="sc">{</span>winner<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-42"><a href="" aria-label="42"></a>plt.tight_layout()</span>
+<span id="cb24-43"><a href="" aria-label="43"></a>plt.show()</span></code></pre></div>
 Accuracy is dominated by frequent classes. Macro F1 computes F1 per class and averages them equally, so failure on a rare class has a much larger effect.
 </details>
 </section>
