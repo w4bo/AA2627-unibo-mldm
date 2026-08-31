@@ -216,15 +216,74 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section class="slide level2">
 
 <p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-mldm/blob/master/slides/lab-00-basics.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
-<p>A compact primer on the tools used in the modeling notebooks.</p>
+</section>
+<section id="lab-00---python-notebooks-pandas-and-scikit-learn-basics" class="title-slide slide level1 center">
+<h1>Lab 00 - Python notebooks, pandas, and scikit-learn basics</h1>
+<p>This 3-hour lab is a gentle, hands-on introduction to the two libraries used throughout the course: <strong>pandas</strong> for tabular data and <strong>scikit-learn</strong> for machine learning.</p>
+<p>During the live lab, pandas is kept intentionally small: we stop at inspecting tables and selecting columns, because that is the minimum needed to create training data for machine learning. More pandas practice is left as homework at the end.</p>
 <p>By the end, you should be able to:</p>
 <ul>
 <li>run a notebook reliably in Colab;</li>
-<li>inspect tabular data with pandas;</li>
-<li>split a dataset into <code>X</code>, <code>y</code>, training, and test sets;</li>
-<li>train and evaluate a simple scikit-learn estimator.</li>
+<li>recognize the main pandas objects: <code>DataFrame</code> and <code>Series</code>;</li>
+<li>inspect tabular data and select columns;</li>
+<li>build <code>X</code> feature matrices and <code>y</code> target vectors;</li>
+<li>split data into training and test sets;</li>
+<li>train, predict, and evaluate simple scikit-learn models;</li>
+<li>continue practicing pandas with the homework section.</li>
 </ul>
 </section>
+
+<section id="suggested-timing" class="title-slide slide level1 center">
+<h1>Suggested timing</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Segment</th>
+<th>Topic</th>
+<th style="text-align: right;">Time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Colab and notebook survival skills</td>
+<td style="text-align: right;">20 min</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>pandas essentials: tables, inspection, column selection</td>
+<td style="text-align: right;">35 min</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>From pandas columns to <code>X</code> and <code>y</code></td>
+<td style="text-align: right;">20 min</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>scikit-learn basics: datasets, estimators, train/test split</td>
+<td style="text-align: right;">45 min</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Model evaluation and interpretation</td>
+<td style="text-align: right;">30 min</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>In-class exercises and recap</td>
+<td style="text-align: right;">30 min</td>
+</tr>
+</tbody>
+</table>
+<p>Homework continues with additional pandas operations: filtering, sorting, grouping, missing values, simple feature creation, and categorical encoding.</p>
+</section>
+
 <section id="how-notebooks-work" class="title-slide slide level1 center">
 <h1>How notebooks work</h1>
 <p>A notebook is a sequence of cells.</p>
@@ -342,7 +401,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>A <strong>DataFrame</strong> is a table: rows and columns.</li>
 <li>A <strong>Series</strong> is one column or one one-dimensional array.</li>
 </ul>
-<p>In machine learning notebooks, pandas is often used for loading, inspecting, filtering, and preparing tabular data.</p>
+<p>In the live lab, we use pandas only for the operations needed before modeling: looking at a table and selecting the columns that become machine-learning inputs.</p>
+</section>
+
+<section id="pandas-mental-model" class="title-slide slide level1 center">
+<h1>pandas mental model</h1>
+<p>Think of a DataFrame as a spreadsheet with labels.</p>
+<ul>
+<li>Each <strong>row</strong> is one observation, such as one student or one flower.</li>
+<li>Each <strong>column</strong> is one variable, such as hours studied or exam score.</li>
+<li>Most pandas operations either select part of the table or create a new table from the old one.</li>
+</ul>
+<p>A useful habit is to keep the original data unchanged and assign transformed data to a new variable.</p>
 <div id="pandas-dataframe" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
@@ -597,9 +667,14 @@ memory usage: 228.0 bytes</code></pre>
 </div>
 </section>
 
-<section id="select-columns-and-rows" class="title-slide slide level1 center">
-<h1>Select columns and rows</h1>
-<p>Column selection is one of the most common pandas operations.</p>
+<section id="select-columns" class="title-slide slide level1 center">
+<h1>Select columns</h1>
+<p>Column selection is the pandas operation we need immediately for machine learning.</p>
+<ul>
+<li><code>students["hours_studied"]</code> selects one column and returns a <code>Series</code>.</li>
+<li><code>students[["hours_studied", "passed"]]</code> selects multiple columns and returns a <code>DataFrame</code>.</li>
+</ul>
+<p>Notice the double square brackets when selecting more than one column.</p>
 <div id="pandas-series" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
@@ -669,144 +744,28 @@ Name: hours_studied, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="pandas-filter" class="cell" data-execution_count="11">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>students[students[<span class="st">"passed"</span>] <span class="op">==</span> <span class="dv">1</span>]</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">name</th>
-<th data-quarto-table-cell-role="th">hours_studied</th>
-<th data-quarto-table-cell-role="th">passed</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">1</th>
-<td>Grace</td>
-<td>5</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">2</th>
-<td>Katherine</td>
-<td>4</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
 </section>
 
 <section id="features-and-target" class="title-slide slide level1 center">
 <h1>Features and target</h1>
-<p>In supervised learning we usually split the table into:</p>
+<p>In supervised learning we split a table into:</p>
 <ul>
 <li><code>X</code>: the feature matrix, with the input columns;</li>
 <li><code>y</code>: the target array, with the label we want to predict.</li>
 </ul>
+<p>This is why column selection is essential: creating <code>X</code> and <code>y</code> is mostly selecting the right columns.</p>
 <div id="features-target-code" class="cell" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>X_demo <span class="op">=</span> students[[<span class="st">"hours_studied"</span>]]</span>
-<span id="cb18-2"><a href="" aria-label="2"></a>y_demo <span class="op">=</span> students[<span class="st">"passed"</span>]</span>
-<span id="cb18-3"><a href="" aria-label="3"></a></span>
-<span id="cb18-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="st">"X_demo shape:"</span>, X_demo.shape)</span>
-<span id="cb18-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"y_demo shape:"</span>, y_demo.shape)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>X_demo <span class="op">=</span> students[[<span class="st">"hours_studied"</span>]]</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>y_demo <span class="op">=</span> students[<span class="st">"passed"</span>]</span>
+<span id="cb17-3"><a href="" aria-label="3"></a></span>
+<span id="cb17-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="st">"X_demo shape:"</span>, X_demo.shape)</span>
+<span id="cb17-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"y_demo shape:"</span>, y_demo.shape)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>X_demo shape: (4, 1)
 y_demo shape: (4,)</code></pre>
-</div>
-</div>
-</section>
-
-<section id="missing-values-and-aggregation" class="title-slide slide level1 center">
-<h1>Missing values and aggregation</h1>
-<p>Two useful checks before modeling:</p>
-<ul>
-<li>missing values: <code>.isna().sum()</code>;</li>
-<li>grouped summaries: <code>.groupby(...).mean()</code>.</li>
-</ul>
-<div id="pandas-missing" class="cell" data-execution_count="13">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>students.isna().<span class="bu">sum</span>()</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>name             0
-hours_studied    0
-passed           0
-dtype: int64</code></pre>
-</div>
-</div>
-<div id="pandas-groupby" class="cell" data-execution_count="14">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>students.groupby(<span class="st">"passed"</span>)[<span class="st">"hours_studied"</span>].mean().to_frame(<span class="st">"mean_hours"</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">mean_hours</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">passed</th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>1.5</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>4.5</td>
-</tr>
-</tbody>
-</table>
-
-</div>
 </div>
 </div>
 </section>
@@ -825,9 +784,9 @@ dtype: int64</code></pre>
 <div id="sklearn-version" class="cell" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="im">import</span> sklearn <span class="im">as</span> sk</span>
-<span id="cb23-2"><a href="" aria-label="2"></a></span>
-<span id="cb23-3"><a href="" aria-label="3"></a><span class="bu">print</span>(sk.__version__)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="im">import</span> sklearn <span class="im">as</span> sk</span>
+<span id="cb19-2"><a href="" aria-label="2"></a></span>
+<span id="cb19-3"><a href="" aria-label="3"></a><span class="bu">print</span>(sk.__version__)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>1.8.0</code></pre>
@@ -839,9 +798,9 @@ dtype: int64</code></pre>
 <h1>The estimator interface</h1>
 <p>An <strong>estimator</strong> is a scikit-learn object that learns from data.</p>
 <p>Most estimators follow the same pattern:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>model <span class="op">=</span> Estimator(parameters)</span>
-<span id="cb25-2"><a href="" aria-label="2"></a>model.fit(X_train, y_train)</span>
-<span id="cb25-3"><a href="" aria-label="3"></a>predictions <span class="op">=</span> model.predict(X_test)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>model <span class="op">=</span> Estimator(parameters)</span>
+<span id="cb21-2"><a href="" aria-label="2"></a>model.fit(X_train, y_train)</span>
+<span id="cb21-3"><a href="" aria-label="3"></a>predictions <span class="op">=</span> model.predict(X_test)</span></code></pre></div>
 <p>This shared API is one reason scikit-learn is pleasant to use.</p>
 </section>
 
@@ -870,9 +829,9 @@ dtype: int64</code></pre>
 <div id="sklearn-datasets" class="cell" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> datasets</span>
-<span id="cb26-2"><a href="" aria-label="2"></a></span>
-<span id="cb26-3"><a href="" aria-label="3"></a>[name <span class="cf">for</span> name <span class="kw">in</span> <span class="bu">dir</span>(datasets) <span class="cf">if</span> name.startswith(<span class="st">"load_"</span>)][:<span class="dv">12</span>]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="im">import</span> sklearn.datasets <span class="im">as</span> datasets</span>
+<span id="cb22-2"><a href="" aria-label="2"></a></span>
+<span id="cb22-3"><a href="" aria-label="3"></a>[name <span class="cf">for</span> name <span class="kw">in</span> <span class="bu">dir</span>(datasets) <span class="cf">if</span> name.startswith(<span class="st">"load_"</span>)][:<span class="dv">12</span>]</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>['load_breast_cancer',
@@ -896,11 +855,11 @@ dtype: int64</code></pre>
 <div id="iris-load" class="cell" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
-<span id="cb28-2"><a href="" aria-label="2"></a></span>
-<span id="cb28-3"><a href="" aria-label="3"></a>iris <span class="op">=</span> load_iris(as_frame<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb28-4"><a href="" aria-label="4"></a>df <span class="op">=</span> iris.frame.copy()</span>
-<span id="cb28-5"><a href="" aria-label="5"></a>df.head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
+<span id="cb24-2"><a href="" aria-label="2"></a></span>
+<span id="cb24-3"><a href="" aria-label="3"></a>iris <span class="op">=</span> load_iris(as_frame<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb24-4"><a href="" aria-label="4"></a>df <span class="op">=</span> iris.frame.copy()</span>
+<span id="cb24-5"><a href="" aria-label="5"></a>df.head()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
@@ -984,7 +943,7 @@ dtype: int64</code></pre>
 <div id="iris-info" class="cell" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>df.info()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>df.info()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.DataFrame'&gt;
@@ -1004,7 +963,7 @@ memory usage: 6.0 KB</code></pre>
 <div id="iris-counts" class="cell" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>df[<span class="st">"target"</span>].value_counts().rename(index<span class="op">=</span><span class="bu">dict</span>(<span class="bu">enumerate</span>(iris.target_names))).to_frame(<span class="st">"count"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>df[<span class="st">"target"</span>].value_counts().rename(index<span class="op">=</span><span class="bu">dict</span>(<span class="bu">enumerate</span>(iris.target_names))).to_frame(<span class="st">"count"</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div>
@@ -1059,7 +1018,7 @@ memory usage: 6.0 KB</code></pre>
 <div id="iris-groupby" class="cell" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>df.groupby(<span class="st">"target"</span>).mean().rename(index<span class="op">=</span><span class="bu">dict</span>(<span class="bu">enumerate</span>(iris.target_names))).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a>df.groupby(<span class="st">"target"</span>).mean().rename(index<span class="op">=</span><span class="bu">dict</span>(<span class="bu">enumerate</span>(iris.target_names))).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <div>
@@ -1130,11 +1089,11 @@ memory usage: 6.0 KB</code></pre>
 <div id="iris-x-y-code" class="cell" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>X <span class="op">=</span> df.drop(columns<span class="op">=</span><span class="st">"target"</span>)</span>
-<span id="cb33-2"><a href="" aria-label="2"></a>y <span class="op">=</span> df[<span class="st">"target"</span>]</span>
-<span id="cb33-3"><a href="" aria-label="3"></a></span>
-<span id="cb33-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="st">"X shape:"</span>, X.shape)</span>
-<span id="cb33-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"y shape:"</span>, y.shape)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>X <span class="op">=</span> df.drop(columns<span class="op">=</span><span class="st">"target"</span>)</span>
+<span id="cb29-2"><a href="" aria-label="2"></a>y <span class="op">=</span> df[<span class="st">"target"</span>]</span>
+<span id="cb29-3"><a href="" aria-label="3"></a></span>
+<span id="cb29-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="st">"X shape:"</span>, X.shape)</span>
+<span id="cb29-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"y shape:"</span>, y.shape)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>X shape: (150, 4)
@@ -1150,19 +1109,19 @@ y shape: (150,)</code></pre>
 <div id="train-test-code" class="cell" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb35-2"><a href="" aria-label="2"></a></span>
-<span id="cb35-3"><a href="" aria-label="3"></a>seed <span class="op">=</span> <span class="dv">42</span></span>
-<span id="cb35-4"><a href="" aria-label="4"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb35-5"><a href="" aria-label="5"></a>    X,</span>
-<span id="cb35-6"><a href="" aria-label="6"></a>    y,</span>
-<span id="cb35-7"><a href="" aria-label="7"></a>    test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb35-8"><a href="" aria-label="8"></a>    random_state<span class="op">=</span>seed,</span>
-<span id="cb35-9"><a href="" aria-label="9"></a>    stratify<span class="op">=</span>y,</span>
-<span id="cb35-10"><a href="" aria-label="10"></a>)</span>
-<span id="cb35-11"><a href="" aria-label="11"></a></span>
-<span id="cb35-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="st">"X_train:"</span>, X_train.shape)</span>
-<span id="cb35-13"><a href="" aria-label="13"></a><span class="bu">print</span>(<span class="st">"X_test:"</span>, X_test.shape)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb31-2"><a href="" aria-label="2"></a></span>
+<span id="cb31-3"><a href="" aria-label="3"></a>seed <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb31-4"><a href="" aria-label="4"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb31-5"><a href="" aria-label="5"></a>    X,</span>
+<span id="cb31-6"><a href="" aria-label="6"></a>    y,</span>
+<span id="cb31-7"><a href="" aria-label="7"></a>    test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb31-8"><a href="" aria-label="8"></a>    random_state<span class="op">=</span>seed,</span>
+<span id="cb31-9"><a href="" aria-label="9"></a>    stratify<span class="op">=</span>y,</span>
+<span id="cb31-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb31-11"><a href="" aria-label="11"></a></span>
+<span id="cb31-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="st">"X_train:"</span>, X_train.shape)</span>
+<span id="cb31-13"><a href="" aria-label="13"></a><span class="bu">print</span>(<span class="st">"X_test:"</span>, X_test.shape)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>X_train: (120, 4)
@@ -1178,10 +1137,10 @@ X_test: (30, 4)</code></pre>
 <div id="random-state-code" class="cell" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb37-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb37-2"><a href="" aria-label="2"></a></span>
-<span id="cb37-3"><a href="" aria-label="3"></a><span class="bu">print</span>(np.random.default_rng(<span class="dv">42</span>).integers(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span><span class="dv">10</span>))</span>
-<span id="cb37-4"><a href="" aria-label="4"></a><span class="bu">print</span>(np.random.default_rng(<span class="dv">42</span>).integers(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span><span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb33-2"><a href="" aria-label="2"></a></span>
+<span id="cb33-3"><a href="" aria-label="3"></a><span class="bu">print</span>(np.random.default_rng(<span class="dv">42</span>).integers(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span><span class="dv">10</span>))</span>
+<span id="cb33-4"><a href="" aria-label="4"></a><span class="bu">print</span>(np.random.default_rng(<span class="dv">42</span>).integers(<span class="dv">1</span>, <span class="dv">7</span>, size<span class="op">=</span><span class="dv">10</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1 5 4 3 3 6 1 5 2 1]
@@ -1196,14 +1155,14 @@ X_test: (30, 4)</code></pre>
 <div id="train-estimator-code" class="cell" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb39-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
-<span id="cb39-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
-<span id="cb39-3"><a href="" aria-label="3"></a></span>
-<span id="cb39-4"><a href="" aria-label="4"></a>model <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed)</span>
-<span id="cb39-5"><a href="" aria-label="5"></a>model.fit(X_train, y_train)</span>
-<span id="cb39-6"><a href="" aria-label="6"></a></span>
-<span id="cb39-7"><a href="" aria-label="7"></a>predictions <span class="op">=</span> model.predict(X_test)</span>
-<span id="cb39-8"><a href="" aria-label="8"></a>accuracy_score(y_test, predictions)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb35-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb35-3"><a href="" aria-label="3"></a></span>
+<span id="cb35-4"><a href="" aria-label="4"></a>model <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed)</span>
+<span id="cb35-5"><a href="" aria-label="5"></a>model.fit(X_train, y_train)</span>
+<span id="cb35-6"><a href="" aria-label="6"></a></span>
+<span id="cb35-7"><a href="" aria-label="7"></a>predictions <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb35-8"><a href="" aria-label="8"></a>accuracy_score(y_test, predictions)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <pre><code>0.9333333333333333</code></pre>
@@ -1217,9 +1176,9 @@ X_test: (30, 4)</code></pre>
 <div id="inspect-trained-code" class="cell" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb41-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="st">"Classes:"</span>, model.classes_)</span>
-<span id="cb41-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"Tree depth:"</span>, model.get_depth())</span>
-<span id="cb41-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Leaves:"</span>, model.get_n_leaves())</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb37-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="st">"Classes:"</span>, model.classes_)</span>
+<span id="cb37-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="st">"Tree depth:"</span>, model.get_depth())</span>
+<span id="cb37-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Leaves:"</span>, model.get_n_leaves())</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classes: [0 1 2]
@@ -1236,12 +1195,12 @@ Leaves: 3</code></pre>
 <div id="feature-importance-code" class="cell" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb43-1"><a href="" aria-label="1"></a>importance <span class="op">=</span> pd.Series(</span>
-<span id="cb43-2"><a href="" aria-label="2"></a>    model.feature_importances_,</span>
-<span id="cb43-3"><a href="" aria-label="3"></a>    index<span class="op">=</span>X.columns,</span>
-<span id="cb43-4"><a href="" aria-label="4"></a>    name<span class="op">=</span><span class="st">"importance"</span>,</span>
-<span id="cb43-5"><a href="" aria-label="5"></a>).sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb43-6"><a href="" aria-label="6"></a>importance.to_frame()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb39-1"><a href="" aria-label="1"></a>importance <span class="op">=</span> pd.Series(</span>
+<span id="cb39-2"><a href="" aria-label="2"></a>    model.feature_importances_,</span>
+<span id="cb39-3"><a href="" aria-label="3"></a>    index<span class="op">=</span>X.columns,</span>
+<span id="cb39-4"><a href="" aria-label="4"></a>    name<span class="op">=</span><span class="st">"importance"</span>,</span>
+<span id="cb39-5"><a href="" aria-label="5"></a>).sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb39-6"><a href="" aria-label="6"></a>importance.to_frame()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <div>
@@ -1291,26 +1250,475 @@ Leaves: 3</code></pre>
 </div>
 </section>
 
+<section id="classification-metrics" class="title-slide slide level1 center">
+<h1>Classification metrics</h1>
+<p>Accuracy is the fraction of correct predictions.</p>
+<p>A confusion matrix gives more detail. Rows are true classes, columns are predicted classes. It helps you see which classes the model confuses.</p>
+<div id="sklearn-metrics-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb40-2"><a href="" aria-label="2"></a></span>
+<span id="cb40-3"><a href="" aria-label="3"></a>ConfusionMatrixDisplay.from_estimator(</span>
+<span id="cb40-4"><a href="" aria-label="4"></a>    model,</span>
+<span id="cb40-5"><a href="" aria-label="5"></a>    X_test,</span>
+<span id="cb40-6"><a href="" aria-label="6"></a>    y_test,</span>
+<span id="cb40-7"><a href="" aria-label="7"></a>    display_labels<span class="op">=</span>iris.target_names,</span>
+<span id="cb40-8"><a href="" aria-label="8"></a>)</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="predict-new-examples" class="title-slide slide level1 center">
+<h1>Predict new examples</h1>
+<p>Once a model has been fitted, it can predict labels for new rows with the same feature columns used during training.</p>
+<div id="sklearn-predict-new-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb41-1"><a href="" aria-label="1"></a>new_flowers <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb41-2"><a href="" aria-label="2"></a>    [[<span class="fl">5.1</span>, <span class="fl">3.5</span>, <span class="fl">1.4</span>, <span class="fl">0.2</span>], [<span class="fl">6.2</span>, <span class="fl">3.0</span>, <span class="fl">4.8</span>, <span class="fl">1.8</span>]],</span>
+<span id="cb41-3"><a href="" aria-label="3"></a>    columns<span class="op">=</span>X.columns,</span>
+<span id="cb41-4"><a href="" aria-label="4"></a>)</span>
+<span id="cb41-5"><a href="" aria-label="5"></a></span>
+<span id="cb41-6"><a href="" aria-label="6"></a>predicted_ids <span class="op">=</span> model.predict(new_flowers)</span>
+<span id="cb41-7"><a href="" aria-label="7"></a>pd.DataFrame({</span>
+<span id="cb41-8"><a href="" aria-label="8"></a>    <span class="st">"predicted_id"</span>: predicted_ids,</span>
+<span id="cb41-9"><a href="" aria-label="9"></a>    <span class="st">"predicted_species"</span>: iris.target_names[predicted_ids],</span>
+<span id="cb41-10"><a href="" aria-label="10"></a>})</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="try-another-estimator" class="title-slide slide level1 center">
+<h1>Try another estimator</h1>
+<p>The scikit-learn API is consistent. Switching model often means changing only the estimator class.</p>
+<div id="sklearn-try-another-estimator-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb42-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb42-2"><a href="" aria-label="2"></a></span>
+<span id="cb42-3"><a href="" aria-label="3"></a>knn <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb42-4"><a href="" aria-label="4"></a>knn.fit(X_train, y_train)</span>
+<span id="cb42-5"><a href="" aria-label="5"></a></span>
+<span id="cb42-6"><a href="" aria-label="6"></a>knn_predictions <span class="op">=</span> knn.predict(X_test)</span>
+<span id="cb42-7"><a href="" aria-label="7"></a>accuracy_score(y_test, knn_predictions)</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="a-small-data-warning" class="title-slide slide level1 center">
+<h1>A small-data warning</h1>
+<p>The classroom table is useful for learning syntax, but it is too small for trustworthy model evaluation.</p>
+<p>For real evaluation, prefer datasets with enough rows that the train/test split contains representative examples from each class.</p>
+</section>
+
 <section id="the-basic-workflow" class="title-slide slide level1 center">
 <h1>The basic workflow</h1>
-<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb44-1"><a href="" aria-label="1"></a>pandas DataFrame</span>
-<span id="cb44-2"><a href="" aria-label="2"></a>      |</span>
-<span id="cb44-3"><a href="" aria-label="3"></a>      v</span>
-<span id="cb44-4"><a href="" aria-label="4"></a>select X and y</span>
-<span id="cb44-5"><a href="" aria-label="5"></a>      |</span>
-<span id="cb44-6"><a href="" aria-label="6"></a>      v</span>
-<span id="cb44-7"><a href="" aria-label="7"></a>train/test split</span>
-<span id="cb44-8"><a href="" aria-label="8"></a>      |</span>
-<span id="cb44-9"><a href="" aria-label="9"></a>      v</span>
-<span id="cb44-10"><a href="" aria-label="10"></a>model.fit(X_train, y_train)</span>
-<span id="cb44-11"><a href="" aria-label="11"></a>      |</span>
-<span id="cb44-12"><a href="" aria-label="12"></a>      v</span>
-<span id="cb44-13"><a href="" aria-label="13"></a>model.predict(X_test)</span>
-<span id="cb44-14"><a href="" aria-label="14"></a>      |</span>
-<span id="cb44-15"><a href="" aria-label="15"></a>      v</span>
-<span id="cb44-16"><a href="" aria-label="16"></a>evaluate with a metric</span></code></pre></div>
-
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb43-1"><a href="" aria-label="1"></a>pandas DataFrame</span>
+<span id="cb43-2"><a href="" aria-label="2"></a>      |</span>
+<span id="cb43-3"><a href="" aria-label="3"></a>      v</span>
+<span id="cb43-4"><a href="" aria-label="4"></a>select X and y</span>
+<span id="cb43-5"><a href="" aria-label="5"></a>      |</span>
+<span id="cb43-6"><a href="" aria-label="6"></a>      v</span>
+<span id="cb43-7"><a href="" aria-label="7"></a>train/test split</span>
+<span id="cb43-8"><a href="" aria-label="8"></a>      |</span>
+<span id="cb43-9"><a href="" aria-label="9"></a>      v</span>
+<span id="cb43-10"><a href="" aria-label="10"></a>model.fit(X_train, y_train)</span>
+<span id="cb43-11"><a href="" aria-label="11"></a>      |</span>
+<span id="cb43-12"><a href="" aria-label="12"></a>      v</span>
+<span id="cb43-13"><a href="" aria-label="13"></a>model.predict(X_test)</span>
+<span id="cb43-14"><a href="" aria-label="14"></a>      |</span>
+<span id="cb43-15"><a href="" aria-label="15"></a>      v</span>
+<span id="cb43-16"><a href="" aria-label="16"></a>evaluate with a metric</span></code></pre></div>
 </section>
+
+<section>
+<section id="in-class-exercises" class="title-slide slide level1 center">
+<h1>In-class exercises</h1>
+<p>These exercises stay close to the live-lab path: select columns, create <code>X</code> and <code>y</code>, split data, train models, and evaluate them.</p>
+</section>
+<section id="exercise-1---pandas-column-selection" class="slide level2">
+<h2>Exercise 1 - pandas column selection</h2>
+<p>Using the <code>students</code> DataFrame:</p>
+<ol type="1">
+<li>select the <code>hours_studied</code> column as a <code>Series</code>;</li>
+<li>select <code>hours_studied</code> and <code>passed</code> as a <code>DataFrame</code>;</li>
+<li>create <code>X_students</code> with only <code>hours_studied</code>;</li>
+<li>create <code>y_students</code> with <code>passed</code>;</li>
+<li>print the shapes of <code>X_students</code> and <code>y_students</code>.</li>
+</ol>
+<div id="exercise-pandas-columns-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb44-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: solve Exercise 1 here</span></span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="exercise-2---scikit-learn-traintest-split" class="slide level2">
+<h2>Exercise 2 - scikit-learn train/test split</h2>
+<p>Using the Iris DataFrame <code>df</code>:</p>
+<ol type="1">
+<li>create <code>X_ex</code> by dropping <code>target</code>;</li>
+<li>create <code>y_ex</code> from the <code>target</code> column;</li>
+<li>split the data into train and test sets with <code>test_size=0.30</code>, <code>random_state=42</code>, and <code>stratify=y_ex</code>;</li>
+<li>print the shapes of the four resulting objects.</li>
+</ol>
+<div id="exercise-sklearn-1-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb45-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: solve Exercise 4 here</span></span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="exercise-3---train-and-evaluate-a-model" class="slide level2">
+<h2>Exercise 3 - train and evaluate a model</h2>
+<p>Train a <code>DecisionTreeClassifier</code> with <code>max_depth=3</code> on the exercise training set.</p>
+<p>Then:</p>
+<ol type="1">
+<li>predict the labels of the test set;</li>
+<li>compute the accuracy;</li>
+<li>display a confusion matrix.</li>
+</ol>
+<div id="exercise-sklearn-2-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb46-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: solve Exercise 5 here</span></span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="exercise-4---compare-two-models" class="slide level2">
+<h2>Exercise 4 - compare two models</h2>
+<p>Train a <code>KNeighborsClassifier</code> with <code>n_neighbors=3</code> on the same exercise training set.</p>
+<p>Compare its accuracy with the decision tree from Exercise 3. Which model performs better on this split?</p>
+<div id="exercise-sklearn-3-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb47-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: solve Exercise 6 here</span></span></code></pre></div>
+</details>
+</div>
+</section></section>
+<section id="homework-more-pandas-practice" class="title-slide slide level1 center">
+<h1>Homework: more pandas practice</h1>
+<p>The live lab stopped at column selection. The following cells are useful pandas basics, but they are better practiced slowly at home.</p>
+<p>Work through them after the lab and run each cell before attempting the homework exercises.</p>
+</section>
+
+<section id="missing-values-and-aggregation" class="title-slide slide level1 center">
+<h1>Missing values and aggregation</h1>
+<p>Two useful checks before modeling:</p>
+<ul>
+<li>missing values: <code>.isna().sum()</code>;</li>
+<li>grouped summaries: <code>.groupby(...).mean()</code>.</li>
+</ul>
+<div id="pandas-missing" class="cell" data-execution_count="13">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb48-1"><a href="" aria-label="1"></a>students.isna().<span class="bu">sum</span>()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>name             0
+hours_studied    0
+passed           0
+dtype: int64</code></pre>
+</div>
+</div>
+<div id="pandas-groupby" class="cell" data-execution_count="14">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb50-1"><a href="" aria-label="1"></a>students.groupby(<span class="st">"passed"</span>)[<span class="st">"hours_studied"</span>].mean().to_frame(<span class="st">"mean_hours"</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean_hours</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">passed</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>4.5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="create-a-slightly-richer-table" class="title-slide slide level1 center">
+<h1>Create a slightly richer table</h1>
+<p>The next table is still small enough to inspect by eye, but it contains the ingredients we need for realistic data work:</p>
+<ul>
+<li>numeric columns;</li>
+<li>a categorical column;</li>
+<li>a missing value;</li>
+<li>a target column.</li>
+</ul>
+<div id="pandas-create-dataset-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb51-1"><a href="" aria-label="1"></a>classroom <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb51-2"><a href="" aria-label="2"></a>    <span class="st">"student"</span>: [<span class="st">"Ada"</span>, <span class="st">"Grace"</span>, <span class="st">"Katherine"</span>, <span class="st">"Alan"</span>, <span class="st">"Barbara"</span>, <span class="st">"Edsger"</span>],</span>
+<span id="cb51-3"><a href="" aria-label="3"></a>    <span class="st">"hours_studied"</span>: [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="va">None</span>],</span>
+<span id="cb51-4"><a href="" aria-label="4"></a>    <span class="st">"attendance"</span>: [<span class="fl">0.70</span>, <span class="fl">0.95</span>, <span class="fl">0.90</span>, <span class="fl">0.55</span>, <span class="fl">0.80</span>, <span class="fl">0.60</span>],</span>
+<span id="cb51-5"><a href="" aria-label="5"></a>    <span class="st">"previous_score"</span>: [<span class="dv">24</span>, <span class="dv">28</span>, <span class="dv">27</span>, <span class="dv">18</span>, <span class="dv">22</span>, <span class="dv">20</span>],</span>
+<span id="cb51-6"><a href="" aria-label="6"></a>    <span class="st">"track"</span>: [<span class="st">"theory"</span>, <span class="st">"lab"</span>, <span class="st">"lab"</span>, <span class="st">"theory"</span>, <span class="st">"lab"</span>, <span class="st">"theory"</span>],</span>
+<span id="cb51-7"><a href="" aria-label="7"></a>    <span class="st">"passed"</span>: [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb51-8"><a href="" aria-label="8"></a>})</span>
+<span id="cb51-9"><a href="" aria-label="9"></a></span>
+<span id="cb51-10"><a href="" aria-label="10"></a>classroom</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="column-types-matter" class="title-slide slide level1 center">
+<h1>Column types matter</h1>
+<p>pandas stores each column with a data type.</p>
+<p>Common types:</p>
+<ul>
+<li><code>int64</code> for whole numbers;</li>
+<li><code>float64</code> for decimal numbers and numeric columns with missing values;</li>
+<li><code>object</code> for strings;</li>
+<li><code>category</code> for repeated labels.</li>
+</ul>
+<p>Many modeling errors begin with a column having an unexpected type.</p>
+<div id="pandas-dtypes-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb52-1"><a href="" aria-label="1"></a>classroom.dtypes</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="select-rows-by-label-or-position" class="title-slide slide level1 center">
+<h1>Select rows by label or position</h1>
+<p>Two selection tools appear often:</p>
+<ul>
+<li><code>.loc[...]</code> selects by row/column labels and conditions;</li>
+<li><code>.iloc[...]</code> selects by integer position.</li>
+</ul>
+<p>When you are filtering by a condition, <code>.loc</code> usually makes the code easier to read.</p>
+<div id="pandas-filter" class="cell" data-execution_count="11">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb53-1"><a href="" aria-label="1"></a>students[students[<span class="st">"passed"</span>] <span class="op">==</span> <span class="dv">1</span>]</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">hours_studied</th>
+<th data-quarto-table-cell-role="th">passed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Grace</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Katherine</td>
+<td>4</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="pandas-loc-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb54-1"><a href="" aria-label="1"></a><span class="co"># Students who attended at least 80% of classes: keep only selected columns.</span></span>
+<span id="cb54-2"><a href="" aria-label="2"></a>classroom.loc[classroom[<span class="st">"attendance"</span>] <span class="op">&gt;=</span> <span class="fl">0.80</span>, [<span class="st">"student"</span>, <span class="st">"attendance"</span>, <span class="st">"passed"</span>]]</span></code></pre></div>
+</details>
+</div>
+<div id="pandas-iloc-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb55-1"><a href="" aria-label="1"></a><span class="co"># First three rows and first two columns by position.</span></span>
+<span id="cb55-2"><a href="" aria-label="2"></a>classroom.iloc[:<span class="dv">3</span>, :<span class="dv">2</span>]</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="create-new-columns" class="title-slide slide level1 center">
+<h1>Create new columns</h1>
+<p>A new column can be calculated from existing columns. This is common in data preparation and feature engineering.</p>
+<div id="pandas-new-columns-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb56-1"><a href="" aria-label="1"></a>classroom_with_score <span class="op">=</span> classroom.copy()</span>
+<span id="cb56-2"><a href="" aria-label="2"></a>classroom_with_score[<span class="st">"study_attendance_score"</span>] <span class="op">=</span> (</span>
+<span id="cb56-3"><a href="" aria-label="3"></a>    classroom_with_score[<span class="st">"hours_studied"</span>] <span class="op">*</span> classroom_with_score[<span class="st">"attendance"</span>]</span>
+<span id="cb56-4"><a href="" aria-label="4"></a>)</span>
+<span id="cb56-5"><a href="" aria-label="5"></a></span>
+<span id="cb56-6"><a href="" aria-label="6"></a>classroom_with_score[[<span class="st">"student"</span>, <span class="st">"hours_studied"</span>, <span class="st">"attendance"</span>, <span class="st">"study_attendance_score"</span>]]</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="handle-missing-values" class="title-slide slide level1 center">
+<h1>Handle missing values</h1>
+<p>Missing values are common. A simple first strategy is to replace a missing numeric value with the column mean.</p>
+<p>This is not always the best statistical choice, but it is a clear starting point for this first lab.</p>
+<div id="pandas-missing-values-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb57-1"><a href="" aria-label="1"></a>classroom_clean <span class="op">=</span> classroom.copy()</span>
+<span id="cb57-2"><a href="" aria-label="2"></a>mean_hours <span class="op">=</span> classroom_clean[<span class="st">"hours_studied"</span>].mean()</span>
+<span id="cb57-3"><a href="" aria-label="3"></a>classroom_clean[<span class="st">"hours_studied"</span>] <span class="op">=</span> classroom_clean[<span class="st">"hours_studied"</span>].fillna(mean_hours)</span>
+<span id="cb57-4"><a href="" aria-label="4"></a></span>
+<span id="cb57-5"><a href="" aria-label="5"></a>classroom_clean</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="sort-rows" class="title-slide slide level1 center">
+<h1>Sort rows</h1>
+<p>Sorting helps you inspect extremes and check whether values make sense.</p>
+<div id="pandas-sorting-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb58-1"><a href="" aria-label="1"></a>classroom_clean.sort_values(<span class="st">"previous_score"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="group-by-a-category" class="title-slide slide level1 center">
+<h1>Group by a category</h1>
+<p>Grouping answers questions such as: do lab-track and theory-track students look different in this small example?</p>
+<div id="pandas-categorical-summary-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb59-1"><a href="" aria-label="1"></a>classroom_clean.groupby(<span class="st">"track"</span>)[[<span class="st">"hours_studied"</span>, <span class="st">"attendance"</span>, <span class="st">"previous_score"</span>, <span class="st">"passed"</span>]].mean().<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="preprocessing-convert-categories-to-numbers" class="title-slide slide level1 center">
+<h1>Preprocessing: convert categories to numbers</h1>
+<p>Many estimators need numeric input. If a DataFrame contains text labels, convert them before modeling.</p>
+<p><code>pd.get_dummies(...)</code> is a beginner-friendly way to one-hot encode categorical columns.</p>
+<div id="sklearn-preprocessing-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb60-1"><a href="" aria-label="1"></a>classroom_features <span class="op">=</span> classroom_clean.drop(columns<span class="op">=</span>[<span class="st">"student"</span>, <span class="st">"passed"</span>])</span>
+<span id="cb60-2"><a href="" aria-label="2"></a>classroom_target <span class="op">=</span> classroom_clean[<span class="st">"passed"</span>]</span>
+<span id="cb60-3"><a href="" aria-label="3"></a></span>
+<span id="cb60-4"><a href="" aria-label="4"></a>classroom_features_encoded <span class="op">=</span> pd.get_dummies(classroom_features, columns<span class="op">=</span>[<span class="st">"track"</span>])</span>
+<span id="cb60-5"><a href="" aria-label="5"></a>classroom_features_encoded</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section>
+<section id="homework-exercises" class="title-slide slide level1 center">
+<h1>Homework exercises</h1>
+<p>These exercises use the extra pandas operations introduced in the homework section.</p>
+</section>
+<section id="homework-exercise-1---pandas-inspection" class="slide level2">
+<h2>Homework Exercise 1 - pandas inspection</h2>
+<p>Using <code>classroom_clean</code>, write code that:</p>
+<ol type="1">
+<li>shows the first 3 rows;</li>
+<li>prints the number of rows and columns;</li>
+<li>computes the average <code>attendance</code>;</li>
+<li>counts how many students passed and failed.</li>
+</ol>
+<div id="exercise-pandas-1-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb61-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: solve Exercise 1 here</span></span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="homework-exercise-2---pandas-filtering-and-sorting" class="slide level2">
+<h2>Homework Exercise 2 - pandas filtering and sorting</h2>
+<p>Using <code>classroom_clean</code>, create a table with students who have:</p>
+<ul>
+<li><code>attendance &gt;= 0.75</code>; and</li>
+<li><code>previous_score &gt;= 22</code>.</li>
+</ul>
+<p>Show only <code>student</code>, <code>attendance</code>, <code>previous_score</code>, and <code>passed</code>, sorted by <code>previous_score</code> from highest to lowest.</p>
+<div id="exercise-pandas-2-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb62-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: solve Exercise 2 here</span></span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="homework-exercise-3---pandas-feature-creation" class="slide level2">
+<h2>Homework Exercise 3 - pandas feature creation</h2>
+<p>Create a new DataFrame named <code>classroom_exercise</code> and add a column named <code>ready_score</code>:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb63-1"><a href="" aria-label="1"></a>ready_score <span class="op">=</span> hours_studied <span class="op">+</span> <span class="dv">10</span> <span class="op">*</span> attendance <span class="op">+</span> previous_score <span class="op">/</span> <span class="dv">10</span></span></code></pre></div>
+<p>Then display <code>student</code>, <code>ready_score</code>, and <code>passed</code>.</p>
+<div id="exercise-pandas-3-code" class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb64-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: solve Exercise 3 here</span></span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="final-reflection" class="slide level2">
+<h2>Final reflection</h2>
+<p>Answer in a markdown cell:</p>
+<ol type="1">
+<li>What is the difference between a pandas <code>DataFrame</code> and a pandas <code>Series</code>?</li>
+<li>Why do we split data into training and test sets?</li>
+<li>What does <code>.fit(...)</code> do?</li>
+<li>What does <code>.predict(...)</code> do?</li>
+<li>Why should the target column not be included in <code>X</code>?</li>
+</ol>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
