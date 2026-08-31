@@ -225,13 +225,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>compare K-means and DBSCAN on the elongated clusters in Coordinates.</li>
 </ul>
 </section>
-<section id="the-iris-dataset" class="slide level2">
-<h2>The Iris dataset</h2>
-<p>Iris contains 150 plants, four numeric measurements, and no missing values. As in the Weka exercise, <code>class</code> is excluded from the distance computation and used only after clustering for external evaluation.</p>
+<section>
+<section id="the-iris-dataset" class="title-slide slide level1 center">
+<h1>The Iris dataset</h1>
+<p>Iris contains 150 plants, four numeric measurements, and no missing values.</p>
+<ul>
+<li><code>class</code> is excluded from the distance computation and used only after clustering for external evaluation.</li>
+</ul>
 </section>
 <section id="iris-schema" class="slide level2">
 <h2>Iris schema</h2>
-<div id="1d3f0274" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:32.874156Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:32.873978Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:32.884491Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:32.883725Z&quot;}}" data-execution_count="3">
+<div id="1d3f0274" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.234506Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.234313Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.244968Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.244159Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>iris <span class="op">=</span> load_arff_frame(<span class="st">"iris.arff"</span>)</span>
@@ -255,7 +259,7 @@ memory usage: 6.0 KB</code></pre>
 </section>
 <section id="iris-summary" class="slide level2">
 <h2>Iris summary</h2>
-<div id="e311b696" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:32.886246Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:32.886063Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:32.902385Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:32.901534Z&quot;}}" data-execution_count="4">
+<div id="e311b696" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.247048Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.246877Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.263448Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.262670Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>iris.describe(include<span class="op">=</span><span class="st">"all"</span>).T</span></code></pre></div>
@@ -374,7 +378,7 @@ memory usage: 6.0 KB</code></pre>
 <section id="preprocessing-normalize-before-euclidean-distance" class="slide level2">
 <h2>Preprocessing: normalize before Euclidean distance</h2>
 <p>Distance-based algorithms are sensitive to scale.</p>
-<div id="d8e2e7f8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:32.904156Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:32.903993Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:32.914357Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:32.913643Z&quot;}}" data-execution_count="5">
+<div id="d8e2e7f8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.265544Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.265355Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.276881Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.275968Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>iris_features <span class="op">=</span> [<span class="st">"sepallength"</span>, <span class="st">"sepalwidth"</span>, <span class="st">"petallength"</span>, <span class="st">"petalwidth"</span>]</span>
@@ -433,11 +437,14 @@ memory usage: 6.0 KB</code></pre>
 </div>
 </div>
 </div>
-</section>
+</section></section>
 <section id="simple-k-means" class="title-slide slide level1 center">
 <h1>Simple K-means</h1>
-<p><code>n_init=10</code> deliberately tries several initializations and retains the lowest-SSE result. Fixing <code>random_state</code> makes this notebook reproducible.</p>
-<div id="da46f1a0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:32.916273Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:32.916111Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:32.955771Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:32.955030Z&quot;}}" data-execution_count="6">
+<p><code>n_init=10</code> deliberately tries several initializations and retains the lowest-SSE result.</p>
+<ul>
+<li>Fixing <code>random_state</code> makes this notebook reproducible.</li>
+</ul>
+<div id="da46f1a0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.278582Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.278407Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.313960Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.313065Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>iris_kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, n_init<span class="op">=</span><span class="dv">10</span>, max_iter<span class="op">=</span><span class="dv">500</span>, random_state<span class="op">=</span><span class="dv">10</span>)</span>
@@ -460,7 +467,7 @@ SSE / inertia: 6.9981</code></pre>
 <section>
 <section id="simple-k-means-1" class="title-slide slide level1 center">
 <h1>Simple K-means</h1>
-<div id="d0e3cbf6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:32.957973Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:32.957754Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.080913Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.080084Z&quot;}}" data-execution_count="7">
+<div id="d0e3cbf6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.316137Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.315957Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.446648Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.445627Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
@@ -476,9 +483,9 @@ SSE / inertia: 6.9981</code></pre>
 
 </div>
 <img data-src="lab-04-clustering_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
-<section id="iris-cluster-sizes" class="slide level2">
-<h2>Iris cluster sizes</h2>
-<div id="1c4101b3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.082736Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.082554Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.088456Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.087639Z&quot;}}" data-execution_count="8">
+<section id="iris-cluster" class="slide level2">
+<h2>Iris cluster</h2>
+<div id="1c4101b3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.448561Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.448374Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.454676Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.453832Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>iris_sizes.to_frame()</span></code></pre></div>
@@ -525,10 +532,7 @@ SSE / inertia: 6.9981</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="iris-centroids" class="slide level2">
-<h2>Iris centroids</h2>
-<div id="086690ae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.090189Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.090016Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.096467Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.095739Z&quot;}}" data-execution_count="9">
+<div id="086690ae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.456510Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.456330Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.463914Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.462982Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>iris_centers.<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
@@ -587,10 +591,7 @@ SSE / inertia: 6.9981</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="iris-within-cluster-standard-deviations" class="slide level2">
-<h2>Iris within-cluster standard deviations</h2>
-<div id="367e3ded" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.098503Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.098333Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.104696Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.103970Z&quot;}}" data-execution_count="10">
+<div id="367e3ded" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.465663Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.465492Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.472968Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.472010Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>iris_stds.<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
@@ -650,27 +651,19 @@ SSE / inertia: 6.9981</code></pre>
 </div>
 </div>
 </section>
-<section id="classes-to-clusters-evaluation" class="slide level2">
-<h2>Classes-to-clusters evaluation</h2>
-<p>Cluster IDs have no semantic order. We therefore find the one-to-one mapping from clusters to Iris species that maximizes the diagonal of the contingency table. This is the Python equivalent of Weka’s class-to-cluster correspondence.</p>
-<div id="1e77d988" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.106445Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.106269Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.116071Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.115312Z&quot;}}" data-execution_count="11">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>iris_table, iris_mapping, iris_predicted_class, iris_accuracy <span class="op">=</span> best_cluster_class_mapping(</span>
-<span id="cb11-2"><a href="" aria-label="2"></a>    y_iris, iris_clusters</span>
-<span id="cb11-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb11-4"><a href="" aria-label="4"></a></span></code></pre></div>
-</details>
-</div>
-</section>
 <section id="iris-cluster-to-class-matching" class="slide level2">
 <h2>Iris cluster-to-class matching</h2>
-<div id="985863e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.117867Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.117693Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.122716Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.122102Z&quot;}}" data-execution_count="12">
+<p>Cluster IDs have no semantic order.</p>
+<ul>
+<li>We therefore find the one-to-one mapping from clusters to Iris species that maximizes the diagonal of the contingency table.</li>
+</ul>
+<div id="1e77d988" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.474726Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.474536Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.487492Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.486602Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>iris_table</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>iris_table, iris_mapping, iris_predicted_class, iris_accuracy <span class="op">=</span> best_cluster_class_mapping(y_iris, iris_clusters)</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>iris_table</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -729,26 +722,26 @@ SSE / inertia: 6.9981</code></pre>
 </section>
 <section id="iris-matched-class-confusion-matrix" class="slide level2">
 <h2>Iris matched-class confusion matrix</h2>
-<div id="35d45901" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.124650Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.124482Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.134381Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.133554Z&quot;}}" data-execution_count="13">
+<div id="35d45901" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.489244Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.489072Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.499444Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.498563Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="st">"Cluster-to-class mapping:"</span>, {<span class="ss">f"C</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>: v <span class="cf">for</span> k, v <span class="kw">in</span> iris_mapping.items()})</span>
-<span id="cb13-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="ss">f"Correctly matched: </span><span class="sc">{</span>iris_accuracy<span class="sc">:.1%}</span><span class="ss">"</span>)</span>
-<span id="cb13-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="ss">f"Incorrectly matched: </span><span class="sc">{</span><span class="dv">1</span> <span class="op">-</span> iris_accuracy<span class="sc">:.1%}</span><span class="ss"> (</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(iris_predicted_class <span class="op">!=</span> y_iris)<span class="sc">}</span><span class="ss"> plants)"</span>)</span>
-<span id="cb13-4"><a href="" aria-label="4"></a></span>
-<span id="cb13-5"><a href="" aria-label="5"></a>cm <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb13-6"><a href="" aria-label="6"></a>    confusion_matrix(y_iris, iris_predicted_class, labels<span class="op">=</span>np.unique(y_iris)),</span>
-<span id="cb13-7"><a href="" aria-label="7"></a>    index<span class="op">=</span>[<span class="ss">f"true: </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> np.unique(y_iris)],</span>
-<span id="cb13-8"><a href="" aria-label="8"></a>    columns<span class="op">=</span>[<span class="ss">f"pred: </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> np.unique(y_iris)],</span>
-<span id="cb13-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb13-10"><a href="" aria-label="10"></a>cm</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="st">"Cluster-to-class mapping:"</span>, {<span class="ss">f"C</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>: v <span class="cf">for</span> k, v <span class="kw">in</span> iris_mapping.items()})</span>
+<span id="cb12-2"><a href="" aria-label="2"></a><span class="bu">print</span>(<span class="ss">f"Correctly matched: </span><span class="sc">{</span>iris_accuracy<span class="sc">:.1%}</span><span class="ss">"</span>)</span>
+<span id="cb12-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="ss">f"Incorrectly matched: </span><span class="sc">{</span><span class="dv">1</span> <span class="op">-</span> iris_accuracy<span class="sc">:.1%}</span><span class="ss"> (</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(iris_predicted_class <span class="op">!=</span> y_iris)<span class="sc">}</span><span class="ss"> plants)"</span>)</span>
+<span id="cb12-4"><a href="" aria-label="4"></a></span>
+<span id="cb12-5"><a href="" aria-label="5"></a>cm <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb12-6"><a href="" aria-label="6"></a>    confusion_matrix(y_iris, iris_predicted_class, labels<span class="op">=</span>np.unique(y_iris)),</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>    index<span class="op">=</span>[<span class="ss">f"true: </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> np.unique(y_iris)],</span>
+<span id="cb12-8"><a href="" aria-label="8"></a>    columns<span class="op">=</span>[<span class="ss">f"pred: </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> np.unique(y_iris)],</span>
+<span id="cb12-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb12-10"><a href="" aria-label="10"></a>cm</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cluster-to-class mapping: {'C0': 'Iris-virginica', 'C1': 'Iris-setosa', 'C2': 'Iris-versicolor'}
 Correctly matched: 88.7%
 Incorrectly matched: 11.3% (17 plants)</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -801,32 +794,33 @@ Incorrectly matched: 11.3% (17 plants)</code></pre>
 </section>
 <section id="visual-analysis-across-pairs-of-attributes" class="slide level2">
 <h2>Visual analysis across pairs of attributes</h2>
-<p>Setosa should appear well separated. Versicolor and virginica overlap most strongly on sepal length and sepal width, while the petal measurements provide clearer separation.</p>
+<ul>
+<li>Setosa should appear well separated.</li>
+<li>Versicolor and virginica overlap most strongly on sepal length and sepal width, while the petal measurements provide clearer separation.</li>
+</ul>
 
-<img data-src="lab-04-clustering_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
+<img data-src="lab-04-clustering_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
 <section id="improve-the-result-by-removing-weak-attributes" class="slide level2">
 <h2>Improve the result by removing weak attributes</h2>
-<p>The handout suggests excluding poorly informative attributes. We repeat K-means using only petal length and petal width, then evaluate against the hidden species labels.</p>
-<div id="fb5ed1fd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.445723Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.445524Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.467903Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.467139Z&quot;}}" data-execution_count="15">
+<p>The handout suggests excluding poorly informative attributes.</p>
+<ul>
+<li>We repeat K-means using only petal length and petal width, then evaluate against the hidden species labels.</li>
+</ul>
+<div id="fb5ed1fd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.841952Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.841723Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.867414Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.866480Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>petal_features <span class="op">=</span> [<span class="st">"petallength"</span>, <span class="st">"petalwidth"</span>]</span>
-<span id="cb15-2"><a href="" aria-label="2"></a>X_petal <span class="op">=</span> MinMaxScaler().fit_transform(iris[petal_features])</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>petal_model <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, n_init<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb15-4"><a href="" aria-label="4"></a>petal_clusters <span class="op">=</span> petal_model.fit_predict(X_petal)</span>
-<span id="cb15-5"><a href="" aria-label="5"></a>petal_table, petal_mapping, petal_predicted, petal_accuracy <span class="op">=</span> best_cluster_class_mapping(y_iris, petal_clusters)</span>
-<span id="cb15-6"><a href="" aria-label="6"></a></span>
-<span id="cb15-7"><a href="" aria-label="7"></a>comparison <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb15-8"><a href="" aria-label="8"></a>    <span class="st">"features"</span>: [<span class="st">"all four"</span>, <span class="st">"petal only"</span>],</span>
-<span id="cb15-9"><a href="" aria-label="9"></a>    <span class="st">"SSE"</span>: [iris_kmeans.inertia_, petal_model.inertia_],</span>
-<span id="cb15-10"><a href="" aria-label="10"></a>    <span class="st">"class-match accuracy"</span>: [iris_accuracy, petal_accuracy],</span>
-<span id="cb15-11"><a href="" aria-label="11"></a>})</span>
-<span id="cb15-12"><a href="" aria-label="12"></a>comparison_table <span class="op">=</span> comparison.copy()</span>
-<span id="cb15-13"><a href="" aria-label="13"></a>comparison_table[<span class="st">"SSE"</span>] <span class="op">=</span> comparison_table[<span class="st">"SSE"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> value: <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb15-14"><a href="" aria-label="14"></a>comparison_table[<span class="st">"class-match accuracy"</span>] <span class="op">=</span> comparison_table[<span class="st">"class-match accuracy"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> value: <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.1%}</span><span class="ss">"</span>)</span>
-<span id="cb15-15"><a href="" aria-label="15"></a>comparison_table</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>petal_features <span class="op">=</span> [<span class="st">"petallength"</span>, <span class="st">"petalwidth"</span>]</span>
+<span id="cb14-2"><a href="" aria-label="2"></a>X_petal <span class="op">=</span> MinMaxScaler().fit_transform(iris[petal_features])</span>
+<span id="cb14-3"><a href="" aria-label="3"></a>petal_model <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, n_init<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb14-4"><a href="" aria-label="4"></a>petal_clusters <span class="op">=</span> petal_model.fit_predict(X_petal)</span>
+<span id="cb14-5"><a href="" aria-label="5"></a>petal_table, petal_mapping, petal_predicted, petal_accuracy <span class="op">=</span> best_cluster_class_mapping(y_iris, petal_clusters)</span>
+<span id="cb14-6"><a href="" aria-label="6"></a>comparison <span class="op">=</span> pd.DataFrame({<span class="st">"features"</span>: [<span class="st">"all four"</span>, <span class="st">"petal only"</span>], <span class="st">"SSE"</span>: [iris_kmeans.inertia_, petal_model.inertia_], <span class="st">"class-match accuracy"</span>: [iris_accuracy, petal_accuracy],})</span>
+<span id="cb14-7"><a href="" aria-label="7"></a>comparison_table <span class="op">=</span> comparison.copy()</span>
+<span id="cb14-8"><a href="" aria-label="8"></a>comparison_table[<span class="st">"SSE"</span>] <span class="op">=</span> comparison_table[<span class="st">"SSE"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> value: <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-9"><a href="" aria-label="9"></a>comparison_table[<span class="st">"class-match accuracy"</span>] <span class="op">=</span> comparison_table[<span class="st">"class-match accuracy"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> value: <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.1%}</span><span class="ss">"</span>)</span>
+<span id="cb14-10"><a href="" aria-label="10"></a>comparison_table</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -879,34 +873,41 @@ Answer
 <li>Do not compare the two SSE values directly: they live in spaces with different dimensionality.</li>
 </ul>
 </details>
+</section></section>
+<section>
+<section id="the-food-nutrient-dataset" class="title-slide slide level1 center">
+<h1>The Food Nutrient dataset</h1>
+
 </section>
-<section id="the-food-nutrient-dataset" class="slide level2">
+<section id="the-food-nutrient-dataset-1" class="slide level2">
 <h2>The Food Nutrient dataset</h2>
-<p>The file contains nutritional values per 100 g. Following the handout, we normalize the five numeric attributes and fit K-means for <span class="math inline">\(k=2,3,4,5,6\)</span>.</p>
-<p>The cluster numbers below are <strong>canonicalized</strong> by sorting centroids from high to low energy. This makes tables easier to compare across runs; cluster IDs themselves have no inherent meaning and need not equal Weka’s IDs.</p>
-<div id="f7cdb0da" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.469984Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.469790Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.476763Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.475882Z&quot;}}" data-execution_count="16">
+<p>The file contains nutritional values per 100 g.</p>
+<ul>
+<li>Following the handout, we normalize the five numeric attributes and fit K-means for <span class="math inline">\(k=2,3,4,5,6\)</span>.</li>
+<li>The cluster numbers below are <strong>canonicalized</strong> by sorting centroids from high to low energy.
+<ul>
+<li>This makes tables easier to compare across runs.</li>
+</ul></li>
+</ul>
+<div id="f7cdb0da" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.869248Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.869073Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.876342Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.875393Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>food <span class="op">=</span> load_arff_frame(<span class="st">"FoodNutrients.arff"</span>)</span>
-<span id="cb16-2"><a href="" aria-label="2"></a>food_features <span class="op">=</span> <span class="bu">list</span>(food.columns)</span>
-<span id="cb16-3"><a href="" aria-label="3"></a>food_scaler <span class="op">=</span> MinMaxScaler()</span>
-<span id="cb16-4"><a href="" aria-label="4"></a>X_food <span class="op">=</span> food_scaler.fit_transform(food[food_features])</span>
-<span id="cb16-5"><a href="" aria-label="5"></a></span>
-<span id="cb16-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Foods: </span><span class="sc">{</span><span class="bu">len</span>(food)<span class="sc">}</span><span class="ss"> | attributes: </span><span class="sc">{</span><span class="bu">len</span>(food_features)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>food <span class="op">=</span> load_arff_frame(<span class="st">"FoodNutrients.arff"</span>)</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>food_features <span class="op">=</span> <span class="bu">list</span>(food.columns)</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>food_scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>X_food <span class="op">=</span> food_scaler.fit_transform(food[food_features])</span>
+<span id="cb15-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="ss">f"Foods: </span><span class="sc">{</span><span class="bu">len</span>(food)<span class="sc">}</span><span class="ss"> | attributes: </span><span class="sc">{</span><span class="bu">len</span>(food_features)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Foods: 27 | attributes: 5</code></pre>
 </div>
 </div>
-</section>
-<section id="food-sample" class="slide level2">
-<h2>Food sample</h2>
-<div id="0abea8ea" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.478531Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.478355Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.486014Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.485195Z&quot;}}" data-execution_count="17">
+<div id="0abea8ea" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.878002Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.877793Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.885762Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.884988Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>food.head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>food.head(<span class="dv">3</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -958,22 +959,6 @@ Answer
 <td>7.0</td>
 <td>2.0</td>
 </tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>375.0</td>
-<td>19.0</td>
-<td>32.0</td>
-<td>9.0</td>
-<td>2.6</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>180.0</td>
-<td>22.0</td>
-<td>10.0</td>
-<td>17.0</td>
-<td>3.7</td>
-</tr>
 </tbody>
 </table>
 
@@ -983,12 +968,12 @@ Answer
 </section>
 <section id="food-summary" class="slide level2">
 <h2>Food summary</h2>
-<div id="b5d9effc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.487713Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.487553Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:33.501229Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:33.500462Z&quot;}}" data-execution_count="18">
+<div id="b5d9effc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:50.888091Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:50.887650Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:50.902923Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:50.902106Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>food.describe().<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>food.describe().<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1090,34 +1075,34 @@ Answer
 <section id="centroid-profiles-across-cluster-counts" class="slide level2">
 <h2>Centroid profiles across cluster counts</h2>
 <p>The heatmaps use normalized centroid values: darker cells mean a larger value relative to the observed range of that nutrient.</p>
-<div id="bda10ed6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:33.637122Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:33.636924Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.047088Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.046221Z&quot;}}" data-execution_count="20">
+<div id="bda10ed6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.072244Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.071874Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.521945Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.520977Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">44</span>, <span class="dv">5</span>))</span>
-<span id="cb20-2"><a href="" aria-label="2"></a><span class="cf">for</span> ax, k <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">7</span>)):</span>
-<span id="cb20-3"><a href="" aria-label="3"></a>    _, _, centers, _, _, sizes <span class="op">=</span> food_results[k]</span>
-<span id="cb20-4"><a href="" aria-label="4"></a>    image <span class="op">=</span> ax.imshow(centers, cmap<span class="op">=</span><span class="st">"YlOrRd"</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>, aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
-<span id="cb20-5"><a href="" aria-label="5"></a>    ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(food_features)), food_features, rotation<span class="op">=</span><span class="dv">35</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
-<span id="cb20-6"><a href="" aria-label="6"></a>    ax.set_yticks(<span class="bu">range</span>(k), [<span class="ss">f"C</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> (n=</span><span class="sc">{</span>sizes<span class="sc">.</span>iloc[i]<span class="sc">}</span><span class="ss">)"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k)])</span>
-<span id="cb20-7"><a href="" aria-label="7"></a>    ax.set_title(<span class="ss">f"k=</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> | SSE=</span><span class="sc">{</span>food_results[k][<span class="dv">0</span>]<span class="sc">.</span>inertia_<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb20-8"><a href="" aria-label="8"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k):</span>
-<span id="cb20-9"><a href="" aria-label="9"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(food_features)):</span>
-<span id="cb20-10"><a href="" aria-label="10"></a>            value <span class="op">=</span> centers.iloc[i, j]</span>
-<span id="cb20-11"><a href="" aria-label="11"></a>            ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span><span class="st">"white"</span> <span class="cf">if</span> value <span class="op">&gt;</span> <span class="fl">.55</span> <span class="cf">else</span> <span class="st">"black"</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb20-12"><a href="" aria-label="12"></a>fig.colorbar(image, ax<span class="op">=</span>axes.ravel().tolist(), shrink<span class="op">=</span><span class="fl">.55</span>, label<span class="op">=</span><span class="st">"normalized centroid"</span>)</span>
-<span id="cb20-13"><a href="" aria-label="13"></a>fig.suptitle(<span class="st">"Food Nutrient centroid profiles"</span>, fontsize<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb20-14"><a href="" aria-label="14"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">44</span>, <span class="dv">5</span>))</span>
+<span id="cb19-2"><a href="" aria-label="2"></a><span class="cf">for</span> ax, k <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">7</span>)):</span>
+<span id="cb19-3"><a href="" aria-label="3"></a>    _, _, centers, _, _, sizes <span class="op">=</span> food_results[k]</span>
+<span id="cb19-4"><a href="" aria-label="4"></a>    image <span class="op">=</span> ax.imshow(centers, cmap<span class="op">=</span><span class="st">"YlOrRd"</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>, aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
+<span id="cb19-5"><a href="" aria-label="5"></a>    ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(food_features)), food_features, rotation<span class="op">=</span><span class="dv">35</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb19-6"><a href="" aria-label="6"></a>    ax.set_yticks(<span class="bu">range</span>(k), [<span class="ss">f"C</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> (n=</span><span class="sc">{</span>sizes<span class="sc">.</span>iloc[i]<span class="sc">}</span><span class="ss">)"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k)])</span>
+<span id="cb19-7"><a href="" aria-label="7"></a>    ax.set_title(<span class="ss">f"k=</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> | SSE=</span><span class="sc">{</span>food_results[k][<span class="dv">0</span>]<span class="sc">.</span>inertia_<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb19-8"><a href="" aria-label="8"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k):</span>
+<span id="cb19-9"><a href="" aria-label="9"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(food_features)):</span>
+<span id="cb19-10"><a href="" aria-label="10"></a>            value <span class="op">=</span> centers.iloc[i, j]</span>
+<span id="cb19-11"><a href="" aria-label="11"></a>            ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span><span class="st">"white"</span> <span class="cf">if</span> value <span class="op">&gt;</span> <span class="fl">.55</span> <span class="cf">else</span> <span class="st">"black"</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb19-12"><a href="" aria-label="12"></a>fig.colorbar(image, ax<span class="op">=</span>axes.ravel().tolist(), shrink<span class="op">=</span><span class="fl">.55</span>, label<span class="op">=</span><span class="st">"normalized centroid"</span>)</span>
+<span id="cb19-13"><a href="" aria-label="13"></a>fig.suptitle(<span class="st">"Food Nutrient centroid profiles"</span>, fontsize<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb19-14"><a href="" aria-label="14"></a>plt.show()</span></code></pre></div>
 </details>
 
 </div>
-<img data-src="lab-04-clustering_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section>
+<img data-src="lab-04-clustering_files/figure-revealjs/cell-20-output-1.png" class="r-stretch"></section>
 <section id="food-cluster-centers" class="slide level2">
 <h2>Food cluster centers</h2>
-<div id="839a5a0e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.049295Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.049108Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.057901Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.057196Z&quot;}}" data-execution_count="21">
+<div id="839a5a0e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.524017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.523784Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.533698Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.532720Z&quot;}}" data-execution_count="20">
 <div class="cell-output cell-output-stdout">
 <pre><code>SSE = 5.069</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1170,11 +1155,11 @@ Answer
 </div>
 </div>
 </div>
-<div id="a6ccbaf4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.060048Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.059846Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.068323Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.067560Z&quot;}}" data-execution_count="22">
+<div id="a6ccbaf4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.535395Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.535223Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.544690Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.543908Z&quot;}}" data-execution_count="21">
 <div class="cell-output cell-output-stdout">
 <pre><code>SSE = 3.367</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="22">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1236,11 +1221,11 @@ Answer
 </div>
 </div>
 </div>
-<div id="f3b9d427" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.070246Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.070075Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.079130Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.078199Z&quot;}}" data-execution_count="23">
+<div id="f3b9d427" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.546626Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.546342Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.555508Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.554659Z&quot;}}" data-execution_count="22">
 <div class="cell-output cell-output-stdout">
 <pre><code>SSE = 2.559</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="23">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1314,11 +1299,11 @@ Answer
 </section>
 <section id="food-cluster-centers-1" class="slide level2">
 <h2>Food cluster centers</h2>
-<div id="800338d3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.080886Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.080695Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.090097Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.089173Z&quot;}}" data-execution_count="24">
+<div id="800338d3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.557256Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.557083Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.567038Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.566215Z&quot;}}" data-execution_count="23">
 <div class="cell-output cell-output-stdout">
 <pre><code>SSE = 1.776</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="24">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1398,11 +1383,11 @@ Answer
 </div>
 </div>
 </div>
-<div id="31c43d64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.091817Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.091626Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.101420Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.100592Z&quot;}}" data-execution_count="25">
+<div id="31c43d64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.568874Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.568670Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.578603Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.577800Z&quot;}}" data-execution_count="24">
 <div class="cell-output cell-output-stdout">
 <pre><code>SSE = 1.400</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="24">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1507,28 +1492,295 @@ Answer
 <li>foods with middle-range energy, protein, and fat;</li>
 <li>a light/low-fat but protein-, calcium-, or iron-rich group at the finer partition.</li>
 </ul>
-Iron is often weakly characterized because most values are similar and a few high-iron foods dominate its range. Small clusters should be treated cautiously: lower SSE alone does not guarantee a useful segmentation.
+<p><br></p>
+<p>Iron is often weakly characterized because most values are similar and a few high-iron foods dominate its range.</p>
+<ul>
+<li>Small clusters should be treated cautiously: lower SSE alone does not guarantee a useful segmentation.</li>
+</ul>
 </details>
 </section>
 <section id="verify-against-the-classified-file" class="slide level2">
 <h2>Verify against the classified file</h2>
 <p><code>FoodNutrientsClassified.arff</code> contains descriptive fields (<code>SuperType</code>, preparation, <code>Type</code>, and <code>Name</code>) followed by the same numeric nutrients. They are used only to interpret the already fitted <span class="math inline">\(k=6\)</span> clusters.</p>
-<div id="d569c866" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.103282Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.103087Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.110820Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.110040Z&quot;}}" data-execution_count="26">
+<div id="d569c866" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.580755Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.580564Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.594986Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.594057Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a>food_classified <span class="op">=</span> load_arff_frame(<span class="st">"FoodNutrientsClassified.arff"</span>)</span>
-<span id="cb26-2"><a href="" aria-label="2"></a>numeric_food <span class="op">=</span> food_classified[food_features].astype(<span class="bu">float</span>)</span>
-<span id="cb26-3"><a href="" aria-label="3"></a></span>
-<span id="cb26-4"><a href="" aria-label="4"></a>labels6 <span class="op">=</span> food_results[<span class="dv">6</span>][<span class="dv">1</span>]</span>
-<span id="cb26-5"><a href="" aria-label="5"></a>food_labeled <span class="op">=</span> food_classified[[<span class="st">"Name"</span>, <span class="st">"SuperType"</span>, <span class="st">"Type"</span>]].copy()</span>
-<span id="cb26-6"><a href="" aria-label="6"></a>food_labeled.insert(<span class="dv">0</span>, <span class="st">"cluster"</span>, [<span class="ss">f"C</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> labels6])</span>
-<span id="cb26-7"><a href="" aria-label="7"></a></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>food_classified <span class="op">=</span> load_arff_frame(<span class="st">"FoodNutrientsClassified.arff"</span>)</span>
+<span id="cb25-2"><a href="" aria-label="2"></a>food_classified.head(<span class="dv">10</span>)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SuperType</th>
+<th data-quarto-table-cell-role="th">Preparated</th>
+<th data-quarto-table-cell-role="th">Type</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">EnergyCal</th>
+<th data-quarto-table-cell-role="th">ProteinGram</th>
+<th data-quarto-table-cell-role="th">FatGram</th>
+<th data-quarto-table-cell-role="th">CalciumMG</th>
+<th data-quarto-table-cell-role="th">IronMG</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>MEAT</td>
+<td>COOKED</td>
+<td>BEEF</td>
+<td>BEEF_BRAISED</td>
+<td>340.0</td>
+<td>20.0</td>
+<td>28.0</td>
+<td>9.0</td>
+<td>2.6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>MEAT</td>
+<td>COOKED</td>
+<td>BEEF</td>
+<td>HAMBURGER</td>
+<td>245.0</td>
+<td>21.0</td>
+<td>17.0</td>
+<td>9.0</td>
+<td>2.7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MEAT</td>
+<td>COOKED</td>
+<td>BEEF</td>
+<td>BEEF_ROAST</td>
+<td>420.0</td>
+<td>15.0</td>
+<td>39.0</td>
+<td>7.0</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>MEAT</td>
+<td>COOKED</td>
+<td>BEEF</td>
+<td>BEEF_STEAK</td>
+<td>375.0</td>
+<td>19.0</td>
+<td>32.0</td>
+<td>9.0</td>
+<td>2.6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>MEAT</td>
+<td>CANNED</td>
+<td>BEEF</td>
+<td>BEEF_CANNED</td>
+<td>180.0</td>
+<td>22.0</td>
+<td>10.0</td>
+<td>17.0</td>
+<td>3.7</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>MEAT</td>
+<td>BROILED</td>
+<td>CHICKEN</td>
+<td>CHICKEN_BROILED</td>
+<td>115.0</td>
+<td>20.0</td>
+<td>3.0</td>
+<td>8.0</td>
+<td>1.4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>MEAT</td>
+<td>CANNED</td>
+<td>CHICKEN</td>
+<td>CHICKEN_CANNED</td>
+<td>170.0</td>
+<td>25.0</td>
+<td>7.0</td>
+<td>12.0</td>
+<td>1.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>MEAT</td>
+<td>BROILED</td>
+<td>BEEF</td>
+<td>BEEF_HEART</td>
+<td>160.0</td>
+<td>26.0</td>
+<td>5.0</td>
+<td>14.0</td>
+<td>5.9</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>MEAT</td>
+<td>COOKED</td>
+<td>LAMB</td>
+<td>LAMB_LEG_ROAST</td>
+<td>265.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>9.0</td>
+<td>2.6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>MEAT</td>
+<td>COOKED</td>
+<td>LAMB</td>
+<td>LAMB_SHOULDER_ROAST</td>
+<td>300.0</td>
+<td>18.0</td>
+<td>25.0</td>
+<td>9.0</td>
+<td>2.3</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="food-clusters-by-super-type" class="slide level2">
 <h2>Food clusters by super type</h2>
-<div id="7936208a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.112590Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.112413Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.131825Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.131045Z&quot;}}" data-execution_count="27">
+<div id="8b746001" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.596671Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.596503Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.604780Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.604067Z&quot;}}" data-execution_count="26">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a>labels6 <span class="op">=</span> food_results[<span class="dv">6</span>][<span class="dv">1</span>]</span>
+<span id="cb26-2"><a href="" aria-label="2"></a>food_labeled <span class="op">=</span> food_classified[[<span class="st">"Name"</span>, <span class="st">"SuperType"</span>, <span class="st">"Type"</span>]].copy()</span>
+<span id="cb26-3"><a href="" aria-label="3"></a>food_labeled.insert(<span class="dv">0</span>, <span class="st">"cluster"</span>, [<span class="ss">f"C</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> labels6])</span>
+<span id="cb26-4"><a href="" aria-label="4"></a>food_labeled.head(<span class="dv">10</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">cluster</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">SuperType</th>
+<th data-quarto-table-cell-role="th">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>C0</td>
+<td>BEEF_BRAISED</td>
+<td>MEAT</td>
+<td>BEEF</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>C1</td>
+<td>HAMBURGER</td>
+<td>MEAT</td>
+<td>BEEF</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>C0</td>
+<td>BEEF_ROAST</td>
+<td>MEAT</td>
+<td>BEEF</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>C0</td>
+<td>BEEF_STEAK</td>
+<td>MEAT</td>
+<td>BEEF</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>C1</td>
+<td>BEEF_CANNED</td>
+<td>MEAT</td>
+<td>BEEF</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>C4</td>
+<td>CHICKEN_BROILED</td>
+<td>MEAT</td>
+<td>CHICKEN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>C1</td>
+<td>CHICKEN_CANNED</td>
+<td>MEAT</td>
+<td>CHICKEN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>C3</td>
+<td>BEEF_HEART</td>
+<td>MEAT</td>
+<td>BEEF</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>C1</td>
+<td>LAMB_LEG_ROAST</td>
+<td>MEAT</td>
+<td>LAMB</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>C0</td>
+<td>LAMB_SHOULDER_ROAST</td>
+<td>MEAT</td>
+<td>LAMB</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="7936208a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.606705Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.606532Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.627934Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.627019Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>pd.crosstab(food_labeled[<span class="st">"cluster"</span>], food_labeled[<span class="st">"SuperType"</span>], margins<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
@@ -1616,7 +1868,7 @@ Iron is often weakly characterized because most values are similar and a few hig
 </section>
 <section id="food-clusters-by-type" class="slide level2">
 <h2>Food clusters by type</h2>
-<div id="e84bbe38" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.134081Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.133868Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.155847Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.155059Z&quot;}}" data-execution_count="28">
+<div id="e84bbe38" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.629670Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.629500Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.651190Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.650307Z&quot;}}" data-execution_count="28">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a>pd.crosstab(food_labeled[<span class="st">"cluster"</span>], food_labeled[<span class="st">"Type"</span>], margins<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
@@ -1749,7 +2001,7 @@ Iron is often weakly characterized because most values are similar and a few hig
 </section>
 <section id="food-cluster-members" class="slide level2">
 <h2>Food cluster members</h2>
-<div id="7de35ed1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.158130Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.157866Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.162596Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.161839Z&quot;}}" data-execution_count="29">
+<div id="7de35ed1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.652940Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.652745Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.657739Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.656830Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="cf">for</span> cluster, group <span class="kw">in</span> food_labeled.groupby(<span class="st">"cluster"</span>, sort<span class="op">=</span><span class="va">True</span>):</span>
@@ -1764,11 +2016,20 @@ C4: CHICKEN_BROILED, BLUEFISH_BAKED, CRABMEAT_CANNED, HADDOCK_FRIED, MACKEREL_BR
 C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 </div>
 </div>
+</section></section>
+<section>
+<section id="coordinates-dataset-k-means" class="title-slide slide level1 center">
+<h1>Coordinates dataset: K-means</h1>
+
 </section>
 <section id="the-coordinates-dataset-k-means" class="slide level2">
 <h2>The Coordinates dataset: K-means</h2>
-<p>Coordinates contains 480 two-dimensional points. We first repeat the <span class="math inline">\(k=2\ldots6\)</span> experiment and inspect how SSE changes. Because scikit-learn reports the <strong>sum</strong> of squared distances while the Weka slide values depend on its own normalization and reporting convention, absolute SSE values need not match; the trend and geometry are the comparison that matter.</p>
-<div id="3cf01b03" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.164509Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.164341Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.252551Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.251617Z&quot;}}" data-execution_count="30">
+<p>Coordinates contains 480 two-dimensional points.</p>
+<ul>
+<li>We first repeat the <span class="math inline">\(k=2\ldots6\)</span> experiment and inspect how SSE changes.</li>
+<li>Because scikit-learn reports the <strong>sum</strong> of squared distances while the Weka slide values depend on its own normalization and reporting convention, absolute SSE values need not match; the trend and geometry are the comparison that matter.</li>
+</ul>
+<div id="3cf01b03" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.659603Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.659414Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:51.769837Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:51.768709Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>coordinates <span class="op">=</span> load_arff_frame(<span class="st">"Coordinates.arff"</span>)</span>
@@ -1855,7 +2116,7 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 <section>
 <section id="k-means" class="title-slide slide level1 center">
 <h1>K-means</h1>
-<div id="e5392ac3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.254451Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.254261Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.781578Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.780737Z&quot;}}" data-execution_count="31">
+<div id="e5392ac3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:51.771557Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:51.771365Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:52.359701Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:52.358713Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
@@ -1875,7 +2136,12 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 <img data-src="lab-04-clustering_files/figure-revealjs/cell-32-output-1.png" class="r-stretch"></section>
 <section id="k-means-conclusion" class="slide level2">
 <h2>K-means conclusion</h2>
-<p>SSE necessarily decreases as <span class="math inline">\(k\)</span> grows, with diminishing improvements around the handout’s suggested <span class="math inline">\(k\approx5\)</span>. But the plots expose the more important limitation: K-means divides elongated natural groups into compact Voronoi regions. Adding centroids reduces SSE by slicing the shapes rather than discovering their full extent. A density-based method is preferable.</p>
+<p>SSE necessarily decreases as <span class="math inline">\(k\)</span> grows, with diminishing improvements around the handout’s suggested <span class="math inline">\(k\approx5\)</span>.</p>
+<ul>
+<li>But the plots expose the more important limitation: K-means divides elongated natural groups into compact Voronoi regions.</li>
+<li>Adding centroids reduces SSE by slicing the shapes rather than discovering their full extent.</li>
+<li><strong>A density-based method is preferable</strong>.</li>
+</ul>
 </section>
 <section id="the-coordinates-dataset-dbscan" class="slide level2">
 <h2>The Coordinates dataset: DBSCAN</h2>
@@ -1884,7 +2150,7 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 <li><code>eps</code>: neighborhood radius;</li>
 <li><code>min_samples</code>: minimum number of points (including the point itself) needed to define a core point.</li>
 </ul>
-<div id="b1befaf7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:34.784893Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:34.784689Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:34.877410Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:34.876613Z&quot;}}" data-execution_count="32">
+<div id="b1befaf7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:52.362673Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:52.362478Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:52.465162Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:52.464299Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="co"># A k-distance plot helps identify a bend for min_samples=8.</span></span>
@@ -1908,7 +2174,7 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 <h1>DBSCAN</h1>
 <p>The handout explores <code>(eps, minPts)</code> values <code>(0.10,4)</code>, <code>(0.10,8)</code>, <code>(0.05,4)</code>, <code>(0.06,3)</code>, and <code>(0.06,8)</code> on normalized coordinates.</p>
 
-<img data-src="lab-04-clustering_files/figure-revealjs/cell-34-output-1.png" class="r-stretch"><div id="2d072d27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T12:51:35.458645Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T12:51:35.458452Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T12:51:35.489019Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T12:51:35.488507Z&quot;}}" data-execution_count="34">
+<img data-src="lab-04-clustering_files/figure-revealjs/cell-34-output-1.png" class="r-stretch"><div id="2d072d27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T13:33:53.141777Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T13:33:53.141587Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T13:33:53.170008Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T13:33:53.169519Z&quot;}}" data-execution_count="34">
 <div class="cell-output cell-output-display" data-execution_count="34">
 <div>
 <style scoped="">
@@ -2029,7 +2295,6 @@ Unlike K-means, DBSCAN can trace non-spherical shapes and mark observations as n
 <li>Profile each cluster with tables and plots, then assign a short business label to every cluster.</li>
 <li>Explain one limitation of the analysis, including whether any variables could introduce bias or make the clusters hard to act on.</li>
 </ol>
-<p>Submit the executed notebook plus a short conclusion with the selected method, the cluster profiles, and one concrete marketing recommendation per cluster.</p>
 
 </section></section>
     </div>
