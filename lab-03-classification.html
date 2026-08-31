@@ -226,9 +226,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 @attribute id {ID12101,ID12102,...}
 @attribute age numeric
 @attribute sex {FEMALE,MALE}
-@attribute region {INNER_CITY,TOWN,RURAL,SUBURBAN}
-@attribute income numeric
-@attribute married {NO,YES}
 @attribute children numeric
 ...
 @attribute pep {YES,NO}
@@ -244,7 +241,7 @@ ID12102,40,MALE,TOWN,30085.1,YES,3,YES,NO,YES,YES,NO</code></pre>
 <li>build leakage-safe preprocessing pipelines for numeric and categorical features;</li>
 <li>distinguish training, cross-validation, and test performance;</li>
 <li>compare a baseline, logistic regression, a decision tree, and k-nearest neighbours;</li>
-<li>interpret confusion matrices, precision, recall, F1, ROC AUC, and PR AUC;</li>
+<li>interpret confusion matrices, precision, recall, F1;</li>
 <li>tune a model without using the test set;</li>
 <li>evaluate a selected model on a supplied external test set;</li>
 <li>extend the workflow from binary to multiclass classification.</li>
@@ -261,7 +258,7 @@ ID12102,40,MALE,TOWN,30085.1,YES,3,YES,NO,YES,YES,NO</code></pre>
 <section id="load-arff-files-without-extra-dependencies" class="title-slide slide level1 center">
 <h1>Load ARFF files without extra dependencies</h1>
 <p><code>find_dataset</code> makes paths work whether the notebook starts in the repository root or in <code>slides/</code>.</p>
-<div id="d48b2a2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:29.617705Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:29.617512Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:30.106071Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:30.105230Z&quot;}}" data-execution_count="3">
+<div id="d48b2a2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:14.923655Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:14.923524Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.428084Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.427511Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>bank <span class="op">=</span> load_dense_arff(<span class="st">"bank-data.arff"</span>)</span>
@@ -363,7 +360,7 @@ Only Census has an explicit training/test pair. Looking at its test results whil
 </section>
 <section id="bank-sample" class="slide level2">
 <h2>Bank sample</h2>
-<div id="c0772277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:30.108273Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:30.108098Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:30.117236Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:30.116534Z&quot;}}" data-execution_count="4">
+<div id="c0772277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.430108Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.429965Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.436913Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.436014Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>bank.head()</span></code></pre></div>
@@ -487,7 +484,7 @@ Only Census has an explicit training/test pair. Looking at its test results whil
 </section></section>
 <section id="data-profiling" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="a8cdbc99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:30.119313Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:30.119113Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:30.128052Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:30.127264Z&quot;}}" data-execution_count="5">
+<div id="a8cdbc99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.438191Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.438061Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.444096Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.443708Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>bank.info()</span></code></pre></div>
@@ -519,7 +516,7 @@ memory usage: 56.4+ KB</code></pre>
 <section>
 <section id="data-profiling-1" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="60447248" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:30.129894Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:30.129706Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:30.149802Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:30.149005Z&quot;}}" data-execution_count="6">
+<div id="60447248" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.445774Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.445641Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.458696Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.458199Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>bank.describe(include<span class="op">=</span><span class="st">'all'</span>).T</span></code></pre></div>
@@ -735,7 +732,7 @@ memory usage: 56.4+ KB</code></pre>
 </section>
 <section id="bank-target-counts" class="slide level2">
 <h2>Bank target counts</h2>
-<div id="3756fc8f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:30.151609Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:30.151418Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:30.157377Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:30.156546Z&quot;}}" data-execution_count="7">
+<div id="3756fc8f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.460249Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.460127Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.464794Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.464008Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
@@ -785,7 +782,7 @@ memory usage: 56.4+ KB</code></pre>
 </section>
 <section id="bank-target-proportions" class="slide level2">
 <h2>Bank target proportions</h2>
-<div id="c27cb604" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:30.159175Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:30.159008Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:30.165275Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:30.164484Z&quot;}}" data-execution_count="8">
+<div id="c27cb604" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.466017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.465905Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.470330Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.469871Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"proportion"</span>).to_frame()</span></code></pre></div>
@@ -856,7 +853,7 @@ Suggested answer
 <section id="make-a-single-stratified-holdout-split" class="slide level2">
 <h2>Make a single stratified holdout split</h2>
 <p>The test set is placed “in a vault” until model selection is complete. Stratification preserves the target proportions in both partitions.</p>
-<div id="d842afad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:30.607768Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:30.607591Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:30.620697Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:30.619816Z&quot;}}" data-execution_count="10">
+<div id="d842afad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:15.789017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:15.788825Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:15.799517Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:15.798784Z&quot;}}" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>Training shape: (450, 10)
 Test shape: (150, 10)</code></pre>
@@ -922,7 +919,7 @@ Test shape: (150, 10)</code></pre>
 <h2>Compare candidates with stratified cross-validation</h2>
 <p>Always include a simple baseline. <code>DummyClassifier</code> reveals whether a learned model improves on predicting the most common class.</p>
 <p>We report the mean and standard deviation across five folds. The same folds are used for every candidate.</p>
-<div id="13b30080" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:31.026247Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:31.026053Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:31.175839Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:31.174961Z&quot;}}" data-execution_count="13">
+<div id="13b30080" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:16.073000Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:16.072838Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:16.167867Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:16.167279Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> cv_results[[<span class="st">"accuracy_mean"</span>, <span class="st">"balanced_accuracy_mean"</span>, <span class="st">"f1_mean"</span>, <span class="st">"roc_auc_mean"</span>]].plot.bar(</span>
@@ -948,13 +945,13 @@ Test shape: (150, 10)</code></pre>
 <section id="tune-tree-complexity-using-training-data-only" class="slide level2">
 <h2>Tune tree complexity using training data only</h2>
 <p>An unconstrained tree can memorize the training set. Grid search evaluates combinations of depth and minimum leaf size inside cross-validation. We optimize balanced accuracy and do not touch <code>X_test</code>.</p>
-<div id="ded7c6e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:31.177829Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:31.177642Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:33.855230Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:33.854306Z&quot;}}" data-execution_count="14">
+<div id="ded7c6e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:16.169436Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:16.169298Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:17.882422Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:17.881665Z&quot;}}" data-execution_count="14">
 <div class="cell-output cell-output-stdout">
 <pre><code>Best parameters: {'model__max_depth': 7, 'model__min_samples_leaf': 5}
 Best mean CV balanced accuracy: 0.839</code></pre>
 </div>
 </div>
-<div id="c04d30ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:33.857060Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:33.856845Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:33.866450Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:33.865687Z&quot;}}" data-execution_count="15">
+<div id="c04d30ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:17.883987Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:17.883841Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:17.890566Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:17.890065Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>grid_results <span class="op">=</span> pd.DataFrame(tree_grid.cv_results_)</span>
@@ -1049,7 +1046,7 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 <section id="final-bank-evaluation" class="slide level2">
 <h2>Final Bank evaluation</h2>
 <p>Now evaluate the tuned workflow once on the held-out test set. The positive class is <code>YES</code>, so recall answers: “of customers who bought a PEP, how many did we find?”</p>
-<div id="d7130671" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:33.868371Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:33.868193Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:33.898459Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:33.897719Z&quot;}}" data-execution_count="16">
+<div id="d7130671" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:17.892052Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:17.891926Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:17.911971Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:17.911509Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>best_bank_model <span class="op">=</span> tree_grid.best_estimator_</span>
@@ -1190,7 +1187,7 @@ weighted avg      0.873     0.873     0.873       150
 <section id="inspect-the-model-not-just-its-score" class="slide level2">
 <h2>Inspect the model, not just its score</h2>
 <p>Permutation importance measures how much test performance drops after shuffling one feature. It works on the original columns and can expose reliance on a small number of inputs. Importance is predictive, not causal.</p>
-<div id="a50f567d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:34.201270Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:34.201078Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.343162Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.342304Z&quot;}}" data-execution_count="18">
+<div id="a50f567d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:18.109321Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:18.109177Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:18.865900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:18.865429Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>importance <span class="op">=</span> permutation_importance(</span>
@@ -1214,7 +1211,7 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="bank-permutation-importance-table" class="slide level2">
 <h2>Bank permutation importance table</h2>
-<div id="8be3edd0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.345212Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.345023Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.352025Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.351261Z&quot;}}" data-execution_count="19">
+<div id="8be3edd0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:18.868022Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:18.867879Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:18.873295Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:18.872565Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>importance_df.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
@@ -1314,7 +1311,7 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="bank-permutation-importance-chart" class="slide level2">
 <h2>Bank permutation importance chart</h2>
-<div id="7f116130" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.353808Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.353617Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.496511Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.495620Z&quot;}}" data-execution_count="20">
+<div id="7f116130" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:18.875171Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:18.875030Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:18.967756Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:18.967079Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> importance_df.sort_values(<span class="st">"importance_mean"</span>).plot.barh(</span>
@@ -1329,7 +1326,7 @@ weighted avg      0.873     0.873     0.873       150
 <section>
 <section id="fitted-tree" class="title-slide slide level1 center">
 <h1>Fitted tree</h1>
-<div id="6cdd6b7e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.498487Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.498279Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.774971Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.774165Z&quot;}}" data-execution_count="21">
+<div id="6cdd6b7e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:18.969110Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:18.968964Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.145114Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.144627Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>fitted_tree <span class="op">=</span> best_bank_model.named_steps[<span class="st">"model"</span>]</span>
@@ -1346,7 +1343,7 @@ weighted avg      0.873     0.873     0.873       150
 <section id="exercise---error-analysis" class="slide level2">
 <h2>Exercise - error analysis</h2>
 <p>Inspect misclassified rows. Look for patterns, but do not treat a small test sample as proof.</p>
-<div id="f258d83f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.777034Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.776814Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.790996Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.790154Z&quot;}}" data-execution_count="22">
+<div id="f258d83f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.146807Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.146648Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.156545Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.155671Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>bank_errors <span class="op">=</span> X_test.copy()</span>
@@ -1539,7 +1536,7 @@ weighted avg      0.873     0.873     0.873       150
 <section id="audit-traintest-compatibility" class="slide level2">
 <h2>Audit train/test compatibility</h2>
 <p>Check that schemas match, inspect missingness, and compare class prevalence. <code>fnlwgt</code> is a survey weight rather than a personal characteristic; we exclude it here. <code>education</code> and <code>education-num</code> encode closely related information, so we remove the numeric duplicate for a clearer teaching model.</p>
-<div id="8323f7ee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.792955Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.792733Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.870722Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.869901Z&quot;}}" data-execution_count="23">
+<div id="8323f7ee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.157926Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.157789Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.181434Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.180952Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>TARGET <span class="op">=</span> <span class="st">"class"</span></span>
@@ -1556,7 +1553,7 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="census-audit-summary" class="slide level2">
 <h2>Census audit summary</h2>
-<div id="63c7c3ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.873015Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.872808Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.879774Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.878940Z&quot;}}" data-execution_count="24">
+<div id="63c7c3ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.183049Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.182926Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.187505Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.186989Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>census_summary</span></code></pre></div>
@@ -1702,7 +1699,7 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="census-target-prevalence" class="slide level2">
 <h2>Census target prevalence</h2>
-<div id="ec64e26e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.881528Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.881357Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.894056Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.893268Z&quot;}}" data-execution_count="25">
+<div id="ec64e26e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.188953Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.188822Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.195123Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.194757Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>prevalence <span class="op">=</span> pd.concat(</span>
@@ -1760,7 +1757,7 @@ weighted avg      0.873     0.873     0.873       150
 </div>
 </div>
 </div>
-<div id="b1291eaf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.895898Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.895712Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:35.900577Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:35.899713Z&quot;}}" data-execution_count="26">
+<div id="b1291eaf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.196642Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.196513Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:19.199878Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:19.199485Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>X_census_train <span class="op">=</span> census_train.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
@@ -1788,7 +1785,7 @@ weighted avg      0.873     0.873     0.873       150
 <section id="select-a-census-model-by-cross-validation" class="slide level2">
 <h2>Select a Census model by cross-validation</h2>
 <p>The positive class is the less frequent <code>&gt;50K</code> group. We compare a class-weighted logistic regression, a constrained decision tree, and a random forest. Class weighting asks the learner to penalize mistakes on the minority class more strongly; it does not change the evaluation data.</p>
-<div id="43f6fb51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:35.902420Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:35.902246Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:38.759084Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:38.758165Z&quot;}}" data-execution_count="27">
+<div id="43f6fb51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:19.201425Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:19.201295Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:21.079351Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:21.078529Z&quot;}}" data-execution_count="27">
 <div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 <style scoped="">
@@ -1888,7 +1885,7 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="census-supplied-test-metrics" class="slide level2">
 <h2>Census supplied test metrics</h2>
-<div id="a14bbdfe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:40.612577Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:40.612399Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:40.619245Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:40.618374Z&quot;}}" data-execution_count="29">
+<div id="a14bbdfe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.274545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.274397Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.280036Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.279151Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="st">"Selected by CV:"</span>, selected_name)</span>
@@ -1950,7 +1947,7 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="census-supplied-test-report-and-confusion-matrix" class="slide level2">
 <h2>Census supplied test report and confusion matrix</h2>
-<div id="e974da16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:40.620988Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:40.620773Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:41.127387Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:41.126453Z&quot;}}" data-execution_count="30">
+<div id="e974da16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.281619Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.281494Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.564414Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.563553Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a><span class="bu">print</span>(classification_report(y_census_test, census_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
@@ -1975,7 +1972,7 @@ weighted avg      0.835     0.779     0.792     31561
 <section id="slice-based-error-analysis" class="slide level2">
 <h2>Slice-based error analysis</h2>
 <p>Aggregate metrics can hide uneven performance. The next cell reports accuracy and positive-class recall by sex. This is a descriptive diagnostic, <strong>not</strong> a fairness verdict: subgroup sizes, label quality, history, deployment context, and the costs of errors all matter.</p>
-<div id="32792970" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:41.129688Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:41.129316Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:41.155612Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:41.154826Z&quot;}}" data-execution_count="31">
+<div id="32792970" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.566250Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.566101Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.583203Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.582588Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>census_diagnostics <span class="op">=</span> X_census_test[[<span class="st">"sex"</span>]].copy()</span>
@@ -2070,7 +2067,7 @@ weighted avg      0.835     0.779     0.792     31561
 </section>
 <section id="nursery-sample" class="slide level2">
 <h2>Nursery sample</h2>
-<div id="dbd33a92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:41.157656Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:41.157472Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:41.164898Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:41.164166Z&quot;}}" data-execution_count="32">
+<div id="dbd33a92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.584896Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.584740Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.591261Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.590469Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>nursery.head()</span></code></pre></div>
@@ -2176,7 +2173,7 @@ weighted avg      0.835     0.779     0.792     31561
 </section>
 <section id="nursery-class-counts" class="slide level2">
 <h2>Nursery class counts</h2>
-<div id="0c56671f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:41.166585Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:41.166405Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:41.173721Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:41.173079Z&quot;}}" data-execution_count="33">
+<div id="0c56671f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.592927Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.592806Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.598279Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.597476Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>nursery[<span class="st">"class"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div>
@@ -2235,7 +2232,7 @@ weighted avg      0.835     0.779     0.792     31561
 </div>
 </div>
 </div>
-<div id="d2633366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:41.175583Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:41.175409Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:41.191094Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:41.190313Z&quot;}}" data-execution_count="34">
+<div id="d2633366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.599862Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.599703Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.611305Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.610717Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>X_nursery <span class="op">=</span> nursery.drop(columns<span class="op">=</span><span class="st">"class"</span>)</span>
@@ -2260,7 +2257,7 @@ weighted avg      0.835     0.779     0.792     31561
 <li>Identify the class with the lowest recall.</li>
 </ol>
 <p>Why might accuracy and macro F1 rank models differently?</p>
-<div id="f4dd5a2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T09:44:41.192907Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T09:44:41.192727Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T09:44:41.196254Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T09:44:41.195480Z&quot;}}" data-execution_count="35">
+<div id="f4dd5a2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-31T10:08:22.612661Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-31T10:08:22.612537Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-31T10:08:22.615096Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-31T10:08:22.614524Z&quot;}}" data-execution_count="35">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add at least two learned models.</span></span>
