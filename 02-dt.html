@@ -1961,6 +1961,56 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 
 
 
+<section id="cross-validation" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+<ul>
+<li>Partition the records into <span class="math inline">\(k\)</span> folds of similar size</li>
+<li>For each fold:
+<ul>
+<li>train on the other <span class="math inline">\(k-1\)</span> folds</li>
+<li>evaluate on the held-out fold</li>
+</ul></li>
+<li>Cross-validation is often used for <strong>hyperparameter tuning</strong>:
+<ul>
+<li>repeat the same <span class="math inline">\(k\)</span>-fold procedure for each candidate configuration</li>
+<li>compare configurations by their average validation performance</li>
+<li>prefer configurations that perform well <strong>and</strong> have acceptable variability across folds</li>
+</ul></li>
+<li>The final test set is still kept aside and used only once, after the hyperparameters have been selected</li>
+</ul>
+</section>
+
+<section id="cross-validation-1" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+
+<img data-src="https://scikit-learn.org/stable/_images/grid_search_cross_validation.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
+<li>CAUTION: cross-validation creates <span class="math inline">\(k\)</span> different classifiers
+<ul>
+<li>validation indicates whether the classifier type and its parameters are appropriate for the problem</li>
+</ul></li>
+<li>Built decision trees can have different split attributes and conditions depending on the records in each training fold</li>
+</ul>
+</section>
+
+<section id="cross-validation-2" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+
+<img data-src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*GhKMAUmi4bfFiEwZCPlDsA.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
+<li>This gives <span class="math inline">\(k\)</span> performance values, one for each held-out fold</li>
+<li>Report the <strong>average</strong> performance to estimate how well the model configuration generalizes</li>
+<li>Also report the <strong>standard deviation</strong> across folds:
+<ul>
+<li>low standard deviation means the result is stable across different train/test splits</li>
+<li>high standard deviation means performance depends strongly on which records end up in the fold</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="cross-validation-3" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+
+<img data-src="https://scikit-learn.org/stable/_images/grid_search_workflow.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p></section>
+
 <section id="classification-errors" class="title-slide slide level1 center">
 <h1>Classification errors</h1>
 <ul>
@@ -2159,19 +2209,6 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </section>
 
 
-
-<section id="bootstrap" class="title-slide slide level1 center">
-<h1>Bootstrap</h1>
-<p>Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of <span class="math inline">\(N\)</span>records, you can create an <span class="math inline">\(N\)</span>-record set in which each record has approximately a 63.2% probability of appearing (with <span class="math inline">\(N\)</span>sufficiently large)</p>
-<p><span class="math inline">\(1 - (1 - \frac{1}{N})^N = 1 - e^{-1} = 0.632\)</span></p>
-<ul>
-<li>Records that are not used even once in the current training set form the validation set</li>
-</ul>
-<p>The procedure is repeated <span class="math inline">\(b\)</span> times. Commonly, the model’s accuracy is calculated as:</p>
-<p><span class="math inline">\(Acc_{boot} = \frac{1}{b} \sum_{i=1}^b 0.632 \cdot Acc_i + 0.368 \cdot Acc_s\)</span></p>
-<p>where <span class="math inline">\(Acc_i\)</span> is the accuracy of the <span class="math inline">\(i\)</span>-th bootstrap, <span class="math inline">\(Acc_s\)</span> is the accuracy of the complete dataset</p>
-<p>The bootstrap does not create a (new) dataset with more information, but it can stabilize the obtained results of the available dataset. It is therefore particularly useful for small datasets.</p>
-</section>
 
 <section id="c4.5" class="title-slide slide level1 center">
 <h1>C4.5</h1>
