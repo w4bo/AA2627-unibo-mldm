@@ -1,3 +1,9 @@
+## [1.0.22](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.21...1.0.22) (2026-09-01)
+
+### Bug Fixes
+
+* typo ([5a3e2c6](https://github.com/w4bo/AA2627-unibo-mldm/commit/5a3e2c6b22e457173a7ff600fc9657143acc4c83))
+
 ## [1.0.21](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.20...1.0.21) (2026-09-01)
 
 ### Bug Fixes
