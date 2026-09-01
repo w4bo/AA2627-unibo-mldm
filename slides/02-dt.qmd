@@ -1131,6 +1131,40 @@ $$
 :::
 ::::
 
+# Cross validation
+
+- Partition the records into $k$ folds of similar size
+- For each fold:
+  - train on the other $k-1$ folds
+  - evaluate on the held-out fold
+- Cross-validation is often used for **hyperparameter tuning**:
+  - repeat the same $k$-fold procedure for each candidate configuration
+  - compare configurations by their average validation performance
+  - prefer configurations that perform well **and** have acceptable variability across folds
+- The final test set is still kept aside and used only once, after the hyperparameters have been selected
+
+# Cross validation
+
+![Cross validation](https://scikit-learn.org/stable/_images/grid_search_cross_validation.png)
+
+- CAUTION: cross-validation creates $k$ different classifiers
+  - validation indicates whether the classifier type and its parameters are appropriate for the problem
+- Built decision trees can have different split attributes and conditions depending on the records in each training fold
+
+# Cross validation
+
+![Cross validation](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*GhKMAUmi4bfFiEwZCPlDsA.png)
+
+- This gives $k$ performance values, one for each held-out fold
+- Report the **average** performance to estimate how well the model configuration generalizes
+- Also report the **standard deviation** across folds:
+  - low standard deviation means the result is stable across different train/test splits
+  - high standard deviation means performance depends strongly on which records end up in the fold
+
+# Cross validation
+
+![Cross validation](https://scikit-learn.org/stable/_images/grid_search_workflow.png)
+
 # Classification errors
 
 - **Training error:** are mistakes that are made on the training set
@@ -1310,18 +1344,7 @@ Pessimistic error (penalty 1)?
 :::
 ::::
 
-# Building the test set {visibility="hidden"}
-
-**Cross validation**
-
-- Partition the records into separate $k$ subdivisions
-- Run the training on $k-1$ partitions and test the remainder
-- Repeat the test $k$ times and calculate the average accuracy
-- CAUTION: cross-validation creates $k$ different classifiers.
-    - Thus, validation indicates how much the type of classifier and its parameters are appropriate for the specific problem
-- Built decision trees can have different split attributes and conditions depending on the character of the $k$-th training set
-
-# Bootstrap
+# Bootstrap {visibility="hidden"}
 
 Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of $N$records, you can create an $N$-record set in which each record has approximately a 63.2% probability of appearing (with $N$sufficiently large)
 
