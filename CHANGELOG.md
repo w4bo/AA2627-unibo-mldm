@@ -1,3 +1,11 @@
+## [1.0.21](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.20...1.0.21) (2026-09-01)
+
+### Bug Fixes
+
+* cleaning slides, add CV back to 02-dt ([a8de4d5](https://github.com/w4bo/AA2627-unibo-mldm/commit/a8de4d54f300333ba8212c8d9440ae6d52a6cc97))
+* outline ([34a0c31](https://github.com/w4bo/AA2627-unibo-mldm/commit/34a0c311175c129461825e04ab198caa545451b0))
+* update lab layout ([2a76414](https://github.com/w4bo/AA2627-unibo-mldm/commit/2a76414b0e17f20cc05fd9687d068caf7d575b57))
+
 ## [1.0.20](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.19...1.0.20) (2026-08-31)
 
 ### Bug Fixes
