@@ -213,6 +213,94 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
+<section id="learning-objectives" class="title-slide slide level1 center">
+<h1>Learning objectives</h1>
+<p>By the end of this lecture, you will be able to:</p>
+<ul>
+<li><strong>Explain</strong> association rules as co-occurrence patterns rather than causal claims</li>
+<li><strong>Compute</strong> support and confidence for itemsets and rules</li>
+<li><strong>Use</strong> the Apriori principle to reduce candidate search</li>
+<li><strong>Interpret</strong> closed, maximal, and multi-level itemsets</li>
+<li><strong>Diagnose</strong> redundant, uninteresting, and cross-support patterns</li>
+</ul>
+</section>
+
+<section id="learning-priorities" class="title-slide slide level1 center">
+<h1>Learning priorities</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Priority</th>
+<th>What students should be able to do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Core</strong></td>
+<td>Explain itemsets, support, confidence, Apriori, and rule interpretation</td>
+</tr>
+<tr class="even">
+<td><strong>Practice</strong></td>
+<td>Compute supports, confidences, and frequent itemsets on a small transaction table</td>
+</tr>
+<tr class="odd">
+<td><strong>Extension</strong></td>
+<td>Closed/maximal itemsets, interestingness, continuous attributes, and multi-level rules</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="project-lifecycle-checkpoint" class="title-slide slide level1 center">
+<h1>Project lifecycle checkpoint</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Project question</th>
+<th>Association-rule answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Business question</td>
+<td>Which co-occurrences could support layout, recommendation, or promotion decisions?</td>
+</tr>
+<tr class="even">
+<td>Data requirements</td>
+<td>Transactional or discretized data where item co-occurrence is meaningful</td>
+</tr>
+<tr class="odd">
+<td>Preprocessing</td>
+<td>Define items, transactions, hierarchies, and discretization carefully</td>
+</tr>
+<tr class="even">
+<td>Modeling</td>
+<td>Choose <code>minsup</code>, <code>minconf</code>, and rule-pruning strategy</td>
+</tr>
+<tr class="odd">
+<td>Evaluation</td>
+<td>Inspect support, confidence, redundancy, usefulness, and domain plausibility</td>
+</tr>
+<tr class="even">
+<td>Failure modes</td>
+<td>Rules may be obvious, redundant, non-causal, or driven by uneven item support</td>
+</tr>
+<tr class="odd">
+<td>Assignment angle</td>
+<td>Explain which rules are actionable and which should be ignored</td>
+</tr>
+</tbody>
+</table>
+</section>
+
 <section id="the-walmart-market-basket-use-case" class="title-slide slide level1 center">
 <h1>The Walmart “market basket” use case</h1>
 <table class="caption-top">
@@ -1614,6 +1702,52 @@ those with count at least 3.
 <li>Cross-support patterns may appear</li>
 <li>The number of redundant associations increases</li>
 </ul>
+</section>
+
+<section id="project-lifecycle-checkpoint-1" class="title-slide slide level1 center">
+<h1>Project lifecycle checkpoint</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Project question</th>
+<th>Association-rule answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Business question</td>
+<td>What decision would change if the rule is trusted?</td>
+</tr>
+<tr class="even">
+<td>Data requirements</td>
+<td>Transactions must reflect the behavior being analyzed</td>
+</tr>
+<tr class="odd">
+<td>Preprocessing</td>
+<td>Item definitions and discretization shape the discovered patterns</td>
+</tr>
+<tr class="even">
+<td>Modeling</td>
+<td>Thresholds trade coverage against the number of candidate rules</td>
+</tr>
+<tr class="odd">
+<td>Evaluation</td>
+<td>Interestingness requires more than support and confidence</td>
+</tr>
+<tr class="even">
+<td>Failure modes</td>
+<td>Co-occurrence is not causality, and redundancy can overwhelm interpretation</td>
+</tr>
+<tr class="odd">
+<td>Assignment angle</td>
+<td>Select a small set of rules and defend their practical relevance</td>
+</tr>
+</tbody>
+</table>
 
 </section>
     </div>

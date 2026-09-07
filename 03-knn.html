@@ -233,6 +233,82 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
+<section id="learning-priorities" class="title-slide slide level1 center">
+<h1>Learning priorities</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Priority</th>
+<th>What students should be able to do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Core</strong></td>
+<td>Explain lazy learning, distance metrics, majority vote, and why scaling matters</td>
+</tr>
+<tr class="even">
+<td><strong>Practice</strong></td>
+<td>Compute a k-NN prediction and select <span class="math inline">\(k\)</span> using validation data</td>
+</tr>
+<tr class="odd">
+<td><strong>Extension</strong></td>
+<td>Distance weighting, R-tree indexing, and high-dimensional behavior</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="project-lifecycle-checkpoint" class="title-slide slide level1 center">
+<h1>Project lifecycle checkpoint</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Project question</th>
+<th>k-NN answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Business question</td>
+<td>Are similar historical cases expected to behave similarly?</td>
+</tr>
+<tr class="even">
+<td>Data requirements</td>
+<td>Representative labeled examples and features with meaningful distances</td>
+</tr>
+<tr class="odd">
+<td>Preprocessing</td>
+<td>Fit scaling, encoding, and feature selection on training data only</td>
+</tr>
+<tr class="even">
+<td>Modeling</td>
+<td>Choose distance metric, <span class="math inline">\(k\)</span>, and voting rule</td>
+</tr>
+<tr class="odd">
+<td>Evaluation</td>
+<td>Tune <span class="math inline">\(k\)</span> and metric on validation data; test once at the end</td>
+</tr>
+<tr class="even">
+<td>Failure modes</td>
+<td>Irrelevant features, poor scaling, sparse data, high dimensionality, and latency</td>
+</tr>
+<tr class="odd">
+<td>Assignment angle</td>
+<td>Defend the data representation as much as the algorithm choice</td>
+</tr>
+</tbody>
+</table>
+</section>
+
 <section id="intuition-nearby-points-tend-to-behave-alike" class="title-slide slide level1 center">
 <h1>Intuition: nearby points tend to behave alike</h1>
 <p>K-nearest neighbors is an <strong>instance-based</strong> method.</p>
@@ -624,7 +700,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="a-neighborhood-inside-the-unit-hypercube" class="title-slide slide level1 center">
 <h1>A neighborhood inside the unit hypercube</h1>
 <p>The query is at the center, and “near” means within <span class="math inline">\(\pm0.1\)</span> on every feature.</p>
-<div id="44403719" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
+<div id="bf20081c" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -674,7 +750,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="average-distance-grows-with-dimensionality" class="title-slide slide level1 center">
 <h1>Average distance grows with dimensionality</h1>
 <p>For 1,000 points uniformly distributed in <span class="math inline">\([0,1]^{10}\)</span>, select one point and measure its average Euclidean distance from all the others while using the first 1 to 10 dimensions:</p>
-<div id="54554958" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
+<div id="c501b884" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -689,7 +765,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="local-neighborhoods-quickly-become-empty" class="title-slide slide level1 center">
 <h1>Local neighborhoods quickly become empty</h1>
 <p>For 1,000 uniformly distributed points, using a tolerance of <span class="math inline">\(\pm0.1\)</span> on every normalized feature:</p>
-<div id="35cd175e" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
+<div id="46e6aacf" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -843,6 +919,52 @@ O(nd+n\log k)
 <li>Data are sparse or high-dimensional</li>
 </ul>
 <p><strong>Remember:</strong> scale features, select the metric and <span class="math inline">\(k\)</span> with validation data, and keep the test set untouched.</p>
+</section>
+
+<section id="project-lifecycle-checkpoint-1" class="title-slide slide level1 center">
+<h1>Project lifecycle checkpoint</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Project question</th>
+<th>k-NN answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Business question</td>
+<td>Does local similarity support the decision?</td>
+</tr>
+<tr class="even">
+<td>Data requirements</td>
+<td>Enough nearby examples for future records</td>
+</tr>
+<tr class="odd">
+<td>Preprocessing</td>
+<td>Scaling is part of the model workflow, not an optional cleaning step</td>
+</tr>
+<tr class="even">
+<td>Modeling</td>
+<td>Distance metric, <span class="math inline">\(k\)</span>, and voting rule define the behavior</td>
+</tr>
+<tr class="odd">
+<td>Evaluation</td>
+<td>Validate the whole pipeline, including preprocessing</td>
+</tr>
+<tr class="even">
+<td>Failure modes</td>
+<td>Bad distance definitions can make the nearest neighbors meaningless</td>
+</tr>
+<tr class="odd">
+<td>Assignment angle</td>
+<td>Show examples where neighborhood choices change the prediction</td>
+</tr>
+</tbody>
+</table>
 
 </section>
     </div>
