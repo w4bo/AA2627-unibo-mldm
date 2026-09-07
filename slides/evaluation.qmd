@@ -1,0 +1,232 @@
+---
+subtitle: Data Splits, Evaluation, and Leakage
+---
+
+# Learning objectives
+
+By the end of this lecture, you will be able to:
+
+- **Explain** why training, validation, and test data have different roles
+- **Read** a confusion matrix and compute the main classification metrics
+- **Choose** a metric from the consequences of false positives and false negatives
+- **Use** cross-validation for model selection without contaminating the final test
+- **Recognize** common forms of data leakage
+
+# Learning priorities
+
+| Priority | What students should be able to do |
+|---|---|
+| **Core** | Explain train/validation/test splits, confusion matrix, accuracy, precision, recall, F-measure, overfitting, and underfitting |
+| **Practice** | Compute metrics from a small confusion matrix and choose a metric for a business or safety objective |
+| **Extension** | Cost matrices, ROC curves, AUC, bootstrap estimates, and threshold optimization |
+
+# Why evaluation comes before algorithms
+
+A model is useful only if it generalizes beyond the data used to build it.
+
+- Algorithms learn patterns from training data
+- Evaluation estimates whether those patterns will survive on future data
+- Validation supports model selection and hyperparameter tuning
+- The final test set estimates performance only after choices have been made
+
+The same evaluation vocabulary will return in decision trees, k-NN, neural networks, ensembles, and the final assignment.
+
+# Training, validation, and test sets
+
+| Split | Main use | Typical mistake |
+|---|---|---|
+| **Training** | Fit model parameters | Reporting training performance as final performance |
+| **Validation** | Choose models, hyperparameters, thresholds, or preprocessing choices | Reusing it until it becomes an implicit training set |
+| **Test** | Estimate final generalization once | Looking at it before the workflow is fixed |
+
+The test set should answer: **how well does the chosen workflow perform on unseen data?**
+
+# Evaluation workflow
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    A[Raw data] --> B[Split data]
+    B --> C[Training set]
+    B --> D[Validation set]
+    B --> E[Test set]
+    C --> F[Fit preprocessing and model]
+    F --> G[Candidate model]
+    D --> H[Select configuration]
+    G --> H
+    H --> I[Final workflow]
+    E --> J[Final evaluation]
+    I --> J
+
+    style H fill:#f78c8c,stroke:#000
+    style J fill:#a3f7a3,stroke:#000
+```
+
+# Confusion matrix
+
+The confusion matrix compares the predicted class with the actual class.
+
+- $TP$ (true positive): actual positive, predicted positive
+- $FN$ (false negative): actual positive, predicted negative
+- $FP$ (false positive): actual negative, predicted positive
+- $TN$ (true negative): actual negative, predicted negative
+
+| Predicted $\downarrow$ / Actual $\rightarrow$ | **Class=+** | **Class=-** |
+| :-: | :-: | :-: |
+| **Class=+** | TP | FP |
+| **Class=-** | FN | TN |
+
+For $n$ classes, the confusion matrix has size $n\times n$.
+
+# Real-world example: card-payment fraud
+
+Define **positive** as a fraudulent payment and **negative** as a legitimate payment.
+
+| Example | Actual class | Model prediction | Result |
+|:---:|:---:|:---:|:---:|
+| A stolen-card payment is correctly flagged | Fraud | Fraud | **True positive** |
+| A legitimate payment is incorrectly blocked | Legitimate | Fraud | **False positive** |
+| A fraudulent payment is incorrectly approved | Fraud | Legitimate | **False negative** |
+| A normal grocery payment is correctly approved | Legitimate | Legitimate | **True negative** |
+
+- **True** means that the prediction matches reality
+- **False** means that the prediction does not match reality
+- **Positive** and **negative** name the classes; they do not mean good and bad
+
+TP and TN are correct predictions; FP and FN are errors with potentially different costs.
+
+# Accuracy
+
+Accuracy is the most widely used metric to synthesize the information of a confusion matrix.
+
+$$Accuracy=\frac{TP + TN}{TP + TN + FP + FN}$$
+
+Equally, the frequency of the error could be used.
+
+$$Error~rate=\frac{FP + FN}{TP + TN + FP + FN}$$
+
+# Accuracy limitations
+
+Accuracy is not an appropriate metric if the classes contain a very different number of records.
+
+Consider a binary classification problem:
+
+- #Record of class 0 = 9990
+- #Record of class 1 = 10
+
+A model that always returns class 0 will have:
+
+$$Accuracy=\frac{9990}{10000}=99.9\%$$
+
+In binary classification, the rare class is often called the positive class.
+
+# Precision and recall
+
+Precision and recall answer different questions about the positive class:
+
+- **Precision**: among predicted positives, how many are actually positive?
+
+$$Precision = \frac{TP}{TP + FP}$$
+
+- **Recall**: among actual positives, how many did the model detect?
+
+$$Recall = \frac{TP}{TP + FN}$$
+
+High precision means few false positives. High recall means few false negatives.
+
+# Choosing between precision and recall
+
+Prefer higher **precision** when a positive prediction triggers an expensive, disruptive, or irreversible action.
+
+Examples:
+
+- A spam filter that automatically deletes messages
+- A fraud system that automatically blocks card payments
+- A moderation system that automatically removes content
+
+Prefer higher **recall** when missing a positive case creates danger or a major loss.
+
+Examples:
+
+- Cancer or infectious-disease screening
+- Fraud alerts sent to a human investigator
+- Fire, intrusion, or safety-defect detection
+
+# F-measure
+
+The F-measure summarizes precision and recall:
+
+$$
+\text{F-measure} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall}
+= \frac{2 \cdot TP}{2 \cdot TP + FP + FN}
+$$
+
+F-measure is the harmonic mean of precision and recall.
+
+- The harmonic average tends to be close to the smallest value
+- A high F-measure requires both precision and recall to be high
+- It is useful when the positive class matters and both error types are relevant
+
+# Cross-validation
+
+- Partition the records into $k$ folds of similar size
+- For each fold:
+  - train on the other $k-1$ folds
+  - evaluate on the held-out fold
+- Cross-validation is often used for **hyperparameter tuning**
+- The final test set is still kept aside and used only once
+
+# Cross-validation for model selection
+
+Cross-validation gives $k$ performance values, one for each held-out fold.
+
+Report:
+
+- The **average** performance to estimate expected generalization
+- The **standard deviation** to show stability across different splits
+
+Low standard deviation means the result is stable. High standard deviation means performance depends strongly on which records end up in each fold.
+
+# Classification errors
+
+- **Training error:** mistakes made on the training set
+- **Generalization error:** mistakes made on data not used for training
+- **Underfitting:** the model is too simple and performs poorly on both training and test data
+- **Overfitting:** the model fits the training data well but performs poorly on unseen data
+
+Overfitting means that the model has learned peculiarities of the training set that do not generalize.
+
+# Data leakage
+
+Data leakage happens when information unavailable at prediction time influences training or model selection.
+
+Common examples:
+
+- Scaling or imputing using the full dataset before splitting
+- Selecting features using the test labels
+- Using future information to predict the past
+- Repeatedly tuning decisions after inspecting the test set
+
+**Rule:** fit preprocessing and model choices inside the training/validation workflow, then evaluate once on the untouched test set.
+
+# Project lifecycle checkpoint
+
+| Project question | Evaluation answer |
+|---|---|
+| Business question | Which errors are costly, and for whom? |
+| Data requirements | Are labels reliable, representative, and available at prediction time? |
+| Preprocessing | Is every transformation fitted without looking at the test set? |
+| Modeling | Which hyperparameters or thresholds must be selected? |
+| Evaluation | Which metric matches the objective and error costs? |
+| Failure modes | Class imbalance, leakage, overfitting, and unstable validation results |
+| Assignment angle | Defend why your metric, split, and validation workflow match the problem |
+
+# Summary
+
+Before asking which algorithm is best, define how "best" will be measured.
+
+- Keep training, validation, and test roles separate
+- Choose metrics from the consequences of FP and FN
+- Use cross-validation for model selection, not for final proof
+- Treat leakage as a workflow error, not as a small technical detail
+- Report final performance only on untouched test data

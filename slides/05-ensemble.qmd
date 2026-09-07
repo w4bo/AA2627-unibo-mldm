@@ -12,6 +12,26 @@ By the end of this lecture, you will be able to:
 - **Compute** the main quantities used by AdaBoost
 - **Relate** AdaBoost to the original paper [@freund1997decision]
 
+# Learning priorities
+
+| Priority | What students should be able to do |
+|---|---|
+| **Core** | Explain voting, diversity, bagging, random forests, boosting, and weak learners |
+| **Practice** | Compute majority vote, weighted vote, and the main AdaBoost quantities |
+| **Extension** | Borda count, confidence fusion, and original-paper derivations |
+
+# Project lifecycle checkpoint
+
+| Project question | Ensemble answer |
+|---|---|
+| Business question | Do we need better predictive robustness than a single model provides? |
+| Data requirements | Enough data to train multiple learners and validate their combined behavior |
+| Preprocessing | Match preprocessing to each base learner and validate the full ensemble pipeline |
+| Modeling | Decide how to create diversity and how to combine predictions |
+| Evaluation | Compare the ensemble against simple baselines, not only against chance |
+| Failure modes | Correlated errors, noisy labels, overfitting through too many rounds, and lower interpretability |
+| Assignment angle | Show what the ensemble improves and what transparency it sacrifices |
+
 # Why ensemble classifiers?
 
 An **ensemble classifier** combines the predictions of several base classifiers.
@@ -627,6 +647,18 @@ Ensembles improve classification by combining multiple predictors.
 The key question is always the same:
 
 **How do we create useful diversity among classifiers?**
+
+# Project lifecycle checkpoint
+
+| Project question | Ensemble answer |
+|---|---|
+| Business question | Is the extra complexity justified by better decisions? |
+| Data requirements | Training data should support multiple diverse learners |
+| Preprocessing | The complete ensemble workflow must be selected without using the test set |
+| Modeling | Diversity can come from samples, features, algorithms, or sequential reweighting |
+| Evaluation | Compare performance, stability, and interpretability against one strong baseline |
+| Failure modes | Ensembles can amplify noisy labels or hide systematic errors |
+| Assignment angle | Explain why combination improves the project objective |
 
 # References
 

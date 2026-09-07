@@ -2,6 +2,36 @@
 subtitle: Association rules
 ---
 
+# Learning objectives
+
+By the end of this lecture, you will be able to:
+
+- **Explain** association rules as co-occurrence patterns rather than causal claims
+- **Compute** support and confidence for itemsets and rules
+- **Use** the Apriori principle to reduce candidate search
+- **Interpret** closed, maximal, and multi-level itemsets
+- **Diagnose** redundant, uninteresting, and cross-support patterns
+
+# Learning priorities
+
+| Priority | What students should be able to do |
+|---|---|
+| **Core** | Explain itemsets, support, confidence, Apriori, and rule interpretation |
+| **Practice** | Compute supports, confidences, and frequent itemsets on a small transaction table |
+| **Extension** | Closed/maximal itemsets, interestingness, continuous attributes, and multi-level rules |
+
+# Project lifecycle checkpoint
+
+| Project question | Association-rule answer |
+|---|---|
+| Business question | Which co-occurrences could support layout, recommendation, or promotion decisions? |
+| Data requirements | Transactional or discretized data where item co-occurrence is meaningful |
+| Preprocessing | Define items, transactions, hierarchies, and discretization carefully |
+| Modeling | Choose `minsup`, `minconf`, and rule-pruning strategy |
+| Evaluation | Inspect support, confidence, redundancy, usefulness, and domain plausibility |
+| Failure modes | Rules may be obvious, redundant, non-causal, or driven by uneven item support |
+| Assignment angle | Explain which rules are actionable and which should be ignored |
+
 # The Walmart "market basket" use case
 
 | TID | Items |
@@ -1077,3 +1107,15 @@ Consequences:
 - High-level items have very high support
 - Cross-support patterns may appear
 - The number of redundant associations increases
+
+# Project lifecycle checkpoint
+
+| Project question | Association-rule answer |
+|---|---|
+| Business question | What decision would change if the rule is trusted? |
+| Data requirements | Transactions must reflect the behavior being analyzed |
+| Preprocessing | Item definitions and discretization shape the discovered patterns |
+| Modeling | Thresholds trade coverage against the number of candidate rules |
+| Evaluation | Interestingness requires more than support and confidence |
+| Failure modes | Co-occurrence is not causality, and redundancy can overwhelm interpretation |
+| Assignment angle | Select a small set of rules and defend their practical relevance |

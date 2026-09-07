@@ -8,8 +8,28 @@ By the end of this lecture, you will be able to:
 
 - **Explain** how a decision tree turns feature tests into a prediction
 - **Build** a small classification tree by selecting and evaluating candidate splits
-- **Compute and interpret** impurity, gain, and classification metrics
-- **Diagnose** overfitting and choose an appropriate validation or pruning strategy
+- **Compute and interpret** impurity and gain
+- **Diagnose** overfitting and choose an appropriate pruning strategy
+
+# Learning priorities
+
+| Priority | What students should be able to do |
+|---|---|
+| **Core** | Explain the tree representation, root-to-leaf rules, split conditions, impurity, and overfitting |
+| **Practice** | Compute Gini, Entropy, Gain, and GainRatio on a small candidate split |
+| **Extension** | C4.5 details, MDL, pessimistic pruning, and bootstrap estimates |
+
+# Project lifecycle checkpoint
+
+| Project question | Decision-tree answer |
+|---|---|
+| Business question | Do we need an interpretable set of rules or explanations? |
+| Data requirements | Labeled examples with meaningful predictors and a clear target |
+| Preprocessing | Often less scaling than distance-based models, but missing values and categorical encoding still matter |
+| Modeling | Choose split criteria, stopping rules, and pruning strategy |
+| Evaluation | Use the shared evaluation workflow from [Data Splits, Evaluation, and Leakage](evaluation) |
+| Failure modes | Deep trees can memorize noise and small data changes can change the tree |
+| Assignment angle | Defend both the predictive performance and the interpretability of the learned rules |
 
 # Motivating problem: who will churn?
 
@@ -1397,3 +1417,15 @@ Be careful when:
 - Accuracy hides class imbalance or unequal error costs
 
 **Remember:** choose splits on training data, tune and prune with validation data, and report performance only on untouched test data.
+
+# Project lifecycle checkpoint
+
+| Project question | Decision-tree answer |
+|---|---|
+| Business question | Do stakeholders need rules they can inspect or defend? |
+| Data requirements | Labeled tabular data with predictors known at prediction time |
+| Preprocessing | Handle missing values and categorical attributes deliberately |
+| Modeling | Select split criteria, stopping rules, and pruning strategy |
+| Evaluation | Compare validation and test performance using task-appropriate metrics |
+| Failure modes | Instability, overfitting, and misleading accuracy under imbalance |
+| Assignment angle | Explain why the final tree is useful, not only how it was fitted |
