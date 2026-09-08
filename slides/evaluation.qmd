@@ -383,6 +383,31 @@ $$
 - **Overfitting:** The model is too complex, it allows a good classification of the training set, but a poor classification of the test set
     - The model fails to generalize because it is based on the specific peculiarities of the training set that are not found in the test set
 
+# Underfitting and overfitting
+
+::::{.columns}
+:::{.column width=50%}
+![Data distribution](img/dt/3-Decision Tree_83.png)
+:::
+:::{.column width=50%}
+![Model behavior](img/dt/3-Decision Tree_82.png)
+:::
+::::
+
+- A model that is too simple misses real structure
+- A model that is too flexible can memorize noise
+- The goal is not perfect training performance, but useful generalization
+
+# Failure case: overfitting to noise
+
+![The boundaries of the areas are distorted due to noise](img/dt/3-Decision Tree_84.png)
+
+# Failure case: insufficient training coverage
+
+Lack of points at the bottom of the chart makes it difficult to find a proper classification for that portion of the region.
+
+![Overfitting](img/dt/3-Decision Tree_85.png)
+
 # Bootstrap {visibility="hidden"}
 
 Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of $N$records, you can create an $N$-record set in which each record has approximately a 63.2% probability of appearing (with $N$sufficiently large)

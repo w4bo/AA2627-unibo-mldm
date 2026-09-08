@@ -871,30 +871,12 @@ Stop splitting a node
 - The number of records in the node is below a certain threshold (data fragmentation)
     - The selected criterion would not be statistically relevant
 
-# Underfitting and overfitting
+# Decision-tree response to overfitting
 
-::::{.columns}
-:::{.column width=50%}
-![Data distribution](img/dt/3-Decision Tree_83.png)
-:::
-:::{.column width=50%}
-![Performance of the DT](img/dt/3-Decision Tree_82.png)
-:::
-::::
+Decision trees can overfit because repeated splits make the decision boundary increasingly specific to the training data.
 
-- 500 circles and 500 triangles
-- Circular points: $0.5 < sqrt(x12+x22) \le 1$
-- Triangular points: $sqrt(x12+x22) > 0.5~or~sqrt(x12+x22) < 1$
-
-# Failure case: overfitting to noise
-
-![The boundaries of the areas are distorted due to noise](img/dt/3-Decision Tree_84.png)
-
-# Overfitting due to the reduced size of the training set
-
-Lack of points at the bottom of the chart makes it difficult to find a proper classification for that portion of the region.
-
-![Overfitting](img/dt/3-Decision Tree_85.png)
+- The shared evaluation lecture defines underfitting, overfitting, and generalization error
+- Here we focus on tree-specific controls: stopping criteria, pre-pruning, post-pruning, and complexity penalties
 
 # Handling overfitting: pre-pruning (early stopping)
 
