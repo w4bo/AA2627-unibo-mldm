@@ -119,10 +119,12 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="05-ensemble_files/libs/revealjs/dist/theme/quarto-2a4b070768aef88e7992984127cace11.css">
+  <link rel="stylesheet" href="05-ensemble_files/libs/revealjs/dist/theme/quarto-3aff54e5f0c64c9f44dab45420b5f30d.css">
   <link href="05-ensemble_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="05-ensemble_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="05-ensemble_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="05-ensemble_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="05-ensemble_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="05-ensemble_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -240,7 +242,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Compare</strong> decision-level and confidence-level fusion rules</li>
 <li><strong>Distinguish</strong> bagging from boosting</li>
 <li><strong>Compute</strong> the main quantities used by AdaBoost</li>
-<li><strong>Relate</strong> AdaBoost to the original paper <span class="citation" data-cites="freund1997decision">(<a href="#/references" role="doc-biblioref" onclick="">Freund and Schapire 1997</a>)</span></li>
+<li><strong>Relate</strong> AdaBoost to the original paper <span class="citation" data-cites="freund1997decision">(<a href="#/references" role="doc-biblioref" onclick=""><strong>freund1997decision?</strong></a>)</span></li>
 </ul>
 </section>
 
@@ -547,7 +549,7 @@ If one classifier assigns confidence 0, a product rule forces the whole combined
 
 <section id="bagging" class="title-slide slide level1 center">
 <h1>Bagging</h1>
-<p><strong>Bagging</strong> means <strong>bootstrap aggregating</strong> <span class="citation" data-cites="breiman1996bagging">Breiman (<a href="#/references" role="doc-biblioref" onclick="">1996</a>)</span>.</p>
+<p><strong>Bagging</strong> means <strong>bootstrap aggregating</strong> <span class="citation" data-cites="breiman1996bagging">(<a href="#/references" role="doc-biblioref" onclick=""><strong>breiman1996bagging?</strong></a>)</span>.</p>
 <p>It builds many classifiers by repeatedly sampling the training set <strong>with replacement</strong>.</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -677,7 +679,7 @@ x \le 0.7 \rightarrow -1,\qquad x&gt;0.7 \rightarrow +1
 <h1>Random forest</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
-<p>A <strong>random forest</strong> is a bagging ensemble of decision trees <span class="citation" data-cites="breiman2001random">(<a href="#/references" role="doc-biblioref" onclick="">Breiman 2001</a>)</span>.</p>
+<p>A <strong>random forest</strong> is a bagging ensemble of decision trees <span class="citation" data-cites="breiman2001random">(<a href="#/references" role="doc-biblioref" onclick=""><strong>breiman2001random?</strong></a>)</span>.</p>
 <p>It introduces randomness in two places:</p>
 <ul>
 <li><strong>Rows</strong>: each tree is trained on a bootstrap sample</li>
@@ -784,7 +786,7 @@ d' \approx \sqrt{d}
 
 <section id="adaboost-in-the-original-paper" class="title-slide slide level1 center">
 <h1>AdaBoost in the original paper</h1>
-<p>Freund and Schapire introduced AdaBoost as an adaptive boosting method that does not need prior knowledge of the weak learner’s accuracy <span class="citation" data-cites="freund1997decision">Freund and Schapire (<a href="#/references" role="doc-biblioref" onclick="">1997</a>)</span>.</p>
+<p>Freund and Schapire introduced AdaBoost as an adaptive boosting method that does not need prior knowledge of the weak learner’s accuracy <span class="citation" data-cites="freund1997decision">(<a href="#/references" role="doc-biblioref" onclick=""><strong>freund1997decision?</strong></a>)</span>.</p>
 <p>The paper connects boosting to a broader <strong>decision-theoretic</strong> setting.</p>
 <p>Key idea:</p>
 <ul>
@@ -1072,16 +1074,8 @@ C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsym
 
 <section id="references" class="title-slide slide level1 smaller scrollable">
 <h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-breiman1996bagging" class="csl-entry" role="listitem">
-Breiman, Leo. 1996. <span>“Bagging Predictors.”</span> <em>Machine Learning</em> 24 (2): 123–40. <a href="https://doi.org/10.1007/BF00058655">https://doi.org/10.1007/BF00058655</a>.
-</div>
-<div id="ref-breiman2001random" class="csl-entry" role="listitem">
-Breiman, Leo. 2001. <span>“Random Forests.”</span> <em>Machine Learning</em> 45 (1): 5–32. <a href="https://doi.org/10.1023/A:1010933404324">https://doi.org/10.1023/A:1010933404324</a>.
-</div>
-<div id="ref-freund1997decision" class="csl-entry" role="listitem">
-Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Generalization of on-Line Learning and an Application to Boosting.”</span> <em>Journal of Computer and System Sciences</em> 55 (1): 119–39. <a href="https://doi.org/10.1006/jcss.1997.1504">https://doi.org/10.1006/jcss.1997.1504</a>.
-</div>
+<div id="refs" role="list">
+
 </div>
 
 </section>
@@ -1099,6 +1093,7 @@ Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Genera
   <script src="05-ensemble_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="05-ensemble_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="05-ensemble_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="05-ensemble_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="05-ensemble_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -1120,7 +1115,8 @@ Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Genera
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1246,7 +1242,7 @@ Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Genera
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -1291,7 +1287,7 @@ Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Genera
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,

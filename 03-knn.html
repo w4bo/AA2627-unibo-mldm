@@ -100,10 +100,12 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-knn_files/libs/revealjs/dist/theme/quarto-2a4b070768aef88e7992984127cace11.css">
+  <link rel="stylesheet" href="03-knn_files/libs/revealjs/dist/theme/quarto-3aff54e5f0c64c9f44dab45420b5f30d.css">
   <link href="03-knn_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="03-knn_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="03-knn_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="03-knn_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="03-knn_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="03-knn_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -700,7 +702,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="a-neighborhood-inside-the-unit-hypercube" class="title-slide slide level1 center">
 <h1>A neighborhood inside the unit hypercube</h1>
 <p>The query is at the center, and “near” means within <span class="math inline">\(\pm0.1\)</span> on every feature.</p>
-<div id="bf20081c" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
+<div id="41cd1ddd" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -750,7 +752,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="average-distance-grows-with-dimensionality" class="title-slide slide level1 center">
 <h1>Average distance grows with dimensionality</h1>
 <p>For 1,000 points uniformly distributed in <span class="math inline">\([0,1]^{10}\)</span>, select one point and measure its average Euclidean distance from all the others while using the first 1 to 10 dimensions:</p>
-<div id="c501b884" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
+<div id="db02f239" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -765,7 +767,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="local-neighborhoods-quickly-become-empty" class="title-slide slide level1 center">
 <h1>Local neighborhoods quickly become empty</h1>
 <p>For 1,000 uniformly distributed points, using a tolerance of <span class="math inline">\(\pm0.1\)</span> on every normalized feature:</p>
-<div id="46e6aacf" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
+<div id="de4d7375" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -981,6 +983,7 @@ O(nd+n\log k)
   <script src="03-knn_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="03-knn_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="03-knn_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="03-knn_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="03-knn_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -1002,7 +1005,8 @@ O(nd+n\log k)
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1128,7 +1132,7 @@ O(nd+n\log k)
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -1173,7 +1177,7 @@ O(nd+n\log k)
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,
