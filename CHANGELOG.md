@@ -1,3 +1,21 @@
+## [1.0.23](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.22...1.0.23) (2026-09-08)
+
+### Dependency updates
+
+* **deps:** update slides/refs digest to adee7dd ([#30](https://github.com/w4bo/AA2627-unibo-mldm/issues/30)) ([198da94](https://github.com/w4bo/AA2627-unibo-mldm/commit/198da94de96b8f7f3b8c7b89f8ca331f90f9ddf6))
+
+### Bug Fixes
+
+* add chalkboard ([8484086](https://github.com/w4bo/AA2627-unibo-mldm/commit/8484086cc6198401456cb2cb94fc229b544bdc41))
+* update scss ([872054c](https://github.com/w4bo/AA2627-unibo-mldm/commit/872054c692027bff7a1a852848a3fe1aae07949b))
+
+### General maintenance
+
+* working on automl ([b5b9e8d](https://github.com/w4bo/AA2627-unibo-mldm/commit/b5b9e8dd958303543e6e5e2f18d89ea05afd8492))
+* working on evaluation ([7ac5d07](https://github.com/w4bo/AA2627-unibo-mldm/commit/7ac5d07f6842bfd59af82c5c7e147536a900e7a2))
+* working on evaluation and overfitting ([a670c07](https://github.com/w4bo/AA2627-unibo-mldm/commit/a670c07c2d9d100ca3d582bfa4e1e37a02422a1b))
+* working on evaluation and overfitting ([8e32438](https://github.com/w4bo/AA2627-unibo-mldm/commit/8e3243813065fa350e451e2b9f7394e57ef83a65))
+
 ## [1.0.22](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.21...1.0.22) (2026-09-01)
 
 ### Bug Fixes
