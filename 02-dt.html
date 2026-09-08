@@ -1804,41 +1804,14 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </ul>
 </section>
 
-<section id="underfitting-and-overfitting" class="title-slide slide level1 center">
-<h1>Underfitting and overfitting</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/dt/3-Decision%20Tree_83.png"></p>
-<figcaption>Data distribution</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/dt/3-Decision%20Tree_82.png"></p>
-<figcaption>Performance of the DT</figcaption>
-</figure>
-</div>
-</div></div>
+<section id="decision-tree-response-to-overfitting" class="title-slide slide level1 center">
+<h1>Decision-tree response to overfitting</h1>
+<p>Decision trees can overfit because repeated splits make the decision boundary increasingly specific to the training data.</p>
 <ul>
-<li>500 circles and 500 triangles</li>
-<li>Circular points: <span class="math inline">\(0.5 &lt; sqrt(x12+x22) \le 1\)</span></li>
-<li>Triangular points: <span class="math inline">\(sqrt(x12+x22) &gt; 0.5~or~sqrt(x12+x22) &lt; 1\)</span></li>
+<li>The shared evaluation lecture defines underfitting, overfitting, and generalization error</li>
+<li>Here we focus on tree-specific controls: stopping criteria, pre-pruning, post-pruning, and complexity penalties</li>
 </ul>
 </section>
-
-<section id="failure-case-overfitting-to-noise" class="title-slide slide level1 center">
-<h1>Failure case: overfitting to noise</h1>
-
-<img data-src="img/dt/3-Decision%20Tree_84.png" class="r-stretch quarto-figure-center"><p class="caption">The boundaries of the areas are distorted due to noise</p></section>
-
-<section id="overfitting-due-to-the-reduced-size-of-the-training-set" class="title-slide slide level1 center">
-<h1>Overfitting due to the reduced size of the training set</h1>
-<p>Lack of points at the bottom of the chart makes it difficult to find a proper classification for that portion of the region.</p>
-
-<img data-src="img/dt/3-Decision%20Tree_85.png" class="r-stretch quarto-figure-center"><p class="caption">Overfitting</p></section>
 
 <section id="handling-overfitting-pre-pruning-early-stopping" class="title-slide slide level1 center">
 <h1>Handling overfitting: pre-pruning (early stopping)</h1>
