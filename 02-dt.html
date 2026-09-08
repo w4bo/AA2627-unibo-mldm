@@ -184,7 +184,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 <tr class="odd">
 <td><strong>Extension</strong></td>
-<td>C4.5 details, MDL, pessimistic pruning, and bootstrap estimates</td>
+<td>C4.5 details, MDL, and pessimistic pruning</td>
 </tr>
 </tbody>
 </table>
@@ -1804,300 +1804,6 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </ul>
 </section>
 
-<section id="model-evaluation" class="title-slide slide level1 center">
-<h1>Model evaluation</h1>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A[("Training set")]
-    G[("Test set")]
-    F[("Predicted class")]
-    A --&gt;|Induction| B[Learn Model]
-    C(DT Algorithm) --&gt; B
-    B --&gt; D[DT Model]
-
-    G --&gt;D
-    D --&gt;|Deduction| F
-    F --&gt; I[Evaluation]
-    H[(Real Class)] --&gt; I
-    I --&gt; J((Performance))
-
-    style I fill:#f78c8c,stroke:#000
-    style J fill:#f78c8c,stroke:#000
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-
-<section id="metrics-for-model-evaluation" class="title-slide slide level1 center">
-<h1>Metrics for model evaluation</h1>
-<p>The confusion matrix compares the predicted class with the actual class.</p>
-<ul>
-<li><span class="math inline">\(TP\)</span> (true positive): actual positive, predicted positive</li>
-<li><span class="math inline">\(FN\)</span> (false negative): actual positive, predicted negative</li>
-<li><span class="math inline">\(FP\)</span> (false positive): actual negative, predicted positive</li>
-<li><span class="math inline">\(TN\)</span> (true negative): actual negative, predicted negative</li>
-</ul>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Predicted <span class="math inline">\(\downarrow\)</span> / Actual <span class="math inline">\(\rightarrow\)</span></th>
-<th style="text-align: center;"><strong>Class=+</strong></th>
-<th style="text-align: center;"><strong>Class=-</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Class=+</strong></td>
-<td style="text-align: center;">TP</td>
-<td style="text-align: center;">FP</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Class=-</strong></td>
-<td style="text-align: center;">FN</td>
-<td style="text-align: center;">TN</td>
-</tr>
-</tbody>
-</table>
-<p>For <span class="math inline">\(n\)</span> classes, the confusion matrix has size <span class="math inline">\(n\times n\)</span>.</p>
-</section>
-
-<section id="real-world-example-card-payment-fraud" class="title-slide slide level1 center">
-<h1>Real-world example: card-payment fraud</h1>
-<p>Define <strong>positive</strong> as a fraudulent payment and <strong>negative</strong> as a legitimate payment.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Example</th>
-<th style="text-align: center;">Actual class</th>
-<th style="text-align: center;">Model prediction</th>
-<th style="text-align: center;">Result</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">A stolen-card payment is correctly flagged</td>
-<td style="text-align: center;">Fraud</td>
-<td style="text-align: center;">Fraud</td>
-<td style="text-align: center;"><strong>True positive</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">A legitimate payment is incorrectly blocked</td>
-<td style="text-align: center;">Legitimate</td>
-<td style="text-align: center;">Fraud</td>
-<td style="text-align: center;"><strong>False positive</strong></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">A fraudulent payment is incorrectly approved</td>
-<td style="text-align: center;">Fraud</td>
-<td style="text-align: center;">Legitimate</td>
-<td style="text-align: center;"><strong>False negative</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">A normal grocery payment is correctly approved</td>
-<td style="text-align: center;">Legitimate</td>
-<td style="text-align: center;">Legitimate</td>
-<td style="text-align: center;"><strong>True negative</strong></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><strong>True</strong> means that the prediction matches reality</li>
-<li><strong>False</strong> means that the prediction does not match reality</li>
-<li><strong>Positive</strong> and <strong>negative</strong> name the classes; they do not mean good and bad</li>
-</ul>
-<p>TP and TN are correct predictions; FP and FN are errors with potentially different costs.</p>
-</section>
-
-<section id="accuracy" class="title-slide slide level1 center">
-<h1>Accuracy</h1>
-<p>Accuracy is the most widely used metric to synthesize the information of a confusion matrix.</p>
-<p><span class="math inline">\(Accuracy=\frac{TP + TN}{TP + TN + FP + FN}\)</span></p>
-<p>Equally, the frequency of the error could be used.</p>
-<p><span class="math inline">\(Error~rate=\frac{FP + FN}{TP + TN + FP + FN}\)</span></p>
-</section>
-
-<section id="accuracy-limitations" class="title-slide slide level1 center">
-<h1>Accuracy limitations</h1>
-<p>Accuracy is not an appropriate metric if the classes contain a very different number of records. Consider a binary classification problem in which</p>
-<ul>
-<li>#Record of class 0 = 9990</li>
-<li>#Record of class 1 = 10</li>
-</ul>
-<p>A model that always returns class 0 will have an accuracy of <span class="math inline">\(\frac{9990}{10000}\)</span> = 99.9%</p>
-<p>In the case of binary classification problems, the class “rare” is also called a positive class.</p>
-</section>
-
-<section id="precision-and-recall" class="title-slide slide level1 center">
-<h1>Precision and recall</h1>
-<p>Precision and recall answer different questions about the positive class:</p>
-<ul>
-<li><strong>Precision</strong> (<span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span>): among predicted positives, how many are actually positive?
-<ul>
-<li>High precision means few false positives.</li>
-</ul></li>
-<li><strong>Recall</strong> (<span class="math inline">\(Recall = \frac{TP}{TP + FN}\)</span>): among actual positives, how many did the model detect?
-<ul>
-<li>High recall means few false negatives.</li>
-</ul></li>
-</ul>
-
-<img data-src="./img/dt/image24.png" class="r-stretch quarto-figure-center"><p class="caption">Outcome of classification</p></section>
-
-<section id="prioritize-precision-when-false-positives-are-costly" class="title-slide slide level1 center">
-<h1>Prioritize precision when false positives are costly</h1>
-<p>Precision asks: <strong>when the model predicts positive, how often is it correct?</strong></p>
-<p>Prefer higher precision when a positive prediction triggers an expensive, disruptive, or irreversible action.</p>
-<p>Examples:</p>
-<ul>
-<li>A spam filter that automatically deletes messages</li>
-<li>A fraud system that automatically blocks card payments</li>
-<li>A moderation system that automatically removes content</li>
-</ul>
-<p>These systems should hesitate before taking positive action against a negative case.</p>
-</section>
-
-<section id="prioritize-recall-when-false-negatives-are-costly" class="title-slide slide level1 center">
-<h1>Prioritize recall when false negatives are costly</h1>
-<p>Recall asks: <strong>of all real positive cases, how many did the model find?</strong></p>
-<p>Prefer higher recall when missing a positive case creates danger or a major loss.</p>
-<p>Examples:</p>
-<ul>
-<li>Cancer or infectious-disease screening</li>
-<li>Fraud alerts sent to a human investigator</li>
-<li>Fire, intrusion, or safety-defect detection</li>
-</ul>
-<p>The same domain can differ: <strong>automatic fraud blocking favors precision</strong>, while a <strong>fraud-review queue favors recall</strong>. Choose the metric and threshold from the consequences of FP and FN.</p>
-</section>
-
-<section id="precision-and-recall-1" class="title-slide slide level1 center">
-<h1>Precision and recall</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><span class="math inline">\(Precision = 1\)</span> if there are no false positives: every predicted positive is actually positive.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image25.png"></p>
-<figcaption><span class="math inline">\(Precision = 1\)</span></figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<p><span class="math inline">\(Recall = 1\)</span> if there are no false negatives: every actual positive is detected.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/dt/image26.png"></p>
-<figcaption><span class="math inline">\(Recall = 1\)</span></figcaption>
-</figure>
-</div>
-</div></div>
-<p>If both equal 1, the model makes neither false-positive nor false-negative errors.</p>
-</section>
-
-<section id="f-measure" class="title-slide slide level1 center">
-<h1>F-measure</h1>
-<p>A metric that summarizes precision and recall is called the F-measure (<span class="math inline">\(\text{F-measure} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}\)</span>).</p>
-<p>F-measure represents the harmonic mean of precision and recall.</p>
-<ul>
-<li>The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers.</li>
-<li>So if the harmonic average is high, it means both precision and recall are.</li>
-<li>… so there have been no false negatives or false positives</li>
-</ul>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section id="cross-validation" class="title-slide slide level1 center">
-<h1>Cross validation</h1>
-<ul>
-<li>Partition the records into <span class="math inline">\(k\)</span> folds of similar size</li>
-<li>For each fold:
-<ul>
-<li>train on the other <span class="math inline">\(k-1\)</span> folds</li>
-<li>evaluate on the held-out fold</li>
-</ul></li>
-<li>Cross-validation is often used for <strong>hyperparameter tuning</strong>:
-<ul>
-<li>repeat the same <span class="math inline">\(k\)</span>-fold procedure for each candidate configuration</li>
-<li>compare configurations by their average validation performance</li>
-<li>prefer configurations that perform well <strong>and</strong> have acceptable variability across folds</li>
-</ul></li>
-<li>The final test set is still kept aside and used only once, after the hyperparameters have been selected</li>
-</ul>
-</section>
-
-<section id="cross-validation-1" class="title-slide slide level1 center">
-<h1>Cross validation</h1>
-
-<img data-src="https://scikit-learn.org/stable/_images/grid_search_cross_validation.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
-<li>CAUTION: cross-validation creates <span class="math inline">\(k\)</span> different classifiers
-<ul>
-<li>validation indicates whether the classifier type and its parameters are appropriate for the problem</li>
-</ul></li>
-<li>Built decision trees can have different split attributes and conditions depending on the records in each training fold</li>
-</ul>
-</section>
-
-<section id="cross-validation-2" class="title-slide slide level1 center">
-<h1>Cross validation</h1>
-
-<img data-src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*GhKMAUmi4bfFiEwZCPlDsA.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
-<li>This gives <span class="math inline">\(k\)</span> performance values, one for each held-out fold</li>
-<li>Report the <strong>average</strong> performance to estimate how well the model configuration generalizes</li>
-<li>Also report the <strong>standard deviation</strong> across folds:
-<ul>
-<li>low standard deviation means the result is stable across different train/test splits</li>
-<li>high standard deviation means performance depends strongly on which records end up in the fold</li>
-</ul></li>
-</ul>
-</section>
-
-<section id="cross-validation-3" class="title-slide slide level1 center">
-<h1>Cross validation</h1>
-
-<img data-src="https://scikit-learn.org/stable/_images/grid_search_workflow.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p></section>
-
-<section id="classification-errors" class="title-slide slide level1 center">
-<h1>Classification errors</h1>
-<ul>
-<li><strong>Training error:</strong> are mistakes that are made on the training set</li>
-<li><strong>Generalization error:</strong> errors are made on the test set (i.e., records that have not been trained on the system).</li>
-<li><strong>Underfitting:</strong> The model is too simple and does not allow a good classification of the training set or test set</li>
-<li><strong>Overfitting:</strong> The model is too complex, it allows a good classification of the training set, but a poor classification of the test set
-<ul>
-<li>The model fails to generalize because it is based on the specific peculiarities of the training set that are not found in the test set</li>
-</ul></li>
-</ul>
-</section>
-
 <section id="underfitting-and-overfitting" class="title-slide slide level1 center">
 <h1>Underfitting and overfitting</h1>
 <div class="columns">
@@ -2176,24 +1882,20 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 <p>It requires new techniques to estimate generalization errors.</p>
 </section>
 
-<section id="estimating-generalization-error" class="title-slide slide level1 center">
-<h1>Estimating generalization error</h1>
+<section id="estimating-tree-generalization-error" class="title-slide slide level1 center">
+<h1>Estimating tree generalization error</h1>
 <p>A decision tree should minimize the error on real data but, during construction, only the training set is available.</p>
-<p>Then the real-time data error must be estimated.</p>
+<p>For pruning, the real-data error must be estimated without trusting the training error alone.</p>
 <ul>
 <li><strong>Re-substitution error:</strong> number of errors in the training set</li>
 <li><strong>Generalization error:</strong> number of errors on real data</li>
 </ul>
 <p>The methods for estimating the generalization error are:</p>
 <ul>
-<li><p><strong>Optimistic approach:</strong> <span class="math inline">\(e'(t) = e(t)\)</span></p></li>
-<li><p><strong>Pessimistic approach</strong></p></li>
-<li><p><strong>Minimum Description Length (MDL)</strong></p></li>
-<li><p><strong>Using the test set:</strong> The generalization error is equal to the error on the test set.</p>
-<ul>
-<li>Normally, the test set is obtained by extracting from the initial training set 1/3 of the records</li>
-<li>It offers good results, but the risk is to work with a too small training set</li>
-</ul></li>
+<li><strong>Optimistic approach:</strong> <span class="math inline">\(e'(t) = e(t)\)</span></li>
+<li><strong>Pessimistic approach</strong></li>
+<li><strong>Minimum Description Length (MDL)</strong></li>
+<li><strong>Validation set:</strong> estimate whether simplifying the tree improves generalization</li>
 </ul>
 </section>
 
@@ -2282,8 +1984,6 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </div></div>
 </section>
 
-
-
 <section id="c4.5" class="title-slide slide level1 center">
 <h1>C4.5</h1>
 <p>Widely used decision-tree algorithm. It extends ID3 and Hunt’s algorithm.</p>
@@ -2322,7 +2022,7 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 <ul>
 <li>Small data changes produce very different trees</li>
 <li>The tree grows deep enough to memorize noise</li>
-<li>Accuracy hides class imbalance or unequal error costs</li>
+<li>Class imbalance or unequal error costs hide weak performance</li>
 </ul>
 <p><strong>Remember:</strong> choose splits on training data, tune and prune with validation data, and report performance only on untouched test data.</p>
 </section>
@@ -2363,7 +2063,7 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </tr>
 <tr class="even">
 <td>Failure modes</td>
-<td>Instability, overfitting, and misleading accuracy under imbalance</td>
+<td>Instability, overfitting, and misleading metrics under imbalance</td>
 </tr>
 <tr class="odd">
 <td>Assignment angle</td>

@@ -269,8 +269,39 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </section>
 
-<section id="confusion-matrix" class="title-slide slide level1 center">
-<h1>Confusion matrix</h1>
+<section id="model-evaluation" class="title-slide slide level1 center">
+<h1>Model evaluation</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[("Training set")]
+    G[("Test set")]
+    F[("Predicted class")]
+    A --&gt;|Induction| B[Learn Model]
+    C(Learning Algorithm) --&gt; B
+    B --&gt; D[Model]
+
+    G --&gt;D
+    D --&gt;|Deduction| F
+    F --&gt; I[Evaluation]
+    H[(Real Class)] --&gt; I
+    I --&gt; J((Performance))
+
+    style I fill:#f78c8c,stroke:#000
+    style J fill:#f78c8c,stroke:#000
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="metrics-for-model-evaluation" class="title-slide slide level1 center">
+<h1>Metrics for model evaluation</h1>
 <p>The confusion matrix compares the predicted class with the actual class.</p>
 <ul>
 <li><span class="math inline">\(TP\)</span> (true positive): actual positive, predicted positive</li>
@@ -363,73 +394,114 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="accuracy" class="title-slide slide level1 center">
 <h1>Accuracy</h1>
 <p>Accuracy is the most widely used metric to synthesize the information of a confusion matrix.</p>
-<p><span class="math display">\[Accuracy=\frac{TP + TN}{TP + TN + FP + FN}\]</span></p>
+<p><span class="math inline">\(Accuracy=\frac{TP + TN}{TP + TN + FP + FN}\)</span></p>
 <p>Equally, the frequency of the error could be used.</p>
-<p><span class="math display">\[Error~rate=\frac{FP + FN}{TP + TN + FP + FN}\]</span></p>
+<p><span class="math inline">\(Error~rate=\frac{FP + FN}{TP + TN + FP + FN}\)</span></p>
 </section>
 
 <section id="accuracy-limitations" class="title-slide slide level1 center">
 <h1>Accuracy limitations</h1>
-<p>Accuracy is not an appropriate metric if the classes contain a very different number of records.</p>
-<p>Consider a binary classification problem:</p>
+<p>Accuracy is not an appropriate metric if the classes contain a very different number of records. Consider a binary classification problem in which</p>
 <ul>
 <li>#Record of class 0 = 9990</li>
 <li>#Record of class 1 = 10</li>
 </ul>
-<p>A model that always returns class 0 will have:</p>
-<p><span class="math display">\[Accuracy=\frac{9990}{10000}=99.9\%\]</span></p>
-<p>In binary classification, the rare class is often called the positive class.</p>
+<p>A model that always returns class 0 will have an accuracy of <span class="math inline">\(\frac{9990}{10000}\)</span> = 99.9%</p>
+<p>In the case of binary classification problems, the class “rare” is also called a positive class.</p>
 </section>
 
 <section id="precision-and-recall" class="title-slide slide level1 center">
 <h1>Precision and recall</h1>
 <p>Precision and recall answer different questions about the positive class:</p>
 <ul>
-<li><strong>Precision</strong>: among predicted positives, how many are actually positive?</li>
-</ul>
-<p><span class="math display">\[Precision = \frac{TP}{TP + FP}\]</span></p>
+<li><strong>Precision</strong> (<span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span>): among predicted positives, how many are actually positive?
 <ul>
-<li><strong>Recall</strong>: among actual positives, how many did the model detect?</li>
+<li>High precision means few false positives.</li>
+</ul></li>
+<li><strong>Recall</strong> (<span class="math inline">\(Recall = \frac{TP}{TP + FN}\)</span>): among actual positives, how many did the model detect?
+<ul>
+<li>High recall means few false negatives.</li>
+</ul></li>
 </ul>
-<p><span class="math display">\[Recall = \frac{TP}{TP + FN}\]</span></p>
-<p>High precision means few false positives. High recall means few false negatives.</p>
-</section>
 
-<section id="choosing-between-precision-and-recall" class="title-slide slide level1 center">
-<h1>Choosing between precision and recall</h1>
-<p>Prefer higher <strong>precision</strong> when a positive prediction triggers an expensive, disruptive, or irreversible action.</p>
+<img data-src="./img/dt/image24.png" class="r-stretch quarto-figure-center"><p class="caption">Outcome of classification</p></section>
+
+<section id="prioritize-precision-when-false-positives-are-costly" class="title-slide slide level1 center">
+<h1>Prioritize precision when false positives are costly</h1>
+<p>Precision asks: <strong>when the model predicts positive, how often is it correct?</strong></p>
+<p>Prefer higher precision when a positive prediction triggers an expensive, disruptive, or irreversible action.</p>
 <p>Examples:</p>
 <ul>
 <li>A spam filter that automatically deletes messages</li>
 <li>A fraud system that automatically blocks card payments</li>
 <li>A moderation system that automatically removes content</li>
 </ul>
-<p>Prefer higher <strong>recall</strong> when missing a positive case creates danger or a major loss.</p>
+<p>These systems should hesitate before taking positive action against a negative case.</p>
+</section>
+
+<section id="prioritize-recall-when-false-negatives-are-costly" class="title-slide slide level1 center">
+<h1>Prioritize recall when false negatives are costly</h1>
+<p>Recall asks: <strong>of all real positive cases, how many did the model find?</strong></p>
+<p>Prefer higher recall when missing a positive case creates danger or a major loss.</p>
 <p>Examples:</p>
 <ul>
 <li>Cancer or infectious-disease screening</li>
 <li>Fraud alerts sent to a human investigator</li>
 <li>Fire, intrusion, or safety-defect detection</li>
 </ul>
+<p>The same domain can differ: <strong>automatic fraud blocking favors precision</strong>, while a <strong>fraud-review queue favors recall</strong>. Choose the metric and threshold from the consequences of FP and FN.</p>
+</section>
+
+<section id="precision-and-recall-1" class="title-slide slide level1 center">
+<h1>Precision and recall</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(Precision = 1\)</span> if there are no false positives: every predicted positive is actually positive.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image25.png"></p>
+<figcaption><span class="math inline">\(Precision = 1\)</span></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<p><span class="math inline">\(Recall = 1\)</span> if there are no false negatives: every actual positive is detected.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image26.png"></p>
+<figcaption><span class="math inline">\(Recall = 1\)</span></figcaption>
+</figure>
+</div>
+</div></div>
+<p>If both equal 1, the model makes neither false-positive nor false-negative errors.</p>
 </section>
 
 <section id="f-measure" class="title-slide slide level1 center">
 <h1>F-measure</h1>
-<p>The F-measure summarizes precision and recall:</p>
-<p><span class="math display">\[
-\text{F-measure} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall}
-= \frac{2 \cdot TP}{2 \cdot TP + FP + FN}
-\]</span></p>
-<p>F-measure is the harmonic mean of precision and recall.</p>
+<p>A metric that summarizes precision and recall is called the F-measure (<span class="math inline">\(\text{F-measure} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall} = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}\)</span>).</p>
+<p>F-measure represents the harmonic mean of precision and recall.</p>
 <ul>
-<li>The harmonic average tends to be close to the smallest value</li>
-<li>A high F-measure requires both precision and recall to be high</li>
-<li>It is useful when the positive class matters and both error types are relevant</li>
+<li>The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers.</li>
+<li>So if the harmonic average is high, it means both precision and recall are.</li>
+<li>… so there have been no false negatives or false positives</li>
 </ul>
 </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section id="cross-validation" class="title-slide slide level1 center">
-<h1>Cross-validation</h1>
+<h1>Cross validation</h1>
 <ul>
 <li>Partition the records into <span class="math inline">\(k\)</span> folds of similar size</li>
 <li>For each fold:
@@ -437,32 +509,61 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>train on the other <span class="math inline">\(k-1\)</span> folds</li>
 <li>evaluate on the held-out fold</li>
 </ul></li>
-<li>Cross-validation is often used for <strong>hyperparameter tuning</strong></li>
-<li>The final test set is still kept aside and used only once</li>
+<li>Cross-validation is often used for <strong>hyperparameter tuning</strong>:
+<ul>
+<li>repeat the same <span class="math inline">\(k\)</span>-fold procedure for each candidate configuration</li>
+<li>compare configurations by their average validation performance</li>
+<li>prefer configurations that perform well <strong>and</strong> have acceptable variability across folds</li>
+</ul></li>
+<li>The final test set is still kept aside and used only once, after the hyperparameters have been selected</li>
 </ul>
 </section>
 
-<section id="cross-validation-for-model-selection" class="title-slide slide level1 center">
-<h1>Cross-validation for model selection</h1>
-<p>Cross-validation gives <span class="math inline">\(k\)</span> performance values, one for each held-out fold.</p>
-<p>Report:</p>
+<section id="cross-validation-1" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+
+<img data-src="https://scikit-learn.org/stable/_images/grid_search_cross_validation.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
+<li>CAUTION: cross-validation creates <span class="math inline">\(k\)</span> different classifiers
 <ul>
-<li>The <strong>average</strong> performance to estimate expected generalization</li>
-<li>The <strong>standard deviation</strong> to show stability across different splits</li>
+<li>validation indicates whether the classifier type and its parameters are appropriate for the problem</li>
+</ul></li>
+<li>Built models can differ depending on the records in each training fold</li>
 </ul>
-<p>Low standard deviation means the result is stable. High standard deviation means performance depends strongly on which records end up in each fold.</p>
 </section>
+
+<section id="cross-validation-2" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+
+<img data-src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*GhKMAUmi4bfFiEwZCPlDsA.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
+<li>This gives <span class="math inline">\(k\)</span> performance values, one for each held-out fold</li>
+<li>Report the <strong>average</strong> performance to estimate how well the model configuration generalizes</li>
+<li>Also report the <strong>standard deviation</strong> across folds:
+<ul>
+<li>low standard deviation means the result is stable across different train/test splits</li>
+<li>high standard deviation means performance depends strongly on which records end up in the fold</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="cross-validation-3" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+
+<img data-src="https://scikit-learn.org/stable/_images/grid_search_workflow.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p></section>
 
 <section id="classification-errors" class="title-slide slide level1 center">
 <h1>Classification errors</h1>
 <ul>
-<li><strong>Training error:</strong> mistakes made on the training set</li>
-<li><strong>Generalization error:</strong> mistakes made on data not used for training</li>
-<li><strong>Underfitting:</strong> the model is too simple and performs poorly on both training and test data</li>
-<li><strong>Overfitting:</strong> the model fits the training data well but performs poorly on unseen data</li>
+<li><strong>Training error:</strong> are mistakes that are made on the training set</li>
+<li><strong>Generalization error:</strong> errors are made on the test set (i.e., records that have not been trained on the system).</li>
+<li><strong>Underfitting:</strong> The model is too simple and does not allow a good classification of the training set or test set</li>
+<li><strong>Overfitting:</strong> The model is too complex, it allows a good classification of the training set, but a poor classification of the test set
+<ul>
+<li>The model fails to generalize because it is based on the specific peculiarities of the training set that are not found in the test set</li>
+</ul></li>
 </ul>
-<p>Overfitting means that the model has learned peculiarities of the training set that do not generalize.</p>
 </section>
+
+
 
 <section id="data-leakage" class="title-slide slide level1 center">
 <h1>Data leakage</h1>
