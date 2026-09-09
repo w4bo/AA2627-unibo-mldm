@@ -1,3 +1,9 @@
+## [1.0.25](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.24...1.0.25) (2026-09-09)
+
+### Bug Fixes
+
+* update images ([4e41233](https://github.com/w4bo/AA2627-unibo-mldm/commit/4e412337c2146c99cbb27867252405aecd80fafd))
+
 ## [1.0.24](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.23...1.0.24) (2026-09-09)
 
 ### Dependency updates
