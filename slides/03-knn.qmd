@@ -31,19 +31,6 @@ By the end of this lecture, you will be able to:
 |---|---|
 | **Core** | Explain lazy learning, distance metrics, majority vote, and why scaling matters |
 | **Practice** | Compute a k-NN prediction and select $k$ using validation data |
-| **Extension** | Distance weighting, R-tree indexing, and high-dimensional behavior |
-
-# Project lifecycle checkpoint
-
-| Project question | k-NN answer |
-|---|---|
-| Business question | Are similar historical cases expected to behave similarly? |
-| Data requirements | Representative labeled examples and features with meaningful distances |
-| Preprocessing | Fit scaling, encoding, and feature selection on training data only |
-| Modeling | Choose distance metric, $k$, and voting rule |
-| Evaluation | Tune $k$ and metric on validation data; test once at the end |
-| Failure modes | Irrelevant features, poor scaling, sparse data, high dimensionality, and latency |
-| Assignment angle | Defend the data representation as much as the algorithm choice |
 
 # Intuition: nearby points tend to behave alike
 
@@ -695,15 +682,3 @@ A query point has five nearest-neighbor labels:
 - Data are sparse or high-dimensional
 
 **Remember:** scale features, select the metric and $k$ with validation data, and keep the test set untouched.
-
-# Project lifecycle checkpoint
-
-| Project question | k-NN answer |
-|---|---|
-| Business question | Does local similarity support the decision? |
-| Data requirements | Enough nearby examples for future records |
-| Preprocessing | Scaling is part of the model workflow, not an optional cleaning step |
-| Modeling | Distance metric, $k$, and voting rule define the behavior |
-| Evaluation | Validate the whole pipeline, including preprocessing |
-| Failure modes | Bad distance definitions can make the nearest neighbors meaningless |
-| Assignment angle | Show examples where neighborhood choices change the prediction |
