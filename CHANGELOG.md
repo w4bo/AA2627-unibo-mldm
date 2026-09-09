@@ -1,3 +1,18 @@
+## [1.0.24](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.23...1.0.24) (2026-09-09)
+
+### Dependency updates
+
+* **deps:** update slides/refs digest to cf5d8d6 ([#31](https://github.com/w4bo/AA2627-unibo-mldm/issues/31)) ([5bd2be6](https://github.com/w4bo/AA2627-unibo-mldm/commit/5bd2be6d9163fcc7e2b9e06f7eca15ac50f3fbd2))
+
+### Bug Fixes
+
+* update the slides ([ed2f577](https://github.com/w4bo/AA2627-unibo-mldm/commit/ed2f577384662cd0db967e155cd66ef3256af4f1))
+* update the slides ([afe4363](https://github.com/w4bo/AA2627-unibo-mldm/commit/afe436314cfc368fb0780b160dc2720d5c0c5dde))
+
+### General maintenance
+
+* working on evaluation and overfitting ([fdf2eaf](https://github.com/w4bo/AA2627-unibo-mldm/commit/fdf2eaf4f8dd921bf971a9d0c6625c554aafc035))
+
 ## [1.0.23](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.22...1.0.23) (2026-09-08)
 
 ### Dependency updates
