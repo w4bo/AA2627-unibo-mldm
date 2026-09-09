@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+<script src="03-knn_files/libs/clipboard/clipboard.min.js"></script>
 <script src="03-knn_files/libs/quarto-html/tabby.min.js"></script>
 <script src="03-knn_files/libs/quarto-html/popper.min.js"></script>
 <script src="03-knn_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -100,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-knn_files/libs/revealjs/dist/theme/quarto-2a4b070768aef88e7992984127cace11.css">
+  <link rel="stylesheet" href="03-knn_files/libs/revealjs/dist/theme/quarto-16bc8fc46cf16bb45dbb7941de0fb807.css">
   <link href="03-knn_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="03-knn_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="03-knn_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -626,14 +627,14 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="use-pipelines" class="title-slide slide level1 center">
 <h1>Use pipelines</h1>
 <p>In scikit-learn, use a pipeline:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb1-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb1-3"><a href="" aria-label="3"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
 <span id="cb1-4"><a href="" aria-label="4"></a></span>
 <span id="cb1-5"><a href="" aria-label="5"></a>model <span class="op">=</span> Pipeline([</span>
 <span id="cb1-6"><a href="" aria-label="6"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
 <span id="cb1-7"><a href="" aria-label="7"></a>    (<span class="st">"knn"</span>, KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">5</span>)),</span>
-<span id="cb1-8"><a href="" aria-label="8"></a>])</span></code></pre></div>
+<span id="cb1-8"><a href="" aria-label="8"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The pipeline fits preprocessing only on the training folds during cross-validation.</p>
 </section>
 
@@ -652,7 +653,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="a-neighborhood-inside-the-unit-hypercube" class="title-slide slide level1 center">
 <h1>A neighborhood inside the unit hypercube</h1>
 <p>The query is at the center, and “near” means within <span class="math inline">\(\pm0.1\)</span> on every feature.</p>
-<div id="5e5380bc" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
+<div id="e8a9f74e" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -702,7 +703,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="average-distance-grows-with-dimensionality" class="title-slide slide level1 center">
 <h1>Average distance grows with dimensionality</h1>
 <p>For 1,000 points uniformly distributed in <span class="math inline">\([0,1]^{10}\)</span>, select one point and measure its average Euclidean distance from all the others while using the first 1 to 10 dimensions:</p>
-<div id="40ced3c5" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
+<div id="f0a0b8b9" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -717,7 +718,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="local-neighborhoods-quickly-become-empty" class="title-slide slide level1 center">
 <h1>Local neighborhoods quickly become empty</h1>
 <p>For 1,000 uniformly distributed points, using a tolerance of <span class="math inline">\(\pm0.1\)</span> on every normalized feature:</p>
-<div id="0ec595b8" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
+<div id="c7091ba2" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -876,7 +877,7 @@ O(nd+n\log k)
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>Matteo Francia - Machine Learning and Data Mining (Module I) - A.Y. 2026/27</p>
+<p>MLDM Module I — M. Francia — A.Y. 2026/27</p>
 </div>
 </div></div>
 
@@ -1096,6 +1097,68 @@ O(nd+n\log k)
         tabsets.forEach(function(tabset) {
           const tabby = new Tabby('#' + tabset.id);
         });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
             var filterRegex = new RegExp('/' + window.location.host + '/');

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+<script src="05-ensemble_files/libs/clipboard/clipboard.min.js"></script>
 <script src="05-ensemble_files/libs/quarto-html/tabby.min.js"></script>
 <script src="05-ensemble_files/libs/quarto-html/popper.min.js"></script>
 <script src="05-ensemble_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -119,7 +120,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="05-ensemble_files/libs/revealjs/dist/theme/quarto-2a4b070768aef88e7992984127cace11.css">
+  <link rel="stylesheet" href="05-ensemble_files/libs/revealjs/dist/theme/quarto-16bc8fc46cf16bb45dbb7941de0fb807.css">
   <link href="05-ensemble_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="05-ensemble_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="05-ensemble_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -242,7 +243,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Compare</strong> decision-level and confidence-level fusion rules</li>
 <li><strong>Distinguish</strong> bagging from boosting</li>
 <li><strong>Compute</strong> the main quantities used by AdaBoost</li>
-<li><strong>Relate</strong> AdaBoost to the original paper <span class="citation" data-cites="freund1997decision">(<a href="#/references" role="doc-biblioref" onclick="">Freund and Schapire 1997</a>)</span></li>
+<li><strong>Relate</strong> AdaBoost to the original paper <span class="citation" data-cites="freund1997decision">(<a href="#/references" role="doc-biblioref" onclick=""><strong>freund1997decision?</strong></a>)</span></li>
 </ul>
 </section>
 
@@ -499,7 +500,7 @@ If one classifier assigns confidence 0, a product rule forces the whole combined
 
 <section id="bagging" class="title-slide slide level1 center">
 <h1>Bagging</h1>
-<p><strong>Bagging</strong> means <strong>bootstrap aggregating</strong> <span class="citation" data-cites="breiman1996bagging">Breiman (<a href="#/references" role="doc-biblioref" onclick="">1996</a>)</span>.</p>
+<p><strong>Bagging</strong> means <strong>bootstrap aggregating</strong> <span class="citation" data-cites="breiman1996bagging">(<a href="#/references" role="doc-biblioref" onclick=""><strong>breiman1996bagging?</strong></a>)</span>.</p>
 <p>It builds many classifiers by repeatedly sampling the training set <strong>with replacement</strong>.</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -629,7 +630,7 @@ x \le 0.7 \rightarrow -1,\qquad x&gt;0.7 \rightarrow +1
 <h1>Random forest</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
-<p>A <strong>random forest</strong> is a bagging ensemble of decision trees <span class="citation" data-cites="breiman2001random">(<a href="#/references" role="doc-biblioref" onclick="">Breiman 2001</a>)</span>.</p>
+<p>A <strong>random forest</strong> is a bagging ensemble of decision trees <span class="citation" data-cites="breiman2001random">(<a href="#/references" role="doc-biblioref" onclick=""><strong>breiman2001random?</strong></a>)</span>.</p>
 <p>It introduces randomness in two places:</p>
 <ul>
 <li><strong>Rows</strong>: each tree is trained on a bootstrap sample</li>
@@ -736,7 +737,7 @@ d' \approx \sqrt{d}
 
 <section id="adaboost-in-the-original-paper" class="title-slide slide level1 center">
 <h1>AdaBoost in the original paper</h1>
-<p>Freund and Schapire introduced AdaBoost as an adaptive boosting method that does not need prior knowledge of the weak learner’s accuracy <span class="citation" data-cites="freund1997decision">Freund and Schapire (<a href="#/references" role="doc-biblioref" onclick="">1997</a>)</span>.</p>
+<p>Freund and Schapire introduced AdaBoost as an adaptive boosting method that does not need prior knowledge of the weak learner’s accuracy <span class="citation" data-cites="freund1997decision">(<a href="#/references" role="doc-biblioref" onclick=""><strong>freund1997decision?</strong></a>)</span>.</p>
 <p>The paper connects boosting to a broader <strong>decision-theoretic</strong> setting.</p>
 <p>Key idea:</p>
 <ul>
@@ -842,7 +843,7 @@ C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsym
 
 <section id="adaboost-algorithm-in-pseudocode" class="title-slide slide level1 center">
 <h1>AdaBoost algorithm in pseudocode</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize weights w_i = 1/N for i = 1, ..., N</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize weights w_i = 1/N for i = 1, ..., N</span>
 <span id="cb1-2"><a href="" aria-label="2"></a></span>
 <span id="cb1-3"><a href="" aria-label="3"></a>for j = 1, ..., T:</span>
 <span id="cb1-4"><a href="" aria-label="4"></a>    Train classifier C_j on the weighted training set</span>
@@ -856,7 +857,7 @@ C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsym
 <span id="cb1-12"><a href="" aria-label="12"></a>        Decrease the weights of correctly classified records</span>
 <span id="cb1-13"><a href="" aria-label="13"></a>        Normalize weights so that their sum is 1</span>
 <span id="cb1-14"><a href="" aria-label="14"></a></span>
-<span id="cb1-15"><a href="" aria-label="15"></a>Return the weighted vote of C_1, ..., C_T</span></code></pre></div>
+<span id="cb1-15"><a href="" aria-label="15"></a>Return the weighted vote of C_1, ..., C_T</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The condition <span class="math inline">\(\epsilon_j&lt;0.5\)</span> is important: each base classifier must be better than random guessing.</p>
 </section>
 
@@ -978,23 +979,15 @@ C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsym
 
 <section id="references" class="title-slide slide level1 smaller scrollable">
 <h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-breiman1996bagging" class="csl-entry" role="listitem">
-Breiman, Leo. 1996. <span>“Bagging Predictors.”</span> <em>Machine Learning</em> 24 (2): 123–40. <a href="https://doi.org/10.1007/BF00058655">https://doi.org/10.1007/BF00058655</a>.
-</div>
-<div id="ref-breiman2001random" class="csl-entry" role="listitem">
-Breiman, Leo. 2001. <span>“Random Forests.”</span> <em>Machine Learning</em> 45 (1): 5–32. <a href="https://doi.org/10.1023/A:1010933404324">https://doi.org/10.1023/A:1010933404324</a>.
-</div>
-<div id="ref-freund1997decision" class="csl-entry" role="listitem">
-Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Generalization of on-Line Learning and an Application to Boosting.”</span> <em>Journal of Computer and System Sciences</em> 55 (1): 119–39. <a href="https://doi.org/10.1006/jcss.1997.1504">https://doi.org/10.1006/jcss.1997.1504</a>.
-</div>
+<div id="refs" role="list">
+
 </div>
 
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>Matteo Francia - Machine Learning and Data Mining (Module I) - A.Y. 2026/27</p>
+<p>MLDM Module I — M. Francia — A.Y. 2026/27</p>
 </div>
 </div></div>
 
@@ -1214,6 +1207,68 @@ Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Genera
         tabsets.forEach(function(tabset) {
           const tabby = new Tabby('#' + tabset.id);
         });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
             var filterRegex = new RegExp('/' + window.location.host + '/');
