@@ -1804,6 +1804,38 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </ul>
 </section>
 
+<section id="evaluation" class="title-slide slide level1 center" data-background-color="#121011">
+<h1>Evaluation</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[("Training set")]
+    G[("Test set")]
+    F[("Predicted class")]
+    A --&gt;|Induction| B[Learn Model]
+    C(Learning Algorithm) --&gt; B
+    B --&gt; D[Model]
+
+    G --&gt;D
+    D --&gt;|Deduction| F
+    F --&gt; I[Evaluation]
+    H[(Real Class)] --&gt; I
+    I --&gt; J((Performance))
+
+    style I fill:#f78c8c,stroke:#000
+    style J fill:#f78c8c,stroke:#000
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>See <a href="08-evaluation">Evaluation of classifiers</a></p>
+</section>
+
 <section id="decision-tree-response-to-overfitting" class="title-slide slide level1 center">
 <h1>Decision-tree response to overfitting</h1>
 <p>Decision trees can overfit because repeated splits make the decision boundary increasingly specific to the training data.</p>
