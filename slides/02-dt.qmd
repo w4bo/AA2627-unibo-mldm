@@ -871,6 +871,30 @@ Stop splitting a node
 - The number of records in the node is below a certain threshold (data fragmentation)
     - The selected criterion would not be statistically relevant
 
+# Evaluation {background-color="#121011"}
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    A[("Training set")]
+    G[("Test set")]
+    F[("Predicted class")]
+    A -->|Induction| B[Learn Model]
+    C(Learning Algorithm) --> B
+    B --> D[Model]
+
+    G -->D
+    D -->|Deduction| F
+    F --> I[Evaluation]
+    H[(Real Class)] --> I
+    I --> J((Performance))
+
+    style I fill:#f78c8c,stroke:#000
+    style J fill:#f78c8c,stroke:#000
+```
+
+See [Evaluation of classifiers](08-evaluation)
+
 # Decision-tree response to overfitting
 
 Decision trees can overfit because repeated splits make the decision boundary increasingly specific to the training data.
