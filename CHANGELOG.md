@@ -1,3 +1,20 @@
+## [1.0.26](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.25...1.0.26) (2026-09-10)
+
+### Dependency updates
+
+* **deps:** update node.js to 24.21 ([#33](https://github.com/w4bo/AA2627-unibo-mldm/issues/33)) ([8f5d096](https://github.com/w4bo/AA2627-unibo-mldm/commit/8f5d096868ef77847ca7eb28c26efcadc64790bd))
+
+### Bug Fixes
+
+* improve intro ([9979544](https://github.com/w4bo/AA2627-unibo-mldm/commit/9979544a1244c8cf5cf07420be9df320acb8ea2e))
+* intro ([9b3b948](https://github.com/w4bo/AA2627-unibo-mldm/commit/9b3b948e9b4dc8c61de43490f78f3c844314d731))
+* intro ([0896515](https://github.com/w4bo/AA2627-unibo-mldm/commit/08965158566472fbe9d92a7d4eb967dda7ac8a6f))
+* scss ([e292187](https://github.com/w4bo/AA2627-unibo-mldm/commit/e292187a821b7d2641719cf469d1d4a6f801bb2e))
+
+### General maintenance
+
+* remove useless folder ([4ff0b13](https://github.com/w4bo/AA2627-unibo-mldm/commit/4ff0b137e23783c61481c39d14fefd11150e0378))
+
 ## [1.0.25](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.24...1.0.25) (2026-09-09)
 
 ### Bug Fixes
