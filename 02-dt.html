@@ -1759,7 +1759,7 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </ul>
 </section>
 
-<section id="evaluation" class="title-slide slide level1 center" data-background-color="#121011">
+<section id="evaluation" class="title-slide slide level1 center">
 <h1>Evaluation</h1>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -1819,45 +1819,21 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 
 <section id="handling-overfitting-post-pruning-reduced-error-pruning" class="title-slide slide level1 center">
 <h1>Handling overfitting: post-pruning (reduced-error pruning)</h1>
+<p>Examine the decision tree nodes obtained with a bottom-up logic</p>
 <ul>
-<li>Run all possible splits</li>
-<li>Examine the decision tree nodes obtained with a bottom-up logic</li>
-<li>Replace a subtree with a leaf if this reduces the generalization error (i.e., on the validation set)
-<ul>
+<li>Replace a subtree with a leaf if this reduces the generalization error (i.e., on the validation set)</li>
 <li>Choose to collapse the sub-tree that determines the maximum error reduction (N.B. greedy choice)</li>
-</ul></li>
 </ul>
-<p>Instances in the new leaf can be tagged.</p>
+<p>Instances in the new leaf can be tagged based on the label that appears most frequently in the sub-trees</p>
+<p>Post-pruning is more effective but involves more computational cost.</p>
 <ul>
-<li>Based on the label that appears most frequently in the sub-trees</li>
-<li>According to the label that occurs most frequently in the instances of the training set that belong to the sub-tree</li>
+<li>It is based on the evidence of the result of a complete tree.</li>
 </ul>
-<p>Post-pruning is more effective but involves more computational cost. It is based on the evidence of the result of a complete tree.</p>
 </section>
 
-<section id="notes-on-overfitting" class="title-slide slide level1 center">
-<h1>Notes on overfitting</h1>
-<p>Overfitting results in more complex decision-making trees than necessary</p>
-<p>The classification error done on the training set does not provide accurate estimates about tree behavior on unknown records.</p>
-<p>It requires new techniques to estimate generalization errors.</p>
-</section>
 
-<section id="estimating-tree-generalization-error" class="title-slide slide level1 center">
-<h1>Estimating tree generalization error</h1>
-<p>A decision tree should minimize the error on real data but, during construction, only the training set is available.</p>
-<p>For pruning, the real-data error must be estimated without trusting the training error alone.</p>
-<ul>
-<li><strong>Re-substitution error:</strong> number of errors in the training set</li>
-<li><strong>Generalization error:</strong> number of errors on real data</li>
-</ul>
-<p>The methods for estimating the generalization error are:</p>
-<ul>
-<li><strong>Optimistic approach:</strong> <span class="math inline">\(e'(t) = e(t)\)</span></li>
-<li><strong>Pessimistic approach</strong></li>
-<li><strong>Minimum Description Length (MDL)</strong></li>
-<li><strong>Validation set:</strong> estimate whether simplifying the tree improves generalization</li>
-</ul>
-</section>
+
+
 
 <section id="occams-razor" class="title-slide slide level1 center">
 <h1>Occam’s razor</h1>
