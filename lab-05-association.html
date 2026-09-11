@@ -245,7 +245,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="dataset-overview" class="slide level2">
 <h2>Dataset overview</h2>
 <p>The warm-up uses <code>CensusTraining.arff</code>, a 1,000-row sample of US census records. Its 15 attributes describe age, employment, education, household role, demographics, capital gains/losses, working hours, country, and whether total income exceeds $50K.</p>
-<div id="6e60d361" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:29.928814Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:29.928609Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:29.950501Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:29.949689Z&quot;}}" data-execution_count="4">
+<div id="6e60d361" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:02.984434Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:02.984249Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.007030Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.006030Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>census, census_meta <span class="op">=</span> load_arff_frame(<span class="st">"CensusTraining.arff"</span>)</span>
@@ -261,7 +261,7 @@ Attributes: 15</code></pre>
 </section>
 <section id="census-sample" class="slide level2">
 <h2>Census sample</h2>
-<div id="f628d3b0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:29.952335Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:29.952143Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:29.965681Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:29.964806Z&quot;}}" data-execution_count="5">
+<div id="f628d3b0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.008938Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.008723Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.023712Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.022835Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>census.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -403,7 +403,7 @@ Attributes: 15</code></pre>
 </section>
 <section id="census-dtypes" class="slide level2">
 <h2>Census dtypes</h2>
-<div id="e3e5454b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:29.967448Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:29.967272Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:29.973728Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:29.972997Z&quot;}}" data-execution_count="6">
+<div id="e3e5454b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.025702Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.025492Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.032308Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.031454Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>census.dtypes.to_frame(<span class="st">"dtype"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -508,7 +508,7 @@ Attributes: 15</code></pre>
 <li>retain one item per observed <code>attribute=value</code> pair.</li>
 </ol>
 <p>Missing values are not turned into items.</p>
-<div id="27fc2019" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:29.975715Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:29.975520Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.021098Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.020311Z&quot;}}" data-execution_count="7">
+<div id="27fc2019" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.034534Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.034312Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.084363Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.083305Z&quot;}}" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>One-hot transaction matrix: 1000 x 115</code></pre>
 </div>
@@ -648,7 +648,7 @@ Attributes: 15</code></pre>
 <li>A pairwise check reveals the strongest expected relationship: <code>education</code> and <code>education-num</code> encode nearly the same concept.</li>
 <li>Normalized mutual information (NMI) is 0 for independence and 1 for a deterministic correspondence.</li>
 </ul>
-<div id="5fe0b7aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.023051Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.022827Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.047434Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.046679Z&quot;}}" data-execution_count="8">
+<div id="5fe0b7aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.086223Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.086034Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.111801Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.110964Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>NMI(education, education-num) = 1.000</code></pre>
 </div>
@@ -1039,7 +1039,7 @@ Attributes: 15</code></pre>
 <h1>Rule generation from one itemset</h1>
 <p>The theory says that once an itemset is frequent, rules are obtained by choosing a non-empty proper subset as the antecedent and putting the remaining items in the consequent.</p>
 <p>The small market-basket example below makes every partition explicit.</p>
-<div id="501b621b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.049544Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.049369Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.056746Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.056005Z&quot;}}" data-execution_count="9">
+<div id="501b621b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.113803Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.113613Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.122060Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.121125Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>walmart_transactions <span class="op">=</span> [</span>
@@ -1136,7 +1136,7 @@ Attributes: 15</code></pre>
 <section id="all-rules-generated-from-milk-diaper-beer" class="slide level2">
 <h2>All rules generated from <code>{Milk, Diaper, Beer}</code></h2>
 <p>Each row uses the same frequent itemset, but a different antecedent/consequent split.</p>
-<div id="50b24e7e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.058639Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.058335Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.071877Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.071114Z&quot;}}" data-execution_count="10">
+<div id="50b24e7e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.123908Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.123711Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.138737Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.137821Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>milk_diaper_beer_rules <span class="op">=</span> rules_from_itemset(walmart, {<span class="st">"Milk"</span>, <span class="st">"Diaper"</span>, <span class="st">"Beer"</span>})</span>
@@ -1235,7 +1235,7 @@ Attributes: 15</code></pre>
 <section id="reading-confidence" class="slide level2">
 <h2>Reading confidence</h2>
 <p>For <code>Milk, Diaper =&gt; Beer</code>, the antecedent appears in three transactions. Two of those transactions also contain <code>Beer</code>, so confidence is <span class="math inline">\(2/3\)</span>.</p>
-<div id="bb51b6cd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.073657Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.073473Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.082055Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.081289Z&quot;}}" data-execution_count="11">
+<div id="bb51b6cd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.140677Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.140457Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.150579Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.149528Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>milk_diaper_beer_rules.query(<span class="st">"antecedent == 'Diaper, Milk' and consequent == 'Beer'"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1289,7 +1289,7 @@ Attributes: 15</code></pre>
 <h2>Confidence pruning with concrete counts</h2>
 <p>When rules come from the same itemset, the numerator is fixed: every confidence value uses the support count of the full itemset.</p>
 <p>The only part that changes is the antecedent count in the denominator.</p>
-<div id="9d23d58a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.083826Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.083650Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.101482Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.100765Z&quot;}}" data-execution_count="12">
+<div id="9d23d58a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.152596Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.152262Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.173874Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.172983Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>pruning_transactions <span class="op">=</span> (</span>
@@ -1372,7 +1372,7 @@ Attributes: 15</code></pre>
 <section id="default-search-with-decreasing-support" class="slide level2">
 <h2>Default search with decreasing support</h2>
 <p>Start at the upper support bound, decrease it by <code>delta</code>, and stop once ten confidence-qualified rules are available.</p>
-<div id="e0fa3fda" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.103273Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.103097Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.126540Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.125680Z&quot;}}" data-execution_count="13">
+<div id="e0fa3fda" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.175847Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.175629Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.201267Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.200244Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>census_itemsets_10, census_rules_10, census_history_10 <span class="op">=</span> decreasing_support_search(</span>
@@ -1390,7 +1390,7 @@ Attributes: 15</code></pre>
 </section>
 <section id="census-decreasing-support-rounds" class="slide level2">
 <h2>Census decreasing-support rounds</h2>
-<div id="48921e43" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.128360Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.128181Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.133940Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.133290Z&quot;}}" data-execution_count="14">
+<div id="48921e43" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.203112Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.202924Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.209390Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.208518Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>census_history_10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1466,7 +1466,7 @@ Attributes: 15</code></pre>
 </section>
 <section id="census-frequent-itemsets-at-the-stopping-round" class="slide level2">
 <h2>Census frequent itemsets at the stopping round</h2>
-<div id="e3518617" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.135891Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.135714Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.143964Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.143154Z&quot;}}" data-execution_count="15">
+<div id="e3518617" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.211157Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.210978Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.220101Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.219155Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>itemset_table(census_itemsets_10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1578,7 +1578,7 @@ Attributes: 15</code></pre>
 </section>
 <section id="census-best-rules" class="slide level2">
 <h2>Census best rules</h2>
-<div id="2f82cb7f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.145655Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.145475Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.157886Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.157162Z&quot;}}" data-execution_count="16">
+<div id="2f82cb7f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.221853Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.221675Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.235395Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.234412Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>readable_rules(census_rules_10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1756,7 +1756,7 @@ Attributes: 15</code></pre>
 <section id="reading-antecedent-and-rule-support" class="slide level2">
 <h2>Reading antecedent and rule support</h2>
 <p>The rule support must never exceed either side’s support; the check below verifies the anti-monotone relationship numerically.</p>
-<div id="402c7457" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.159683Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.159498Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.168423Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.167636Z&quot;}}" data-execution_count="17">
+<div id="402c7457" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.237336Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.237134Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.247187Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.246276Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="cf">if</span> <span class="kw">not</span> census_rules_10.empty:</span>
@@ -1874,7 +1874,7 @@ Attributes: 15</code></pre>
 <section id="iterative-search-with-decreasing-support" class="slide level2">
 <h2>Iterative search with decreasing support</h2>
 <p>Start at the upper support bound and lowers it by <code>delta</code>. Each round returns rules above <code>minMetric</code>; the cycle stops when it reaches the lower bound or has found <code>numRules</code> rules. Increasing <code>numRules</code> therefore permits more rounds and can reveal lower-support but higher-confidence rules.</p>
-<div id="7e2e3b64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.170279Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.170099Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.226229Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.225451Z&quot;}}" data-execution_count="18">
+<div id="7e2e3b64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.248991Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.248796Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.312528Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.311510Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>census_itemsets_100, census_rules_100, census_history_100 <span class="op">=</span> decreasing_support_search(</span>
@@ -1898,7 +1898,7 @@ Rules returned: 100</code></pre>
 </section>
 <section id="census-broad-rule-search-history" class="slide level2">
 <h2>Census broad rule search history</h2>
-<div id="1f73bb52" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.228368Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.228185Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.235363Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.234507Z&quot;}}" data-execution_count="19">
+<div id="1f73bb52" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.314580Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.314349Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.321316Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.320544Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>census_history_100</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2010,7 +2010,7 @@ Rules returned: 100</code></pre>
 </section>
 <section id="census-broad-rule-search-results" class="slide level2">
 <h2>Census broad rule search results</h2>
-<div id="649b4666" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.237156Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.236956Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.249514Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.248748Z&quot;}}" data-execution_count="20">
+<div id="649b4666" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.323427Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.323232Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.337298Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.336581Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>readable_rules(census_rules_100, top<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2197,7 +2197,7 @@ Answer
 </summary>
 A lower support near <strong>0.70</strong> is a useful reference point. At that level, only very frequent items survive, so the remaining three-item sets generate several different rules while longer, rarer combinations disappear.
 </details>
-<div id="a2583734" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.251250Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.251064Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.261527Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.260639Z&quot;}}" data-execution_count="21">
+<div id="a2583734" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.339522Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.339323Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.350174Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.349417Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>census_itemsets_70, census_rules_70 <span class="op">=</span> mine_rules(</span>
@@ -2219,7 +2219,7 @@ Rules generated: 22</code></pre>
 </section>
 <section id="census-high-support-itemset-lengths" class="slide level2">
 <h2>Census high-support itemset lengths</h2>
-<div id="76e2b13a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.263197Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.263024Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.268263Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.267421Z&quot;}}" data-execution_count="22">
+<div id="76e2b13a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.352197Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.352018Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.357367Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.356509Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>length_summary_70</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2273,7 +2273,7 @@ Rules generated: 22</code></pre>
 </section>
 <section id="census-high-support-rules" class="slide level2">
 <h2>Census high-support rules</h2>
-<div id="96d6f033" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.269933Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.269754Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.285181Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.284483Z&quot;}}" data-execution_count="23">
+<div id="96d6f033" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.359067Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.358889Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.376130Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.375304Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>readable_rules(census_rules_70)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2611,7 +2611,7 @@ Rules generated: 22</code></pre>
 <section id="rules-for-a-target-attribute-cartrue" class="slide level2">
 <h2>Rules for a target attribute (<code>car=True</code>)</h2>
 <p>Class-association-rule filtering constrains the chosen class attribute to the consequent. Here the original class (attribute 15 in Python’s one-based counting) is represented by items beginning with <code>class=</code>.</p>
-<div id="08e7a597" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.287108Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.286901Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.424745Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.423899Z&quot;}}" data-execution_count="24">
+<div id="08e7a597" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.378224Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.378047Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.528193Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.527061Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>car_itemsets, car_rules, car_history <span class="op">=</span> decreasing_support_search(</span>
@@ -2630,7 +2630,7 @@ Rules generated: 22</code></pre>
 </section>
 <section id="census-class-consequent-search-history" class="slide level2">
 <h2>Census class-consequent search history</h2>
-<div id="ca887e98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.427372Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.427180Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.434195Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.433369Z&quot;}}" data-execution_count="25">
+<div id="ca887e98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.530270Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.530087Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.537814Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.536881Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>car_history</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2772,7 +2772,7 @@ Rules generated: 22</code></pre>
 </section>
 <section id="census-class-consequent-rules" class="slide level2">
 <h2>Census class-consequent rules</h2>
-<div id="ce53d810" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.436064Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.435746Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.448610Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.447833Z&quot;}}" data-execution_count="26">
+<div id="ce53d810" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.539657Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.539453Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.553115Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.552276Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a>readable_rules(car_rules).head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2949,7 +2949,7 @@ Rules generated: 22</code></pre>
 </section>
 <section id="census-class-consequent-rule-counts" class="slide level2">
 <h2>Census class-consequent rule counts</h2>
-<div id="e34e3032" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.450366Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.450184Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.456301Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.455428Z&quot;}}" data-execution_count="27">
+<div id="e34e3032" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.555175Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.554983Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.561553Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.560701Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>car_rules[<span class="st">"consequents"</span>].<span class="bu">map</span>(item_label).value_counts().to_frame(<span class="st">"rules"</span>) <span class="cf">if</span> <span class="kw">not</span> car_rules.empty <span class="cf">else</span> pd.DataFrame()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2996,7 +2996,7 @@ Rules generated: 22</code></pre>
 <section id="interpreting-class-association-rules" class="slide level2">
 <h2>Interpreting class-association rules</h2>
 <p>All returned rules have income class as the consequent. The dominant consequent is <code>class=&lt;=50K</code>, because that is by far the more frequent class in this sample. CAR filtering constrains the <em>attribute</em>, not a specific value; filtering to one value is an additional step:</p>
-<div id="75667133" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.458081Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.457873Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.464696Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.463861Z&quot;}}" data-execution_count="28">
+<div id="75667133" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.563560Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.563333Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.570866Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.569874Z&quot;}}" data-execution_count="28">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a>target_over_50k <span class="op">=</span> car_rules[</span>
@@ -3052,7 +3052,7 @@ Rules generated: 22</code></pre>
 <li><strong>closed frequent itemsets</strong> keep frequent itemsets whose supersets do not have the same support.</li>
 </ul>
 <p>Closed itemsets retain support information; maximal itemsets are more compact but lossy.</p>
-<div id="c3797083" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.466379Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.466213Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.473800Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.472983Z&quot;}}" data-execution_count="29">
+<div id="c3797083" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.572628Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.572424Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.580704Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.579912Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>closed_maximal_transactions <span class="op">=</span> [</span>
@@ -3077,7 +3077,7 @@ Rules generated: 22</code></pre>
 </section>
 <section id="closed-and-maximal-frequent-itemsets-1" class="slide level2">
 <h2>Closed and maximal frequent itemsets</h2>
-<div id="75495f23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.475432Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.475268Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.482767Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.482006Z&quot;}}" data-execution_count="30">
+<div id="75495f23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.582847Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.582675Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.591196Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.590229Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>closed_maximal_labels</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -3247,7 +3247,7 @@ Rules generated: 22</code></pre>
 <section id="compare-the-compression" class="slide level2">
 <h2>Compare the compression</h2>
 <p>The same frequent-itemset collection can be summarized by closed itemsets or by maximal itemsets.</p>
-<div id="f958c5e3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.484498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.484331Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.492249Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.491429Z&quot;}}" data-execution_count="31">
+<div id="f958c5e3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.592983Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.592807Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.601311Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.600539Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>summary <span class="op">=</span> closed_maximal_labels.groupby([<span class="st">"closed"</span>, <span class="st">"maximal"</span>]).size().rename(<span class="st">"itemsets"</span>).to_frame()</span>
@@ -3312,7 +3312,7 @@ Rules generated: 22</code></pre>
 <ul>
 <li>For example, a closed singleton can preserve support information that would disappear if we kept only maximal patterns.</li>
 </ul>
-<div id="f478e9ad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.493948Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.493773Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.500935Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.500177Z&quot;}}" data-execution_count="32">
+<div id="f478e9ad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.603595Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.603246Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.611057Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.610262Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>closed_only[[<span class="st">"itemset"</span>, <span class="st">"support count"</span>, <span class="st">"support"</span>, <span class="st">"maximal"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -3416,7 +3416,7 @@ Rules generated: 22</code></pre>
 </section>
 <section id="compare-the-compression-2" class="slide level2">
 <h2>Compare the compression</h2>
-<div id="818d17ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.502616Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.502453Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.509250Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.508223Z&quot;}}" data-execution_count="33">
+<div id="818d17ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.613054Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.612880Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.620197Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.619277Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>maximal_only[[<span class="st">"itemset"</span>, <span class="st">"support count"</span>, <span class="st">"support"</span>, <span class="st">"closed"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -3492,7 +3492,7 @@ Rules generated: 22</code></pre>
 <h2>Dataset overview</h2>
 <p>Market Basket Analysis identifies buying habits that can inform promotions, shelf placement, and advertising. <code>MarketBasket.arff</code> contains 651 transactions and 56 binary product attributes.</p>
 <p>The local file uses a dense asymmetric encoding: <code>t</code> means purchased, while <code>f</code> or <code>?</code> means absent. Treating absence as a regular item would produce unhelpful rules about products <em>not</em> being bought, so only <code>t</code> becomes <code>True</code> in the transaction matrix.</p>
-<div id="0bcbb631" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.511105Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.510889Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:30.559160Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:30.558301Z&quot;}}" data-execution_count="34">
+<div id="0bcbb631" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.622001Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.621823Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:03.678757Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:03.677917Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a>market_raw, market_meta <span class="op">=</span> load_arff_frame(<span class="st">"MarketBasket.arff"</span>)</span>
@@ -3685,7 +3685,7 @@ Rules generated: 22</code></pre>
 r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 \]</span></p>
 <p>If this ratio is very small, a high-confidence rule may simply be pointing from a rare item to a very common item.</p>
-<div id="b6263d30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:30.560900Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:30.560726Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:36.987937Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:36.987127Z&quot;}}" data-execution_count="35">
+<div id="b6263d30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:03.680987Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:03.680804Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:12.287785Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:12.286908Z&quot;}}" data-execution_count="35">
 <div class="cell-output cell-output-display" data-execution_count="35">
 <div>
 <style scoped="">
@@ -3814,7 +3814,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 <li>support 0.05, confidence 0.90;</li>
 <li>support 0.05, confidence 0.70.</li>
 </ol>
-<div id="9fd4293b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:36.989903Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:36.989709Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:38.811401Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:38.810527Z&quot;}}" data-execution_count="36">
+<div id="9fd4293b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:12.290116Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:12.289924Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.114222Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.113241Z&quot;}}" data-execution_count="36">
 <div class="cell-output cell-output-display" data-execution_count="36">
 <div>
 <style scoped="">
@@ -3885,7 +3885,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 <section id="rules-returned-by-each-threshold" class="slide level2">
 <h2>Rules returned by each threshold</h2>
 <p>Compare the highest-ranked rules after changing minimum support and minimum confidence.</p>
-<div id="b1ed9321" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:38.813238Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:38.813053Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:38.818181Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:38.817498Z&quot;}}" data-execution_count="37">
+<div id="b1ed9321" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.116163Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.115966Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.121707Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.120922Z&quot;}}" data-execution_count="37">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.10</span>, <span class="fl">0.90</span>)]</span>
@@ -3927,7 +3927,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 </section>
 <section id="market-rules-with-lower-support" class="slide level2">
 <h2>Market rules with lower support</h2>
-<div id="84f6f4d4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:38.820223Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:38.820038Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:38.910047Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:38.909160Z&quot;}}" data-execution_count="38">
+<div id="84f6f4d4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.124028Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.123684Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.221014Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.220121Z&quot;}}" data-execution_count="38">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.01</span>, <span class="fl">0.90</span>)]</span>
@@ -4089,15 +4089,15 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
-<td>Cola, Eggs, Sugar Cookies, Tomatoes</td>
-<td>White Bread</td>
+<td>Cola, Sugar Cookies, Tomatoes, White Bread</td>
+<td>Eggs</td>
 <td>5</td>
 <td>0.0276</td>
-<td>0.2488</td>
+<td>0.2565</td>
 <td>0.0276</td>
 <td>1.0</td>
-<td>4.0185</td>
-<td>0.0208</td>
+<td>3.8982</td>
+<td>0.0206</td>
 <td>inf</td>
 </tr>
 </tbody>
@@ -4109,7 +4109,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 </section>
 <section id="market-rules-with-moderate-support" class="slide level2">
 <h2>Market rules with moderate support</h2>
-<div id="c2d017c1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:38.911855Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:38.911675Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:38.917302Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:38.916596Z&quot;}}" data-execution_count="39">
+<div id="c2d017c1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.223056Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.222841Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.229190Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.228232Z&quot;}}" data-execution_count="39">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.05</span>, <span class="fl">0.90</span>)]</span>
@@ -4151,7 +4151,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 </section>
 <section id="market-rules-with-lower-confidence" class="slide level2">
 <h2>Market rules with lower confidence</h2>
-<div id="11620777" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:38.919334Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:38.919160Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:38.932623Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:38.931892Z&quot;}}" data-execution_count="40">
+<div id="11620777" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.231052Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.230870Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.246497Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.245674Z&quot;}}" data-execution_count="40">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="" aria-label="1"></a>itemsets, rules <span class="op">=</span> market_results[(<span class="fl">0.05</span>, <span class="fl">0.70</span>)]</span>
@@ -4300,19 +4300,6 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
-<td>2pct. Milk, Eggs, Potato Chips</td>
-<td>White Bread</td>
-<td>4</td>
-<td>0.0707</td>
-<td>0.2488</td>
-<td>0.0553</td>
-<td>0.7826</td>
-<td>3.1449</td>
-<td>0.0377</td>
-<td>3.4553</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">9</th>
 <td>Eggs, Potato Chips, White Bread</td>
 <td>2pct. Milk</td>
 <td>4</td>
@@ -4323,6 +4310,19 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 <td>3.4193</td>
 <td>0.0391</td>
 <td>3.5472</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>2pct. Milk, Eggs, Potato Chips</td>
+<td>White Bread</td>
+<td>4</td>
+<td>0.0707</td>
+<td>0.2488</td>
+<td>0.0553</td>
+<td>0.7826</td>
+<td>3.1449</td>
+<td>0.0377</td>
+<td>3.4553</td>
 </tr>
 </tbody>
 </table>
@@ -4346,7 +4346,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 <ul>
 <li>The reference highlights 2% milk, eggs, cola, and white bread.</li>
 </ul>
-<div id="ccf37319" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:38.934648Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:38.934457Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:38.941389Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:38.940675Z&quot;}}" data-execution_count="41">
+<div id="ccf37319" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.248804Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.248621Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.256269Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.255280Z&quot;}}" data-execution_count="41">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="" aria-label="1"></a>staples <span class="op">=</span> [<span class="st">"2pct. Milk"</span>, <span class="st">"Eggs"</span>, <span class="st">"Cola"</span>, <span class="st">"White Bread"</span>]</span>
@@ -4402,7 +4402,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 </section>
 <section id="market-staple-support-chart" class="slide level2">
 <h2>Market staple support chart</h2>
-<div id="f6b0a801" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:38.943254Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:38.943087Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:39.049885Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:39.049064Z&quot;}}" data-execution_count="42">
+<div id="f6b0a801" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.258054Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.257877Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.375732Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.374636Z&quot;}}" data-execution_count="42">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> staple_support.sort_values(<span class="st">"support"</span>).plot.barh(legend<span class="op">=</span><span class="va">False</span>, color<span class="op">=</span><span class="st">"#4C9BC6"</span>)</span>
@@ -4426,7 +4426,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 <ul>
 <li>The high-confidence rules are based on small joint counts, confirming that eggs are frequent but not tightly linked to one particular basket.</li>
 </ul>
-<div id="66693a1b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:39.051924Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:39.051745Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:39.092229Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:39.091322Z&quot;}}" data-execution_count="43">
+<div id="66693a1b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.377798Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.377601Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.421020Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.419979Z&quot;}}" data-execution_count="43">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="" aria-label="1"></a>market_itemsets_01, market_rules_01 <span class="op">=</span> market_results[(<span class="fl">0.01</span>, <span class="fl">0.90</span>)]</span>
@@ -4509,7 +4509,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 <td>inf</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">10</th>
+<th data-quarto-table-cell-role="th">9</th>
 <td>Cola, Sugar Cookies, Tomatoes, White Bread</td>
 <td>Eggs</td>
 <td>5</td>
@@ -4687,7 +4687,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 </section>
 <section id="market-items-lift" class="slide level2">
 <h2>Market items lift</h2>
-<div id="f660c33c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:39.094200Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:39.094013Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:39.113082Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:39.112286Z&quot;}}" data-execution_count="44">
+<div id="f660c33c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.423148Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.422932Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.445795Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.444829Z&quot;}}" data-execution_count="44">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="" aria-label="1"></a>market_itemsets_lift, market_rules_lift <span class="op">=</span> mine_rules(market, min_support<span class="op">=</span><span class="fl">0.10</span>, metric<span class="op">=</span><span class="st">"lift"</span>, min_metric<span class="op">=</span><span class="fl">1.0</span>)</span>
@@ -4918,7 +4918,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 <section id="hamburger-buns-fat-free-hamburger-and-white-bread" class="slide level2">
 <h2>Hamburger buns, fat-free hamburger, and white bread</h2>
 <p>The strongest lifted pair is <code>98pct. Fat Free Hamburger</code> with <code>Hamburger Buns</code>; fat-free hamburger is also positively associated with <code>White Bread</code>. We now inspect the exact counts, including the three-way overlap that is hidden by pairwise rules.</p>
-<div id="d17694e7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:39.114855Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:39.114681Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:39.122066Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:39.121306Z&quot;}}" data-execution_count="45">
+<div id="d17694e7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.447908Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.447698Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.456695Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.455725Z&quot;}}" data-execution_count="45">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="" aria-label="1"></a>hamburger <span class="op">=</span> <span class="st">"98pct. Fat Free Hamburger"</span></span>
@@ -4991,7 +4991,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 </section>
 <section id="hamburger-bun-and-bread-choices" class="slide level2">
 <h2>Hamburger bun and bread choices</h2>
-<div id="67e51b38" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:39.123895Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:39.123709Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:39.132463Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:39.131766Z&quot;}}" data-execution_count="46">
+<div id="67e51b38" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.458745Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.458532Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.468996Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.468179Z&quot;}}" data-execution_count="46">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="" aria-label="1"></a>hamburger_baskets <span class="op">=</span> market.loc[market[hamburger], [buns, bread]]</span>
@@ -5062,7 +5062,7 @@ r(X)=\frac{\min_i s(i)}{\max_i s(i)}
 <section id="pairwise-lift-rules-for-the-three-products" class="slide level2">
 <h2>Pairwise lift rules for the three products</h2>
 <p>Filter the lifted rules to the hamburger, buns, and white-bread subset before interpreting the relationship.</p>
-<div id="77d29297" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T10:50:39.134452Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T10:50:39.134279Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T10:50:39.145717Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T10:50:39.145034Z&quot;}}" data-execution_count="47">
+<div id="77d29297" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-11T16:03:14.471326Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-11T16:03:14.471136Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-11T16:03:14.485500Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-11T16:03:14.484746Z&quot;}}" data-execution_count="47">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="" aria-label="1"></a>focus_rules <span class="op">=</span> market_rules_lift[</span>
