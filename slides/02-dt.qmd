@@ -858,7 +858,7 @@ Stop splitting a node
 - The number of records in the node is below a certain threshold (data fragmentation)
     - The selected criterion would not be statistically relevant
 
-# Evaluation {background-color="#121011"}
+# Evaluation
 
 ```{mermaid}
 %%| echo: false
@@ -907,19 +907,18 @@ More restrictive conditions potentially applicable are:
 
 # Handling overfitting: post-pruning (reduced-error pruning)
 
-- Run all possible splits
-- Examine the decision tree nodes obtained with a bottom-up logic
+Examine the decision tree nodes obtained with a bottom-up logic
+
 - Replace a subtree with a leaf if this reduces the generalization error (i.e., on the validation set)
-    - Choose to collapse the sub-tree that determines the maximum error reduction (N.B. greedy choice)
+- Choose to collapse the sub-tree that determines the maximum error reduction (N.B. greedy choice)
 
-Instances in the new leaf can be tagged.
+Instances in the new leaf can be tagged based on the label that appears most frequently in the sub-trees
 
-- Based on the label that appears most frequently in the sub-trees
-- According to the label that occurs most frequently in the instances of the training set that belong to the sub-tree
+Post-pruning is more effective but involves more computational cost.
 
-Post-pruning is more effective but involves more computational cost. It is based on the evidence of the result of a complete tree.
+- It is based on the evidence of the result of a complete tree.
 
-# Notes on overfitting
+# Notes on overfitting {visibility="hidden"}
 
 Overfitting results in more complex decision-making trees than necessary
 
@@ -927,7 +926,7 @@ The classification error done on the training set does not provide accurate esti
 
 It requires new techniques to estimate generalization errors.
 
-# Estimating tree generalization error
+# Estimating tree generalization error {visibility="hidden"}
 
 A decision tree should minimize the error on real data but, during construction, only the training set is available.
 
