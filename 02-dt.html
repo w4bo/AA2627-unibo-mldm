@@ -546,16 +546,18 @@ Predicted class
 <h1>Intuition: divide the feature space</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
-<p>Decision trees solve difficult classification problems through sequences of simpler questions.</p>
+<p>Decision trees solve classification problems through sequences of simpler questions.</p>
 <ul>
-<li>Each internal node asks one question about one feature:
+<li><em>Which question best separates customers who churn from those who stay?</em></li>
+</ul>
+<div class="fragment">
 <ul>
-<li><em>which question best separates customers who churn from those who stay?</em></li>
-</ul></li>
+<li>Each internal node asks one question about one feature</li>
 <li>Each answer restricts the set of possible records</li>
 <li>A root-to-leaf path behaves like an <strong>if-then rule</strong></li>
 <li>Training searches for questions that make the resulting groups as pure as possible</li>
 </ul>
+</div>
 </div><div class="column" style="width:40%;">
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -1062,14 +1064,13 @@ Predicted class
 <div class="column" style="width:85%;">
 <p>Recursive approach that progressively subdivides a set of <span class="math inline">\(D_t\)</span> records into pure record sets</p>
 <ul>
-<li>Let <span class="math inline">\(D_t=\{x_1, ..., x_k\}\)</span> be the set of records of the training set corresponding to <span class="math inline">\(node_t\)</span> and <span class="math inline">\(y_t = \{y_1, ..., y_k\}\)</span> the possible class labels</li>
-<li>If <span class="math inline">\(D_t\)</span>
+<li>Let <span class="math inline">\(D_t=\{x_1, ..., x_k\}\)</span> be the records of the training set corresponding to <span class="math inline">\(node_t\)</span> and <span class="math inline">\(y_t = \{y_1, ..., y_k\}\)</span> the possible class labels</li>
+<li>Apply the current procedure for each subset recursively, if <span class="math inline">\(D_t\)</span>
 <ul>
 <li>Contains records of the <span class="math inline">\(y_j\)</span> class only, then <span class="math inline">\(node_t\)</span> is a leaf with label <span class="math inline">\(y_j\)</span></li>
 <li>Is an empty set, then <span class="math inline">\(node_t\)</span> is a leaf node to which a parent node class is assigned</li>
 <li>Contains records of several classes, we need an <em>attribute</em> and a <em>split policy</em> to partition them</li>
 </ul></li>
-<li>Apply the current procedure for each subset recursively</li>
 </ul>
 </div><div class="column" style="width:15%;">
 <div class="cell" data-reveal="true" data-layout-align="default">
@@ -1232,7 +1233,10 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<p><em>Binary split</em>: creates two partitions only. The attribute value that optimally splits the dataset must be found.</p>
+<p><em>Binary split</em>: creates two partitions only.</p>
+<ul>
+<li>The attribute value that optimally splits the dataset must be found.</li>
+</ul>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1295,7 +1299,10 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<p><em>Binary split</em>: creates two partitions only. The attribute value that optimally splits the dataset must be found.</p>
+<p><em>Binary split</em>: creates two partitions only.</p>
+<ul>
+<li>The attribute value that optimally splits the dataset must be found.</li>
+</ul>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1337,7 +1344,10 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <h1>Splitting <em>continuous</em> attributes</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><em>N-ary split</em>: The split condition can be expressed as a Boolean test that results in multiple ranges of values. The algorithm must consider the entire possible range of values as possible split points</p>
+<p><em>N-ary split</em>: The split condition can be expressed as a Boolean test that results in multiple ranges of values.</p>
+<ul>
+<li>The algorithm must consider the entire possible range of values as possible split points</li>
+</ul>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1358,7 +1368,10 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<p><em>Binary split</em>: The split condition can be expressed as a binary comparison test. The algorithm must consider all values as possible split points</p>
+<p><em>Binary split</em>: The split condition can be expressed as a binary comparison test.</p>
+<ul>
+<li>The algorithm must consider all values as possible split points</li>
+</ul>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1377,13 +1390,9 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </div>
 </div>
 </div></div>
-</section>
-
-<section id="splitting-continuous-attributes-1" class="title-slide slide level1 center">
-<h1>Splitting <em>continuous</em> attributes</h1>
 <p>A discretization technique can be used to manage the complexity of the search for optimal split points.</p>
 <ul>
-<li><strong>Static:</strong> discretization takes place only once before applying the algorithm</li>
+<li><strong>Static:</strong> discretization takes place only once before applying the algorithm.</li>
 <li><strong>Dynamic:</strong> discretization takes place at each recursion step by exploiting information about the distribution of input data to the <span class="math inline">\(D_t\)</span> node.</li>
 </ul>
 </section>
@@ -1421,18 +1430,31 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="impurity-measures" class="title-slide slide level1 center">
 <h1>Impurity measures</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
 <p>Given a parent node <span class="math inline">\(p\)</span> with records belonging to <span class="math inline">\(k\)</span> classes and a candidate partition into <span class="math inline">\(n\)</span> child nodes:</p>
 <ul>
 <li><span class="math inline">\(m\)</span> = number of records in parent node <span class="math inline">\(p\)</span></li>
 <li><span class="math inline">\(m_i\)</span> = number of records in child node <span class="math inline">\(i\)</span></li>
 </ul>
-<p><strong>ATTENTION: do not confuse the number of classes (<span class="math inline">\(k\)</span>) and of the child nodes (<span class="math inline">\(n\)</span>)</strong></p>
 <p>Several indices can be adopted to measure the impurity of one node <span class="math inline">\(i\)</span>.</p>
 <ul>
 <li><span class="math inline">\(Gini(i) = 1 - \sum_{j=1}^k p(j | i)^2\)</span> (adopted in CART, SLIQ, and SPRINT)</li>
 <li><span class="math inline">\(Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))\)</span> (adopted in ID3 and C4.5)</li>
 <li><span class="math inline">\(Misclassification~Error(i) = 1 - max_{j=1,\ldots,k} p(j|i)\)</span></li>
 </ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/dt/3-Decision%20Tree_48.png"></p>
+<figcaption>Impurity measures behavior for a two-class problem</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="impurity-measures-1" class="title-slide slide level1 center">
+<h1>Impurity measures</h1>
 <p>The impurity of the whole split is the weighted average of the child impurities. <strong>Lower is better.</strong></p>
 <ul>
 <li><span class="math inline">\(Impurity_{split} = \sum_{i=1}^{n}\frac{m_i}{m}meas(i)\)</span></li>
@@ -1446,7 +1468,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <section id="comparing-impurity-measures" class="title-slide slide level1 center">
 <h1>Comparing impurity measures</h1>
 
-<img data-src="img/dt/3-Decision%20Tree_48.png" class="r-stretch quarto-figure-center"><p class="caption">Impurity measures behavior for a two-class problem</p></section>
+</section>
 
 <section id="how-do-we-determine-the-best-split-value" class="title-slide slide level1 center">
 <h1>How do we determine the best split value?</h1>
@@ -1501,128 +1523,18 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 <section id="computing-gini-for-binary-attributes" class="title-slide slide level1 center">
 <h1>Computing Gini for <em>binary</em> attributes</h1>
 
-<img data-src="./img/dt/image21.png" class="r-stretch"><ul>
+<img data-src="./img/dt/image21.png" class="r-stretch"><summary>
+Answers
+</summary>
+<ul>
 <li><span class="math inline">\(Gini(N3) = 1 - (\frac{5}{7})^2 - (\frac{2}{7})^2 = 0.408\)</span></li>
 <li><span class="math inline">\(Gini(N4) = 1 - (\frac{1}{5})^2 - (\frac{4}{5})^2 = 0.320\)</span></li>
-<li><span class="math inline">\(Impurity= \frac{7}{12} \cdot 0.408 + \frac{5}{12} \cdot 0.320= 0.371\)</span></li>
+<li><span class="math inline">\(Impurity= \frac{7}{12} \cdot 0.408 + \frac{5}{12} \cdot 0.320= 0.371\)</span>
+</li>
 </ul>
 </section>
 
-<section id="computing-gini-for-categorical-attributes" class="title-slide slide level1 center">
-<h1>Computing Gini for <em>categorical</em> attributes</h1>
-<p>It is usually more efficient to create a “count matrix” for each candidate split:</p>
-<ul>
-<li>Rows represent the classes</li>
-<li>Columns represent the child nodes created by the split</li>
-<li>The reported Gini is the weighted impurity of the candidate split</li>
-</ul>
-<div>
 
-</div>
-<div class="columns">
-<div class="column" style="width:33%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">CarType</th>
-<th style="text-align: center;"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>{Sports, Luxury}</strong></td>
-<td style="text-align: center;"><strong>{Family}</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>C1</strong></td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><strong>C2</strong></td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Gini</td>
-<td style="text-align: center;"><strong>0.400</strong></td>
-<td style="text-align: center;"></td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:33%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">CarType</th>
-<th style="text-align: center;"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>{Sports}</strong></td>
-<td style="text-align: center;"><strong>{Family, Luxury}</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>C1</strong></td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><strong>C2</strong></td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Gini</td>
-<td style="text-align: center;"><strong>0.419</strong></td>
-<td style="text-align: center;"></td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:33%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">CarType</th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><strong>Family</strong></td>
-<td style="text-align: center;"><strong>Sports</strong></td>
-<td style="text-align: center;"><strong>Luxury</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>C1</strong></td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><strong>C2</strong></td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Gini</td>
-<td style="text-align: center;"><strong>0.393</strong></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-</tbody>
-</table>
-</div></div>
-</section>
 
 <section id="computing-gini-for-continuous-attributes" class="title-slide slide level1 center">
 <h1>Computing Gini for <em>continuous</em> attributes</h1>
@@ -1654,8 +1566,7 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 <li>Choose as split point the value that minimizes the weighted Gini impurity</li>
 </ul>
 
-<img data-src="./img/dt/image22.png" class="r-stretch quarto-figure-center"><p class="caption">Optimizing the split</p><p>Further optimizations?</p>
-</section>
+<img data-src="./img/dt/image22.png" class="r-stretch quarto-figure-center"><p class="caption">Optimizing the split</p></section>
 
 <section id="gain-based-split" class="title-slide slide level1 center">
 <h1>Gain-based split</h1>
@@ -1670,21 +1581,156 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 </ul>
 </section>
 
+<section id="gain-based-split-1" class="title-slide slide level1 center">
+<h1>Gain-based split</h1>
+<p>Consider these churn-prediction training records:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">customer_id</th>
+<th style="text-align: center;">auto_pay</th>
+<th style="text-align: center;">monthly_watch_hours</th>
+<th style="text-align: center;">tickets</th>
+<th style="text-align: center;">churn</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">C-1048</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C-1172</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C-1325</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C-1390</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C-1451</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C-1516</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C-1642</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C-1775</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C-1833</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<p>At the root: 4 <code>yes</code> and 5 <code>no</code>, so <span class="math inline">\(Gini(root)=0.494\)</span>.</p>
+</section>
+
+<section id="gain-based-split-2" class="title-slide slide level1 center">
+<h1>Gain-based split</h1>
+<p>A unique identifier can look like the best possible split under raw Gini gain:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Candidate split</th>
+<th style="text-align: left;">Children</th>
+<th style="text-align: center;">Weighted Gini</th>
+<th style="text-align: center;">Gini gain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>auto_pay</code></td>
+<td style="text-align: left;"><code>no</code>: 4 yes, 0 no; <code>yes</code>: 0 yes, 5 no</td>
+<td style="text-align: center;"><strong>0.000</strong></td>
+<td style="text-align: center;"><strong>0.494</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>monthly_watch_hours &lt;= 8</code></td>
+<td style="text-align: left;"><code>&lt;= 8</code>: 4 yes, 1 no; <code>&gt; 8</code>: 0 yes, 4 no</td>
+<td style="text-align: center;">0.178</td>
+<td style="text-align: center;">0.316</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>tickets &lt;= 1</code></td>
+<td style="text-align: left;"><code>&lt;= 1</code>: 1 yes, 5 no; <code>&gt; 1</code>: 3 yes, 0 no</td>
+<td style="text-align: center;">0.185</td>
+<td style="text-align: center;">0.309</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>customer_id</code></td>
+<td style="text-align: left;">9 one-record children, each pure</td>
+<td style="text-align: center;"><strong>0.000</strong></td>
+<td style="text-align: center;"><strong>0.494</strong></td>
+</tr>
+</tbody>
+</table>
+<p>For <code>customer_id</code>, every child has either 1 churner or 1 non-churner:</p>
+<p><span class="math display">\[
+Gini(customer\_id)=\sum_{i=1}^{9}\frac{1}{9}\cdot 0=0
+\]</span></p>
+<p>The score is perfect on training data, but the split only memorizes customer identifiers.</p>
+</section>
+
 <section id="split-based-on-splitinfo" class="title-slide slide level1 center">
 <h1>Split based on <span class="math inline">\(SplitInfo\)</span></h1>
-<p>To avoid the problem of spraying records into many tiny branches, C4.5 maximizes the <span class="math inline">\(GainRatio\)</span>.</p>
+<p>To avoid the problem of spraying records into many tiny branches, we can maximize the <span class="math inline">\(GainRatio\)</span>.</p>
 <ul>
 <li><span class="math inline">\(n\)</span> = number of child nodes</li>
 <li><span class="math inline">\(m\)</span> = number of records in parent node <span class="math inline">\(p\)</span></li>
 <li><span class="math inline">\(m_i\)</span> = number of records in child node <span class="math inline">\(i\)</span></li>
 </ul>
-<p><span class="math inline">\(GainRatio_{split}=\frac{Gain_{split}}{SplitInfo}\)</span></p>
 <p><span class="math inline">\(SplitInfo=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}\)</span></p>
-<p><span class="math inline">\(SplitInfo\)</span> is the entropy of the <strong>branch sizes</strong>, not of the class labels.</p>
-<p>The more a split fragments the records, the larger <span class="math inline">\(SplitInfo\)</span> becomes, reducing the <span class="math inline">\(GainRatio\)</span>.</p>
 <ul>
-<li>For example, assuming that each child node contains the same number of records, <span class="math inline">\(SplitInfo = log(n)\)</span>.</li>
-<li>Thus, among splits with similar gain, <span class="math inline">\(GainRatio\)</span> prefers the less fragmented one</li>
+<li><span class="math inline">\(SplitInfo\)</span> is the entropy of the <strong>branch sizes</strong>, not of the class labels.</li>
+</ul>
+<p><span class="math inline">\(GainRatio_{split}=\frac{Gain_{split}}{SplitInfo}\)</span></p>
+<ul>
+<li>The more a split fragments the records, the larger <span class="math inline">\(SplitInfo\)</span> becomes, reducing the <span class="math inline">\(GainRatio\)</span>.</li>
+<li>Thus, among splits with similar gain, <span class="math inline">\(GainRatio\)</span> prefers the less fragmented one.</li>
 </ul>
 </section>
 
@@ -1850,44 +1896,7 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 
 
 
-<section id="post-pruning-example" class="title-slide slide level1 center">
-<h1>Post-pruning example</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Class</th>
-<th style="text-align: center;">Instances</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">Class = Yes</td>
-<td style="text-align: center;">20</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Class = No</td>
-<td style="text-align: center;">10</td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/dt/image30.png"></p>
-<figcaption>Should I prune?</figcaption>
-</figure>
-</div>
-</div></div>
-<ul>
-<li>Training error (before split) = <span class="math inline">\(\frac{10}{30}\)</span></li>
-<li>Pessimistic error = <span class="math inline">\(\frac{10 + 0.5}{30} = \frac{10.5}{30}\)</span></li>
-<li>Training error (after split) = <span class="math inline">\(\frac{9}{30}\)</span></li>
-<li>Pessimistic error (after splitting) = <span class="math inline">\(\frac{9 + 4 \cdot 0.5}{30} = \frac{11}{30}\)</span></li>
-</ul>
-<p>PRUNE!</p>
-</section>
+
 
 
 
@@ -1907,7 +1916,7 @@ Gini(root)=1-\left(\frac{4}{9}\right)^2-\left(\frac{5}{9}\right)^2=0.494
 
 <section id="summary-when-should-i-use-a-decision-tree" class="title-slide slide level1 center">
 <h1>Summary: when should I use a decision tree?</h1>
-<p>Use a decision tree when you need an interpretable model expressed as rules, especially when non-linear interactions are likely and extensive preprocessing is undesirable.</p>
+<p>Use a decision tree when you need an interpretable model expressed as rules.</p>
 <p>Be careful when:</p>
 <ul>
 <li>Small data changes produce very different trees</li>
