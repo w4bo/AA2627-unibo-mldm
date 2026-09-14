@@ -224,7 +224,21 @@ $$
 
 Income overwhelms age, so the raw distance selects **B**.
 
-# After standardization, the answer changes
+# Normalization: standardization (forward reference to Mod II)
+
+Standardization converts each feature to:
+
+$$
+x'=\frac{x-\mu}{\sigma}
+$$
+
+- $\mu$ is the feature mean
+- $\sigma$ is the feature standard deviation
+- The transformed feature has mean 0 and standard deviation 1 on the training set
+
+Fit the scaler on the **training set only**.
+
+# After standardization, the answer changes 
 
 Suppose the training-set standard deviations are:
 
@@ -241,21 +255,7 @@ Standardized differences and distances become:
 
 After scaling, **A** is closer. Scaling gives each feature influence relative to its typical variation.
 
-# Standardization
-
-Standardization converts each feature to:
-
-$$
-x'=\frac{x-\mu}{\sigma}
-$$
-
-- $\mu$ is the feature mean
-- $\sigma$ is the feature standard deviation
-- The transformed feature has mean 0 and standard deviation 1 on the training set
-
-Fit the scaler on the **training set only**.
-
-# Min-max scaling
+# Min-max scaling (forward reference to Mod II)
 
 Min-max scaling converts each feature to:
 
@@ -303,15 +303,13 @@ model = Pipeline([
 
 The pipeline fits preprocessing only on the training folds during cross-validation.
 
-# Failure case: irrelevant features
+# Failure case: irrelevant features (forward reference to Mod II)
 
-Scaling fixes unequal units, but it does not remove useless dimensions.
-
-If we add many irrelevant features:
+Scaling fixes unequal units, but k-NN is sensitive to the number of features.
 
 - each feature contributes noise to the distance
+- irrelevant features can dominate the distance metric
 - truly similar records may appear far apart
-- prediction can degrade even after scaling
 
 k-NN benefits from feature selection, dimensionality reduction, or careful feature engineering.
 
