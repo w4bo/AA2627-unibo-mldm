@@ -542,6 +542,20 @@ dist(z,B)=\sqrt{20^2+500^2}\approx500.4
 <p>Income overwhelms age, so the raw distance selects <strong>B</strong>.</p>
 </section>
 
+<section id="normalization-standardization-forward-reference-to-mod-ii" class="title-slide slide level1 center">
+<h1>Normalization: standardization (forward reference to Mod II)</h1>
+<p>Standardization converts each feature to:</p>
+<p><span class="math display">\[
+x'=\frac{x-\mu}{\sigma}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\mu\)</span> is the feature mean</li>
+<li><span class="math inline">\(\sigma\)</span> is the feature standard deviation</li>
+<li>The transformed feature has mean 0 and standard deviation 1 on the training set</li>
+</ul>
+<p>Fit the scaler on the <strong>training set only</strong>.</p>
+</section>
+
 <section id="after-standardization-the-answer-changes" class="title-slide slide level1 center">
 <h1>After standardization, the answer changes</h1>
 <p>Suppose the training-set standard deviations are:</p>
@@ -578,22 +592,8 @@ dist(z,B)=\sqrt{20^2+500^2}\approx500.4
 <p>After scaling, <strong>A</strong> is closer. Scaling gives each feature influence relative to its typical variation.</p>
 </section>
 
-<section id="standardization" class="title-slide slide level1 center">
-<h1>Standardization</h1>
-<p>Standardization converts each feature to:</p>
-<p><span class="math display">\[
-x'=\frac{x-\mu}{\sigma}
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\mu\)</span> is the feature mean</li>
-<li><span class="math inline">\(\sigma\)</span> is the feature standard deviation</li>
-<li>The transformed feature has mean 0 and standard deviation 1 on the training set</li>
-</ul>
-<p>Fit the scaler on the <strong>training set only</strong>.</p>
-</section>
-
-<section id="min-max-scaling" class="title-slide slide level1 center">
-<h1>Min-max scaling</h1>
+<section id="min-max-scaling-forward-reference-to-mod-ii" class="title-slide slide level1 center">
+<h1>Min-max scaling (forward reference to Mod II)</h1>
 <p>Min-max scaling converts each feature to:</p>
 <p><span class="math display">\[
 x'=\frac{x-\min(x)}{\max(x)-\min(x)}
@@ -638,14 +638,13 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <p>The pipeline fits preprocessing only on the training folds during cross-validation.</p>
 </section>
 
-<section id="failure-case-irrelevant-features" class="title-slide slide level1 center">
-<h1>Failure case: irrelevant features</h1>
-<p>Scaling fixes unequal units, but it does not remove useless dimensions.</p>
-<p>If we add many irrelevant features:</p>
+<section id="failure-case-irrelevant-features-forward-reference-to-mod-ii" class="title-slide slide level1 center">
+<h1>Failure case: irrelevant features (forward reference to Mod II)</h1>
+<p>Scaling fixes unequal units, but k-NN is sensitive to the number of features.</p>
 <ul>
 <li>each feature contributes noise to the distance</li>
+<li>irrelevant features can dominate the distance metric</li>
 <li>truly similar records may appear far apart</li>
-<li>prediction can degrade even after scaling</li>
 </ul>
 <p>k-NN benefits from feature selection, dimensionality reduction, or careful feature engineering.</p>
 </section>
@@ -653,7 +652,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="a-neighborhood-inside-the-unit-hypercube" class="title-slide slide level1 center">
 <h1>A neighborhood inside the unit hypercube</h1>
 <p>The query is at the center, and “near” means within <span class="math inline">\(\pm0.1\)</span> on every feature.</p>
-<div id="318af9de" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
+<div id="3cf3a3d5" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -703,7 +702,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="average-distance-grows-with-dimensionality" class="title-slide slide level1 center">
 <h1>Average distance grows with dimensionality</h1>
 <p>For 1,000 points uniformly distributed in <span class="math inline">\([0,1]^{10}\)</span>, select one point and measure its average Euclidean distance from all the others while using the first 1 to 10 dimensions:</p>
-<div id="e703b340" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
+<div id="25b6bf04" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -718,7 +717,7 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <section id="local-neighborhoods-quickly-become-empty" class="title-slide slide level1 center">
 <h1>Local neighborhoods quickly become empty</h1>
 <p>For 1,000 uniformly distributed points, using a tolerance of <span class="math inline">\(\pm0.1\)</span> on every normalized feature:</p>
-<div id="88f18279" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
+<div id="a99deb39" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
