@@ -1,3 +1,11 @@
+## [1.0.32](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.31...1.0.32) (2026-09-14)
+
+### Bug Fixes
+
+* update slides ([465eba3](https://github.com/w4bo/AA2627-unibo-mldm/commit/465eba3dd2c82b4170588dc3d7203495dbdeb7ee))
+* update slides ([375c5de](https://github.com/w4bo/AA2627-unibo-mldm/commit/375c5de90ab8bb39cf3718ce9c25fb5f1b3a501b))
+* update slides ([886ec72](https://github.com/w4bo/AA2627-unibo-mldm/commit/886ec7289d9ed55fca87d3299a256b833293cc4b))
+
 ## [1.0.31](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.30...1.0.31) (2026-09-14)
 
 ### Dependency updates
