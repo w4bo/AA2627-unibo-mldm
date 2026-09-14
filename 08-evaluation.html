@@ -194,14 +194,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li>Algorithms learn patterns from training data</li>
 <li>Evaluation estimates whether those patterns will survive on future data</li>
-<li>Validation supports model selection and hyperparameter tuning</li>
 <li>The final test set estimates performance only after choices have been made</li>
 </ul>
 <p>The same evaluation vocabulary will return in decision trees, k-NN, neural networks, ensembles, and the final assignment.</p>
 </section>
 
-<section id="training-validation-and-test-sets" class="title-slide slide level1 center">
-<h1>Training, validation, and test sets</h1>
+<section id="training-and-test-sets" class="title-slide slide level1 center">
+<h1>Training, and test sets</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -222,11 +221,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>Reporting training performance as final performance</td>
 </tr>
 <tr class="even">
-<td><strong>Validation</strong></td>
-<td>Choose models, hyperparameters, thresholds, or preprocessing choices</td>
-<td>Reusing it until it becomes an implicit training set</td>
-</tr>
-<tr class="odd">
 <td><strong>Test</strong></td>
 <td>Estimate final generalization once</td>
 <td>Looking at it before the workflow is fixed</td>
@@ -467,69 +461,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 
 
-<section id="cross-validation" class="title-slide slide level1 center">
-<h1>Cross validation</h1>
-<ul>
-<li>Partition the records into <span class="math inline">\(k\)</span> folds of similar size</li>
-<li>For each fold:
-<ul>
-<li>train on the other <span class="math inline">\(k-1\)</span> folds</li>
-<li>evaluate on the held-out fold</li>
-</ul></li>
-<li>Cross-validation is often used for <strong>hyperparameter tuning</strong>:
-<ul>
-<li>repeat the same <span class="math inline">\(k\)</span>-fold procedure for each candidate configuration</li>
-<li>compare configurations by their average validation performance</li>
-<li>prefer configurations that perform well <strong>and</strong> have acceptable variability across folds</li>
-</ul></li>
-<li>The final test set is still kept aside and used only once, after the hyperparameters have been selected</li>
-</ul>
-</section>
-
-<section id="cross-validation-1" class="title-slide slide level1 center">
-<h1>Cross validation</h1>
-
-<img data-src="./img/cv/grid_search_cross_validation.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
-<li>CAUTION: cross-validation creates <span class="math inline">\(k\)</span> different classifiers
-<ul>
-<li>validation indicates whether the classifier type and its parameters are appropriate for the problem</li>
-</ul></li>
-<li>Built models can differ depending on the records in each training fold</li>
-</ul>
-</section>
-
-<section id="cross-validation-2" class="title-slide slide level1 center">
-<h1>Cross validation</h1>
-
-<img data-src="./img/cv/cross_validation_folds.svg" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
-<li>This gives <span class="math inline">\(k\)</span> performance values, one for each held-out fold</li>
-<li>Report the <strong>average</strong> performance to estimate how well the model configuration generalizes</li>
-<li>Also report the <strong>standard deviation</strong> across folds:
-<ul>
-<li>low standard deviation means the result is stable across different train/test splits</li>
-<li>high standard deviation means performance depends strongly on which records end up in the fold</li>
-</ul></li>
-</ul>
-</section>
-
-<section id="cross-validation-3" class="title-slide slide level1 center">
-<h1>Cross validation</h1>
-
-<img data-src="./img/cv/grid_search_workflow.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p></section>
-
-<section id="classification-errors" class="title-slide slide level1 center">
-<h1>Classification errors</h1>
-<ul>
-<li><strong>Training error:</strong> are mistakes that are made on the training set</li>
-<li><strong>Generalization error:</strong> errors are made on the test set (i.e., records that have not been trained on the system).</li>
-<li><strong>Underfitting:</strong> The model is too simple and does not allow a good classification of the training set or test set</li>
-<li><strong>Overfitting:</strong> The model is too complex, it allows a good classification of the training set, but a poor classification of the test set
-<ul>
-<li>The model fails to generalize because it is based on the specific peculiarities of the training set that are not found in the test set</li>
-</ul></li>
-</ul>
-</section>
-
 <section id="underfitting-and-overfitting" class="title-slide slide level1 center">
 <h1>Underfitting and overfitting</h1>
 <div class="columns">
@@ -580,6 +511,89 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 <p><strong>Rule:</strong> fit preprocessing and model choices inside the training/validation workflow, then evaluate once on the untouched test set.</p>
 </section>
+
+<section id="what-about-the-evaluation-of-model-hyperparameters" class="title-slide slide level1 center">
+<h1>What about the evaluation of model hyperparameters?</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Split</th>
+<th>Main use</th>
+<th>Typical mistake</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Training</strong></td>
+<td>Fit model parameters</td>
+<td>Reporting training performance as final performance</td>
+</tr>
+<tr class="even">
+<td><strong>Validation</strong></td>
+<td>Choose models, hyperparameters, thresholds, or preprocessing choices</td>
+<td>Reusing it until it becomes an implicit training set</td>
+</tr>
+<tr class="odd">
+<td><strong>Test</strong></td>
+<td>Estimate final generalization once</td>
+<td>Looking at it before the workflow is fixed</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="cross-validation" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Partition the records into <span class="math inline">\(k\)</span> folds of similar size</li>
+<li>For each fold:
+<ul>
+<li>train on the other <span class="math inline">\(k-1\)</span> folds</li>
+<li>evaluate on the held-out fold</li>
+</ul></li>
+<li>Cross-validation is often used for <strong>hyperparameter tuning</strong>:
+<ul>
+<li>repeat the same <span class="math inline">\(k\)</span>-fold procedure for each candidate configuration</li>
+<li>compare configurations by their average validation performance</li>
+<li>prefer configurations that perform well <strong>and</strong> have acceptable variability across folds</li>
+</ul></li>
+<li>The final test set is still kept aside and used only once, after the hyperparameters have been selected</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/cv/cross_validation_folds.svg"></p>
+<figcaption>Cross validation</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="cross-validation-1" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+
+<img data-src="./img/cv/grid_search_cross_validation.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
+<li>Cross-validation creates <span class="math inline">\(k\)</span> different classifiers</li>
+<li>Report the <strong>average</strong> performance to estimate how well the model configuration generalizes</li>
+<li>Also report the <strong>standard deviation</strong> across folds:
+<ul>
+<li>Low standard deviation means the result is stable across different train/test splits</li>
+<li>High standard deviation means performance depends strongly on which records end up in the fold</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="cross-validation-2" class="title-slide slide level1 center">
+<h1>Cross validation</h1>
+
+<img data-src="./img/cv/grid_search_workflow.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p></section>
 
 <section id="summary" class="title-slide slide level1 center">
 <h1>Summary</h1>
