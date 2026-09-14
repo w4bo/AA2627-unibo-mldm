@@ -1,3 +1,14 @@
+## [1.0.31](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.30...1.0.31) (2026-09-14)
+
+### Dependency updates
+
+* **deps:** update slides/refs digest to cf5d8d6 ([31587bd](https://github.com/w4bo/AA2627-unibo-mldm/commit/31587bd42c48321f88d1382fa87b79c2219c7e55))
+
+### Bug Fixes
+
+* update decktape version ([cd240c8](https://github.com/w4bo/AA2627-unibo-mldm/commit/cd240c8cd42981457fd11ffe677217cd1fff416f))
+* update ml ([ce025ef](https://github.com/w4bo/AA2627-unibo-mldm/commit/ce025ef3ab710eb485816cbaf77a646602d2501d))
+
 ## [1.0.30](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.29...1.0.30) (2026-09-14)
 
 ### Bug Fixes
