@@ -1,3 +1,10 @@
+## [1.0.29](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.28...1.0.29) (2026-09-14)
+
+### Bug Fixes
+
+* update the intro ([5c6ff14](https://github.com/w4bo/AA2627-unibo-mldm/commit/5c6ff14204c648b790874b695be2cea9d88c7673))
+* update the intro ([0a4bf17](https://github.com/w4bo/AA2627-unibo-mldm/commit/0a4bf175a90b2e7a6b26b38d28344737b67375bd))
+
 ## [1.0.28](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.27...1.0.28) (2026-09-11)
 
 ### Bug Fixes
