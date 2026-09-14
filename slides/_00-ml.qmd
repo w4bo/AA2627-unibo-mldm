@@ -1,3 +1,9 @@
+---
+jupyter: python3
+execute:
+  enabled: true
+---
+
 # AI is already changing technology, work, and society
 
 - [(Mar 2, 2026) Anthropic's AI model Claude gets popularity boost after US military feud](https://www.theguardian.com/technology/2026/mar/02/claude-anthropic-ai-pentagon)
@@ -96,7 +102,85 @@ A **pattern** is a compact, meaningful description of something recurring-or une
 
 # A decision rule is a compact pattern
 
-![Pattern: `IF income < k THEN reject ELSE accept`](img/00-ml/loan.svg)
+```{python}
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 9
+#| fig-height: 4.8
+#| dpi: 160
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(7)
+threshold = 55_000
+
+rejected_income = rng.normal(38_000, 10_000, 260)
+accepted_income = rng.normal(72_000, 14_000, 260)
+rejected_income = np.clip(rejected_income, 12_000, 105_000)
+accepted_income = np.clip(accepted_income, 12_000, 105_000)
+
+bins = np.arange(10_000, 111_000, 5_000)
+
+plt.rcParams.update({"font.size": 15})
+fig, ax = plt.subplots()
+
+ax.hist(
+    rejected_income,
+    bins=bins,
+    density=True,
+    alpha=0.55,
+    color="#D55E00",
+    label="rejected loans",
+)
+ax.hist(
+    accepted_income,
+    bins=bins,
+    density=True,
+    alpha=0.55,
+    color="#0072B2",
+    label="accepted loans",
+)
+
+ax.axvline(threshold, color="#333333", linewidth=2.5, linestyle="--")
+ax.annotate(
+    "income threshold k",
+    xy=(threshold, ax.get_ylim()[1] * 0.88),
+    xytext=(threshold + 7_000, ax.get_ylim()[1] * 0.92),
+    arrowprops={"arrowstyle": "->", "color": "#333333", "linewidth": 1.4},
+    color="#333333",
+)
+
+ax.text(
+    24_000,
+    ax.get_ylim()[1] * 0.78,
+    "IF income < k\nTHEN reject",
+    color="#8C2D04",
+    ha="center",
+    va="center",
+    weight="bold",
+)
+ax.text(
+    83_000,
+    ax.get_ylim()[1] * 0.78,
+    "ELSE accept",
+    color="#005A8B",
+    ha="center",
+    va="center",
+    weight="bold",
+)
+
+ax.set_xlabel("Income")
+ax.set_ylabel("Data density")
+ax.set_title("A simple rule separates most observations")
+ax.set_xticks([20_000, 40_000, 60_000, 80_000, 100_000])
+ax.set_xticklabels(["20K", "40K", "60K", "80K", "100K"])
+ax.spines[["top", "right"]].set_visible(False)
+ax.legend(frameon=False, loc="upper right")
+
+plt.tight_layout()
+```
 
 # Which tasks actually require data mining? {visibility="hidden"}
 
