@@ -1,3 +1,11 @@
+## [1.0.33](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.32...1.0.33) (2026-09-14)
+
+### Bug Fixes
+
+* update decktape version ([5b3d510](https://github.com/w4bo/AA2627-unibo-mldm/commit/5b3d5100d57c970df55e6256eb26c65863d26b20))
+* update notebook ([ffb53f1](https://github.com/w4bo/AA2627-unibo-mldm/commit/ffb53f1cad699b383ea7a4a611357a77b8c6baad))
+* update slides ([f21cd54](https://github.com/w4bo/AA2627-unibo-mldm/commit/f21cd54a325423cb55cba75bd2833e89e2767865))
+
 ## [1.0.32](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.31...1.0.32) (2026-09-14)
 
 ### Bug Fixes
