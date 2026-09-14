@@ -1,5 +1,8 @@
 ---
 subtitle: Decision Trees
+jupyter: python3
+execute:
+  enabled: true
 ---
 
 # Learning objectives
@@ -466,6 +469,85 @@ flowchart TD
 |     `return` root;
 | `end`;
 
+# Example
+
+```{python}
+#| echo: false
+import matplotlib.pyplot as plt
+import numpy as np
+
+red = np.array([
+    [0.10, 0.57],
+    [0.15, 0.92],
+    [0.30, 0.68],
+    [0.39, 0.52],
+    [0.45, 0.10],
+    [0.67, 0.25],
+    [0.92, 0.30],
+])
+
+blue = np.array([
+    [0.08, 0.40],
+    [0.10, 0.12],
+    [0.25, 0.20],
+    [0.35, 0.44],
+    [0.50, 0.38],
+    [0.58, 0.90],
+    [0.75, 0.80],
+    [0.89, 0.56],
+])
+
+fig, ax = plt.subplots(figsize=(7.2, 5.2))
+
+ax.scatter(
+    red[:, 0],
+    red[:, 1],
+    s=80,
+    facecolors="none",
+    edgecolors="#ff4d4d",
+    linewidths=1.8,
+    marker="o",
+)
+ax.scatter(
+    blue[:, 0],
+    blue[:, 1],
+    s=90,
+    facecolors="none",
+    edgecolors="#4d5cff",
+    linewidths=1.8,
+    marker="v",
+)
+
+split_x = 0.43
+split_y_left = 0.47
+split_y_right = 0.35
+
+ax.set_xlabel("x", fontsize=22)
+ax.set_ylabel("y", fontsize=22)
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
+ax.set_xticks(np.arange(0, 1.01, 0.1))
+ax.set_yticks(np.arange(0, 1.01, 0.1))
+ax.tick_params(direction="in", top=True, right=True)
+ax.set_aspect("equal", adjustable="box")
+for spine in ax.spines.values():
+    spine.set_linewidth(1.5)
+
+plt.show()
+```
+
+# Further remarks...
+
+Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.
+
+![Decision boundary parallel to the axes](img/dt/image12.png)
+
+# Further remarks...
+
+This split is not feasible with traditional decision trees
+
+![$X-Y = 1$](img/dt/3-Decision Tree_19.png)
+
 # Further remarks...
 
 Finding an optimal decision tree is an NP-Complete problem, but many heuristic algorithms are available and very efficient.
@@ -480,18 +562,6 @@ Decision trees are robust enough to handle strongly correlated attributes.
 
 - One of the two attributes will not be considered
 - It is also possible to try to discard one of the preprocessing attributes through appropriate feature selection techniques
-
-# Further remarks...
-
-Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.
-
-![Decision boundary parallel to the axes](img/dt/image12.png)
-
-# Further remarks...
-
-This split is not feasible with traditional decision trees
-
-![$X-Y = 1$](img/dt/3-Decision Tree_19.png)
 
 # Characteristic features {background-color="#121011"}
 
@@ -708,9 +778,6 @@ The gain of a split is the improvement from the parent to the children. **Higher
 
 * $Gain_{split} = meas(p) - Impurity_{split}$
 
-# Comparing impurity measures
-
-
 # How do we determine the best split value?
 
 Before splitting the churn training set, the root contains 4 `yes` (churn) and 5 `no` (not churn) records.
@@ -855,14 +922,6 @@ Gini(customer\_id)=\sum_{i=1}^{9}\frac{1}{9}\cdot 0=0
 $$
 
 The score is perfect on training data, but the split only memorizes customer identifiers.
-
-# Gain-based split
-
-| Candidate split | Children | Weighted Gini | Gini gain |
-| :- | :- | :-: | :-: |
-| `auto_pay` | `no`: 4 yes, 0 no; `yes`: 0 yes, 5 no | **0.000** | **0.494** |
-| `monthly_watch_hours <= 8` | `<= 8`: 4 yes, 1 no; `> 8`: 0 yes, 4 no | 0.178 | 0.316 |
-| `tickets <= 1` | `<= 1`: 1 yes, 5 no; `> 1`: 3 yes, 0 no | 0.185 | 0.309 |
 
 # Split based on $SplitInfo$
 

@@ -129,13 +129,13 @@ Precision and recall answer different questions about the positive class:
 
 Precision asks: **when the model predicts positive, how often is it correct?**
 
-Prefer higher precision when a positive prediction triggers an expensive, disruptive, or irreversible action.
+- Prefer higher precision (few false positives) when a positive prediction triggers a disruptive or irreversible action.
 
 Examples:
 
-- A spam filter that automatically deletes messages
-- A fraud system that automatically blocks card payments
-- A moderation system that automatically removes content
+- A spam filter that automatically deletes messages.
+- A fraud system that automatically blocks card payments.
+- A moderation system that automatically removes content.
 
 These systems should hesitate before taking positive action against a negative case.
 
@@ -143,7 +143,7 @@ These systems should hesitate before taking positive action against a negative c
 
 Recall asks: **of all real positive cases, how many did the model find?**
 
-Prefer higher recall when missing a positive case creates danger or a major loss.
+- Prefer higher (few false negatives) recall when missing a positive case creates danger or a major loss.
 
 Examples:
 
@@ -151,18 +151,20 @@ Examples:
 - Fraud alerts sent to a human investigator
 - Fire, intrusion, or safety-defect detection
 
-The same domain can differ: **automatic fraud blocking favors precision**, while a **fraud-review queue favors recall**. Choose the metric and threshold from the consequences of FP and FN.
+The same domain can differ: **automatic fraud blocking favors precision**, while a **fraud-review queue favors recall**.
+
+- Choose the metric and threshold from the consequences of FP and FN.
 
 # Precision and recall
 
 ::::{.columns}
 :::{.column width=50%}
-$Precision = 1$ if there are no false positives: every predicted positive is actually positive.
+$Precision = 1$ if no FP: every predicted positive is actually positive.
 
 ![$Precision = 1$](./img/dt/image25.png)
 :::
 :::{.column width=50%}
-$Recall = 1$ if there are no false negatives: every actual positive is detected.
+$Recall = 1$ if no FN: every actual positive is detected.
 
 ![$Recall = 1$](./img/dt/image26.png)
 :::
@@ -396,7 +398,7 @@ Common examples:
 - The final test set is still kept aside and used only once, after the hyperparameters have been selected
 :::
 :::{.column width=50%}
-![Cross validation](./img/cv/cross_validation_folds.svg)
+![Cross validation](./img/cv/grid_search_cross_validation.png)
 :::
 ::::
 
