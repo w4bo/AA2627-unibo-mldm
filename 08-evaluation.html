@@ -390,12 +390,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="prioritize-precision-when-false-positives-are-costly" class="title-slide slide level1 center">
 <h1>Prioritize precision when false positives are costly</h1>
 <p>Precision asks: <strong>when the model predicts positive, how often is it correct?</strong></p>
-<p>Prefer higher precision when a positive prediction triggers an expensive, disruptive, or irreversible action.</p>
+<ul>
+<li>Prefer higher precision (few false positives) when a positive prediction triggers a disruptive or irreversible action.</li>
+</ul>
 <p>Examples:</p>
 <ul>
-<li>A spam filter that automatically deletes messages</li>
-<li>A fraud system that automatically blocks card payments</li>
-<li>A moderation system that automatically removes content</li>
+<li>A spam filter that automatically deletes messages.</li>
+<li>A fraud system that automatically blocks card payments.</li>
+<li>A moderation system that automatically removes content.</li>
 </ul>
 <p>These systems should hesitate before taking positive action against a negative case.</p>
 </section>
@@ -403,21 +405,26 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="prioritize-recall-when-false-negatives-are-costly" class="title-slide slide level1 center">
 <h1>Prioritize recall when false negatives are costly</h1>
 <p>Recall asks: <strong>of all real positive cases, how many did the model find?</strong></p>
-<p>Prefer higher recall when missing a positive case creates danger or a major loss.</p>
+<ul>
+<li>Prefer higher (few false negatives) recall when missing a positive case creates danger or a major loss.</li>
+</ul>
 <p>Examples:</p>
 <ul>
 <li>Cancer or infectious-disease screening</li>
 <li>Fraud alerts sent to a human investigator</li>
 <li>Fire, intrusion, or safety-defect detection</li>
 </ul>
-<p>The same domain can differ: <strong>automatic fraud blocking favors precision</strong>, while a <strong>fraud-review queue favors recall</strong>. Choose the metric and threshold from the consequences of FP and FN.</p>
+<p>The same domain can differ: <strong>automatic fraud blocking favors precision</strong>, while a <strong>fraud-review queue favors recall</strong>.</p>
+<ul>
+<li>Choose the metric and threshold from the consequences of FP and FN.</li>
+</ul>
 </section>
 
 <section id="precision-and-recall-1" class="title-slide slide level1 center">
 <h1>Precision and recall</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><span class="math inline">\(Precision = 1\)</span> if there are no false positives: every predicted positive is actually positive.</p>
+<p><span class="math inline">\(Precision = 1\)</span> if no FP: every predicted positive is actually positive.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image25.png"></p>
@@ -425,7 +432,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
-<p><span class="math inline">\(Recall = 1\)</span> if there are no false negatives: every actual positive is detected.</p>
+<p><span class="math inline">\(Recall = 1\)</span> if no FN: every actual positive is detected.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/dt/image26.png"></p>
@@ -569,7 +576,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="./img/cv/cross_validation_folds.svg"></p>
+<p><img data-src="./img/cv/grid_search_cross_validation.png"></p>
 <figcaption>Cross validation</figcaption>
 </figure>
 </div>

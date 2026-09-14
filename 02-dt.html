@@ -1155,7 +1155,32 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <code>end</code>;</div>
 </section>
 
+<section id="example" class="title-slide slide level1 center">
+<h1>Example</h1>
+<div id="25ed63c5" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="02-dt_files/figure-revealjs/cell-2-output-1.png" width="475" height="461"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
 <section id="further-remarks" class="title-slide slide level1 center">
+<h1>Further remarks…</h1>
+<p>Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.</p>
+
+<img data-src="img/dt/image12.png" class="r-stretch quarto-figure-center"><p class="caption">Decision boundary parallel to the axes</p></section>
+
+<section id="further-remarks-1" class="title-slide slide level1 center">
+<h1>Further remarks…</h1>
+<p>This split is not feasible with traditional decision trees</p>
+
+<img data-src="img/dt/3-Decision%20Tree_19.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(X-Y = 1\)</span></p></section>
+
+<section id="further-remarks-2" class="title-slide slide level1 center">
 <h1>Further remarks…</h1>
 <p>Finding an optimal decision tree is an NP-Complete problem, but many heuristic algorithms are available and very efficient.</p>
 <ul>
@@ -1171,18 +1196,6 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <li>It is also possible to try to discard one of the preprocessing attributes through appropriate feature selection techniques</li>
 </ul>
 </section>
-
-<section id="further-remarks-1" class="title-slide slide level1 center">
-<h1>Further remarks…</h1>
-<p>Decision tree expressivity is limited to the possibility of performing search space partitions with conditions that involve only one attribute at a time.</p>
-
-<img data-src="img/dt/image12.png" class="r-stretch quarto-figure-center"><p class="caption">Decision boundary parallel to the axes</p></section>
-
-<section id="further-remarks-2" class="title-slide slide level1 center">
-<h1>Further remarks…</h1>
-<p>This split is not feasible with traditional decision trees</p>
-
-<img data-src="img/dt/3-Decision%20Tree_19.png" class="r-stretch quarto-figure-center"><p class="caption"><span class="math inline">\(X-Y = 1\)</span></p></section>
 
 <section id="characteristic-features" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Characteristic features</h1>
@@ -1468,11 +1481,6 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 </section>
 
-<section id="comparing-impurity-measures" class="title-slide slide level1 center">
-<h1>Comparing impurity measures</h1>
-
-</section>
-
 <section id="how-do-we-determine-the-best-split-value" class="title-slide slide level1 center">
 <h1>How do we determine the best split value?</h1>
 <p>Before splitting the churn training set, the root contains 4 <code>yes</code> (churn) and 5 <code>no</code> (not churn) records.</p>
@@ -1713,46 +1721,6 @@ Answer
 Gini(customer\_id)=\sum_{i=1}^{9}\frac{1}{9}\cdot 0=0
 \]</span></p>
 <p>The score is perfect on training data, but the split only memorizes customer identifiers.</p>
-</section>
-
-<section id="gain-based-split-3" class="title-slide slide level1 center">
-<h1>Gain-based split</h1>
-<table class="caption-top">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 30%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Candidate split</th>
-<th style="text-align: left;">Children</th>
-<th style="text-align: center;">Weighted Gini</th>
-<th style="text-align: center;">Gini gain</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>auto_pay</code></td>
-<td style="text-align: left;"><code>no</code>: 4 yes, 0 no; <code>yes</code>: 0 yes, 5 no</td>
-<td style="text-align: center;"><strong>0.000</strong></td>
-<td style="text-align: center;"><strong>0.494</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>monthly_watch_hours &lt;= 8</code></td>
-<td style="text-align: left;"><code>&lt;= 8</code>: 4 yes, 1 no; <code>&gt; 8</code>: 0 yes, 4 no</td>
-<td style="text-align: center;">0.178</td>
-<td style="text-align: center;">0.316</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>tickets &lt;= 1</code></td>
-<td style="text-align: left;"><code>&lt;= 1</code>: 1 yes, 5 no; <code>&gt; 1</code>: 3 yes, 0 no</td>
-<td style="text-align: center;">0.185</td>
-<td style="text-align: center;">0.309</td>
-</tr>
-</tbody>
-</table>
 </section>
 
 <section id="split-based-on-splitinfo" class="title-slide slide level1 center">
