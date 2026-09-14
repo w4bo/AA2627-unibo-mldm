@@ -116,29 +116,99 @@ import matplotlib.pyplot as plt
 rng = np.random.default_rng(7)
 threshold = 55_000
 
-rejected_income = rng.normal(38_000, 10_000, 260)
-accepted_income = rng.normal(72_000, 14_000, 260)
-rejected_income = np.clip(rejected_income, 12_000, 105_000)
-accepted_income = np.clip(accepted_income, 12_000, 105_000)
+rejected_income = rng.normal(38_000, 8_500, 22)
+accepted_income = rng.normal(73_000, 11_000, 22)
+rejected_income = np.clip(rejected_income, 15_000, threshold - 2_000)
+accepted_income = np.clip(accepted_income, threshold + 2_000, 105_000)
 
-bins = np.arange(10_000, 111_000, 5_000)
+rejected_loan = rng.normal(145_000, 45_000, rejected_income.size)
+accepted_loan = rng.normal(145_000, 45_000, accepted_income.size)
+rejected_loan = np.clip(rejected_loan, 40_000, 260_000)
+accepted_loan = np.clip(accepted_loan, 40_000, 260_000)
 
 plt.rcParams.update({"font.size": 15})
 fig, ax = plt.subplots()
 
-ax.hist(
+ax.scatter(
     rejected_income,
-    bins=bins,
-    density=True,
-    alpha=0.55,
+    rejected_loan,
+    marker="x",
+    s=90,
+    linewidths=2.2,
     color="#D55E00",
     label="rejected loans",
 )
-ax.hist(
+ax.scatter(
     accepted_income,
-    bins=bins,
-    density=True,
-    alpha=0.55,
+    accepted_loan,
+    marker="o",
+    s=90,
+    facecolors="none",
+    linewidths=2.2,
+    color="#0072B2",
+    label="accepted loans",
+)
+
+ax.set_xlabel("Income ($)")
+ax.set_ylabel("Loan size ($)")
+ax.set_xlim(10_000, 110_000)
+ax.set_ylim(30_000, 275_000)
+ax.set_xticks([20_000, 40_000, 60_000, 80_000, 100_000])
+ax.set_xticklabels(["20K", "40K", "60K", "80K", "100K"])
+ax.set_yticks([50_000, 100_000, 150_000, 200_000, 250_000])
+ax.set_yticklabels(["50K", "100K", "150K", "200K", "250K"])
+ax.grid(color="#dddddd", linewidth=0.8, alpha=0.8)
+ax.spines[["top", "right"]].set_visible(False)
+ax.legend(frameon=False, loc="upper right")
+
+plt.tight_layout()
+```
+
+# A decision rule is a compact pattern
+
+```{python}
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 9
+#| fig-height: 4.8
+#| dpi: 160
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(7)
+threshold = 55_000
+
+rejected_income = rng.normal(38_000, 8_500, 22)
+accepted_income = rng.normal(73_000, 11_000, 22)
+rejected_income = np.clip(rejected_income, 15_000, threshold - 2_000)
+accepted_income = np.clip(accepted_income, threshold + 2_000, 105_000)
+
+rejected_loan = rng.normal(145_000, 45_000, rejected_income.size)
+accepted_loan = rng.normal(145_000, 45_000, accepted_income.size)
+rejected_loan = np.clip(rejected_loan, 40_000, 260_000)
+accepted_loan = np.clip(accepted_loan, 40_000, 260_000)
+
+plt.rcParams.update({"font.size": 15})
+fig, ax = plt.subplots()
+
+ax.scatter(
+    rejected_income,
+    rejected_loan,
+    marker="x",
+    s=90,
+    linewidths=2.2,
+    color="#D55E00",
+    label="rejected loans",
+)
+ax.scatter(
+    accepted_income,
+    accepted_loan,
+    marker="o",
+    s=90,
+    facecolors="none",
+    linewidths=2.2,
     color="#0072B2",
     label="accepted loans",
 )
@@ -146,15 +216,15 @@ ax.hist(
 ax.axvline(threshold, color="#333333", linewidth=2.5, linestyle="--")
 ax.annotate(
     "income threshold k",
-    xy=(threshold, ax.get_ylim()[1] * 0.88),
-    xytext=(threshold + 7_000, ax.get_ylim()[1] * 0.92),
+    xy=(threshold, 250_000),
+    xytext=(threshold + 8_000, 250_000),
     arrowprops={"arrowstyle": "->", "color": "#333333", "linewidth": 1.4},
     color="#333333",
 )
 
 ax.text(
-    24_000,
-    ax.get_ylim()[1] * 0.78,
+    31_000,
+    238_000,
     "IF income < k\nTHEN reject",
     color="#8C2D04",
     ha="center",
@@ -163,7 +233,7 @@ ax.text(
 )
 ax.text(
     83_000,
-    ax.get_ylim()[1] * 0.78,
+    238_000,
     "ELSE accept",
     color="#005A8B",
     ha="center",
@@ -171,11 +241,17 @@ ax.text(
     weight="bold",
 )
 
-ax.set_xlabel("Income")
-ax.set_ylabel("Data density")
-ax.set_title("A simple rule separates most observations")
+
+ax.set_xlabel("Income ($)")
+ax.set_ylabel("Loan size ($)")
+ax.set_title("The rule ignores loan size and splits on income")
+ax.set_xlim(10_000, 110_000)
+ax.set_ylim(30_000, 275_000)
 ax.set_xticks([20_000, 40_000, 60_000, 80_000, 100_000])
 ax.set_xticklabels(["20K", "40K", "60K", "80K", "100K"])
+ax.set_yticks([50_000, 100_000, 150_000, 200_000, 250_000])
+ax.set_yticklabels(["50K", "100K", "150K", "200K", "250K"])
+ax.grid(color="#dddddd", linewidth=0.8, alpha=0.8)
 ax.spines[["top", "right"]].set_visible(False)
 ax.legend(frameon=False, loc="upper right")
 

@@ -138,13 +138,16 @@ Predicted class
 
 ::::{.columns}
 :::{.column width=60%}
-Decision trees solve difficult classification problems through sequences of simpler questions.
+Decision trees solve classification problems through sequences of simpler questions.
 
-- Each internal node asks one question about one feature:
-    - *which question best separates customers who churn from those who stay?*
+- *Which question best separates customers who churn from those who stay?*
+
+:::{.fragment}
+- Each internal node asks one question about one feature
 - Each answer restricts the set of possible records
 - A root-to-leaf path behaves like an **if-then rule**
 - Training searches for questions that make the resulting groups as pure as possible
+:::
 
 :::
 :::{.column width=40%}
@@ -395,12 +398,12 @@ Different issues have to be addressed.
 :::{.column width=85%}
 Recursive approach that progressively subdivides a set of $D_t$ records into pure record sets
 
-- Let $D_t=\{x_1, ..., x_k\}$ be the set of records of the training set corresponding to $node_t$ and $y_t = \{y_1, ..., y_k\}$ the possible class labels
-- If $D_t$
+- Let $D_t=\{x_1, ..., x_k\}$ be the records of the training set corresponding to $node_t$ and $y_t = \{y_1, ..., y_k\}$ the possible class labels
+- Apply the current procedure for each subset recursively, if $D_t$
     - Contains records of the $y_j$ class only, then $node_t$ is a leaf with label $y_j$
     - Is an empty set, then $node_t$ is a leaf node to which a parent node class is assigned
     - Contains records of several classes, we need an _attribute_ and a _split policy_ to partition them
-- Apply the current procedure for each subset recursively
+
 :::
 :::{.column width=15%}
 ```{mermaid}
@@ -530,7 +533,9 @@ flowchart TD
 
 :::
 :::{.column width=50%}
-*Binary split*: creates two partitions only. The attribute value that optimally splits the dataset must be found.
+*Binary split*: creates two partitions only.
+
+- The attribute value that optimally splits the dataset must be found.
 
 ```{mermaid}
 %%| echo: false
@@ -573,7 +578,9 @@ flowchart TD
 ```
 :::
 :::{.column width=50%}
-*Binary split*: creates two partitions only. The attribute value that optimally splits the dataset must be found.
+*Binary split*: creates two partitions only.
+
+- The attribute value that optimally splits the dataset must be found.
 
 ```{mermaid}
 %%| echo: false
@@ -601,7 +608,9 @@ flowchart TD
 
 ::::{.columns}
 :::{.column width=50%}
-*N-ary split*: The split condition can be expressed as a Boolean test that results in multiple ranges of values. The algorithm must consider the entire possible range of values as possible split points
+*N-ary split*: The split condition can be expressed as a Boolean test that results in multiple ranges of values.
+
+- The algorithm must consider the entire possible range of values as possible split points
 
 ```{mermaid}
 %%| echo: false
@@ -616,7 +625,9 @@ flowchart TD
 ```
 :::
 :::{.column width=50%}
-*Binary split*: The split condition can be expressed as a binary comparison test. The algorithm must consider all values as possible split points
+*Binary split*: The split condition can be expressed as a binary comparison test.
+
+- The algorithm must consider all values as possible split points
 
 ```{mermaid}
 %%| echo: false
@@ -630,11 +641,9 @@ flowchart TD
 :::
 ::::
 
-# Splitting *continuous* attributes
-
 A discretization technique can be used to manage the complexity of the search for optimal split points.
 
-- **Static:** discretization takes place only once before applying the algorithm
+- **Static:** discretization takes place only once before applying the algorithm.
 - **Dynamic:** discretization takes place at each recursion step by exploiting information about the distribution of input data to the $D_t$ node.
 
 # Characteristic features {background-color="#121011"}
@@ -666,18 +675,26 @@ The split criterion must allow you to determine more pure classes. It needs a me
 
 # Impurity measures
 
+::::{.columns}
+:::{.column width=60%}
 Given a parent node $p$ with records belonging to $k$ classes and a candidate partition into $n$ child nodes:
 
 * $m$ = number of records in parent node $p$
 * $m_i$ = number of records in child node $i$
-
-**ATTENTION: do not confuse the number of classes ($k$) and of the child nodes ($n$)**
 
 Several indices can be adopted to measure the impurity of one node $i$.
 
 * $Gini(i) = 1 - \sum_{j=1}^k p(j | i)^2$ (adopted in CART, SLIQ, and SPRINT)
 * $Entropy(i) = - \sum_{j=1}^k p(j | i) log(p(j | i))$ (adopted in ID3 and C4.5)
 * $Misclassification~Error(i) = 1 - max_{j=1,\ldots,k} p(j|i)$
+
+:::
+:::{.column width=40%}
+![Impurity measures behavior for a two-class problem](img/dt/3-Decision Tree_48.png)
+:::
+::::
+
+# Impurity measures
 
 The impurity of the whole split is the weighted average of the child impurities. **Lower is better.**
 
@@ -689,7 +706,6 @@ The gain of a split is the improvement from the parent to the children. **Higher
 
 # Comparing impurity measures
 
-![Impurity measures behavior for a two-class problem](img/dt/3-Decision Tree_48.png)
 
 # How do we determine the best split value?
 
@@ -715,11 +731,13 @@ The best root split is `auto_pay` because it creates the purest child nodes.
 
 ![](./img/dt/image21.png)
 
+<summary>Answers</summary>
 - $Gini(N3) = 1 - (\frac{5}{7})^2 - (\frac{2}{7})^2 = 0.408$
 - $Gini(N4) = 1 - (\frac{1}{5})^2 - (\frac{4}{5})^2 = 0.320$
 - $Impurity= \frac{7}{12} \cdot 0.408 + \frac{5}{12} \cdot 0.320= 0.371$
+</details>
 
-# Computing Gini for *categorical* attributes
+# Computing Gini for *categorical* attributes {visibility="hidden"}
 
 It is usually more efficient to create a "count matrix" for each candidate split:
 
@@ -781,8 +799,6 @@ A more efficient solution is to:
 
 ![Optimizing the split](./img/dt/image22.png)
 
-Further optimizations?
-
 # Gain-based split
 
 Using impurity measures such as Gini and Entropy requires comparing how much each split reduces impurity.
@@ -798,24 +814,59 @@ However, maximizing raw $Gain$ can favor attributes with many distinct values.
 - Splitting customers by a unique `customer_id` would create one child per customer
 - Each child would be perfectly pure, but the rule would not generalize to future customers
 
+# Gain-based split
+
+Consider these churn-prediction training records:
+
+| customer_id | auto_pay | monthly_watch_hours | tickets | churn |
+| :- | :-: | :-: | :-: | :-: |
+| C-1048 | no | 3 | 3 | yes |
+| C-1172 | no | 5 | 2 | yes |
+| C-1325 | no | 6 | 4 | yes |
+| C-1390 | no | 8 | 2 | yes |
+| C-1451 | yes | 7 | 1 | no |
+| C-1516 | yes | 10 | 1 | no |
+| C-1642 | yes | 12 | 0 | no |
+| C-1775 | yes | 14 | 1 | no |
+| C-1833 | yes | 16 | 0 | no |
+
+At the root: 4 `yes` and 5 `no`, so $Gini(root)=0.494$.
+
+# Gain-based split
+
+A unique identifier can look like the best possible split under raw Gini gain:
+
+| Candidate split | Children | Weighted Gini | Gini gain |
+| :- | :- | :-: | :-: |
+| `auto_pay` | `no`: 4 yes, 0 no; `yes`: 0 yes, 5 no | **0.000** | **0.494** |
+| `monthly_watch_hours <= 8` | `<= 8`: 4 yes, 1 no; `> 8`: 0 yes, 4 no | 0.178 | 0.316 |
+| `tickets <= 1` | `<= 1`: 1 yes, 5 no; `> 1`: 3 yes, 0 no | 0.185 | 0.309 |
+| `customer_id` | 9 one-record children, each pure | **0.000** | **0.494** |
+
+For `customer_id`, every child has either 1 churner or 1 non-churner:
+
+$$
+Gini(customer\_id)=\sum_{i=1}^{9}\frac{1}{9}\cdot 0=0
+$$
+
+The score is perfect on training data, but the split only memorizes customer identifiers.
+
 # Split based on $SplitInfo$
 
-To avoid the problem of spraying records into many tiny branches, C4.5 maximizes the $GainRatio$.
+To avoid the problem of spraying records into many tiny branches, we can maximize the $GainRatio$.
 
 - $n$ = number of child nodes
 - $m$ = number of records in parent node $p$
 - $m_i$ = number of records in child node $i$
 
-$GainRatio_{split}=\frac{Gain_{split}}{SplitInfo}$
-
 $SplitInfo=-\sum_{i=1}^n\frac{m_i}{m}log\frac{m_i}{m}$
 
-$SplitInfo$ is the entropy of the **branch sizes**, not of the class labels.
+- $SplitInfo$ is the entropy of the **branch sizes**, not of the class labels.
 
-The more a split fragments the records, the larger $SplitInfo$ becomes, reducing the $GainRatio$.
+$GainRatio_{split}=\frac{Gain_{split}}{SplitInfo}$
 
-- For example, assuming that each child node contains the same number of records, $SplitInfo = log(n)$.
-- Thus, among splits with similar gain, $GainRatio$ prefers the less fragmented one
+- The more a split fragments the records, the larger $SplitInfo$ becomes, reducing the $GainRatio$.
+- Thus, among splits with similar gain, $GainRatio$ prefers the less fragmented one.
 
 # Split based on $SplitInfo$
 
@@ -989,7 +1040,7 @@ $E(T)=\frac{\sum_{i=1}^k e(t_i)+\Sigma(t_i)}{\sum_{i=1}^k n(t_i)}$
 
 For binary trees, a penalty equal to 0.5 implies that a node should always be expanded into the two child nodes if it improves the classification of at least one record.
 
-# Post-pruning example
+# Post-pruning example {visibility="hidden"}
 
 ::::{.columns}
 :::{.column width=50%}
@@ -1059,7 +1110,7 @@ Widely used decision-tree algorithm. It extends ID3 and Hunt's algorithm.
 
 # Summary: when should I use a decision tree?
 
-Use a decision tree when you need an interpretable model expressed as rules, especially when non-linear interactions are likely and extensive preprocessing is undesirable.
+Use a decision tree when you need an interpretable model expressed as rules.
 
 Be careful when:
 
