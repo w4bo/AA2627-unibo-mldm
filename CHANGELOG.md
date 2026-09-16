@@ -1,3 +1,18 @@
+## [1.0.35](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.34...1.0.35) (2026-09-16)
+
+### Dependency updates
+
+* **deps:** update slides/refs digest to cf5d8d6 ([07a6436](https://github.com/w4bo/AA2627-unibo-mldm/commit/07a6436adbab54568241db18ed9628f9b0f710ae))
+
+### Bug Fixes
+
+* update 01-ml with better charts and examples ([f2cac9c](https://github.com/w4bo/AA2627-unibo-mldm/commit/f2cac9c1190dbbcd2513e7e3f24121a4f20f313d))
+* update 08-evaluation with better examples ([38b1a7c](https://github.com/w4bo/AA2627-unibo-mldm/commit/38b1a7c838ec1edb8db1267c5340139007568ca8))
+* update knn ([97f44ba](https://github.com/w4bo/AA2627-unibo-mldm/commit/97f44ba8a4b41518e3656c17506a11ff1bd4b307))
+* update knn ([d3d0b1c](https://github.com/w4bo/AA2627-unibo-mldm/commit/d3d0b1c23f8dc317e964db5d44eba609f9137da5))
+* update knn ([37a01fe](https://github.com/w4bo/AA2627-unibo-mldm/commit/37a01fe4dbf84735ce4ca43989bfea60c0f65218))
+* update knn ([a99de1c](https://github.com/w4bo/AA2627-unibo-mldm/commit/a99de1cc3c580d30b8ab952b92393d6996733954))
+
 ## [1.0.34](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.33...1.0.34) (2026-09-15)
 
 ### Dependency updates
