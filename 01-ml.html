@@ -302,7 +302,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="a-decision-rule-is-a-compact-pattern" class="title-slide slide level1 center">
 <h1>A decision rule is a compact pattern</h1>
-<div id="e8b46abe" class="cell" data-dpi="160" data-fig-height="4.8" data-fig-width="9" data-execution_count="1">
+<div id="74faeaed" class="cell" data-dpi="160" data-fig-height="4.8" data-fig-width="9" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -315,7 +315,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="a-decision-rule-is-a-compact-pattern-1" class="title-slide slide level1 center">
 <h1>A decision rule is a compact pattern</h1>
-<div id="2428f6dd" class="cell" data-dpi="160" data-fig-height="4.8" data-fig-width="9" data-execution_count="2">
+<div id="cb2b5996" class="cell" data-dpi="160" data-fig-height="4.8" data-fig-width="9" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -432,6 +432,36 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img src="./img/00-ml/ml3.svg" class="center-img r-stretch"></section>
 
+<section id="what-are-the-limits-of-classic-programming" class="title-slide slide level1 center">
+<h1>What are the limits of classic programming?</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Image (input/training features)</th>
+<th style="text-align: center;">Label (cat?)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img data-src="img/00-ml/cat1.jpg"></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img data-src="img/00-ml/cat2.jpg"></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img data-src="img/00-ml/dog1.jpg"></td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img data-src="img/00-ml/dog2.jpg"></td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table>
+</section>
+
 <section id="machine-learning-derives-decision-logic-from-examples" class="title-slide slide level1 center">
 <h1>Machine learning derives decision logic from examples</h1>
 
@@ -454,6 +484,102 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img data-src="./img/remote/xkcd-machine-learning.png" class="r-stretch quarto-figure-center"><p class="caption">What is machine learning?</p></section>
 
+<section id="the-data-type-determines-the-learning-task" class="title-slide slide level1 center">
+<h1>The data type determines the learning task</h1>
+
+</section>
+
+<section id="unstructured-data-is-unorganized-and-does-not-follow-a-predefined-schema" class="title-slide slide level1 center">
+<h1>Unstructured data is unorganized and does not follow a predefined schema</h1>
+<p>Examples include text, images, and audio files.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Intersection_over_Union_-_object_detection_bounding_boxes.jpg?utm_source=en.wikipedia.org&amp;utm_campaign=imageinfo&amp;utm_content=thumbnail_unscaled"></p>
+<figcaption>Computer vision</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Entity_Linking_-_Example_of_pipeline.png/3840px-Entity_Linking_-_Example_of_pipeline.png?utm_source=en.wikipedia.org&amp;utm_campaign=imageinfo&amp;utm_content=thumbnail"></p>
+<figcaption>Natural language processing</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="structured-data-is-organized-in-a-table-with-rows-and-columns" class="title-slide slide level1 center">
+<h1>Structured data is organized in a table with rows and columns</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>A <strong>dataset</strong> is a collection (e.g., a table) of records:</p>
+<ul>
+<li>Each record (aka instance, example, or observation) has a set of <strong>features</strong> (aka attributes, or variables) that describe it (e.g., <code>months_subscribed</code>)</li>
+<li>During training, one feature can provide the known <strong>class</strong> or <strong>label</strong> (e.g., <code>churn</code>)</li>
+<li>The schema of a dataset is the set of features that defines the structure of the data (e.g., <code>months_subscribed</code>, <code>monthly_watch_hours</code>, <code>churn</code>)</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><code>months_subscribed</code></th>
+<th style="text-align: center;"><code>monthly_watch_hours</code></th>
+<th style="text-align: center;"><code>churn</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</section>
+
 <section id="the-task-determines-the-learning-setup" class="title-slide slide level1 center">
 <h1>The task determines the learning setup</h1>
 
@@ -462,16 +588,300 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="three-learning-setups-organize-the-field" class="title-slide slide level1 center" data-background-color="#121011">
 <h1>Three learning setups organize the field</h1>
 <ul>
-<li><strong>Supervised Learning</strong>: models are trained using labeled data to learn a mapping from inputs to labels</li>
+<li><strong>Supervised Learning</strong>: learn the program/model that binds a label to the training features</li>
 <li><strong>Unsupervised Learning</strong>: algorithms find patterns, structures, and insights in unlabeled data without predefined answers</li>
 <li><strong>Reinforcement Learning</strong>: an agent improves its decisions by interacting with an environment and learning from feedback</li>
 </ul>
 </section>
 
+<section id="the-supervised-learning-workflow" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title">The supervised learning workflow</h1>
+<p>Goal:</p>
+<ul>
+<li>Learn a <strong>model</strong> (e.g., a program/algorithm) that maps training features to the right label/class
+<ul>
+<li>A <a href="https://en.wikipedia.org/wiki/Model">model</a> is an informative, simplified representation of an object or system.</li>
+</ul></li>
+<li>Use that model to predict the class of unseen records accurately</li>
+</ul>
+</section>
+
+<section id="the-supervised-learning-workflow-1" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title">The supervised learning workflow</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    D[("&lt;b&gt;Full dataset&lt;/b&gt;&lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;months&lt;/th&gt;&lt;th&gt;hours&lt;/th&gt;&lt;th&gt;churn&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;")]
+
+    classDef data fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    class D data;
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="the-supervised-learning-workflow-2" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title">The supervised learning workflow</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    D[("&lt;b&gt;Full dataset&lt;/b&gt;&lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;months&lt;/th&gt;&lt;th&gt;hours&lt;/th&gt;&lt;th&gt;churn&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;2&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;3&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;4&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;6&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;6&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;15&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;12&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;22&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;3&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;4&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;8&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;18&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;5&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;7&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;1&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;2&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;10&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;20&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;")]
+
+    subgraph Train["Training set"]
+        Xtrain[("X_train&lt;br/&gt;&lt;span&gt;(training features)&lt;/span&gt;")]
+        Ytrain[("y_train&lt;br/&gt;&lt;span&gt;(training labels)&lt;/span&gt;")]
+    end
+
+    subgraph Test["Test set"]
+        Xtest[("X_test&lt;br/&gt;&lt;span&gt;(test features)&lt;/span&gt;")]
+        Ytest[("y_test&lt;br/&gt;&lt;span&gt;(test labels)&lt;/span&gt;")]
+    end
+
+    D --&gt; Train
+    D --&gt; Test
+
+    classDef data fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    classDef train fill:#eef3ff,stroke:#3557a4,stroke-width:2px,color:#24303f;
+    classDef test fill:#fff1eb,stroke:#c2410c,stroke-width:2px,color:#24303f;
+    classDef label fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef testLabel fill:#ecfdf3,stroke:#027a48,stroke-width:2px,color:#24303f;
+
+    class D data;
+    class Xtrain train;
+    class Xtest test;
+    class Ytrain label;
+    class Ytest testLabel;
+    style Train fill:#f8fbff,stroke:#3557a4,stroke-width:2px;
+    style Test fill:#fffaf7,stroke:#c2410c,stroke-width:2px;
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="the-supervised-learning-workflow-3" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title">The supervised learning workflow</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    D[("&lt;b&gt;Full dataset&lt;/b&gt;&lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;months&lt;/th&gt;&lt;th&gt;hours&lt;/th&gt;&lt;th&gt;churn&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;2&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;3&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;4&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;6&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;6&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;15&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;12&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;22&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;3&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;4&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;8&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;18&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;5&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;7&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;1&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;2&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;10&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;20&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;")]
+
+    subgraph Train["Training set"]
+        Xtrain[("X_train&lt;br/&gt;&lt;span&gt;(training features)&lt;/span&gt;")]
+        Ytrain[("y_train&lt;br/&gt;&lt;span&gt;(training labels)&lt;/span&gt;")]
+    end
+
+    subgraph Test["Test set"]
+        Xtest[("X_test&lt;br/&gt;&lt;span&gt;(test features)&lt;/span&gt;")]
+        Ytest[("y_test&lt;br/&gt;&lt;span&gt;(test labels)&lt;/span&gt;")]
+    end
+
+    Algo["ML algorithm"]
+    Model["Model&lt;br/&gt;&lt;span&gt;(learned mapping)&lt;/span&gt;"]
+
+    D --&gt; Train
+    D --&gt; Test
+    Xtrain --&gt; Algo
+    Ytrain --&gt; Algo
+    Algo --&gt; Model
+
+    classDef data fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    classDef train fill:#eef3ff,stroke:#3557a4,stroke-width:2px,color:#24303f;
+    classDef test fill:#fff1eb,stroke:#c2410c,stroke-width:2px,color:#24303f;
+    classDef label fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef testLabel fill:#ecfdf3,stroke:#027a48,stroke-width:2px,color:#24303f;
+    classDef model fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef process fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+
+    class D data;
+    class Xtrain train;
+    class Xtest test;
+    class Ytrain label;
+    class Ytest testLabel;
+    class Model model;
+    class Algo process;
+    style Train fill:#f8fbff,stroke:#3557a4,stroke-width:2px;
+    style Test fill:#fffaf7,stroke:#c2410c,stroke-width:2px;
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="the-supervised-learning-workflow-4" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title">The supervised learning workflow</h1>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    D[("&lt;b&gt;Full dataset&lt;/b&gt;&lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;months&lt;/th&gt;&lt;th&gt;hours&lt;/th&gt;&lt;th&gt;churn&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;2&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;3&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;4&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;6&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;6&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;15&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;12&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;22&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;3&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;4&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#eef3ff'&gt;8&lt;/td&gt;&lt;td style='background:#eef3ff'&gt;18&lt;/td&gt;&lt;td style='background:#fbedf4'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;5&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;7&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;1&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;2&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;✅&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='background:#fff1eb'&gt;10&lt;/td&gt;&lt;td style='background:#fff1eb'&gt;20&lt;/td&gt;&lt;td style='background:#ecfdf3'&gt;❌&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;")]
+
+    subgraph Train["Training set"]
+        Xtrain[("X_train&lt;br/&gt;&lt;span&gt;(training features)&lt;/span&gt;")]
+        Ytrain[("y_train&lt;br/&gt;&lt;span&gt;(training labels)&lt;/span&gt;")]
+    end
+
+    subgraph Test["Test set"]
+        Xtest[("X_test&lt;br/&gt;&lt;span&gt;(test features)&lt;/span&gt;")]
+        Ytest[("y_test&lt;br/&gt;&lt;span&gt;(test labels)&lt;/span&gt;")]
+    end
+
+    Algo["ML algorithm"]
+    Model["Model&lt;br/&gt;&lt;span&gt;(learned mapping)&lt;/span&gt;"]
+    Pred[("y_hat&lt;br/&gt;&lt;span&gt;(predictions)&lt;/span&gt;")]
+    Eval["Compare&lt;br/&gt;&lt;span&gt;(y_hat vs y_test)&lt;/span&gt;"]
+    KPI(["Performance KPI"])
+
+    D --&gt; Train
+    D --&gt; Test
+    Xtrain --&gt; Algo
+    Ytrain --&gt; Algo
+    Algo --&gt; Model
+    Xtest --&gt; Model
+    Model --&gt; Pred
+    Pred --&gt; Eval
+    Ytest --&gt; Eval
+    Eval --&gt; KPI
+
+    classDef data fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    classDef train fill:#eef3ff,stroke:#3557a4,stroke-width:2px,color:#24303f;
+    classDef test fill:#fff1eb,stroke:#c2410c,stroke-width:2px,color:#24303f;
+    classDef label fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef testLabel fill:#ecfdf3,stroke:#027a48,stroke-width:2px,color:#24303f;
+    classDef model fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef process fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    classDef kpi fill:#fff8db,stroke:#b58105,stroke-width:2px,color:#24303f;
+
+    class D data;
+    class Xtrain train;
+    class Xtest test;
+    class Ytrain label;
+    class Ytest testLabel;
+    class Model,Pred model;
+    class Algo,Eval process;
+    class KPI kpi;
+    style Train fill:#f8fbff,stroke:#3557a4,stroke-width:2px;
+    style Test fill:#fffaf7,stroke:#c2410c,stroke-width:2px;
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>The label column is used while training, but kept aside during prediction. Only <code>X_test</code> enters the trained model; <code>y_test</code> is used afterward for evaluation.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="training-and-testing-serve-different-purposes" class="title-slide slide level1 center">
+<h1>Training and testing serve different purposes</h1>
+<p><em>Training</em>: fit the model given known examples (training features + expected results)</p>
+<blockquote>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><code>months_subscribed</code></th>
+<th style="text-align: center;"><code>monthly_watch_hours</code></th>
+<th style="text-align: center;"><code>churn</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p><em>Testing</em>: evaluate the model on unseen examples (test features)</p>
+<blockquote>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><code>months_subscribed</code></th>
+<th style="text-align: center;"><code>monthly_watch_hours</code></th>
+<th style="text-align: center;"><code>churn</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">?</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</section>
+
 <section id="supervised-learning-learns-from-labeled-examples" class="title-slide slide level1 center">
 <h1>Supervised learning learns from labeled examples</h1>
 <ul>
-<li><em>Supervised Learning</em>: models are trained using labeled data to learn a mapping from inputs to <em>labels</em>
+<li><em>Supervised Learning</em>: learn the program/model that binds a label to the training features
 <ul>
 <li><strong>Classification</strong>: the <em>label</em> is <em>nominal</em>; spam detection (<code>yes</code>/<code>no</code>), diagnosis (<code>healthy</code>/<code>sick</code>)</li>
 <li><strong>Regression</strong>: the <em>label</em> is <em>continuous</em>; house price, temperature</li>
@@ -522,162 +932,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Unsupervised Learning</li>
 <li>Reinforcement Learning</li>
 </ul>
-</section>
-
-<section id="model-based-classifiers-learn-a-decision-function" class="title-slide slide level1 center">
-<h1>Model-based classifiers learn a decision function</h1>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>A <strong>dataset</strong> is a collection (e.g., a table) of records:</p>
-<ul>
-<li>Each record (aka instance, example, or observation) has a set of <strong>features</strong> (aka attributes, or variables) that describe it (e.g., <code>months_subscribed</code>)</li>
-<li>During training, one feature provides the known <strong>class</strong> or <strong>label</strong> (e.g., <code>churn</code>)</li>
-<li>The schema of a dataset is the set of features that defines the structure of the data (e.g., <code>months_subscribed</code>, <code>monthly_watch_hours</code>, <code>churn</code>)</li>
-</ul>
-<p>Goal:</p>
-<ul>
-<li>Learn a <strong>model</strong> that maps features to a class
-<ul>
-<li>A <a href="https://en.wikipedia.org/wiki/Model">model</a> is an informative, simplified representation of an object or system.</li>
-</ul></li>
-<li>Use that model to predict the class of unseen records accurately</li>
-</ul>
-</div><div class="column" style="width:40%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><code>months_subscribed</code></th>
-<th style="text-align: center;"><code>monthly_watch_hours</code></th>
-<th style="text-align: center;"><code>churn</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;"><em>yes</em></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;"><em>yes</em></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">15</td>
-<td style="text-align: center;"><em>no</em></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">22</td>
-<td style="text-align: center;"><em>no</em></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;"><em>yes</em></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">18</td>
-<td style="text-align: center;"><em>no</em></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;"><em>no</em></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;"><em>yes</em></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">20</td>
-<td style="text-align: center;"><em>no</em></td>
-</tr>
-</tbody>
-</table>
-</div></div>
-</section>
-
-<section id="training-and-testing-serve-different-purposes" class="title-slide slide level1 center">
-<h1>Training and testing serve different purposes</h1>
-<p>Fist, split the original dataset into non-overlapping <em>training</em> and <em>test</em> sets</p>
-<blockquote>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><code>months_subscribed</code></th>
-<th style="text-align: center;"><code>monthly_watch_hours</code></th>
-<th style="text-align: center;"><code>churn</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;"><em>yes</em></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;"><em>yes</em></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">15</td>
-<td style="text-align: center;"><em>no</em></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">22</td>
-<td style="text-align: center;"><em>no</em></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;"><em>yes</em></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">18</td>
-<td style="text-align: center;"><em>no</em></td>
-</tr>
-</tbody>
-</table>
-</blockquote>
-<blockquote>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><code>months_subscribed</code></th>
-<th style="text-align: center;"><code>monthly_watch_hours</code></th>
-<th style="text-align: center;"><code>churn</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">?</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">?</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">?</td>
-</tr>
-</tbody>
-</table>
-</blockquote>
-<p>Then, learn the model from the training set</p>
-<p>Finally, use the test set only to evaluate performance on unseen records</p>
 </section>
 
 <section id="training-learns-a-model-from-labeled-examples" class="title-slide slide level1 center">
