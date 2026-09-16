@@ -262,14 +262,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </table>
 </section>
 
-<section id="intuition-nearby-points-tend-to-behave-alike" class="title-slide slide level1 center">
-<h1>Intuition: nearby points tend to behave alike</h1>
-<p>K-nearest neighbors is an <strong>instance-based</strong> method.</p>
-<ul>
-<li>Training is mostly memorization: store the labeled examples</li>
-<li>Prediction is local: inspect the neighborhood of the new record</li>
-<li>The learned boundary can be nonlinear because each region can vote differently</li>
-</ul>
+<section id="if-it-walks-like-a-duck-and-quacks-like-a-duck-its-probably-a-duck" class="title-slide slide level1 center">
+<h1>If it walks like a duck and quacks like a duck, it’s probably a duck</h1>
 
 <img data-src="img/knn/Immagine1.png" class="r-stretch quarto-figure-center"><p class="caption">If it walks like a duck and quacks like a duck, it’s probably a duck</p></section>
 
@@ -281,10 +275,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Lazy learners postpone most of the work until a new query arrives</li>
 <li>The prediction cost can therefore be high for large training sets</li>
 </ul>
-<p>The key question becomes:</p>
-<blockquote>
-<p>What does “similar” mean for these records?</p>
-</blockquote>
+<p>K-nearest neighbors is an <strong>instance-based</strong> method.</p>
+<ul>
+<li>Training is mostly memorization: store the labeled examples</li>
+<li>Prediction is local: inspect the neighborhood of the new record</li>
+<li>The learned boundary can be nonlinear because each region can vote differently</li>
+</ul>
 </section>
 
 <section id="nearest-neighbor-classifier" class="title-slide slide level1 center">
@@ -328,7 +324,7 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Minkowski_distance_examples.svg/960px-Minkowski_distance_examples.svg.png?utm_source=en.wikipedia.org&amp;utm_campaign=imageinfo&amp;utm_content=thumbnail"></p>
+<p><img data-src="./img/remote/wiki-minkowski-distance-examples.png"></p>
 <figcaption>Comparison of Chebyshev, Euclidean and Manhattan (Taxicab) distances</figcaption>
 </figure>
 </div>
@@ -385,7 +381,10 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 <ul>
 <li><span class="math inline">\(Y\)</span> is the set of possible class labels</li>
 <li><span class="math inline">\(I(\cdot)\)</span> is 1 if the condition is true and 0 otherwise</li>
-<li>Each selected neighbor has the same vote</li>
+<li>Each selected neighbor has the same vote
+<ul>
+<li>Odd values of <span class="math inline">\(k\)</span> can avoid ties in binary classification</li>
+</ul></li>
 </ul>
 </section>
 
@@ -430,7 +429,7 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 <p>Sometimes closer neighbors should count more.</p>
 <p>A common weighted vote is:</p>
 <p><span class="math display">\[
-\hat{y}=\arg\max_{y \in Y}\sum_{(x_i,y_i)\in D_z} \frac{I(y_i=y)}{dist(x_i,z)}
+\hat{y}=\arg\max_{y \in Y}\sum_{(x_i,y_i)\in D_z} I(y_i=y) \cdot \frac{1}{dist(x_i,z)}
 \]</span></p>
 <ul>
 <li>Very close neighbors receive a larger weight</li>
@@ -448,7 +447,7 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 <th style="text-align: center;">Neighbor</th>
 <th style="text-align: center;">Distance from <span class="math inline">\(z\)</span></th>
 <th style="text-align: center;"><code>churn</code></th>
-<th style="text-align: center;">Weight <span class="math inline">\(1/dist\)</span></th>
+<th style="text-align: center;">Weight <span class="math inline">\(\frac{1}{dist}\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -486,26 +485,38 @@ dist(x_i,z)=\sum_{j=1}^{d}|x_{ij}-z_j|
 <ul>
 <li>Small <span class="math inline">\(k\)</span>: flexible, sensitive to noise, higher variance</li>
 <li>Large <span class="math inline">\(k\)</span>: smoother, more stable, higher bias</li>
-<li>Odd values of <span class="math inline">\(k\)</span> can avoid ties in binary classification</li>
 </ul>
-<p>Choose <span class="math inline">\(k\)</span> using validation data or cross-validation, not the test set.</p>
+<div id="e8abc416" class="cell" data-dpi="160" data-fig-height="4" data-fig-width="10" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03-knn_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="950" height="370"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Choose <span class="math inline">\(k\)</span> using validation data, not the test set.</p>
 </section>
 
-<section id="the-k-value-visual-intuition" class="title-slide slide level1 center">
-<h1>The <span class="math inline">\(k\)</span> value: visual intuition</h1>
-<p>With <span class="math inline">\(k=1\)</span>, every training point can create its own tiny region.</p>
-<p>With a larger <span class="math inline">\(k\)</span>, the boundary becomes smoother because each prediction averages over a wider neighborhood.</p>
-<p>This is the same bias-variance trade-off seen in many classifiers:</p>
-<ul>
-<li>too local: follows noise</li>
-<li>too global: misses real local structure</li>
-</ul>
+<section id="choosing-the-value-of-k-visual-intuition" class="title-slide slide level1 center">
+<h1>Choosing the value of <span class="math inline">\(k\)</span>: visual intuition</h1>
+<div id="f2c500c3" class="cell" data-dpi="160" data-fig-height="4" data-fig-width="10" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03-knn_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="950" height="374"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 
 <section id="feature-scaling-is-not-optional" class="title-slide slide level1 center">
 <h1>Feature scaling is not optional</h1>
 <p>k-NN compares records using distances.</p>
-<p>If features have very different numeric ranges, large-scale features dominate the distance even when they are not more informative.</p>
+<ul>
+<li>If features have very different numeric ranges, large-scale features dominate the distance even when they are not more informative.</li>
+</ul>
 <p>Example:</p>
 <ul>
 <li><code>age</code>: 18 to 80</li>
@@ -566,8 +577,8 @@ x'=\frac{x-\mu}{\sigma}
 <p>Fit the scaler on the <strong>training set only</strong>.</p>
 </section>
 
-<section id="after-standardization-the-answer-changes" class="title-slide slide level1 center">
-<h1>After standardization, the answer changes</h1>
+<section id="after-standardization-the-answer-changes-forward-reference-to-mod-ii" class="title-slide slide level1 center">
+<h1>After standardization, the answer changes (forward reference to Mod II)</h1>
 <p>Suppose the training-set standard deviations are:</p>
 <p><span class="math display">\[
 \sigma_{age}=10\text{ years},\qquad \sigma_{income}=\text{EUR }25{,}000
@@ -599,32 +610,19 @@ x'=\frac{x-\mu}{\sigma}
 </tr>
 </tbody>
 </table>
-<p>After scaling, <strong>A</strong> is closer. Scaling gives each feature influence relative to its typical variation.</p>
+<p>After scaling, <strong>A</strong> is closer.</p>
 </section>
 
-<section id="min-max-scaling-forward-reference-to-mod-ii" class="title-slide slide level1 center">
-<h1>Min-max scaling (forward reference to Mod II)</h1>
-<p>Min-max scaling converts each feature to:</p>
-<p><span class="math display">\[
-x'=\frac{x-\min(x)}{\max(x)-\min(x)}
-\]</span></p>
-<ul>
-<li>Values are usually mapped to <span class="math inline">\([0,1]\)</span></li>
-<li>It preserves the shape of the distribution</li>
-<li>It can be sensitive to outliers</li>
-</ul>
-<p>The right scaler is a modeling choice and should be evaluated with validation data.</p>
-</section>
+
 
 <section id="avoiding-data-leakage" class="title-slide slide level1 center">
 <h1>Avoiding data leakage</h1>
-<p>Incorrect workflow:</p>
+<p>Incorrect workflow that leaks information from the test set into preprocessing.</p>
 <ol type="1">
 <li>Scale the whole dataset</li>
 <li>Split into train and test sets</li>
 <li>Evaluate the model</li>
 </ol>
-<p>This leaks information from the test set into preprocessing.</p>
 <p>Correct workflow:</p>
 <ol type="1">
 <li>Split into train and test sets</li>
@@ -648,119 +646,59 @@ x'=\frac{x-\min(x)}{\max(x)-\min(x)}
 <p>The pipeline fits preprocessing only on the training folds during cross-validation.</p>
 </section>
 
-<section id="failure-case-irrelevant-features-forward-reference-to-mod-ii" class="title-slide slide level1 center">
-<h1>Failure case: irrelevant features (forward reference to Mod II)</h1>
-<p>Scaling fixes unequal units, but k-NN is sensitive to the number of features.</p>
+<section id="high-dimensionality" class="title-slide slide level1 center">
+<h1>High dimensionality</h1>
+<p>k-NN is sensitive to the number of features.</p>
 <ul>
 <li>each feature contributes noise to the distance</li>
 <li>irrelevant features can dominate the distance metric</li>
 <li>truly similar records may appear far apart</li>
 </ul>
-<p>k-NN benefits from feature selection, dimensionality reduction, or careful feature engineering.</p>
 </section>
 
 <section id="a-neighborhood-inside-the-unit-hypercube" class="title-slide slide level1 center">
 <h1>A neighborhood inside the unit hypercube</h1>
 <p>The query is at the center, and “near” means within <span class="math inline">\(\pm0.1\)</span> on every feature.</p>
-<div id="f636cb29" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="1">
+<ul>
+<li>The highlighted region is the local neighborhood around the query point.</li>
+<li>This sparsity is the <strong>curse of dimensionality</strong>: k-NN needs far more data, or fewer and more informative features, to keep neighborhoods meaningful.</li>
+</ul>
+<div id="8e0c15bb" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="03-knn_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="921" height="456"></p>
+<p><img data-src="03-knn_files/figure-revealjs/cell-4-output-1.png" class="quarto-figure quarto-figure-center" width="835" height="398"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>In the 1-D panel, vertical jitter separates overlapping points; it is <strong>not a feature</strong>.</p>
-<p>Adding one dimension multiplies the relative neighborhood volume by another factor of <span class="math inline">\(0.2\)</span>.</p>
 </section>
 
-<section id="failure-case-high-dimensionality" class="title-slide slide level1 center">
-<h1>Failure case: high dimensionality</h1>
-<p>Assume 1,000 points are uniformly distributed in <span class="math inline">\([0,1]^d\)</span>. Around a query at the center, define “near” as within <span class="math inline">\(\pm0.1\)</span> on <strong>every</strong> feature.</p>
-<p>The relative neighborhood volume is <span class="math inline">\((0.2)^d\)</span>:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Dimensions <span class="math inline">\(d\)</span></th>
-<th style="text-align: center;">Relative volume <span class="math inline">\((0.2)^d\)</span></th>
-<th style="text-align: center;">Expected nearby points</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;"><span class="math inline">\(0.04\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1000\times0.04=40\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;"><span class="math inline">\(0.00032\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1000\times0.00032=0.32\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;"><span class="math inline">\(1.024\times10^{-7}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(0.0001024\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>With the same data size and per-feature tolerance, a useful local neighborhood goes from <strong>40 points in 2-D</strong> to effectively <strong>empty in 10-D</strong>.</p>
-<p>This sparsity is the <strong>curse of dimensionality</strong>: k-NN needs far more data, or fewer and more informative features, to keep neighborhoods meaningful.</p>
-</section>
+
 
 <section id="average-distance-grows-with-dimensionality" class="title-slide slide level1 center">
 <h1>Average distance grows with dimensionality</h1>
 <p>For 1,000 points uniformly distributed in <span class="math inline">\([0,1]^{10}\)</span>, select one point and measure its average Euclidean distance from all the others while using the first 1 to 10 dimensions:</p>
-<div id="2419ff55" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="2">
+<div id="f8a392ab" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="03-knn_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="934" height="453"></p>
+<p><img data-src="03-knn_files/figure-revealjs/cell-5-output-1.png" class="quarto-figure quarto-figure-center" width="934" height="453"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Each additional feature contributes another nonnegative term to the Euclidean distance, so points become farther apart on average even though every feature remains in <span class="math inline">\([0,1]\)</span>.</p>
-</section>
-
-<section id="local-neighborhoods-quickly-become-empty" class="title-slide slide level1 center">
-<h1>Local neighborhoods quickly become empty</h1>
-<p>For 1,000 uniformly distributed points, using a tolerance of <span class="math inline">\(\pm0.1\)</span> on every normalized feature:</p>
-<div id="c381abdf" class="cell" data-dpi="160" data-fig-height="4.4" data-fig-width="10" data-execution_count="3">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="03-knn_files/figure-revealjs/cell-4-output-1.png" class="quarto-figure quarto-figure-center" width="918" height="453"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-
-<section id="shrinking-neighborhoods-make-k-nn-less-local" class="title-slide slide level1 center">
-<h1>Shrinking neighborhoods make k-NN less local</h1>
-<p>With a fixed dataset size, the feature space becomes increasingly sparse.</p>
 <ul>
-<li><strong>Neighborhoods become empty:</strong> the nearest observation may still be far away on several features</li>
-<li><strong>The search radius must grow:</strong> finding <span class="math inline">\(k\)</span> neighbors includes increasingly dissimilar observations</li>
-<li><strong>Predictions become less local:</strong> k-NN loses the local similarity that makes it useful</li>
+<li>k-NN benefits from feature selection, dimensionality reduction, or careful feature engineering.</li>
 </ul>
-<p>The algorithm must trade a tiny, unreliable neighborhood for a larger, less relevant one.</p>
 </section>
 
-<section id="preserving-density-requires-exponentially-more-data" class="title-slide slide level1 center">
-<h1>Preserving density requires exponentially more data</h1>
-<p>To keep an expected <span class="math inline">\(m\)</span> observations in a neighborhood occupying the fraction <span class="math inline">\((0.2)^d\)</span>:</p>
-<p><span class="math display">\[
-n=\frac{m}{(0.2)^d}
-\]</span></p>
-<p>Keeping 40 expected neighbors in 10 dimensions would require:</p>
-<p><span class="math display">\[
-n=\frac{40}{(0.2)^{10}}=390{,}625{,}000\text{ observations}
-\]</span></p>
-<p>In practice, <strong>feature selection</strong> and <strong>dimensionality reduction</strong> are often more realistic than collecting exponentially more data.</p>
-</section>
+
+
+
+
+
 
 <section id="practical-model-selection-checklist" class="title-slide slide level1 center">
 <h1>Practical model-selection checklist</h1>
@@ -795,34 +733,21 @@ n\times O(d)=O(nd)
 <p>After computing <span class="math inline">\(n\)</span> distances, k-NN must identify the smallest <span class="math inline">\(k\)</span>:</p>
 <ul>
 <li>Sort every distance: <span class="math inline">\(O(n\log n)\)</span></li>
-<li>Maintain a heap of size <span class="math inline">\(k\)</span>: <span class="math inline">\(O(n\log k)\)</span></li>
-<li>Specialized selection algorithms can achieve <span class="math inline">\(O(n)\)</span></li>
 </ul>
-<p>With a heap, the complete brute-force prediction cost is:</p>
+<p>The complete brute-force prediction (more optimized solution exist) cost is:</p>
 <p><span class="math display">\[
-O(nd+n\log k)
+O(nd+n\log n)
 \]</span></p>
-<p>It is often summarized as <span class="math inline">\(O(nd)\)</span> when <span class="math inline">\(k\)</span> is small and distance computation dominates. Storing the <span class="math inline">\(n\times d\)</span> training matrix also costs <span class="math inline">\(O(nd)\)</span>.</p>
-<p>Index structures can reduce search cost in some low-dimensional settings.</p>
+<p>Storing the <span class="math inline">\(n\times d\)</span> training matrix also costs <span class="math inline">\(O(nd)\)</span>.</p>
+<ul>
+<li>Index structures can reduce search cost.</li>
+</ul>
 </section>
 
-<section id="the-r-tree-index-structure-guttman-1984" class="title-slide slide level1 center">
+
+
+<section id="the-r-tree-index-structure-guttman-1984-1" class="title-slide slide level1 center">
 <h1>The R-tree index structure (Guttman, 1984)</h1>
-<p>R-trees are extensions of B+-trees to multi-dimensional spaces.</p>
-<p>B+-trees organize objects into:</p>
-<ul>
-<li>A set of nonoverlapping one-dimensional intervals</li>
-<li>Recursively nested pages from leaves to root</li>
-</ul>
-<p>R-trees organize objects into:</p>
-<ul>
-<li>Overlapping multi-dimensional rectangles</li>
-<li>Recursively nested bounding regions</li>
-</ul>
-</section>
-
-<section id="r-tree-basic-idea" class="title-slide slide level1 center">
-<h1>R-tree basic idea</h1>
 <ul>
 <li>Recursively aggregate objects using minimum bounding rectangles (MBRs)</li>
 <li>Regions can overlap</li>
