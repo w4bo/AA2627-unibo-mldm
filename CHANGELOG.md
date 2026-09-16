@@ -1,3 +1,12 @@
+## [1.0.36](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.35...1.0.36) (2026-09-16)
+
+### Bug Fixes
+
+* download and refer to remote images ([c21361b](https://github.com/w4bo/AA2627-unibo-mldm/commit/c21361b7dffe9c89aba9ad052224e3b674d8e630))
+* simplify curse of dimensionality ([5412c9a](https://github.com/w4bo/AA2627-unibo-mldm/commit/5412c9a7a6465504df231aad03a6b96922b4e376))
+* simplify curse of dimensionality ([f15b4fb](https://github.com/w4bo/AA2627-unibo-mldm/commit/f15b4fbeb823237fed8761258b697d864232974b))
+* simplify curse of dimensionality ([134b1b3](https://github.com/w4bo/AA2627-unibo-mldm/commit/134b1b32cdbf8bbfe2aa8af41cc901bcb9613fc7))
+
 ## [1.0.35](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.34...1.0.35) (2026-09-16)
 
 ### Dependency updates
