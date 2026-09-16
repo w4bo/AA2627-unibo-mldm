@@ -126,14 +126,14 @@ $$
 
 Suppose the three nearest training records to a new point $z$ are:
 
-| Neighbor | Distance from $z$ | Class |
+| Neighbor | Distance from $z$ | `churn` |
 |:---:|:---:|:---:|
-| $x_1$ | 0.5 | stay |
-| $x_2$ | 1.1 | churn |
-| $x_3$ | 1.3 | churn |
+| $x_1$ | 0.5 | ❌ |
+| $x_2$ | 1.1 | ✅ |
+| $x_3$ | 1.3 | ✅ |
 
-- With $k=1$, predict **stay**
-- With $k=3$, predict **churn** by a 2-to-1 majority
+- With $k=1$, predict **stay ❌**
+- With $k=3$, predict **churn ✅** by a 2-to-1 majority
 
 The prediction is local: a different neighborhood may follow a different rule.
 
@@ -157,14 +157,14 @@ Using the same three neighbors:
 
 | Neighbor | Distance from $z$ | Class | Weight $1/dist$ |
 |:---:|:---:|:---:|:---:|
-| $x_1$ | 0.5 | stay | 2.00 |
-| $x_2$ | 1.1 | churn | 0.91 |
-| $x_3$ | 1.3 | churn | 0.77 |
+| $x_1$ | 0.5 | ❌ | 2.00 |
+| $x_2$ | 1.1 | ✅ | 0.91 |
+| $x_3$ | 1.3 | ✅ | 0.77 |
 
 Total weighted vote:
 
-- stay: $2.0$
-- churn: $0.91 + 0.77$
+- stay ❌: $2.0$
+- churn ✅: $0.91 + 0.77$
 
 Prediction: **stay**.
 
