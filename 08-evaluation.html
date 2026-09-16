@@ -373,19 +373,38 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="precision-and-recall" class="title-slide slide level1 center">
 <h1>Precision and recall</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p>Precision and recall answer different questions about the positive class:</p>
 <ul>
 <li><strong>Precision</strong> (<span class="math inline">\(Precision = \frac{TP}{TP + FP}\)</span>): among predicted positives, how many are actually positive?
 <ul>
 <li>High precision means few false positives.</li>
+<li>The model is “punished” for guessing a dog when there is no dog</li>
+<li>Better to guess a dog, when you are very sure that you see a dog</li>
 </ul></li>
 <li><strong>Recall</strong> (<span class="math inline">\(Recall = \frac{TP}{TP + FN}\)</span>): among actual positives, how many did the model detect?
 <ul>
 <li>High recall means few false negatives.</li>
+<li>Better safe than sorry!</li>
+<li>Be optimistic and guess dog even if you are not sure</li>
 </ul></li>
 </ul>
-
-<img data-src="./img/dt/image24.png" class="r-stretch quarto-figure-center"><p class="caption">Outcome of classification</p></section>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/dt/image24.png"></p>
+<figcaption>Outcome of classification</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/PrecisionrecallDogExample.svg/500px-PrecisionrecallDogExample.svg.png?utm_source=en.wikipedia.org&amp;utm_campaign=imageinfo&amp;utm_content=thumbnail"></p>
+<figcaption>Performance metrics</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
 
 <section id="prioritize-precision-when-false-positives-are-costly" class="title-slide slide level1 center">
 <h1>Prioritize precision when false positives are costly</h1>
@@ -411,12 +430,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Examples:</p>
 <ul>
 <li>Cancer or infectious-disease screening</li>
-<li>Fraud alerts sent to a human investigator</li>
 <li>Fire, intrusion, or safety-defect detection</li>
-</ul>
-<p>The same domain can differ: <strong>automatic fraud blocking favors precision</strong>, while a <strong>fraud-review queue favors recall</strong>.</p>
-<ul>
-<li>Choose the metric and threshold from the consequences of FP and FN.</li>
 </ul>
 </section>
 
