@@ -1,3 +1,9 @@
+## [1.0.37](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.36...1.0.37) (2026-09-16)
+
+### Bug Fixes
+
+* simplify curse of dimensionality ([d3d861f](https://github.com/w4bo/AA2627-unibo-mldm/commit/d3d861fabcb66f6bced2140ba1cd5a71c5a6a250))
+
 ## [1.0.36](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.35...1.0.36) (2026-09-16)
 
 ### Bug Fixes
