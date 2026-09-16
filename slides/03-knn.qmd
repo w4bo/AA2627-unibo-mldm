@@ -77,7 +77,7 @@ The result depends on both the **data representation** and the **distance metric
 For two records $x_i$ and $z$ with $d$ numeric features:
 
 ::::{.columns}
-
+:::{.column width=50%}
 Euclidean distance:
 
 $$
@@ -125,6 +125,7 @@ $$
 - $Y$ is the set of possible class labels
 - $I(\cdot)$ is 1 if the condition is true and 0 otherwise
 - Each selected neighbor has the same vote
+    - Odd values of $k$ can avoid ties in binary classification
 
 # Worked example: majority vote
 
@@ -148,7 +149,7 @@ Sometimes closer neighbors should count more.
 A common weighted vote is:
 
 $$
-\hat{y}=\arg\max_{y \in Y}\sum_{(x_i,y_i)\in D_z} \frac{I(y_i=y)}{dist(x_i,z)}
+\hat{y}=\arg\max_{y \in Y}\sum_{(x_i,y_i)\in D_z} I(y_i=y) \cdot \frac{1}{dist(x_i,z)}
 $$
 
 - Very close neighbors receive a larger weight
@@ -159,7 +160,7 @@ $$
 
 Using the same three neighbors:
 
-| Neighbor | Distance from $z$ | `churn` | Weight $1/dist$ |
+| Neighbor | Distance from $z$ | `churn` | Weight $\frac{1}{dist}$ |
 |:---:|:---:|:---:|:---:|
 | $x_1$ | 0.5 | ❌ | 2.00 |
 | $x_2$ | 1.1 | ✅ | 0.91 |
@@ -178,26 +179,135 @@ The choice of $k$ controls how local the prediction is.
 
 - Small $k$: flexible, sensitive to noise, higher variance
 - Large $k$: smoother, more stable, higher bias
-- Odd values of $k$ can avoid ties in binary classification
 
-Choose $k$ using validation data or cross-validation, not the test set.
+```{python}
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4
+#| dpi: 160
 
-# The $k$ value: visual intuition
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Circle
+from sklearn.datasets import make_moons
+from sklearn.neighbors import KNeighborsClassifier
 
-With $k=1$, every training point can create its own tiny region.
+X, y = make_moons(n_samples=160, noise=0.28, random_state=4)
+class_colors = np.array(["tab:blue", "tab:orange"])
+query = np.array([[0.25, 0.45]])
 
-With a larger $k$, the boundary becomes smoother because each prediction averages over a wider neighborhood.
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+for ax, k in zip(axes, [1, 25]):
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(X, y)
+    distances, indices = model.kneighbors(query)
+    selected = indices[0]
+    radius = distances[0, -1]
+    prediction = model.predict(query)[0]
 
-This is the same bias-variance trade-off seen in many classifiers:
+    ax.scatter(X[:, 0], X[:, 1], c=class_colors[y], edgecolor="white", s=28, alpha=0.35)
+    ax.scatter(
+        X[selected, 0],
+        X[selected, 1],
+        c=class_colors[y[selected]],
+        edgecolor="black",
+        linewidth=1.4,
+        s=72,
+        label="selected neighbors",
+    )
+    ax.scatter(
+        query[:, 0],
+        query[:, 1],
+        color="#D55E00",
+        marker="X",
+        s=160,
+        edgecolor="black",
+        linewidth=1,
+        label="point to predict",
+        zorder=4,
+    )
+    ax.add_patch(
+        Circle(
+            query[0],
+            radius,
+            fill=False,
+            color="#D55E00",
+            linestyle="--",
+            linewidth=1.5,
+        )
+    )
+    ax.set(
+        title=f"k = {k}: predicted class {prediction}",
+        xlabel="Feature 1",
+        ylabel="Feature 2",
+        xlim=(X[:, 0].min() - 0.4, X[:, 0].max() + 0.4),
+        ylim=(X[:, 1].min() - 0.4, X[:, 1].max() + 0.4),
+    )
+    ax.set_aspect("equal", adjustable="box")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
 
-- too local: follows noise
-- too global: misses real local structure
+axes[1].legend(loc="upper right", fontsize=11)
+fig.tight_layout()
+plt.show()
+```
+
+Choose $k$ using validation data, not the test set.
+
+# Choosing the value of $k$: visual intuition
+
+```{python}
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4
+#| dpi: 160
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_moons
+from sklearn.neighbors import KNeighborsClassifier
+
+X, y = make_moons(n_samples=160, noise=0.28, random_state=4)
+class_colors = np.array(["tab:blue", "tab:orange"])
+
+x_min, x_max = X[:, 0].min() - 0.4, X[:, 0].max() + 0.4
+y_min, y_max = X[:, 1].min() - 0.4, X[:, 1].max() + 0.4
+xx, yy = np.meshgrid(
+    np.linspace(x_min, x_max, 250),
+    np.linspace(y_min, y_max, 250),
+)
+grid = np.c_[xx.ravel(), yy.ravel()]
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+for ax, k in zip(axes, [1, 25]):
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(X, y)
+    zz = model.predict(grid).reshape(xx.shape)
+
+    ax.contourf(xx, yy, zz, levels=[-0.5, 0.5, 1.5], colors=class_colors, alpha=0.18)
+    ax.contour(xx, yy, zz, levels=[0.5], colors="#333333", linewidths=1.5)
+    ax.scatter(X[:, 0], X[:, 1], c=class_colors[y], edgecolor="black", s=34)
+    ax.set(title=f"k = {k}", xlabel="Feature 1", ylabel="Feature 2")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+fig.tight_layout()
+plt.show()
+```
 
 # Feature scaling is not optional
 
 k-NN compares records using distances.
 
-If features have very different numeric ranges, large-scale features dominate the distance even when they are not more informative.
+- If features have very different numeric ranges, large-scale features dominate the distance even when they are not more informative.
 
 Example:
 
@@ -257,7 +367,7 @@ Standardized differences and distances become:
 | $A$ | $(2/10,\ 20{,}000/25{,}000)=(0.2,0.8)$ | $\sqrt{0.2^2+0.8^2}\approx0.82$ |
 | $B$ | $(20/10,\ 500/25{,}000)=(2,0.02)$ | $\sqrt{2^2+0.02^2}\approx2.00$ |
 
-After scaling, **A** is closer. Scaling gives each feature influence relative to its typical variation.
+After scaling, **A** is closer.
 
 # Min-max scaling (forward reference to Mod II) {visibility="hidden"}
 
