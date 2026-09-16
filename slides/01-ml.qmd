@@ -367,6 +367,15 @@ Create a calculator that computes the sum of two numbers.
 
 <img src="./img/00-ml/ml3.svg" class="center-img">
 
+# What are the limits of classic programming?
+
+|Image (input/training features)|Label (cat?)|
+|:---:|:---:|
+|![](img/00-ml/cat1.jpg)|✅|
+|![](img/00-ml/cat2.jpg)|✅|
+|![](img/00-ml/dog1.jpg)|❌|
+|![](img/00-ml/dog2.jpg)|❌|
+
 # Machine learning derives decision logic from examples
 
 ![Machine Learning](./img/00-ml/ml2.svg)
@@ -387,17 +396,240 @@ Create a calculator that computes the sum of two numbers.
 
 ![What is machine learning?](./img/remote/xkcd-machine-learning.png)
 
+# The data type determines the learning task
+
+# Unstructured data is unorganized and does not follow a predefined schema
+
+Examples include text, images, and audio files.
+
+::::{.columns}
+::: {.column width=50%}
+![Computer vision](https://upload.wikimedia.org/wikipedia/commons/2/2d/Intersection_over_Union_-_object_detection_bounding_boxes.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)
+:::
+::: {.column width=50%}
+![Natural language processing](https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Entity_Linking_-_Example_of_pipeline.png/3840px-Entity_Linking_-_Example_of_pipeline.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail)
+:::
+::::
+
+# Structured data is organized in a table with rows and columns
+
+::::{.columns}
+:::{.column width=60%}
+
+A **dataset** is a collection (e.g., a table) of records:
+
+- Each record (aka instance, example, or observation) has a set of **features** (aka attributes, or variables) that describe it (e.g., `months_subscribed`)
+- During training, one feature can provide the known **class** or **label** (e.g., `churn`)
+- The schema of a dataset is the set of features that defines the structure of the data (e.g., `months_subscribed`, `monthly_watch_hours`, `churn`)
+
+:::
+:::{.column width=40%}
+
+| `months_subscribed` | `monthly_watch_hours` | `churn` |
+| :-----------------: | :-------------------: | :-----: |
+| 2                 | 3                       | ✅   |
+| 4                 | 6                       | ✅   |
+| 6                 | 15                      | ❌    |
+| 12                | 22                      | ❌    |
+| 3                 | 4                       | ✅   |
+| 8                 | 18                      | ❌    |
+| 5                 | 7                       | ❌    |
+| 1                 | 2                       | ✅   |
+| 10                | 20                      | ❌    |
+
+:::
+::::
+
 # The task determines the learning setup
 
 # Three learning setups organize the field {background-color="#121011"}
 
-- **Supervised Learning**: models are trained using labeled data to learn a mapping from inputs to labels
+- **Supervised Learning**: learn the program/model that binds a label to the training features
 - **Unsupervised Learning**: algorithms find patterns, structures, and insights in unlabeled data without predefined answers
 - **Reinforcement Learning**: an agent improves its decisions by interacting with an environment and learning from feedback
 
+# The supervised learning workflow {auto-animate=true}
+
+Goal:
+
+- Learn a **model** (e.g., a program/algorithm) that maps training features to the right label/class
+  - A [model](https://en.wikipedia.org/wiki/Model) is an informative, simplified representation of an object or system.
+- Use that model to predict the class of unseen records accurately
+
+# The supervised learning workflow {auto-animate=true}
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    D[("<b>Full dataset</b><br/><table><tr><th>months</th><th>hours</th><th>churn</th></tr><tr><td>2</td><td>3</td><td>✅</td></tr><tr><td>4</td><td>6</td><td>✅</td></tr><tr><td>6</td><td>15</td><td>❌</td></tr><tr><td>12</td><td>22</td><td>❌</td></tr><tr><td>3</td><td>4</td><td>✅</td></tr><tr><td>8</td><td>18</td><td>❌</td></tr><tr><td>5</td><td>7</td><td>❌</td></tr><tr><td>1</td><td>2</td><td>✅</td></tr><tr><td>10</td><td>20</td><td>❌</td></tr></table>")]
+
+    classDef data fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    class D data;
+```
+
+# The supervised learning workflow {auto-animate=true}
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    D[("<b>Full dataset</b><br/><table><tr><th>months</th><th>hours</th><th>churn</th></tr><tr><td style='background:#eef3ff'>2</td><td style='background:#eef3ff'>3</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>4</td><td style='background:#eef3ff'>6</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>6</td><td style='background:#eef3ff'>15</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#eef3ff'>12</td><td style='background:#eef3ff'>22</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#eef3ff'>3</td><td style='background:#eef3ff'>4</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>8</td><td style='background:#eef3ff'>18</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#fff1eb'>5</td><td style='background:#fff1eb'>7</td><td style='background:#ecfdf3'>❌</td></tr><tr><td style='background:#fff1eb'>1</td><td style='background:#fff1eb'>2</td><td style='background:#ecfdf3'>✅</td></tr><tr><td style='background:#fff1eb'>10</td><td style='background:#fff1eb'>20</td><td style='background:#ecfdf3'>❌</td></tr></table>")]
+
+    subgraph Train["Training set"]
+        Xtrain[("X_train<br/><span>(training features)</span>")]
+        Ytrain[("y_train<br/><span>(training labels)</span>")]
+    end
+
+    subgraph Test["Test set"]
+        Xtest[("X_test<br/><span>(test features)</span>")]
+        Ytest[("y_test<br/><span>(test labels)</span>")]
+    end
+
+    D --> Train
+    D --> Test
+
+    classDef data fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    classDef train fill:#eef3ff,stroke:#3557a4,stroke-width:2px,color:#24303f;
+    classDef test fill:#fff1eb,stroke:#c2410c,stroke-width:2px,color:#24303f;
+    classDef label fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef testLabel fill:#ecfdf3,stroke:#027a48,stroke-width:2px,color:#24303f;
+
+    class D data;
+    class Xtrain train;
+    class Xtest test;
+    class Ytrain label;
+    class Ytest testLabel;
+    style Train fill:#f8fbff,stroke:#3557a4,stroke-width:2px;
+    style Test fill:#fffaf7,stroke:#c2410c,stroke-width:2px;
+```
+
+# The supervised learning workflow {auto-animate=true}
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    D[("<b>Full dataset</b><br/><table><tr><th>months</th><th>hours</th><th>churn</th></tr><tr><td style='background:#eef3ff'>2</td><td style='background:#eef3ff'>3</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>4</td><td style='background:#eef3ff'>6</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>6</td><td style='background:#eef3ff'>15</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#eef3ff'>12</td><td style='background:#eef3ff'>22</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#eef3ff'>3</td><td style='background:#eef3ff'>4</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>8</td><td style='background:#eef3ff'>18</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#fff1eb'>5</td><td style='background:#fff1eb'>7</td><td style='background:#ecfdf3'>❌</td></tr><tr><td style='background:#fff1eb'>1</td><td style='background:#fff1eb'>2</td><td style='background:#ecfdf3'>✅</td></tr><tr><td style='background:#fff1eb'>10</td><td style='background:#fff1eb'>20</td><td style='background:#ecfdf3'>❌</td></tr></table>")]
+
+    subgraph Train["Training set"]
+        Xtrain[("X_train<br/><span>(training features)</span>")]
+        Ytrain[("y_train<br/><span>(training labels)</span>")]
+    end
+
+    subgraph Test["Test set"]
+        Xtest[("X_test<br/><span>(test features)</span>")]
+        Ytest[("y_test<br/><span>(test labels)</span>")]
+    end
+
+    Algo["ML algorithm"]
+    Model["Model<br/><span>(learned mapping)</span>"]
+
+    D --> Train
+    D --> Test
+    Xtrain --> Algo
+    Ytrain --> Algo
+    Algo --> Model
+
+    classDef data fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    classDef train fill:#eef3ff,stroke:#3557a4,stroke-width:2px,color:#24303f;
+    classDef test fill:#fff1eb,stroke:#c2410c,stroke-width:2px,color:#24303f;
+    classDef label fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef testLabel fill:#ecfdf3,stroke:#027a48,stroke-width:2px,color:#24303f;
+    classDef model fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef process fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+
+    class D data;
+    class Xtrain train;
+    class Xtest test;
+    class Ytrain label;
+    class Ytest testLabel;
+    class Model model;
+    class Algo process;
+    style Train fill:#f8fbff,stroke:#3557a4,stroke-width:2px;
+    style Test fill:#fffaf7,stroke:#c2410c,stroke-width:2px;
+```
+
+# The supervised learning workflow {auto-animate=true}
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    D[("<b>Full dataset</b><br/><table><tr><th>months</th><th>hours</th><th>churn</th></tr><tr><td style='background:#eef3ff'>2</td><td style='background:#eef3ff'>3</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>4</td><td style='background:#eef3ff'>6</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>6</td><td style='background:#eef3ff'>15</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#eef3ff'>12</td><td style='background:#eef3ff'>22</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#eef3ff'>3</td><td style='background:#eef3ff'>4</td><td style='background:#fbedf4'>✅</td></tr><tr><td style='background:#eef3ff'>8</td><td style='background:#eef3ff'>18</td><td style='background:#fbedf4'>❌</td></tr><tr><td style='background:#fff1eb'>5</td><td style='background:#fff1eb'>7</td><td style='background:#ecfdf3'>❌</td></tr><tr><td style='background:#fff1eb'>1</td><td style='background:#fff1eb'>2</td><td style='background:#ecfdf3'>✅</td></tr><tr><td style='background:#fff1eb'>10</td><td style='background:#fff1eb'>20</td><td style='background:#ecfdf3'>❌</td></tr></table>")]
+
+    subgraph Train["Training set"]
+        Xtrain[("X_train<br/><span>(training features)</span>")]
+        Ytrain[("y_train<br/><span>(training labels)</span>")]
+    end
+
+    subgraph Test["Test set"]
+        Xtest[("X_test<br/><span>(test features)</span>")]
+        Ytest[("y_test<br/><span>(test labels)</span>")]
+    end
+
+    Algo["ML algorithm"]
+    Model["Model<br/><span>(learned mapping)</span>"]
+    Pred[("y_hat<br/><span>(predictions)</span>")]
+    Eval["Compare<br/><span>(y_hat vs y_test)</span>"]
+    KPI(["Performance KPI"])
+
+    D --> Train
+    D --> Test
+    Xtrain --> Algo
+    Ytrain --> Algo
+    Algo --> Model
+    Xtest --> Model
+    Model --> Pred
+    Pred --> Eval
+    Ytest --> Eval
+    Eval --> KPI
+
+    classDef data fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    classDef train fill:#eef3ff,stroke:#3557a4,stroke-width:2px,color:#24303f;
+    classDef test fill:#fff1eb,stroke:#c2410c,stroke-width:2px,color:#24303f;
+    classDef label fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef testLabel fill:#ecfdf3,stroke:#027a48,stroke-width:2px,color:#24303f;
+    classDef model fill:#fbedf4,stroke:#9b2c5d,stroke-width:2px,color:#24303f;
+    classDef process fill:#ffffff,stroke:#d7dee8,stroke-width:2px,color:#24303f;
+    classDef kpi fill:#fff8db,stroke:#b58105,stroke-width:2px,color:#24303f;
+
+    class D data;
+    class Xtrain train;
+    class Xtest test;
+    class Ytrain label;
+    class Ytest testLabel;
+    class Model,Pred model;
+    class Algo,Eval process;
+    class KPI kpi;
+    style Train fill:#f8fbff,stroke:#3557a4,stroke-width:2px;
+    style Test fill:#fffaf7,stroke:#c2410c,stroke-width:2px;
+```
+
+::: {.notes}
+The label column is used while training, but kept aside during prediction. Only `X_test` enters the trained model; `y_test` is used afterward for evaluation.
+:::
+
+# Training and testing serve different purposes
+
+*Training*: fit the model given known examples (training features + expected results)
+
+> | `months_subscribed` | `monthly_watch_hours` | `churn` |
+> | :-----------------: | :-------------------: | :-----: |
+> | 2                 | 3                       | ✅   |
+> | 4                 | 6                       | ✅   |
+> | 6                 | 15                      | ❌    |
+> | 12                | 22                      | ❌    |
+> | 3                 | 4                       | ✅   |
+> | 8                 | 18                      | ❌    |
+
+*Testing*: evaluate the model on unseen examples (test features)
+
+> | `months_subscribed` | `monthly_watch_hours` | `churn` |
+> | :-----------------: | :-------------------: | :-----: |
+> | 5                 | 7                       | ?  |
+> | 1                 | 2                       | ?  |
+> | 10                | 20                      | ?  |
+
 # Supervised learning learns from labeled examples
 
-- *Supervised Learning*: models are trained using labeled data to learn a mapping from inputs to *labels*
+- *Supervised Learning*: learn the program/model that binds a label to the training features
     - **Classification**: the *label* is *nominal*; spam detection (`yes`/`no`), diagnosis (`healthy`/`sick`)
     - **Regression**: the *label* is *continuous*; house price, temperature
 - Unsupervised Learning
@@ -429,63 +661,6 @@ Create a calculator that computes the sum of two numbers.
         - Instance-Based Methods
 - Unsupervised Learning
 - Reinforcement Learning
-
-# Model-based classifiers learn a decision function
-
-::::{.columns}
-:::{.column width=60%}
-
-A **dataset** is a collection (e.g., a table) of records:
-
-- Each record (aka instance, example, or observation) has a set of **features** (aka attributes, or variables) that describe it (e.g., `months_subscribed`)
-- During training, one feature provides the known **class** or **label** (e.g., `churn`)
-- The schema of a dataset is the set of features that defines the structure of the data (e.g., `months_subscribed`, `monthly_watch_hours`, `churn`)
-
-Goal:
-
-- Learn a **model** that maps features to a class
-  - A [model](https://en.wikipedia.org/wiki/Model) is an informative, simplified representation of an object or system.
-- Use that model to predict the class of unseen records accurately
-:::
-:::{.column width=40%}
-
-| `months_subscribed` | `monthly_watch_hours` | `churn` |
-| :-----------------: | :-------------------: | :-----: |
-| 2                 | 3                       | *yes*   |
-| 4                 | 6                       | *yes*   |
-| 6                 | 15                      | *no*    |
-| 12                | 22                      | *no*    |
-| 3                 | 4                       | *yes*   |
-| 8                 | 18                      | *no*    |
-| 5                 | 7                       | *no*    |
-| 1                 | 2                       | *yes*   |
-| 10                | 20                      | *no*    |
-
-:::
-::::
-
-# Training and testing serve different purposes
-
-Fist, split the original dataset into non-overlapping *training* and *test* sets
-
-> | `months_subscribed` | `monthly_watch_hours` | `churn` |
-> | :-----------------: | :-------------------: | :-----: |
-> | 2                 | 3                       | *yes*   |
-> | 4                 | 6                       | *yes*   |
-> | 6                 | 15                      | *no*    |
-> | 12                | 22                      | *no*    |
-> | 3                 | 4                       | *yes*   |
-> | 8                 | 18                      | *no*    |
-
-> | `months_subscribed` | `monthly_watch_hours` | `churn` |
-> | :-----------------: | :-------------------: | :-----: |
-> | 5                 | 7                       | ?  |
-> | 1                 | 2                       | ?  |
-> | 10                | 20                      | ?  |
-
-Then, learn the model from the training set
-
-Finally, use the test set only to evaluate performance on unseen records
 
 # Training learns a model from labeled examples
 
