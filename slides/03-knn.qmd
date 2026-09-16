@@ -32,13 +32,7 @@ By the end of this lecture, you will be able to:
 | **Core** | Explain lazy learning, distance metrics, majority vote, and why scaling matters |
 | **Practice** | Compute a k-NN prediction and select $k$ using validation data |
 
-# Intuition: nearby points tend to behave alike
-
-K-nearest neighbors is an **instance-based** method.
-
-- Training is mostly memorization: store the labeled examples
-- Prediction is local: inspect the neighborhood of the new record
-- The learned boundary can be nonlinear because each region can vote differently
+# If it walks like a duck and quacks like a duck, it's probably a duck
 
 ![If it walks like a duck and quacks like a duck, it's probably a duck](img/knn/Immagine1.png)
 
@@ -50,9 +44,11 @@ k-NN is often called a **lazy learner**.
 - Lazy learners postpone most of the work until a new query arrives
 - The prediction cost can therefore be high for large training sets
 
-The key question becomes:
+K-nearest neighbors is an **instance-based** method.
 
-> What does "similar" mean for these records?
+- Training is mostly memorization: store the labeled examples
+- Prediction is local: inspect the neighborhood of the new record
+- The learned boundary can be nonlinear because each region can vote differently
 
 # Nearest-neighbor classifier
 
