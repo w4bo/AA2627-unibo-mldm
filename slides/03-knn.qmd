@@ -702,18 +702,6 @@ $$
 
 In practice, **feature selection** and **dimensionality reduction** are often more realistic than collecting exponentially more data.
 
-# Practical model-selection checklist
-
-For k-NN, validate:
-
-- Number of neighbors: `n_neighbors`
-- Weighting: uniform or distance-weighted
-- Distance metric: Euclidean, Manhattan, or a domain-specific metric
-- Scaling method: standardization, min-max scaling, or another transformation
-- Feature set: remove irrelevant or redundant features
-
-Keep the test set untouched until the final evaluation.
-
 # Why brute-force distance computation costs $O(nd)$
 
 For one query, k-NN compares the query with every training record.
@@ -771,6 +759,16 @@ R-trees organize objects into:
 
 ![R-tree](img/knn/Immagine3.png)
 
+# k-NN: practical model-selection checklist
+
+For k-NN, validate:
+
+- Number of neighbors: `n_neighbors`
+- Weighting: uniform or distance-weighted
+- Distance metric: Euclidean, Manhattan, or a domain-specific metric
+- Scaling method: standardization, min-max scaling, or another transformation
+- Feature set: remove irrelevant or redundant features
+
 # k-NN: strengths
 
 - Very simple baseline
@@ -812,5 +810,3 @@ A query point has five nearest-neighbor labels:
 - Many features are irrelevant
 - Prediction latency matters
 - Data are sparse or high-dimensional
-
-**Remember:** scale features, select the metric and $k$ with validation data, and keep the test set untouched.
