@@ -205,7 +205,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Machine Learning and Data Mining (Module I)</h1>
-  <p class="subtitle">Classification: a hands-on lab</p>
+  <p class="subtitle">Lab 01 - Classification</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -267,47 +267,28 @@ Answer
 </summary>
 Random operations are seeded to ensure reproducibility of results. This means that every time the notebook is run, the same random numbers will be generated, leading to consistent outputs and comparison of results.
 </details>
-<div id="4142a5b5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:18.254926Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:18.254741Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:19.601150Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:19.600087Z&quot;}}" data-execution_count="1">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="op">!</span>pip install <span class="op">-</span>q numpy pandas matplotlib scikit<span class="op">-</span>learn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-yellow-fg">WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.</span><span class="ansi-yellow-fg">
-
-</span>
-
-
-<span class="ansi-bold">[</span><span class="ansi-blue-fg">notice</span><span class="ansi-bold">]</span> A new release of pip is available: <span class="ansi-red-fg">26.0.1</span> -&gt; <span class="ansi-green-fg">26.2.1</span>
-
-<span class="ansi-bold">[</span><span class="ansi-blue-fg">notice</span><span class="ansi-bold">]</span> To update, run: <span class="ansi-green-fg">pip install --upgrade pip</span>
-</pre>
-</div>
-</div>
-</div>
 </section>
 
 <section id="load-arff-files-without-extra-dependencies" class="title-slide slide level1 center">
 <h1>Load ARFF files without extra dependencies</h1>
 <p><code>find_dataset</code> makes paths work whether the notebook starts in the repository root or in <code>slides/</code>.</p>
-<div id="d48b2a2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:24.164829Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:24.164638Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:24.548111Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:24.547047Z&quot;}}" data-execution_count="4">
+<div id="d48b2a2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:31.839200Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:31.839027Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:32.312057Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:32.311052Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>bank <span class="op">=</span> load_dense_arff(<span class="st">"bank-data.arff"</span>)</span>
-<span id="cb3-2"><a href="" aria-label="2"></a>census_train <span class="op">=</span> load_dense_arff(<span class="st">"CensusTraining.arff"</span>)</span>
-<span id="cb3-3"><a href="" aria-label="3"></a>census_test <span class="op">=</span> load_dense_arff(<span class="st">"CensusTest.arff"</span>)</span>
-<span id="cb3-4"><a href="" aria-label="4"></a>nursery <span class="op">=</span> load_dense_arff(<span class="st">"nurseryTrain.arff"</span>)</span>
-<span id="cb3-5"><a href="" aria-label="5"></a></span>
-<span id="cb3-6"><a href="" aria-label="6"></a>dataset_catalog <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb3-7"><a href="" aria-label="7"></a>    {</span>
-<span id="cb3-8"><a href="" aria-label="8"></a>        <span class="st">"rows"</span>: [<span class="bu">len</span>(bank), <span class="bu">len</span>(census_train), <span class="bu">len</span>(census_test), <span class="bu">len</span>(nursery)],</span>
-<span id="cb3-9"><a href="" aria-label="9"></a>        <span class="st">"columns"</span>: [bank.shape[<span class="dv">1</span>], census_train.shape[<span class="dv">1</span>], census_test.shape[<span class="dv">1</span>], nursery.shape[<span class="dv">1</span>]],</span>
-<span id="cb3-10"><a href="" aria-label="10"></a>        <span class="st">"target"</span>: [<span class="st">"pep"</span>, <span class="st">"class"</span>, <span class="st">"class"</span>, <span class="st">"class"</span>],</span>
-<span id="cb3-11"><a href="" aria-label="11"></a>    },</span>
-<span id="cb3-12"><a href="" aria-label="12"></a>    index<span class="op">=</span>[<span class="st">"Bank"</span>, <span class="st">"Census train"</span>, <span class="st">"Census test"</span>, <span class="st">"Nursery"</span>],</span>
-<span id="cb3-13"><a href="" aria-label="13"></a>)</span>
-<span id="cb3-14"><a href="" aria-label="14"></a>dataset_catalog</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>bank <span class="op">=</span> load_dense_arff(<span class="st">"bank-data.arff"</span>)</span>
+<span id="cb2-2"><a href="" aria-label="2"></a>census_train <span class="op">=</span> load_dense_arff(<span class="st">"CensusTraining.arff"</span>)</span>
+<span id="cb2-3"><a href="" aria-label="3"></a>census_test <span class="op">=</span> load_dense_arff(<span class="st">"CensusTest.arff"</span>)</span>
+<span id="cb2-4"><a href="" aria-label="4"></a>nursery <span class="op">=</span> load_dense_arff(<span class="st">"nurseryTrain.arff"</span>)</span>
+<span id="cb2-5"><a href="" aria-label="5"></a></span>
+<span id="cb2-6"><a href="" aria-label="6"></a>dataset_catalog <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb2-7"><a href="" aria-label="7"></a>    {</span>
+<span id="cb2-8"><a href="" aria-label="8"></a>        <span class="st">"rows"</span>: [<span class="bu">len</span>(bank), <span class="bu">len</span>(census_train), <span class="bu">len</span>(census_test), <span class="bu">len</span>(nursery)],</span>
+<span id="cb2-9"><a href="" aria-label="9"></a>        <span class="st">"columns"</span>: [bank.shape[<span class="dv">1</span>], census_train.shape[<span class="dv">1</span>], census_test.shape[<span class="dv">1</span>], nursery.shape[<span class="dv">1</span>]],</span>
+<span id="cb2-10"><a href="" aria-label="10"></a>        <span class="st">"target"</span>: [<span class="st">"pep"</span>, <span class="st">"class"</span>, <span class="st">"class"</span>, <span class="st">"class"</span>],</span>
+<span id="cb2-11"><a href="" aria-label="11"></a>    },</span>
+<span id="cb2-12"><a href="" aria-label="12"></a>    index<span class="op">=</span>[<span class="st">"Bank"</span>, <span class="st">"Census train"</span>, <span class="st">"Census test"</span>, <span class="st">"Nursery"</span>],</span>
+<span id="cb2-13"><a href="" aria-label="13"></a>)</span>
+<span id="cb2-14"><a href="" aria-label="14"></a>dataset_catalog</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -403,10 +384,10 @@ Only Census has an explicit training/test pair. Looking at its test results whil
 <ul>
 <li>An identifier can let a model memorize rows without learning a reusable pattern.</li>
 </ul>
-<div id="c0772277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:24.550072Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:24.549893Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:24.559697Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:24.558892Z&quot;}}" data-execution_count="5">
+<div id="c0772277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:32.314182Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:32.313962Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:32.324449Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:32.323606Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>bank.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>bank.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -529,10 +510,10 @@ Only Census has an explicit training/test pair. Looking at its test results whil
 <section>
 <section id="data-profiling" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="a8cdbc99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:24.561526Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:24.561354Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:24.569398Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:24.568608Z&quot;}}" data-execution_count="6">
+<div id="a8cdbc99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:32.326576Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:32.326364Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:32.336093Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:32.335151Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>bank.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>bank.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.DataFrame'&gt;
@@ -559,10 +540,10 @@ memory usage: 56.4+ KB</code></pre>
 </section>
 <section id="bank-target-counts" class="slide level2">
 <h2>Bank target counts</h2>
-<div id="3756fc8f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:24.594188Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:24.593988Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:24.599934Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:24.599016Z&quot;}}" data-execution_count="8">
+<div id="3756fc8f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:32.366823Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:32.366574Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:32.373529Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:32.372550Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
@@ -606,10 +587,10 @@ memory usage: 56.4+ KB</code></pre>
 </div>
 </div>
 </div>
-<div id="c27cb604" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:24.601551Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:24.601374Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:24.607551Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:24.606763Z&quot;}}" data-execution_count="9">
+<div id="c27cb604" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:32.375376Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:32.375177Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:32.382454Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:32.381449Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"proportion"</span>).to_frame()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>bank[<span class="st">"pep"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"proportion"</span>).to_frame()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
@@ -656,11 +637,11 @@ memory usage: 56.4+ KB</code></pre>
 </section>
 <section id="simple-data-preprocessing" class="slide level2">
 <h2>(Simple) Data preprocessing</h2>
-<div id="7662147e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:24.609393Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:24.609215Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:24.617669Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:24.616731Z&quot;}}" data-execution_count="10">
+<div id="7662147e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:32.384252Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:32.384070Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:32.393462Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:32.392620Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>bank <span class="op">=</span> bank.replace({<span class="st">"YES"</span>: <span class="dv">1</span>, <span class="st">"NO"</span>: <span class="dv">0</span>})</span>
-<span id="cb9-2"><a href="" aria-label="2"></a>bank.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>bank <span class="op">=</span> bank.replace({<span class="st">"YES"</span>: <span class="dv">1</span>, <span class="st">"NO"</span>: <span class="dv">0</span>})</span>
+<span id="cb8-2"><a href="" aria-label="2"></a>bank.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.DataFrame'&gt;
@@ -691,12 +672,28 @@ memory usage: 56.4+ KB</code></pre>
 <ul>
 <li>Values near <code>1</code> indicate a strong positive relationship, values near <code>-1</code> a strong negative relationship, and values near <code>0</code> little linear relationship.</li>
 </ul>
-
-<img data-src="lab-03-classification_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
+<div id="bank-feature-correlation-plot" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:32.395707Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:32.395517Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:32.644222Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:32.643278Z&quot;}}" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-03-classification_files/figure-revealjs/cell-12-output-1.png" width="572" height="473"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="data-understanding-1" class="slide level2">
 <h2>Data understanding</h2>
-
-<img data-src="lab-03-classification_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
+<div id="1e99f351" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:32.646704Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:32.646493Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:33.190031Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:33.188825Z&quot;}}" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-03-classification_files/figure-revealjs/cell-13-output-1.png" width="1527" height="374"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="exercise---decide-what-enters-the-model" class="slide level2">
 <h2>Exercise - decide what enters the model</h2>
 <p>Before running the next cell:</p>
@@ -722,7 +719,7 @@ Answer
 <ul>
 <li>Stratification preserves the target proportions in both partitions.</li>
 </ul>
-<div id="d842afad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:25.379009Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:25.378833Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:25.390229Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:25.389445Z&quot;}}" data-execution_count="13">
+<div id="d842afad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:33.192211Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:33.191886Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:33.205178Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:33.204267Z&quot;}}" data-execution_count="13">
 <div class="cell-output cell-output-stdout">
 <pre><code>Training shape: (450, 10)
 Test shape: (150, 10)</code></pre>
@@ -783,9 +780,9 @@ Test shape: (150, 10)</code></pre>
 <li>Unknown categories are ignored so prediction does not fail on a new category.</li>
 </ul>
 <p>The dataset contains no missing values, so the pipeline deliberately does not impute. Scaling matters for distance-based and linear models. It is unnecessary for a tree, but using a consistent transformer makes the comparison easy to audit.</p>
-<div id="83d4e32c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:25.392316Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:25.392102Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:25.418934Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:25.418140Z&quot;}}" data-execution_count="14">
+<div id="83d4e32c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:33.207073Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:33.206882Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:33.234973Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:33.234022Z&quot;}}" data-execution_count="14">
 <div class="cell-output cell-output-display" data-execution_count="14">
-<style>#sk-container-id-1 {
+<style>.sk-global {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
   --sklearn-color-text-muted: #666;
@@ -802,7 +799,7 @@ Test shape: (150, 10)</code></pre>
   --sklearn-color-fitted-level-3: cornflowerblue;
 }
 
-#sk-container-id-1.light {
+.sk-global.light {
   /* Specific color for light theme */
   --sklearn-color-text-on-default-background: black;
   --sklearn-color-background: white;
@@ -810,25 +807,24 @@ Test shape: (150, 10)</code></pre>
   --sklearn-color-icon: #696969;
 }
 
-#sk-container-id-1.dark {
+.sk-global.dark {
   --sklearn-color-text-on-default-background: white;
   --sklearn-color-background: #111;
   --sklearn-color-border-box: white;
   --sklearn-color-icon: #878787;
 }
 
-#sk-container-id-1 {
+.sk-global {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-1 pre {
+.sk-global pre {
   padding: 0;
 }
 
-#sk-container-id-1 input.sk-hidden--visually {
+.sk-global input.sk-hidden--visually {
   border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(100%);
   height: 1px;
   margin: -1px;
   overflow: hidden;
@@ -837,7 +833,7 @@ Test shape: (150, 10)</code></pre>
   width: 1px;
 }
 
-#sk-container-id-1 div.sk-dashed-wrapped {
+.sk-global div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -845,7 +841,7 @@ Test shape: (150, 10)</code></pre>
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-1 div.sk-container {
+.sk-global div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -855,7 +851,7 @@ Test shape: (150, 10)</code></pre>
   position: relative;
 }
 
-#sk-container-id-1 div.sk-text-repr-fallback {
+.sk-global div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -871,14 +867,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-1 div.sk-parallel-item::after {
+.sk-global div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-1 div.sk-parallel {
+.sk-global div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -886,28 +882,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-1 div.sk-parallel-item {
+.sk-global div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
+.sk-global div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
+.sk-global div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
+.sk-global div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-1 div.sk-serial {
+.sk-global div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -925,14 +921,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-1 div.sk-toggleable {
+.sk-global div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
+.sk-global label.sk-toggleable__label {
   cursor: pointer;
   display: flex;
   width: 100%;
@@ -945,13 +941,13 @@ clickable and can be expanded/collapsed.
   gap: 0.5em;
 }
 
-#sk-container-id-1 label.sk-toggleable__label .caption {
+.sk-global label.sk-toggleable__label .caption {
   font-size: 0.6rem;
   font-weight: lighter;
   color: var(--sklearn-color-text-muted);
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+.sk-global label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -959,25 +955,25 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+.sk-global label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-1 div.sk-toggleable__content {
+.sk-global div.sk-toggleable__content {
   display: none;
   text-align: left;
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted {
+.sk-global div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content pre {
+.sk-global div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -985,78 +981,78 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+.sk-global div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+.sk-global input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   display: block;
   width: 100%;
   overflow: visible;
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+.sk-global input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
+.sk-global div.sk-label label.sk-toggleable__label,
+.sk-global div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+.sk-global div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+.sk-global div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-1 div.sk-label label {
+.sk-global div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   line-height: 1.2em;
 }
 
-#sk-container-id-1 div.sk-label-container {
+.sk-global div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
+.sk-global div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -1066,18 +1062,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted {
+.sk-global div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
+.sk-global div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted:hover {
+.sk-global div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -1168,7 +1164,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-1 a.estimator_doc_link {
+.sk-global a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -1183,7 +1179,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted {
+.sk-global a.estimator_doc_link.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
@@ -1191,16 +1187,24 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 }
 
 /* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
+.sk-global a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+.sk-global a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-top-container.sk-global {
+  /* pydata-sphinx-theme hides overflow, so scrolling is disabled.
+   We need to set it to !important and add tabindex="0" in the HTML
+   to allow keyboard-only users to navigate the display. */
+  overflow-x: scroll !important;
+  max-width: 100%;
 }
 
 .estimator-table {
@@ -1236,11 +1240,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     background-color: #f6f6f6;
 }
 
-.estimator-table .parameters-table tr:hover {
+.estimator-table .parameters-table tr:hover td {
     background-color: #e0e0e0;
 }
 
-.estimator-table table td {
+.estimator-table table :is(td, th) {
     border: 1px solid rgba(106, 105, 104, 0.232);
 }
 
@@ -1264,7 +1268,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     background-color: transparent;
 }
 
-.default td {
+.default td, .estimator-table th {
     color: black;
     text-align: left !important;
 }
@@ -1272,6 +1276,10 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 .user-set td i,
 .default td i {
     color: black;
+}
+
+td.fitted-att-type {
+    white-space: preserve nowrap;
 }
 
 /*
@@ -1286,6 +1294,14 @@ a.param-doc-link:visited {
     color: inherit;
     display: block;
     padding: .5em;
+}
+
+@supports(anchor-name: --doc-link) {
+    a.param-doc-link,
+    a.param-doc-link:link,
+    a.param-doc-link:visited {
+    anchor-name: --doc-link;
+    }
 }
 
 /* "hack" to make the entire area of the cell containing the link clickable */
@@ -1314,6 +1330,14 @@ a.param-doc-link::before {
     border: thin solid var(--sklearn-color-unfitted-level-3);
 }
 
+@supports(position-area: center right) {
+    .param-doc-description {
+    position-area: center right;
+    position: fixed;
+    margin-left: 0;
+    }
+}
+
 /* Fitted state for parameter tooltips */
 .fitted .param-doc-description {
     /* fitted */
@@ -1335,7 +1359,128 @@ a.param-doc-link::before {
     height: 14px;
     cursor: pointer;
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[('preprocess',
+
+.features {
+  font-family: monospace;
+  cursor: pointer;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: .20em;
+  margin-bottom: 0.5em;
+  font-size: inherit; /* Needed for jupyter */
+}
+
+.features.fitted {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features summary {
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 0;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: .25em;
+}
+
+.features details[open] > summary {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features.fitted details[open] > summary {
+  background-color: var(--sklearn-color-fitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features details > summary .arrow::before {
+  content: "▸";
+  color: grey;
+}
+
+.features details[open] > summary .arrow::before {
+  content: "▾";
+}
+
+.features details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.features.fitted details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+.features .features-container {
+  max-width: 15em;
+  max-height: 10em;
+  overflow: auto;
+  scrollbar-width: thin;
+  padding: .25em 0.1rem;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 0 0 .5em .5em;
+}
+
+.features.fitted .features-container {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features .image-container {
+  block-size: 1em;
+  inline-size: 1em;
+  padding: 0;
+  margin: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features .copy-paste-icon {
+  background-size: 1em 1em;
+  width: 1em;
+  height: 1em;
+  filter: grayscale(100%) opacity(60%);
+}
+
+.features .features-container table {
+  width: 100%;
+  margin: 0.01em;
+}
+
+.features .features-container table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.features .features-container table tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.features .features-container table tr:hover {
+  background-color: #e0e0e0;
+}
+
+.features .features-container table {
+  table-layout: inherit;
+}
+
+.features .features-container table td {
+  text-align: left;
+  padding: 0 0.5em;
+  border: 1px solid rgba(106, 105, 104, 0.232);
+  white-space: nowrap;
+  color: var(--sklearn-color-text);
+}
+
+.total_features {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+</style><div id="sk-container-id-1" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[('preprocess',
                  ColumnTransformer(transformers=[('numeric', StandardScaler(),
                                                   ['age', 'income',
                                                    'children']),
@@ -1345,7 +1490,7 @@ a.param-doc-link::before {
                                                    'married', 'mortgage',
                                                    'region', 'save_act',
                                                    'sex'])])),
-                ('model', DecisionTreeClassifier())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox"><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
+                ('model', DecisionTreeClassifier())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox"><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1359,35 +1504,35 @@ a.param-doc-link::before {
 <tbody>
 <tr class="user-set odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=steps,-list%20of%20tuples" class="param-doc-link" rel="noreferrer" target="_blank">steps <span class="param-doc-description">steps: list of tuples<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=steps,-list%20of%20tuples" class="param-doc-link" style="anchor-name: --doc-link-steps;" rel="noreferrer" target="_blank">steps <span class="param-doc-description" style="position-anchor: --doc-link-steps;"> steps: list of tuples<br>
 <br>
 List of (name of step, estimator) tuples that are to be chained in<br>
 sequential order. To be compatible with the scikit-learn API, all steps<br>
 must define `fit`. All non-last steps must also define `transform`. See<br>
-:ref:`Combining Estimators <combining_estimators>` for more details.</combining_estimators></span></a></td>
+:ref:`Combining Estimators &lt;combining_estimators&gt;` for more details.</span></a></td>
 <td class="value">[('preprocess', ...), ('model', ...)]</td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=transform_input,-list%20of%20str%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">transform_input <span class="param-doc-description">transform_input: list of str, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=transform_input,-list%20of%20str%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-transform_input;" rel="noreferrer" target="_blank">transform_input <span class="param-doc-description" style="position-anchor: --doc-link-transform_input;"> transform_input: list of str, default=None<br>
 <br>
 The names of the :term:`metadata` parameters that should be transformed by the<br>
 pipeline before passing it to the step consuming it.<br>
 <br>
 This enables transforming some input arguments to ``fit`` (other than ``X``)<br>
 to be transformed by the steps of the pipeline up to the step which requires<br>
-them. Requirement is defined via :ref:`metadata routing <metadata_routing>`.<br>
+them. Requirement is defined via :ref:`metadata routing &lt;metadata_routing&gt;`.<br>
 For instance, this can be used to pass a validation set through the pipeline.<br>
 <br>
 You can only set this if metadata routing is enabled, which you<br>
 can enable using ``sklearn.set_config(enable_metadata_routing=True)``.<br>
 <br>
-.. versionadded:: 1.6</metadata_routing></span></a></td>
+.. versionadded:: 1.6</span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=memory,-str%20or%20object%20with%20the%20joblib.Memory%20interface%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">memory <span class="param-doc-description">memory: str or object with the joblib.Memory interface, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=memory,-str%20or%20object%20with%20the%20joblib.Memory%20interface%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-memory;" rel="noreferrer" target="_blank">memory <span class="param-doc-description" style="position-anchor: --doc-link-memory;"> memory: str or object with the joblib.Memory interface, default=None<br>
 <br>
 Used to cache the fitted transformers of the pipeline. The last step<br>
 will never be cached, even if it is a transformer. By default, no<br>
@@ -1403,7 +1548,7 @@ for an example on how to enable caching.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: bool, default=False<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" style="anchor-name: --doc-link-verbose;" rel="noreferrer" target="_blank">verbose <span class="param-doc-description" style="position-anchor: --doc-link-verbose;"> verbose: bool, default=False<br>
 <br>
 If True, the time elapsed while fitting each step will be printed as it<br>
 is completed.</span></a></td>
@@ -1414,7 +1559,7 @@ is completed.</span></a></td>
 
             </details>
         </div>
-    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox"><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>preprocess: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocess: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__">
+    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox"><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>preprocess: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocess: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1428,7 +1573,7 @@ is completed.</span></a></td>
 <tbody>
 <tr class="user-set odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformers,-list%20of%20tuples" class="param-doc-link" rel="noreferrer" target="_blank">transformers <span class="param-doc-description">transformers: list of tuples<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformers,-list%20of%20tuples" class="param-doc-link" style="anchor-name: --doc-link-transformers;" rel="noreferrer" target="_blank">transformers <span class="param-doc-description" style="position-anchor: --doc-link-transformers;"> transformers: list of tuples<br>
 <br>
 List of (name, transformer, columns) tuples specifying the<br>
 transformer objects to be applied to subsets of the data.<br>
@@ -1455,7 +1600,7 @@ above. To select multiple columns by name or dtype, you can use<br>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=remainder,-%7B%27drop%27%2C%20%27passthrough%27%7D%20or%20estimator%2C%20default%3D%27drop%27" class="param-doc-link" rel="noreferrer" target="_blank">remainder <span class="param-doc-description">remainder: {'drop', 'passthrough'} or estimator, default='drop'<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=remainder,-%7B%27drop%27%2C%20%27passthrough%27%7D%20or%20estimator%2C%20default%3D%27drop%27" class="param-doc-link" style="anchor-name: --doc-link-remainder;" rel="noreferrer" target="_blank">remainder <span class="param-doc-description" style="position-anchor: --doc-link-remainder;"> remainder: {'drop', 'passthrough'} or estimator, default='drop'<br>
 <br>
 By default, only the specified columns in `transformers` are<br>
 transformed and combined in the output, and the non-specified<br>
@@ -1475,7 +1620,7 @@ input at :term:`fit` and :term:`transform` have identical order.</span></a></td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=sparse_threshold,-float%2C%20default%3D0.3" class="param-doc-link" rel="noreferrer" target="_blank">sparse_threshold <span class="param-doc-description">sparse_threshold: float, default=0.3<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=sparse_threshold,-float%2C%20default%3D0.3" class="param-doc-link" style="anchor-name: --doc-link-sparse_threshold;" rel="noreferrer" target="_blank">sparse_threshold <span class="param-doc-description" style="position-anchor: --doc-link-sparse_threshold;"> sparse_threshold: float, default=0.3<br>
 <br>
 If the output of the different transformers contains sparse matrices,<br>
 these will be stacked as a sparse matrix if the overall density is<br>
@@ -1486,17 +1631,17 @@ stacked result will be dense, and this keyword will be ignored.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description">n_jobs: int, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-n_jobs;" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description" style="position-anchor: --doc-link-n_jobs;"> n_jobs: int, default=None<br>
 <br>
 Number of jobs to run in parallel.<br>
 ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.<br>
-``-1`` means using all processors. See :term:`Glossary <n_jobs>`<br>
-for more details.</n_jobs></span></a></td>
+``-1`` means using all processors. See :term:`Glossary &lt;n_jobs&gt;`<br>
+for more details.</span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformer_weights,-dict%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">transformer_weights <span class="param-doc-description">transformer_weights: dict, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformer_weights,-dict%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-transformer_weights;" rel="noreferrer" target="_blank">transformer_weights <span class="param-doc-description" style="position-anchor: --doc-link-transformer_weights;"> transformer_weights: dict, default=None<br>
 <br>
 Multiplicative weights for features per transformer. The output of the<br>
 transformer is multiplied by these weights. Keys are transformer names,<br>
@@ -1505,7 +1650,7 @@ values the weights.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: bool, default=False<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" style="anchor-name: --doc-link-verbose;" rel="noreferrer" target="_blank">verbose <span class="param-doc-description" style="position-anchor: --doc-link-verbose;"> verbose: bool, default=False<br>
 <br>
 If True, the time elapsed while fitting each transformer will be<br>
 printed as it is completed.</span></a></td>
@@ -1513,7 +1658,7 @@ printed as it is completed.</span></a></td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose_feature_names_out,-bool%2C%20str%20or%20Callable%5B%5Bstr%2C%20str%5D%2C%20str%5D%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">verbose_feature_names_out <span class="param-doc-description">verbose_feature_names_out: bool, str or Callable[[str, str], str], default=True<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose_feature_names_out,-bool%2C%20str%20or%20Callable%5B%5Bstr%2C%20str%5D%2C%20str%5D%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-verbose_feature_names_out;" rel="noreferrer" target="_blank">verbose_feature_names_out <span class="param-doc-description" style="position-anchor: --doc-link-verbose_feature_names_out;"> verbose_feature_names_out: bool, str or Callable[[str, str], str], default=True<br>
 <br>
 - If True, :meth:`ColumnTransformer.get_feature_names_out` will prefix<br>
 all feature names with the name of the transformer that generated that<br>
@@ -1538,33 +1683,12 @@ from the standard library for more info.<br>
 `verbose_feature_names_out` can be a callable or a string to be formatted.</span></a></td>
 <td class="value">True</td>
 </tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=force_int_remainder_cols,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">force_int_remainder_cols <span class="param-doc-description">force_int_remainder_cols: bool, default=False<br>
-<br>
-This parameter has no effect.<br>
-<br>
-.. note::<br>
-If you do not access the list of columns for the remainder columns<br>
-in the `transformers_` fitted attribute, you do not need to set<br>
-this parameter.<br>
-<br>
-.. versionadded:: 1.5<br>
-<br>
-.. versionchanged:: 1.7<br>
-The default value for `force_int_remainder_cols` will change from<br>
-`True` to `False` in version 1.7.<br>
-<br>
-.. deprecated:: 1.7<br>
-`force_int_remainder_cols` is deprecated and will be removed in 1.9.</span></a></td>
-<td class="value">'deprecated'</td>
-</tr>
 </tbody>
 </table>
 
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox"><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>numeric</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__numeric__"><pre>['age', 'income', 'children']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__numeric__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-3" type="checkbox"><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>numeric</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__numeric__"><pre>['age', 'income', 'children']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__numeric__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1578,7 +1702,7 @@ The default value for `force_int_remainder_cols` will change from<br>
 <tbody>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">copy <span class="param-doc-description">copy: bool, default=True<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-copy;" rel="noreferrer" target="_blank">copy <span class="param-doc-description" style="position-anchor: --doc-link-copy;"> copy: bool, default=True<br>
 <br>
 If False, try to avoid a copy and do inplace scaling instead.<br>
 This is not guaranteed to always work inplace; e.g. if the data is<br>
@@ -1588,7 +1712,7 @@ returned.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_mean,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">with_mean <span class="param-doc-description">with_mean: bool, default=True<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_mean,-bool%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-with_mean;" rel="noreferrer" target="_blank">with_mean <span class="param-doc-description" style="position-anchor: --doc-link-with_mean;"> with_mean: bool, default=True<br>
 <br>
 If True, center the data before scaling.<br>
 This does not work (and will raise an exception) when attempted on<br>
@@ -1599,7 +1723,7 @@ memory.</span></a></td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_std,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">with_std <span class="param-doc-description">with_std: bool, default=True<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_std,-bool%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-with_std;" rel="noreferrer" target="_blank">with_std <span class="param-doc-description" style="position-anchor: --doc-link-with_std;"> with_std: bool, default=True<br>
 <br>
 If True, scale the data to unit variance (or equivalently,<br>
 unit standard deviation).</span></a></td>
@@ -1610,7 +1734,7 @@ unit standard deviation).</span></a></td>
 
             </details>
         </div>
-    </div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>categorical</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__categorical__"><pre>['car', 'current_act', 'married', 'mortgage', 'region', 'save_act', 'sex']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__categorical__">
+    </div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>categorical</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__categorical__"><pre>['car', 'current_act', 'married', 'mortgage', 'region', 'save_act', 'sex']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocess__categorical__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1622,9 +1746,43 @@ unit standard deviation).</span></a></td>
 <col style="width: 33%">
 </colgroup>
 <tbody>
-<tr class="default odd">
+<tr class="user-set odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=categories,-%27auto%27%20or%20a%20list%20of%20array-like%2C%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">categories <span class="param-doc-description">categories: 'auto' or a list of array-like, default='auto'<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=handle_unknown,-%7B%27error%27%2C%20%27ignore%27%2C%20%27infrequent_if_exist%27%2C%20%27warn%27%7D%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20default%3D%27error%27" class="param-doc-link" style="anchor-name: --doc-link-handle_unknown;" rel="noreferrer" target="_blank">handle_unknown <span class="param-doc-description" style="position-anchor: --doc-link-handle_unknown;"> handle_unknown: {'error', 'ignore', 'infrequent_if_exist', 'warn'}, default='error'<br>
+<br>
+Specifies the way unknown categories are handled during :meth:`transform`.<br>
+<br>
+- 'error' : Raise an error if an unknown category is present during transform.<br>
+- 'ignore' : When an unknown category is encountered during<br>
+transform, the resulting one-hot encoded columns for this feature<br>
+will be all zeros. In the inverse transform, an unknown category<br>
+will be denoted as None.<br>
+- 'infrequent_if_exist' : When an unknown category is encountered<br>
+during transform, the resulting one-hot encoded columns for this<br>
+feature will map to the infrequent category if it exists. The<br>
+infrequent category will be mapped to the last position in the<br>
+encoding. During inverse transform, an unknown category will be<br>
+mapped to the category denoted `'infrequent'` if it exists. If the<br>
+`'infrequent'` category does not exist, then :meth:`transform` and<br>
+:meth:`inverse_transform` will handle an unknown category as with<br>
+`handle_unknown='ignore'`. Infrequent categories exist based on<br>
+`min_frequency` and `max_categories`. Read more in the<br>
+:ref:`User Guide &lt;encoder_infrequent_categories&gt;`.<br>
+- 'warn' : When an unknown category is encountered during transform<br>
+a warning is issued, and the encoding then proceeds as described for<br>
+`handle_unknown="infrequent_if_exist"`.<br>
+<br>
+.. versionchanged:: 1.1<br>
+`'infrequent_if_exist'` was added to automatically handle unknown<br>
+categories and infrequent categories.<br>
+<br>
+.. versionadded:: 1.6<br>
+The option `"warn"` was added in 1.6.</span></a></td>
+<td class="value">'ignore'</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=categories,-%27auto%27%20or%20a%20list%20of%20array-like%2C%20default%3D%27auto%27" class="param-doc-link" style="anchor-name: --doc-link-categories;" rel="noreferrer" target="_blank">categories <span class="param-doc-description" style="position-anchor: --doc-link-categories;"> categories: 'auto' or a list of array-like, default='auto'<br>
 <br>
 Categories (unique values) per feature:<br>
 <br>
@@ -1639,9 +1797,9 @@ The used categories can be found in the ``categories_`` attribute.<br>
 .. versionadded:: 0.20</span></a></td>
 <td class="value">'auto'</td>
 </tr>
-<tr class="default even">
+<tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=drop,-%7B%27first%27%2C%20%27if_binary%27%7D%20or%20an%20array-like%20of%20shape%20%28n_features%2C%29%2C%20%20%20%20%20%20%20%20%20%20%20%20%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">drop <span class="param-doc-description">drop: {'first', 'if_binary'} or an array-like of shape (n_features,), default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=drop,-%7B%27first%27%2C%20%27if_binary%27%7D%20or%20an%20array-like%20of%20shape%20%28n_features%2C%29%2C%20%20%20%20%20%20%20%20%20%20%20%20%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-drop;" rel="noreferrer" target="_blank">drop <span class="param-doc-description" style="position-anchor: --doc-link-drop;"> drop: {'first', 'if_binary'} or an array-like of shape (n_features,), default=None<br>
 <br>
 Specifies a methodology to use to drop one of the categories per<br>
 feature. This is useful in situations where perfectly collinear<br>
@@ -1675,61 +1833,27 @@ The option `drop='if_binary'` was added in 0.23.<br>
 Support for dropping infrequent categories.</span></a></td>
 <td class="value">None</td>
 </tr>
-<tr class="default odd">
+<tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=sparse_output,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">sparse_output <span class="param-doc-description">sparse_output: bool, default=True<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=sparse_output,-bool%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-sparse_output;" rel="noreferrer" target="_blank">sparse_output <span class="param-doc-description" style="position-anchor: --doc-link-sparse_output;"> sparse_output: bool, default=True<br>
 <br>
-When ``True``, it returns a :class:`scipy.sparse.csr_matrix`,<br>
-i.e. a sparse matrix in "Compressed Sparse Row" (CSR) format.<br>
+When ``True``, it returns a SciPy sparse matrix/array<br>
+in "Compressed Sparse Row" (CSR) format.<br>
 <br>
 .. versionadded:: 1.2<br>
 `sparse` was renamed to `sparse_output`</span></a></td>
 <td class="value">True</td>
 </tr>
-<tr class="default even">
+<tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=dtype,-number%20type%2C%20default%3Dnp.float64" class="param-doc-link" rel="noreferrer" target="_blank">dtype <span class="param-doc-description">dtype: number type, default=np.float64<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=dtype,-number%20type%2C%20default%3Dnp.float64" class="param-doc-link" style="anchor-name: --doc-link-dtype;" rel="noreferrer" target="_blank">dtype <span class="param-doc-description" style="position-anchor: --doc-link-dtype;"> dtype: number type, default=np.float64<br>
 <br>
 Desired dtype of output.</span></a></td>
 <td class="value">&lt;class 'numpy.float64'&gt;</td>
 </tr>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=handle_unknown,-%7B%27error%27%2C%20%27ignore%27%2C%20%27infrequent_if_exist%27%2C%20%27warn%27%7D%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20default%3D%27error%27" class="param-doc-link" rel="noreferrer" target="_blank">handle_unknown <span class="param-doc-description">handle_unknown: {'error', 'ignore', 'infrequent_if_exist', 'warn'}, default='error'<br>
-<br>
-Specifies the way unknown categories are handled during :meth:`transform`.<br>
-<br>
-- 'error' : Raise an error if an unknown category is present during transform.<br>
-- 'ignore' : When an unknown category is encountered during<br>
-transform, the resulting one-hot encoded columns for this feature<br>
-will be all zeros. In the inverse transform, an unknown category<br>
-will be denoted as None.<br>
-- 'infrequent_if_exist' : When an unknown category is encountered<br>
-during transform, the resulting one-hot encoded columns for this<br>
-feature will map to the infrequent category if it exists. The<br>
-infrequent category will be mapped to the last position in the<br>
-encoding. During inverse transform, an unknown category will be<br>
-mapped to the category denoted `'infrequent'` if it exists. If the<br>
-`'infrequent'` category does not exist, then :meth:`transform` and<br>
-:meth:`inverse_transform` will handle an unknown category as with<br>
-`handle_unknown='ignore'`. Infrequent categories exist based on<br>
-`min_frequency` and `max_categories`. Read more in the<br>
-:ref:`User Guide <encoder_infrequent_categories>`.<br>
-- 'warn' : When an unknown category is encountered during transform<br>
-a warning is issued, and the encoding then proceeds as described for<br>
-`handle_unknown="infrequent_if_exist"`.<br>
-<br>
-.. versionchanged:: 1.1<br>
-`'infrequent_if_exist'` was added to automatically handle unknown<br>
-categories and infrequent categories.<br>
-<br>
-.. versionadded:: 1.6<br>
-The option `"warn"` was added in 1.6.</encoder_infrequent_categories></span></a></td>
-<td class="value">'ignore'</td>
-</tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=min_frequency,-int%20or%20float%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">min_frequency <span class="param-doc-description">min_frequency: int or float, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=min_frequency,-int%20or%20float%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-min_frequency;" rel="noreferrer" target="_blank">min_frequency <span class="param-doc-description" style="position-anchor: --doc-link-min_frequency;"> min_frequency: int or float, default=None<br>
 <br>
 Specifies the minimum frequency below which a category will be<br>
 considered infrequent.<br>
@@ -1741,12 +1865,12 @@ infrequent.<br>
 `min_frequency * n_samples` will be considered infrequent.<br>
 <br>
 .. versionadded:: 1.1<br>
-Read more in the :ref:`User Guide <encoder_infrequent_categories>`.</encoder_infrequent_categories></span></a></td>
+Read more in the :ref:`User Guide &lt;encoder_infrequent_categories&gt;`.</span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=max_categories,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_categories <span class="param-doc-description">max_categories: int, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=max_categories,-int%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-max_categories;" rel="noreferrer" target="_blank">max_categories <span class="param-doc-description" style="position-anchor: --doc-link-max_categories;"> max_categories: int, default=None<br>
 <br>
 Specifies an upper limit to the number of output features for each input<br>
 feature when considering infrequent categories. If there are infrequent<br>
@@ -1755,12 +1879,12 @@ infrequent categories along with the frequent categories. If `None`,<br>
 there is no limit to the number of output features.<br>
 <br>
 .. versionadded:: 1.1<br>
-Read more in the :ref:`User Guide <encoder_infrequent_categories>`.</encoder_infrequent_categories></span></a></td>
+Read more in the :ref:`User Guide &lt;encoder_infrequent_categories&gt;`.</span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=feature_name_combiner,-%22concat%22%20or%20callable%2C%20default%3D%22concat%22" class="param-doc-link" rel="noreferrer" target="_blank">feature_name_combiner <span class="param-doc-description">feature_name_combiner: "concat" or callable, default="concat"<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=feature_name_combiner,-%22concat%22%20or%20callable%2C%20default%3D%22concat%22" class="param-doc-link" style="anchor-name: --doc-link-feature_name_combiner;" rel="noreferrer" target="_blank">feature_name_combiner <span class="param-doc-description" style="position-anchor: --doc-link-feature_name_combiner;"> feature_name_combiner: "concat" or callable, default="concat"<br>
 <br>
 Callable with signature `def callable(input_feature, category)` that returns a<br>
 string. This is used to create feature names to be returned by<br>
@@ -1778,7 +1902,7 @@ feature names `X_1, X_6, X_7`.<br>
 
             </details>
         </div>
-    </div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>DecisionTreeClassifier</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="model__">
+    </div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>DecisionTreeClassifier</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="model__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1792,7 +1916,7 @@ feature names `X_1, X_6, X_7`.<br>
 <tbody>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=criterion,-%7B%22gini%22%2C%20%22entropy%22%2C%20%22log_loss%22%7D%2C%20default%3D%22gini%22" class="param-doc-link" rel="noreferrer" target="_blank">criterion <span class="param-doc-description">criterion: {"gini", "entropy", "log_loss"}, default="gini"<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=criterion,-%7B%22gini%22%2C%20%22entropy%22%2C%20%22log_loss%22%7D%2C%20default%3D%22gini%22" class="param-doc-link" style="anchor-name: --doc-link-criterion;" rel="noreferrer" target="_blank">criterion <span class="param-doc-description" style="position-anchor: --doc-link-criterion;"> criterion: {"gini", "entropy", "log_loss"}, default="gini"<br>
 <br>
 The function to measure the quality of a split. Supported criteria are<br>
 "gini" for the Gini impurity and "log_loss" and "entropy" both for the<br>
@@ -1801,7 +1925,7 @@ Shannon information gain, see :ref:`tree_mathematical_formulation`.</span></a></
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=splitter,-%7B%22best%22%2C%20%22random%22%7D%2C%20default%3D%22best%22" class="param-doc-link" rel="noreferrer" target="_blank">splitter <span class="param-doc-description">splitter: {"best", "random"}, default="best"<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=splitter,-%7B%22best%22%2C%20%22random%22%7D%2C%20default%3D%22best%22" class="param-doc-link" style="anchor-name: --doc-link-splitter;" rel="noreferrer" target="_blank">splitter <span class="param-doc-description" style="position-anchor: --doc-link-splitter;"> splitter: {"best", "random"}, default="best"<br>
 <br>
 The strategy used to choose the split at each node. Supported<br>
 strategies are "best" to choose the best split and "random" to choose<br>
@@ -1810,7 +1934,7 @@ the best random split.</span></a></td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_depth,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_depth <span class="param-doc-description">max_depth: int, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_depth,-int%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-max_depth;" rel="noreferrer" target="_blank">max_depth <span class="param-doc-description" style="position-anchor: --doc-link-max_depth;"> max_depth: int, default=None<br>
 <br>
 The maximum depth of the tree. If None, then nodes are expanded until<br>
 all leaves are pure or until all leaves contain less than<br>
@@ -1819,7 +1943,7 @@ min_samples_split samples.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_samples_split,-int%20or%20float%2C%20default%3D2" class="param-doc-link" rel="noreferrer" target="_blank">min_samples_split <span class="param-doc-description">min_samples_split: int or float, default=2<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_samples_split,-int%20or%20float%2C%20default%3D2" class="param-doc-link" style="anchor-name: --doc-link-min_samples_split;" rel="noreferrer" target="_blank">min_samples_split <span class="param-doc-description" style="position-anchor: --doc-link-min_samples_split;"> min_samples_split: int or float, default=2<br>
 <br>
 The minimum number of samples required to split an internal node:<br>
 <br>
@@ -1834,7 +1958,7 @@ Added float values for fractions.</span></a></td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_samples_leaf,-int%20or%20float%2C%20default%3D1" class="param-doc-link" rel="noreferrer" target="_blank">min_samples_leaf <span class="param-doc-description">min_samples_leaf: int or float, default=1<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_samples_leaf,-int%20or%20float%2C%20default%3D1" class="param-doc-link" style="anchor-name: --doc-link-min_samples_leaf;" rel="noreferrer" target="_blank">min_samples_leaf <span class="param-doc-description" style="position-anchor: --doc-link-min_samples_leaf;"> min_samples_leaf: int or float, default=1<br>
 <br>
 The minimum number of samples required to be at a leaf node.<br>
 A split point at any depth will only be considered if it leaves at<br>
@@ -1853,7 +1977,7 @@ Added float values for fractions.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_weight_fraction_leaf,-float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">min_weight_fraction_leaf <span class="param-doc-description">min_weight_fraction_leaf: float, default=0.0<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_weight_fraction_leaf,-float%2C%20default%3D0.0" class="param-doc-link" style="anchor-name: --doc-link-min_weight_fraction_leaf;" rel="noreferrer" target="_blank">min_weight_fraction_leaf <span class="param-doc-description" style="position-anchor: --doc-link-min_weight_fraction_leaf;"> min_weight_fraction_leaf: float, default=0.0<br>
 <br>
 The minimum weighted fraction of the sum total of weights (of all<br>
 the input samples) required to be at a leaf node. Samples have<br>
@@ -1862,7 +1986,7 @@ equal weight when sample_weight is not provided.</span></a></td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_features,-int%2C%20float%20or%20%7B%22sqrt%22%2C%20%22log2%22%7D%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_features <span class="param-doc-description">max_features: int, float or {"sqrt", "log2"}, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_features,-int%2C%20float%20or%20%7B%22sqrt%22%2C%20%22log2%22%7D%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-max_features;" rel="noreferrer" target="_blank">max_features <span class="param-doc-description" style="position-anchor: --doc-link-max_features;"> max_features: int, float or {"sqrt", "log2"}, default=None<br>
 <br>
 The number of features to consider when looking for the best split:<br>
 <br>
@@ -1883,7 +2007,7 @@ effectively inspect more than ``max_features`` features.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=random_state,-int%2C%20RandomState%20instance%20or%20None%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">random_state <span class="param-doc-description">random_state: int, RandomState instance or None, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=random_state,-int%2C%20RandomState%20instance%20or%20None%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-random_state;" rel="noreferrer" target="_blank">random_state <span class="param-doc-description" style="position-anchor: --doc-link-random_state;"> random_state: int, RandomState instance or None, default=None<br>
 <br>
 Controls the randomness of the estimator. The features are always<br>
 randomly permuted at each split, even if ``splitter`` is set to<br>
@@ -1894,12 +2018,12 @@ runs, even if ``max_features=n_features``. That is the case, if the<br>
 improvement of the criterion is identical for several splits and one<br>
 split has to be selected at random. To obtain a deterministic behaviour<br>
 during fitting, ``random_state`` has to be fixed to an integer.<br>
-See :term:`Glossary <random_state>` for details.</random_state></span></a></td>
+See :term:`Glossary &lt;random_state&gt;` for details.</span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_leaf_nodes,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_leaf_nodes <span class="param-doc-description">max_leaf_nodes: int, default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_leaf_nodes,-int%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-max_leaf_nodes;" rel="noreferrer" target="_blank">max_leaf_nodes <span class="param-doc-description" style="position-anchor: --doc-link-max_leaf_nodes;"> max_leaf_nodes: int, default=None<br>
 <br>
 Grow a tree with ``max_leaf_nodes`` in best-first fashion.<br>
 Best nodes are defined as relative reduction in impurity.<br>
@@ -1908,7 +2032,7 @@ If None then unlimited number of leaf nodes.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_impurity_decrease,-float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">min_impurity_decrease <span class="param-doc-description">min_impurity_decrease: float, default=0.0<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_impurity_decrease,-float%2C%20default%3D0.0" class="param-doc-link" style="anchor-name: --doc-link-min_impurity_decrease;" rel="noreferrer" target="_blank">min_impurity_decrease <span class="param-doc-description" style="position-anchor: --doc-link-min_impurity_decrease;"> min_impurity_decrease: float, default=0.0<br>
 <br>
 A node will be split if this split induces a decrease of the impurity<br>
 greater than or equal to this value.<br>
@@ -1930,7 +2054,7 @@ if ``sample_weight`` is passed.<br>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=class_weight,-dict%2C%20list%20of%20dict%20or%20%22balanced%22%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">class_weight <span class="param-doc-description">class_weight: dict, list of dict or "balanced", default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=class_weight,-dict%2C%20list%20of%20dict%20or%20%22balanced%22%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-class_weight;" rel="noreferrer" target="_blank">class_weight <span class="param-doc-description" style="position-anchor: --doc-link-class_weight;"> class_weight: dict, list of dict or "balanced", default=None<br>
 <br>
 Weights associated with classes in the form ``{class_label: weight}``.<br>
 If None, all classes are supposed to have weight one. For<br>
@@ -1955,7 +2079,7 @@ through the fit method) if sample_weight is specified.</span></a></td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=ccp_alpha,-non-negative%20float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">ccp_alpha <span class="param-doc-description">ccp_alpha: non-negative float, default=0.0<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=ccp_alpha,-non-negative%20float%2C%20default%3D0.0" class="param-doc-link" style="anchor-name: --doc-link-ccp_alpha;" rel="noreferrer" target="_blank">ccp_alpha <span class="param-doc-description" style="position-anchor: --doc-link-ccp_alpha;"> ccp_alpha: non-negative float, default=0.0<br>
 <br>
 Complexity parameter used for Minimal Cost-Complexity Pruning. The<br>
 subtree with the largest cost complexity that is smaller than<br>
@@ -1969,7 +2093,7 @@ for an example of such pruning.<br>
 </tr>
 <tr class="default odd">
 <td><em></em></td>
-<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=monotonic_cst,-array-like%20of%20int%20of%20shape%20%28n_features%29%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">monotonic_cst <span class="param-doc-description">monotonic_cst: array-like of int of shape (n_features), default=None<br>
+<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=monotonic_cst,-array-like%20of%20int%20of%20shape%20%28n_features%29%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-monotonic_cst;" rel="noreferrer" target="_blank">monotonic_cst <span class="param-doc-description" style="position-anchor: --doc-link-monotonic_cst;"> monotonic_cst: array-like of int of shape (n_features), default=None<br>
 <br>
 Indicates the monotonicity constraint to enforce on each feature.<br>
 - 1: monotonic increase<br>
@@ -1980,14 +2104,13 @@ If monotonic_cst is None, no constraints are applied.<br>
 <br>
 Monotonicity constraints are not supported for:<br>
 - multiclass classifications (i.e. when `n_classes &gt; 2`),<br>
-- multioutput classifications (i.e. when `n_outputs_ &gt; 1`),<br>
-- classifications trained on data with missing values.<br>
+- multioutput classifications (i.e. when `n_outputs_ &gt; 1`).<br>
 <br>
 The constraints hold over the probability of the positive class.<br>
 <br>
-Read more in the :ref:`User Guide <monotonic_cst_gbdt>`.<br>
+Read more in the :ref:`User Guide &lt;monotonic_cst_gbdt&gt;`.<br>
 <br>
-.. versionadded:: 1.4</monotonic_cst_gbdt></span></a></td>
+.. versionadded:: 1.4</span></a></td>
 <td class="value">None</td>
 </tr>
 </tbody>
@@ -1995,7 +2118,11 @@ Read more in the :ref:`User Guide <monotonic_cst_gbdt>`.<br>
 
             </details>
         </div>
-    </div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
+    </div></div></div></div></div></div></div><script>/*  Authors: The scikit-learn developers
+ SPDX-License-Identifier: BSD-3-Clause
+*/
+
+function copyToClipboard(text, element) {
     // Get the parameter prefix from the closest toggleable content
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
@@ -2032,6 +2159,13 @@ Read more in the :ref:`User Guide <monotonic_cst_gbdt>`.<br>
 document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+
+    const parent = element.parentElement;
+    if (!parent || !parent.nextElementSibling) {
+        console.warn('Expected copy-paste icon is missing from the DOM structure');
+        return;
+    }
+
     const paramName = element.parentElement.nextElementSibling
         .textContent.trim().split(' ')[0];
     const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
@@ -2039,7 +2173,51 @@ document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
     element.setAttribute('title', fullParamName);
 });
 
+/**
+ * Copy the list of feature names formatted as a Python list.
+ *
+ * @param {HTMLElement} element - The copy button inside a `.features` block; its siblings
+ *   contain a `details` element and a table containing feature named.
+ * @returns {boolean} Always returns `false` so callers can prevent the default click behavior.
+ */
+function copyFeatureNamesToClipboard(element) {
+    var detailsElem = element.closest('.features').querySelector('details');
+    var wasOpen = detailsElem.open;
+    detailsElem.open = true;
+    var content = element.closest('.features').querySelector('tbody')
+                  .innerText.trim();
+    if (!wasOpen) detailsElem.open = false;
+    const rows = content.split('\n').map(row => `    "${row}"`);
+    const formattedText = `[\n${rows.join(',\n')},\n]`;
+    const originalHTML = element.innerHTML.replace('✔', '');
+    const originalStyle = element.style;
+    const copyMark = document.createElement('span');
+    copyMark.innerHTML = '✔';
+    copyMark.style.color = 'blue';
+    copyMark.style.fontSize = '1em';
 
+    navigator.clipboard.writeText(formattedText)
+        .then(() => {
+            element.style.display = 'none';
+            element.parentElement.appendChild(copyMark);
+
+            setTimeout(() => {
+                copyMark.remove();
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'orange';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        });
+    return false;
+}
 /**
  * Adapted from Skrub
  * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
@@ -2121,32 +2299,38 @@ forceTheme('sk-container-id-1');</script>
 <li><code>DummyClassifier</code> reveals whether a learned model improves on predicting the most common class.</li>
 <li>We report the mean and standard deviation across five folds. The same folds are used for every candidate.</li>
 </ul>
-<div id="13b30080" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:25.672441Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:25.672264Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:25.831932Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:25.831168Z&quot;}}" data-execution_count="16">
+<div id="13b30080" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:33.496006Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:33.495740Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:33.672605Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:33.671642Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>cv_means <span class="op">=</span> cv_results[[<span class="st">"accuracy_mean"</span>, <span class="st">"balanced_accuracy_mean"</span>, <span class="st">"f1_mean"</span>]]</span>
-<span id="cb12-2"><a href="" aria-label="2"></a>cv_standard_deviations <span class="op">=</span> cv_results[</span>
-<span id="cb12-3"><a href="" aria-label="3"></a>    [<span class="st">"accuracy_sd"</span>, <span class="st">"balanced_accuracy_sd"</span>, <span class="st">"f1_sd"</span>]</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>].rename(columns<span class="op">=</span><span class="kw">lambda</span> name: name.replace(<span class="st">"_sd"</span>, <span class="st">"_mean"</span>))</span>
-<span id="cb12-5"><a href="" aria-label="5"></a></span>
-<span id="cb12-6"><a href="" aria-label="6"></a>ax <span class="op">=</span> cv_means.plot.bar(</span>
-<span id="cb12-7"><a href="" aria-label="7"></a>    yerr<span class="op">=</span>cv_standard_deviations,</span>
-<span id="cb12-8"><a href="" aria-label="8"></a>    capsize<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb12-9"><a href="" aria-label="9"></a>    figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>),</span>
-<span id="cb12-10"><a href="" aria-label="10"></a>    ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb12-11"><a href="" aria-label="11"></a>    rot<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb12-12"><a href="" aria-label="12"></a>)</span>
-<span id="cb12-13"><a href="" aria-label="13"></a>ax.<span class="bu">set</span>(</span>
-<span id="cb12-14"><a href="" aria-label="14"></a>    title<span class="op">=</span><span class="st">"Bank: five-fold cross-validation (error bars show +/-1 SD)"</span>,</span>
-<span id="cb12-15"><a href="" aria-label="15"></a>    ylabel<span class="op">=</span><span class="st">"Mean validation score"</span>,</span>
-<span id="cb12-16"><a href="" aria-label="16"></a>    xlabel<span class="op">=</span><span class="st">""</span>,</span>
-<span id="cb12-17"><a href="" aria-label="17"></a>)</span>
-<span id="cb12-18"><a href="" aria-label="18"></a>ax.legend()</span>
-<span id="cb12-19"><a href="" aria-label="19"></a>plt.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>cv_means <span class="op">=</span> cv_results[[<span class="st">"accuracy_mean"</span>, <span class="st">"balanced_accuracy_mean"</span>, <span class="st">"f1_mean"</span>]]</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>cv_standard_deviations <span class="op">=</span> cv_results[</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>    [<span class="st">"accuracy_sd"</span>, <span class="st">"balanced_accuracy_sd"</span>, <span class="st">"f1_sd"</span>]</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>].rename(columns<span class="op">=</span><span class="kw">lambda</span> name: name.replace(<span class="st">"_sd"</span>, <span class="st">"_mean"</span>))</span>
+<span id="cb11-5"><a href="" aria-label="5"></a></span>
+<span id="cb11-6"><a href="" aria-label="6"></a>ax <span class="op">=</span> cv_means.plot.bar(</span>
+<span id="cb11-7"><a href="" aria-label="7"></a>    yerr<span class="op">=</span>cv_standard_deviations,</span>
+<span id="cb11-8"><a href="" aria-label="8"></a>    capsize<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb11-9"><a href="" aria-label="9"></a>    figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>),</span>
+<span id="cb11-10"><a href="" aria-label="10"></a>    ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb11-11"><a href="" aria-label="11"></a>    rot<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb11-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb11-13"><a href="" aria-label="13"></a>ax.<span class="bu">set</span>(</span>
+<span id="cb11-14"><a href="" aria-label="14"></a>    title<span class="op">=</span><span class="st">"Bank: five-fold cross-validation (error bars show +/-1 SD)"</span>,</span>
+<span id="cb11-15"><a href="" aria-label="15"></a>    ylabel<span class="op">=</span><span class="st">"Mean validation score"</span>,</span>
+<span id="cb11-16"><a href="" aria-label="16"></a>    xlabel<span class="op">=</span><span class="st">""</span>,</span>
+<span id="cb11-17"><a href="" aria-label="17"></a>)</span>
+<span id="cb11-18"><a href="" aria-label="18"></a>ax.legend()</span>
+<span id="cb11-19"><a href="" aria-label="19"></a>plt.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-03-classification_files/figure-revealjs/cell-17-output-1.png" width="1047" height="473"></p>
+</figure>
 </div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-17-output-1.png" class="r-stretch"></section>
+</div>
+</div>
+</section>
 <section id="checkpoint---read-cross-validation-results" class="slide level2">
 <h2>Checkpoint - read cross-validation results</h2>
 <ol type="1">
@@ -2170,24 +2354,24 @@ forceTheme('sk-container-id-1');</script>
 <li>This provides a more stable comparison than choosing parameters from a single split.</li>
 </ul>
 <p>Here the grid varies tree <code>max_depth</code> and <code>min_samples_leaf</code>.</p>
-<div id="ded7c6e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:25.833979Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:25.833788Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:27.702388Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:27.701440Z&quot;}}" data-execution_count="17">
+<div id="ded7c6e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:33.674561Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:33.674365Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:35.562921Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:35.561983Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>tree_workflow <span class="op">=</span> classifier_pipeline(X_train, DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, random_state<span class="op">=</span>RANDOM_STATE), scale_numeric<span class="op">=</span><span class="va">False</span>,)</span>
-<span id="cb13-2"><a href="" aria-label="2"></a>tree_grid <span class="op">=</span> GridSearchCV(</span>
-<span id="cb13-3"><a href="" aria-label="3"></a>    tree_workflow,</span>
-<span id="cb13-4"><a href="" aria-label="4"></a>    param_grid<span class="op">=</span>{</span>
-<span id="cb13-5"><a href="" aria-label="5"></a>        <span class="st">"model__max_depth"</span>: [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="va">None</span>],</span>
-<span id="cb13-6"><a href="" aria-label="6"></a>        <span class="st">"model__min_samples_leaf"</span>: [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>],</span>
-<span id="cb13-7"><a href="" aria-label="7"></a>    },</span>
-<span id="cb13-8"><a href="" aria-label="8"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
-<span id="cb13-9"><a href="" aria-label="9"></a>    cv<span class="op">=</span>cv,</span>
-<span id="cb13-10"><a href="" aria-label="10"></a>    n_jobs<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb13-11"><a href="" aria-label="11"></a>    return_train_score<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb13-12"><a href="" aria-label="12"></a>)</span>
-<span id="cb13-13"><a href="" aria-label="13"></a>tree_grid.fit(X_train, y_train)</span>
-<span id="cb13-14"><a href="" aria-label="14"></a><span class="bu">print</span>(<span class="st">"Best parameters:"</span>, tree_grid.best_params_)</span>
-<span id="cb13-15"><a href="" aria-label="15"></a><span class="bu">print</span>(<span class="st">"Best mean CV balanced accuracy:"</span>, <span class="bu">round</span>(tree_grid.best_score_, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>tree_workflow <span class="op">=</span> classifier_pipeline(X_train, DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, random_state<span class="op">=</span>RANDOM_STATE), scale_numeric<span class="op">=</span><span class="va">False</span>,)</span>
+<span id="cb12-2"><a href="" aria-label="2"></a>tree_grid <span class="op">=</span> GridSearchCV(</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>    tree_workflow,</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>    param_grid<span class="op">=</span>{</span>
+<span id="cb12-5"><a href="" aria-label="5"></a>        <span class="st">"model__max_depth"</span>: [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="va">None</span>],</span>
+<span id="cb12-6"><a href="" aria-label="6"></a>        <span class="st">"model__min_samples_leaf"</span>: [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>],</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>    },</span>
+<span id="cb12-8"><a href="" aria-label="8"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
+<span id="cb12-9"><a href="" aria-label="9"></a>    cv<span class="op">=</span>cv,</span>
+<span id="cb12-10"><a href="" aria-label="10"></a>    n_jobs<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb12-11"><a href="" aria-label="11"></a>    return_train_score<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb12-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb12-13"><a href="" aria-label="13"></a>tree_grid.fit(X_train, y_train)</span>
+<span id="cb12-14"><a href="" aria-label="14"></a><span class="bu">print</span>(<span class="st">"Best parameters:"</span>, tree_grid.best_params_)</span>
+<span id="cb12-15"><a href="" aria-label="15"></a><span class="bu">print</span>(<span class="st">"Best mean CV balanced accuracy:"</span>, <span class="bu">round</span>(tree_grid.best_score_, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best parameters: {'model__max_depth': 7, 'model__min_samples_leaf': 5}
@@ -2197,7 +2381,7 @@ Best mean CV balanced accuracy: 0.839</code></pre>
 </section>
 <section id="tune-tree-complexity-using-training-data-only" class="slide level2">
 <h2>Tune tree complexity using training data only</h2>
-<div id="c04d30ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:27.704251Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:27.704046Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:27.714836Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:27.714038Z&quot;}}" data-execution_count="18">
+<div id="c04d30ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:35.564877Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:35.564663Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:35.575921Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:35.574922Z&quot;}}" data-execution_count="18">
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div>
 <style scoped="">
@@ -2341,7 +2525,7 @@ Deep trees with very small leaves usually have the largest gap. Restricting dept
 <section id="final-bank-evaluation" class="slide level2">
 <h2>Final Bank evaluation</h2>
 <p>Now evaluate the tuned workflow once on the held-out test set. The positive class is <code>YES</code>, so recall answers: “of customers who bought a PEP, how many did we find?”</p>
-<div id="d7130671" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:27.716782Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:27.716581Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:27.738767Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:27.737999Z&quot;}}" data-execution_count="19">
+<div id="d7130671" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:35.577932Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:35.577715Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:35.601103Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:35.600271Z&quot;}}" data-execution_count="19">
 <div class="cell-output cell-output-stdout">
 <pre><code>              precision    recall  f1-score   support
 
@@ -2354,10 +2538,10 @@ weighted avg      0.873     0.873     0.873       150
 </code></pre>
 </div>
 </div>
-<div id="f5de2950" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:27.740780Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:27.740592Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:27.746553Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:27.745706Z&quot;}}" data-execution_count="20">
+<div id="f5de2950" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:35.603145Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:35.602782Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:35.609128Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:35.608334Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>bank_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>bank_test_metrics.to_frame().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <div>
@@ -2404,8 +2588,16 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="final-bank-evaluation-1" class="slide level2">
 <h2>Final Bank evaluation</h2>
-
-<img data-src="lab-03-classification_files/figure-revealjs/cell-22-output-1.png" class="r-stretch"></section>
+<div id="1280b32a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:35.611223Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:35.611026Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:35.690850Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:35.689891Z&quot;}}" data-execution_count="21">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-03-classification_files/figure-revealjs/cell-22-output-1.png" width="445" height="470"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="metric-guide" class="slide level2">
 <h2>Metric guide</h2>
 <p>The right metric depends on the cost of errors. A business policy needs those costs; the dataset alone cannot supply them.</p>
@@ -2468,7 +2660,7 @@ weighted avg      0.873     0.873     0.873       150
 <li>Permutation importance works on the original input columns, so it is easier to read than one-hot encoded tree splits.</li>
 <li>Importance is predictive, not causal: correlated features can share importance, and a high value does not prove that changing the feature would change the outcome.</li>
 </ul>
-<div id="a50f567d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:27.828163Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:27.827953Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:28.709539Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:28.708636Z&quot;}}" data-execution_count="22">
+<div id="a50f567d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:35.692937Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:35.692581Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:36.581900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:36.580908Z&quot;}}" data-execution_count="22">
 <div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 <style scoped="">
@@ -2565,62 +2757,80 @@ weighted avg      0.873     0.873     0.873       150
 <section id="bank-permutation-importance-chart" class="slide level2">
 <h2>Bank permutation importance chart</h2>
 <p>Read the chart from bottom to top: longer bars indicate a larger decrease in balanced accuracy after shuffling that feature. Error bars show the variation across repeated shuffles.</p>
-<div id="7f116130" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:28.711537Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:28.711217Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:28.875842Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:28.874886Z&quot;}}" data-execution_count="23">
+<div id="7f116130" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:36.583826Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:36.583623Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:36.730007Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:36.729063Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> importance_df.sort_values(<span class="st">"importance_mean"</span>).plot.barh(</span>
-<span id="cb17-2"><a href="" aria-label="2"></a>    x<span class="op">=</span><span class="st">"feature"</span>, y<span class="op">=</span><span class="st">"importance_mean"</span>, xerr<span class="op">=</span><span class="st">"importance_sd"</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>)</span>
-<span id="cb17-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb17-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: permutation importance"</span>, xlabel<span class="op">=</span><span class="st">"Decrease in balanced accuracy"</span>, ylabel<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb17-5"><a href="" aria-label="5"></a>plt.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>ax <span class="op">=</span> importance_df.sort_values(<span class="st">"importance_mean"</span>).plot.barh(</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>    x<span class="op">=</span><span class="st">"feature"</span>, y<span class="op">=</span><span class="st">"importance_mean"</span>, xerr<span class="op">=</span><span class="st">"importance_sd"</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>)</span>
+<span id="cb16-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb16-4"><a href="" aria-label="4"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Bank: permutation importance"</span>, xlabel<span class="op">=</span><span class="st">"Decrease in balanced accuracy"</span>, ylabel<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb16-5"><a href="" aria-label="5"></a>plt.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-03-classification_files/figure-revealjs/cell-24-output-1.png" width="763" height="470"></p>
+</figure>
 </div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-24-output-1.png" class="r-stretch"></section></section>
+</div>
+</div>
+</section></section>
 <section id="fitted-tree" class="title-slide slide level1 center">
 <h1>Fitted tree</h1>
-<div id="6cdd6b7e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:28.877531Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:28.877363Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:29.859630Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:29.858717Z&quot;}}" data-execution_count="24">
+<div id="6cdd6b7e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:36.732051Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:36.731869Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:37.722784Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:37.721824Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>fitted_tree <span class="op">=</span> best_bank_model.named_steps[<span class="st">"model"</span>]</span>
-<span id="cb18-2"><a href="" aria-label="2"></a>feature_names <span class="op">=</span> best_bank_model.named_steps[<span class="st">"preprocess"</span>].get_feature_names_out()</span>
-<span id="cb18-3"><a href="" aria-label="3"></a></span>
-<span id="cb18-4"><a href="" aria-label="4"></a>tree_depth <span class="op">=</span> fitted_tree.get_depth()</span>
-<span id="cb18-5"><a href="" aria-label="5"></a>tree_width <span class="op">=</span> <span class="bu">max</span>(<span class="dv">18</span>, <span class="bu">min</span>(<span class="dv">48</span>, <span class="dv">2</span> <span class="op">**</span> <span class="bu">min</span>(tree_depth, <span class="dv">5</span>)))</span>
-<span id="cb18-6"><a href="" aria-label="6"></a>plt.figure(figsize<span class="op">=</span>(tree_width, <span class="bu">max</span>(<span class="dv">10</span>, <span class="fl">2.2</span> <span class="op">*</span> (tree_depth <span class="op">+</span> <span class="dv">1</span>))))</span>
-<span id="cb18-7"><a href="" aria-label="7"></a>plot_tree(fitted_tree, feature_names<span class="op">=</span>feature_names, class_names<span class="op">=</span>[<span class="bu">str</span>(c) <span class="cf">for</span> c <span class="kw">in</span> fitted_tree.classes_], filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">7</span>,)</span>
-<span id="cb18-8"><a href="" aria-label="8"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>fitted_tree <span class="op">=</span> best_bank_model.named_steps[<span class="st">"model"</span>]</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>feature_names <span class="op">=</span> best_bank_model.named_steps[<span class="st">"preprocess"</span>].get_feature_names_out()</span>
+<span id="cb17-3"><a href="" aria-label="3"></a></span>
+<span id="cb17-4"><a href="" aria-label="4"></a>tree_depth <span class="op">=</span> fitted_tree.get_depth()</span>
+<span id="cb17-5"><a href="" aria-label="5"></a>tree_width <span class="op">=</span> <span class="bu">max</span>(<span class="dv">18</span>, <span class="bu">min</span>(<span class="dv">48</span>, <span class="dv">2</span> <span class="op">**</span> <span class="bu">min</span>(tree_depth, <span class="dv">5</span>)))</span>
+<span id="cb17-6"><a href="" aria-label="6"></a>plt.figure(figsize<span class="op">=</span>(tree_width, <span class="bu">max</span>(<span class="dv">10</span>, <span class="fl">2.2</span> <span class="op">*</span> (tree_depth <span class="op">+</span> <span class="dv">1</span>))))</span>
+<span id="cb17-7"><a href="" aria-label="7"></a>plot_tree(fitted_tree, feature_names<span class="op">=</span>feature_names, class_names<span class="op">=</span>[<span class="bu">str</span>(c) <span class="cf">for</span> c <span class="kw">in</span> fitted_tree.classes_], filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">7</span>,)</span>
+<span id="cb17-8"><a href="" aria-label="8"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-03-classification_files/figure-revealjs/cell-25-output-1.png" width="2400" height="1320"></p>
+</figure>
 </div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-25-output-1.png" class="r-stretch"></section>
+</div>
+</div>
+</section>
 
 <section>
 <section id="fitted-tree-1" class="title-slide slide level1 center">
 <h1>Fitted tree</h1>
-<div id="08371e37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:29.862468Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:29.862280Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:30.147215Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:30.146304Z&quot;}}" data-execution_count="25">
+<div id="08371e37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:37.725360Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:37.725165Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:38.016875Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:38.015783Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">9</span>))</span>
-<span id="cb19-2"><a href="" aria-label="2"></a>plot_tree(fitted_tree, feature_names<span class="op">=</span>feature_names, class_names<span class="op">=</span>[<span class="bu">str</span>(c) <span class="cf">for</span> c <span class="kw">in</span> fitted_tree.classes_], max_depth<span class="op">=</span><span class="dv">3</span>, filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">7</span>,)</span>
-<span id="cb19-3"><a href="" aria-label="3"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">9</span>))</span>
+<span id="cb18-2"><a href="" aria-label="2"></a>plot_tree(fitted_tree, feature_names<span class="op">=</span>feature_names, class_names<span class="op">=</span>[<span class="bu">str</span>(c) <span class="cf">for</span> c <span class="kw">in</span> fitted_tree.classes_], max_depth<span class="op">=</span><span class="dv">3</span>, filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">7</span>,)</span>
+<span id="cb18-3"><a href="" aria-label="3"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-03-classification_files/figure-revealjs/cell-26-output-1.png" width="1210" height="684"></p>
+</figure>
 </div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-26-output-1.png" class="r-stretch"></section>
+</div>
+</div>
+</section>
 <section id="exercise---error-analysis" class="slide level2">
 <h2>Exercise - error analysis</h2>
 <p>Inspect misclassified rows. Look for patterns, but do not treat a small test sample as proof.</p>
-<div id="f258d83f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:30.148985Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:30.148807Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:30.162397Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:30.161533Z&quot;}}" data-execution_count="26">
+<div id="f258d83f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:38.018756Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:38.018552Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:38.032806Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:38.032042Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>bank_errors <span class="op">=</span> X_test.copy()</span>
-<span id="cb20-2"><a href="" aria-label="2"></a>bank_errors[<span class="st">"actual"</span>] <span class="op">=</span> y_test</span>
-<span id="cb20-3"><a href="" aria-label="3"></a>bank_errors[<span class="st">"predicted"</span>] <span class="op">=</span> bank_pred</span>
-<span id="cb20-4"><a href="" aria-label="4"></a>bank_errors[<span class="st">"p_yes"</span>] <span class="op">=</span> bank_score</span>
-<span id="cb20-5"><a href="" aria-label="5"></a>bank_errors <span class="op">=</span> bank_errors[bank_errors[<span class="st">"actual"</span>] <span class="op">!=</span> bank_errors[<span class="st">"predicted"</span>]]</span>
-<span id="cb20-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Misclassified rows: </span><span class="sc">{</span><span class="bu">len</span>(bank_errors)<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(X_test)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb20-7"><a href="" aria-label="7"></a>bank_errors.sort_values(<span class="st">"p_yes"</span>).head(<span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>bank_errors <span class="op">=</span> X_test.copy()</span>
+<span id="cb19-2"><a href="" aria-label="2"></a>bank_errors[<span class="st">"actual"</span>] <span class="op">=</span> y_test</span>
+<span id="cb19-3"><a href="" aria-label="3"></a>bank_errors[<span class="st">"predicted"</span>] <span class="op">=</span> bank_pred</span>
+<span id="cb19-4"><a href="" aria-label="4"></a>bank_errors[<span class="st">"p_yes"</span>] <span class="op">=</span> bank_score</span>
+<span id="cb19-5"><a href="" aria-label="5"></a>bank_errors <span class="op">=</span> bank_errors[bank_errors[<span class="st">"actual"</span>] <span class="op">!=</span> bank_errors[<span class="st">"predicted"</span>]]</span>
+<span id="cb19-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Misclassified rows: </span><span class="sc">{</span><span class="bu">len</span>(bank_errors)<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(X_test)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-7"><a href="" aria-label="7"></a>bank_errors.sort_values(<span class="st">"p_yes"</span>).head(<span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Misclassified rows: 19 / 150</code></pre>
@@ -2809,10 +3019,10 @@ weighted avg      0.873     0.873     0.873       150
 <li>Unlike Bank, this dataset supplies separate training and test ARFF files.</li>
 <li>We use training-only cross-validation for decisions and the supplied test set for final evaluation.</li>
 </ul>
-<div id="cb3cf03a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:30.164243Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:30.164036Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:30.174747Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:30.173926Z&quot;}}" data-execution_count="27">
+<div id="cb3cf03a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:38.034750Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:38.034558Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:38.045679Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:38.044814Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>census_train.head(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>census_train.head(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <div>
@@ -2962,7 +3172,7 @@ weighted avg      0.873     0.873     0.873       150
 <section id="audit-traintest-compatibility" class="slide level2">
 <h2>Audit train/test compatibility</h2>
 <p>Check that schemas match, inspect missingness, and compare class prevalence. <code>fnlwgt</code> is a survey weight rather than a personal characteristic; we exclude it here. <code>education</code> and <code>education-num</code> encode closely related information, so we remove the numeric duplicate for a clearer teaching model.</p>
-<div id="8323f7ee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:30.176841Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:30.176656Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:30.233314Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:30.232439Z&quot;}}" data-execution_count="28">
+<div id="8323f7ee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:38.047567Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:38.047376Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:38.116796Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:38.115928Z&quot;}}" data-execution_count="28">
 <div class="cell-output cell-output-display" data-execution_count="28">
 <div>
 <style scoped="">
@@ -3104,17 +3314,17 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="census-target-prevalence" class="slide level2">
 <h2>Census target prevalence</h2>
-<div id="ec64e26e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:30.235215Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:30.235007Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:30.245010Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:30.244084Z&quot;}}" data-execution_count="29">
+<div id="ec64e26e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:38.119123Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:38.118752Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:38.130528Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:38.129680Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>prevalence <span class="op">=</span> pd.concat(</span>
-<span id="cb23-2"><a href="" aria-label="2"></a>    [</span>
-<span id="cb23-3"><a href="" aria-label="3"></a>        census_train[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"train"</span>),</span>
-<span id="cb23-4"><a href="" aria-label="4"></a>        census_test[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"test"</span>),</span>
-<span id="cb23-5"><a href="" aria-label="5"></a>    ],</span>
-<span id="cb23-6"><a href="" aria-label="6"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb23-7"><a href="" aria-label="7"></a>)</span>
-<span id="cb23-8"><a href="" aria-label="8"></a>prevalence</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>prevalence <span class="op">=</span> pd.concat(</span>
+<span id="cb22-2"><a href="" aria-label="2"></a>    [</span>
+<span id="cb22-3"><a href="" aria-label="3"></a>        census_train[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"train"</span>),</span>
+<span id="cb22-4"><a href="" aria-label="4"></a>        census_test[TARGET].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"test"</span>),</span>
+<span id="cb22-5"><a href="" aria-label="5"></a>    ],</span>
+<span id="cb22-6"><a href="" aria-label="6"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb22-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb22-8"><a href="" aria-label="8"></a>prevalence</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="29">
 <div>
@@ -3162,15 +3372,15 @@ weighted avg      0.873     0.873     0.873       150
 </div>
 </div>
 </div>
-<div id="b1291eaf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:30.246840Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:30.246652Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:30.279602Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:30.278869Z&quot;}}" data-execution_count="30">
+<div id="b1291eaf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:38.132400Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:38.132226Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:38.137322Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:38.136541Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>X_census_train <span class="op">=</span> census_train.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
-<span id="cb24-2"><a href="" aria-label="2"></a>y_census_train <span class="op">=</span> census_train[TARGET]</span>
-<span id="cb24-3"><a href="" aria-label="3"></a>X_census_test <span class="op">=</span> census_test.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
-<span id="cb24-4"><a href="" aria-label="4"></a>y_census_test <span class="op">=</span> census_test[TARGET]</span>
-<span id="cb24-5"><a href="" aria-label="5"></a></span>
-<span id="cb24-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"Training:"</span>, X_census_train.shape, <span class="st">"Test:"</span>, X_census_test.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>X_census_train <span class="op">=</span> census_train.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
+<span id="cb23-2"><a href="" aria-label="2"></a>y_census_train <span class="op">=</span> census_train[TARGET]</span>
+<span id="cb23-3"><a href="" aria-label="3"></a>X_census_test <span class="op">=</span> census_test.drop(columns<span class="op">=</span>[TARGET] <span class="op">+</span> drop_columns)</span>
+<span id="cb23-4"><a href="" aria-label="4"></a>y_census_test <span class="op">=</span> census_test[TARGET]</span>
+<span id="cb23-5"><a href="" aria-label="5"></a></span>
+<span id="cb23-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"Training:"</span>, X_census_train.shape, <span class="st">"Test:"</span>, X_census_test.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training: (1000, 12) Test: (31561, 12)</code></pre>
@@ -3184,7 +3394,7 @@ weighted avg      0.873     0.873     0.873       150
 <li>We compare a class-weighted logistic regression, a constrained decision tree, and a random forest.</li>
 <li>Class weighting asks the learner to penalize mistakes on the minority class more strongly; it does not change the evaluation data.</li>
 </ul>
-<div id="43f6fb51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:30.281755Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:30.281581Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:33.026303Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:33.025411Z&quot;}}" data-execution_count="31">
+<div id="43f6fb51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:38.139422Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:38.139246Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:40.955689Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:40.954567Z&quot;}}" data-execution_count="31">
 <div class="cell-output cell-output-display" data-execution_count="31">
 <div>
 <style scoped="">
@@ -3225,12 +3435,12 @@ weighted avg      0.873     0.873     0.873       150
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Weighted random forest</th>
-<td>0.783</td>
-<td>0.796</td>
-<td>0.741</td>
+<td>0.773</td>
+<td>0.794</td>
+<td>0.733</td>
 <td>0.022</td>
-<td>0.022</td>
-<td>0.021</td>
+<td>0.029</td>
+<td>0.024</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Weighted logistic regression</th>
@@ -3269,7 +3479,7 @@ weighted avg      0.873     0.873     0.873       150
 <section id="evaluate-the-selected-census-model-once" class="slide level2">
 <h2>Evaluate the selected Census model once</h2>
 <p>Choose the highest cross-validated balanced accuracy programmatically, refit it on all training rows, and evaluate it on the supplied test set.</p>
-<div id="47c10c8a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:33.028216Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:33.027996Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:34.226095Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:34.225155Z&quot;}}" data-execution_count="32">
+<div id="47c10c8a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:40.957532Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:40.957355Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:42.202572Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:42.201595Z&quot;}}" data-execution_count="32">
 <div class="cell-output cell-output-stdout">
 <pre><code>Selected by CV: Weighted random forest</code></pre>
 </div>
@@ -3299,7 +3509,7 @@ weighted avg      0.873     0.873     0.873       150
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">accuracy</th>
-<td>0.779</td>
+<td>0.769</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">balanced_accuracy</th>
@@ -3307,7 +3517,7 @@ weighted avg      0.873     0.873     0.873       150
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">macro_f1</th>
-<td>0.742</td>
+<td>0.735</td>
 </tr>
 </tbody>
 </table>
@@ -3318,28 +3528,34 @@ weighted avg      0.873     0.873     0.873       150
 </section>
 <section id="census-supplied-test-report-and-confusion-matrix" class="slide level2">
 <h2>Census supplied test report and confusion matrix</h2>
-<div id="e974da16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:34.227915Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:34.227717Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:34.654777Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:34.654013Z&quot;}}" data-execution_count="33">
+<div id="e974da16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:42.204517Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:42.204303Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:42.666986Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:42.666105Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a><span class="bu">print</span>(classification_report(y_census_test, census_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb27-2"><a href="" aria-label="2"></a>ConfusionMatrixDisplay.from_predictions(y_census_test, census_pred, labels<span class="op">=</span>[<span class="st">"&lt;=50K"</span>, <span class="st">"&gt;50K"</span>], cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span>,)</span>
-<span id="cb27-3"><a href="" aria-label="3"></a>plt.title(<span class="st">"Census: supplied test set"</span>)</span>
-<span id="cb27-4"><a href="" aria-label="4"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="bu">print</span>(classification_report(y_census_test, census_pred, digits<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb26-2"><a href="" aria-label="2"></a>ConfusionMatrixDisplay.from_predictions(y_census_test, census_pred, labels<span class="op">=</span>[<span class="st">"&lt;=50K"</span>, <span class="st">"&gt;50K"</span>], cmap<span class="op">=</span><span class="st">"Blues"</span>, colorbar<span class="op">=</span><span class="va">False</span>,)</span>
+<span id="cb26-3"><a href="" aria-label="3"></a>plt.title(<span class="st">"Census: supplied test set"</span>)</span>
+<span id="cb26-4"><a href="" aria-label="4"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>              precision    recall  f1-score   support
 
-       &lt;=50K      0.934     0.762     0.839     23952
-        &gt;50K      0.526     0.830     0.644      7609
+       &lt;=50K      0.939     0.744     0.831     23952
+        &gt;50K      0.513     0.848     0.640      7609
 
-    accuracy                          0.779     31561
-   macro avg      0.730     0.796     0.742     31561
-weighted avg      0.835     0.779     0.792     31561
+    accuracy                          0.769     31561
+   macro avg      0.726     0.796     0.735     31561
+weighted avg      0.836     0.769     0.784     31561
 </code></pre>
 </div>
-
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-03-classification_files/figure-revealjs/cell-34-output-2.png" width="462" height="446"></p>
+</figure>
 </div>
-<img data-src="lab-03-classification_files/figure-revealjs/cell-34-output-2.png" class="r-stretch"></section>
+</div>
+</div>
+</section>
 <section id="slice-based-error-analysis" class="slide level2">
 <h2>Slice-based error analysis</h2>
 <p>Aggregate metrics can hide uneven performance.</p>
@@ -3347,7 +3563,7 @@ weighted avg      0.835     0.779     0.792     31561
 <li>E.g., the next cell reports accuracy and positive-class recall by <code>sex</code>.</li>
 <li>This is a descriptive diagnostic, <strong>not</strong> a fairness verdict: subgroup sizes, label quality, history, deployment context, and the costs of errors all matter.</li>
 </ul>
-<div id="32792970" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:34.656941Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:34.656757Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:34.680790Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:34.679908Z&quot;}}" data-execution_count="34">
+<div id="32792970" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:42.668855Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:42.668625Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:42.694612Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:42.693702Z&quot;}}" data-execution_count="34">
 <div class="cell-output cell-output-display" data-execution_count="34">
 <div>
 <style scoped="">
@@ -3386,15 +3602,15 @@ weighted avg      0.835     0.779     0.792     31561
 <th data-quarto-table-cell-role="th">Female</th>
 <td>10442</td>
 <td>0.109</td>
-<td>0.912</td>
-<td>0.609</td>
+<td>0.907</td>
+<td>0.660</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Male</th>
 <td>21119</td>
 <td>0.306</td>
-<td>0.713</td>
-<td>0.868</td>
+<td>0.702</td>
+<td>0.881</td>
 </tr>
 </tbody>
 </table>
@@ -3414,10 +3630,10 @@ weighted avg      0.835     0.779     0.792     31561
 <li>one additional check required before deployment.</li>
 </ol>
 <p>Avoid saying the model is “good” based on accuracy alone.</p>
-<div id="7d824b95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:34.682591Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:34.682410Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:34.685153Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:34.684316Z&quot;}}" data-execution_count="35">
+<div id="7d824b95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:42.696639Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:42.696458Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:42.699402Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:42.698534Z&quot;}}" data-execution_count="35">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section></section>
@@ -3436,10 +3652,10 @@ weighted avg      0.835     0.779     0.792     31561
 </section>
 <section id="nursery-sample" class="slide level2">
 <h2>Nursery sample</h2>
-<div id="dbd33a92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:34.687042Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:34.686872Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:34.695155Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:34.694300Z&quot;}}" data-execution_count="36">
+<div id="dbd33a92" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:42.701273Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:42.701102Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:42.709753Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:42.708971Z&quot;}}" data-execution_count="36">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>nursery.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>nursery.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="36">
 <div>
@@ -3542,10 +3758,10 @@ weighted avg      0.835     0.779     0.792     31561
 </section>
 <section id="nursery-class-counts" class="slide level2">
 <h2>Nursery class counts</h2>
-<div id="0c56671f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:34.696817Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:34.696649Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:34.704341Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:34.703448Z&quot;}}" data-execution_count="37">
+<div id="0c56671f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:42.711906Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:42.711693Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:42.719574Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:42.718778Z&quot;}}" data-execution_count="37">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>nursery[<span class="st">"class"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>nursery[<span class="st">"class"</span>].value_counts().to_frame(<span class="st">"count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="37">
 <div>
@@ -3601,18 +3817,18 @@ weighted avg      0.835     0.779     0.792     31561
 </div>
 </div>
 </div>
-<div id="d2633366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:34.706053Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:34.705880Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:34.721243Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:34.720387Z&quot;}}" data-execution_count="38">
+<div id="d2633366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:42.721681Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:42.721489Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:42.737755Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:42.736832Z&quot;}}" data-execution_count="38">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>X_nursery <span class="op">=</span> nursery.drop(columns<span class="op">=</span><span class="st">"class"</span>)</span>
-<span id="cb32-2"><a href="" aria-label="2"></a>y_nursery <span class="op">=</span> nursery[<span class="st">"class"</span>]</span>
-<span id="cb32-3"><a href="" aria-label="3"></a>X_nursery_train, X_nursery_test, y_nursery_train, y_nursery_test <span class="op">=</span> train_test_split(</span>
-<span id="cb32-4"><a href="" aria-label="4"></a>    X_nursery,</span>
-<span id="cb32-5"><a href="" aria-label="5"></a>    y_nursery,</span>
-<span id="cb32-6"><a href="" aria-label="6"></a>    test_size<span class="op">=</span><span class="fl">0.25</span>,</span>
-<span id="cb32-7"><a href="" aria-label="7"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb32-8"><a href="" aria-label="8"></a>    stratify<span class="op">=</span>y_nursery,</span>
-<span id="cb32-9"><a href="" aria-label="9"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>X_nursery <span class="op">=</span> nursery.drop(columns<span class="op">=</span><span class="st">"class"</span>)</span>
+<span id="cb31-2"><a href="" aria-label="2"></a>y_nursery <span class="op">=</span> nursery[<span class="st">"class"</span>]</span>
+<span id="cb31-3"><a href="" aria-label="3"></a>X_nursery_train, X_nursery_test, y_nursery_train, y_nursery_test <span class="op">=</span> train_test_split(</span>
+<span id="cb31-4"><a href="" aria-label="4"></a>    X_nursery,</span>
+<span id="cb31-5"><a href="" aria-label="5"></a>    y_nursery,</span>
+<span id="cb31-6"><a href="" aria-label="6"></a>    test_size<span class="op">=</span><span class="fl">0.25</span>,</span>
+<span id="cb31-7"><a href="" aria-label="7"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
+<span id="cb31-8"><a href="" aria-label="8"></a>    stratify<span class="op">=</span>y_nursery,</span>
+<span id="cb31-9"><a href="" aria-label="9"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -3626,22 +3842,22 @@ weighted avg      0.835     0.779     0.792     31561
 <li>Identify the class with the lowest recall.</li>
 </ol>
 <p>Why might accuracy and macro F1 rank models differently?</p>
-<div id="f4dd5a2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T10:48:34.723175Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T10:48:34.722871Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T10:48:34.726409Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T10:48:34.725629Z&quot;}}" data-execution_count="39">
+<div id="f4dd5a2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-17T11:01:42.739812Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-17T11:01:42.739580Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-17T11:01:42.743446Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-17T11:01:42.742474Z&quot;}}" data-execution_count="39">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add at least two learned models.</span></span>
-<span id="cb33-2"><a href="" aria-label="2"></a>nursery_models <span class="op">=</span> {</span>
-<span id="cb33-3"><a href="" aria-label="3"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
-<span id="cb33-4"><a href="" aria-label="4"></a>        X_nursery_train,</span>
-<span id="cb33-5"><a href="" aria-label="5"></a>        DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>),</span>
-<span id="cb33-6"><a href="" aria-label="6"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb33-7"><a href="" aria-label="7"></a>    ),</span>
-<span id="cb33-8"><a href="" aria-label="8"></a>    <span class="co"># "Decision tree": classifier_pipeline(...),</span></span>
-<span id="cb33-9"><a href="" aria-label="9"></a>    <span class="co"># "Logistic regression": classifier_pipeline(...),</span></span>
-<span id="cb33-10"><a href="" aria-label="10"></a>}</span>
-<span id="cb33-11"><a href="" aria-label="11"></a></span>
-<span id="cb33-12"><a href="" aria-label="12"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: use cross_validate(..., scoring={"accuracy": "accuracy", "macro_f1": "f1_macro"})</span></span>
-<span id="cb33-13"><a href="" aria-label="13"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: select, fit, predict, and show classification_report and a confusion matrix.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add at least two learned models.</span></span>
+<span id="cb32-2"><a href="" aria-label="2"></a>nursery_models <span class="op">=</span> {</span>
+<span id="cb32-3"><a href="" aria-label="3"></a>    <span class="st">"Baseline"</span>: classifier_pipeline(</span>
+<span id="cb32-4"><a href="" aria-label="4"></a>        X_nursery_train,</span>
+<span id="cb32-5"><a href="" aria-label="5"></a>        DummyClassifier(strategy<span class="op">=</span><span class="st">"most_frequent"</span>),</span>
+<span id="cb32-6"><a href="" aria-label="6"></a>        scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb32-7"><a href="" aria-label="7"></a>    ),</span>
+<span id="cb32-8"><a href="" aria-label="8"></a>    <span class="co"># "Decision tree": classifier_pipeline(...),</span></span>
+<span id="cb32-9"><a href="" aria-label="9"></a>    <span class="co"># "Logistic regression": classifier_pipeline(...),</span></span>
+<span id="cb32-10"><a href="" aria-label="10"></a>}</span>
+<span id="cb32-11"><a href="" aria-label="11"></a></span>
+<span id="cb32-12"><a href="" aria-label="12"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: use cross_validate(..., scoring={"accuracy": "accuracy", "macro_f1": "f1_macro"})</span></span>
+<span id="cb32-13"><a href="" aria-label="13"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: select, fit, predict, and show classification_report and a confusion matrix.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
