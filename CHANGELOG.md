@@ -1,3 +1,12 @@
+## [1.0.38](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.37...1.0.38) (2026-09-17)
+
+### Bug Fixes
+
+* lab headers ([192794f](https://github.com/w4bo/AA2627-unibo-mldm/commit/192794f42e2fb929a59fd91aec90d177cc388d48))
+* typos ([8d62cd6](https://github.com/w4bo/AA2627-unibo-mldm/commit/8d62cd68d4e59effe820efbd1eb51a20edd84c17))
+* udpate slides ([859db7e](https://github.com/w4bo/AA2627-unibo-mldm/commit/859db7e47a33b78203443bf32f0f3072dbfef428))
+* update the notebook ([568f04c](https://github.com/w4bo/AA2627-unibo-mldm/commit/568f04c47f2e9dbd27cc6e957831c43ab7721aa2))
+
 ## [1.0.37](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.36...1.0.37) (2026-09-16)
 
 ### Bug Fixes
