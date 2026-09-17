@@ -242,17 +242,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img src="./img/crispdm_me.svg" class="center-img r-stretch"></section>
 
-<section id="motivating-problem-learn-useful-features" class="title-slide slide level1 center">
-<h1>Motivating problem: learn useful features</h1>
-<p>Suppose we want to recognize handwritten digits from raw pixels.</p>
-<ul>
-<li>A single pixel rarely determines the class</li>
-<li>Useful evidence is distributed across strokes, edges, and shapes</li>
-<li>The relationship between pixels and labels is highly non-linear</li>
-</ul>
-<p>Can a model learn intermediate representations instead of requiring us to design every feature?</p>
-</section>
-
 <section id="learning-objectives" class="title-slide slide level1 center">
 <h1>Learning objectives</h1>
 <p>By the end of this lecture, you will be able to:</p>
@@ -345,10 +334,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li><em>Inputs</em> are digital numbers (not analog signals)</li>
 <li>Inputs are <em>weighted</em> (signals are not all equally important)</li>
-<li>Inputs are <em>merged</em> with a sum function (plus a <em>bias</em>)</li>
+<li>Inputs are <em>merged</em> with a weighted sum function (plus a <em>bias</em>)</li>
 <li>An <em>activation function</em> is used to generate the final output:
 <ul>
 <li>Also the human brain <em>filters inputs</em>, it is impossible to always take everything into account</li>
+<li>Perceptron uses the step function <span class="math inline">\(H(x)=\begin{cases}1,&amp;x\geq 0\\0,&amp;x&lt;0\end{cases}\)</span></li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
@@ -655,10 +645,30 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <img data-src="img/neuralnetworks/universaltheorem2.svg" class="r-stretch quarto-figure-center"><p class="caption">Universal Approximation Theorem for Deep Narrow Networks</p><p>This is why deep neural networks work.</p>
 </section>
 
-<section id="neural-networks-training-intuition" class="title-slide slide level1 center">
-<h1>Neural networks training: intuition</h1>
-
-<img data-src="./img/neuralnetworks/3%20Model65.png" class="r-stretch quarto-figure-center"><p class="caption">Training</p></section>
+<section id="deep-neural-networks-dnn" class="title-slide slide level1 center">
+<h1>Deep Neural Networks (DNN)</h1>
+<p><strong>Deep Learning</strong>: a branch of ML that avoids the problematic phase of feature extraction (also) with high-dimensional inputs.</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/neuralnetworks/ai-ml-dl.png"></p>
+<figcaption>Deep Learning</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/neuralnetworks/3%20Model51.jpg"></p>
+<figcaption>Deep Learning</figcaption>
+</figure>
+</div>
+</div></div>
+<p>Feature extraction requires human intervention.</p>
+<ul>
+<li>… Often, this is the weak link in the chain!</li>
+</ul>
+</section>
 
 <section id="neural-networks-training" class="title-slide slide level1 center">
 <h1>Neural networks training</h1>
@@ -694,30 +704,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="deep-neural-networks-dnn" class="title-slide slide level1 center">
-<h1>Deep Neural Networks (DNN)</h1>
-<p><strong>Deep Learning</strong>: a branch of ML that avoids the problematic phase of feature extraction (also) with high-dimensional inputs.</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/neuralnetworks/ai-ml-dl.png"></p>
-<figcaption>Deep Learning</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:60%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/neuralnetworks/3%20Model51.jpg"></p>
-<figcaption>Deep Learning</figcaption>
-</figure>
-</div>
-</div></div>
-<p>Feature extraction requires human intervention.</p>
-<ul>
-<li>… Often, this is the weak link in the chain!</li>
-</ul>
-</section>
+<section id="neural-networks-training-intuition" class="title-slide slide level1 center">
+<h1>Neural networks training: intuition</h1>
+
+<img data-src="./img/neuralnetworks/3%20Model65.png" class="r-stretch quarto-figure-center"><p class="caption">Training</p></section>
 
 <section id="ann-and-dnn-training" class="title-slide slide level1 center">
 <h1>ANN and DNN training</h1>
@@ -770,7 +760,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Measures the error between the prediction and the ground truth (label)</li>
 <li>Presents the performance (or error) in the form of a single real number</li>
 </ul>
-<p><strong>Cross Entropy</strong> is the distance between what the model believes the output distribution should be &amp; what the original distribution is</p>
+<p><strong>Cross Entropy</strong> is the distance between what the model believes the output distribution should be and what the original distribution is</p>
 <ul>
 <li>To use the <em>Cross Entropy</em> loss, the output layer must output probabilities.</li>
 <li><em>Binary Cross Entropy (BCE)</em>
@@ -938,27 +928,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="gradient-descent-3" class="title-slide slide level1 center">
-<h1>Gradient descent</h1>
-<p><a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Extensions_and_variants">Many algorithms exist</a>, such as <strong>Adam</strong> (Adaptive Moment Estimation)</p>
-<ul>
-<li>A <em>stochastic gradient descent</em> method</li>
-<li>Fewer parameters than SGD</li>
-</ul>
-<p>Adam is based on two principles:</p>
-<ul>
-<li><strong>Momentum</strong>
-<ul>
-<li>Exponentially decaying average of past gradients to “smooth out” the gradients over multiple steps</li>
-<li>This helps the optimizer move faster in the direction of the overall gradient, improving convergence speed</li>
-</ul></li>
-<li><strong>Adaptive Learning Rates</strong>
-<ul>
-<li>A moving average tracks the squared gradients, adjusting the learning rate based on the variability of the gradient</li>
-<li>Parameters with large (small) gradient changes get smaller (larger) learning rates</li>
-</ul></li>
-</ul>
-</section>
+
 
 <section id="terminology" class="title-slide slide level1 center">
 <h1><a href="https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/">Terminology</a></h1>
@@ -1051,7 +1021,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
     H2(("h2"))
     YH(("y_hat"))
     Y(("y"))
-    C(("loss"))
+    C["loss function"]
 
     X1 -- "w11" --&gt; H1
     X2 -- "w12" --&gt; H1
@@ -1406,10 +1376,6 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <figcaption>Learning curves</figcaption>
 </figure>
 </div>
-<ul>
-<li>Usually, at the beginning of the learning, the value of the loss function drops rapidly</li>
-<li>Starting of the overfitting</li>
-</ul>
 </div></div>
 </section>
 
@@ -1425,36 +1391,6 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <span id="cb1-8"><a href="" aria-label="8"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb1-9"><a href="" aria-label="9"></a> ...</span>
 <span id="cb1-10"><a href="" aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-
-<section id="developing-ai-systems" class="title-slide slide level1 center">
-<h1>Developing AI systems</h1>
-<p>It is not just important how well a particular classifier works.</p>
-<ul>
-<li><em>How to develop an AI system</em>?</li>
-<li><em>When is it better to use Machine Learning</em>? And <em>Deep Learning</em>?</li>
-<li><em>What about hardware for AI</em>?</li>
-</ul>
-</section>
-
-<section id="how-to-develop-an-ai-project" class="title-slide slide level1 center">
-<h1>How to develop an AI project?</h1>
-<ul>
-<li>We have seen the main steps necessary for the realization of an AI project
-<ul>
-<li><em>Data Collection</em></li>
-<li><em>Data Processing</em> (and feature extraction)</li>
-<li><em>Model training</em></li>
-<li><em>Prediction analysis</em> (through metrics)</li>
-</ul></li>
-<li>However, there are other important considerations:
-<ul>
-<li><em>When to address a problem through ML</em>?</li>
-<li><em>When to address a problem through DL</em>?</li>
-<li><em>What are the hardware resources needed</em>?</li>
-<li><em>What are the software resources needed</em>?</li>
-</ul></li>
-</ul>
 </section>
 
 <section id="machine-learning-vs-deep-learning" class="title-slide slide level1 center">
@@ -1530,11 +1466,6 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <li>GPUs are essential for parallelizing (and therefore speeding up) calculations.</li>
 <li>As seen, the deeper a network is, the more computational load is introduced</li>
 </ul>
-<p>To date, Nvidia, a company that dominates the market:</p>
-<ul>
-<li>The parallelization of the calculations is possible thanks to the CUDA libraries (<em>Compute Unified Device Architecture</em>, the true core business of Nvidia)</li>
-<li>Google has started a competition by introducing TPU (<em>Tensor Processor Unit</em>)</li>
-</ul>
 </div><div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1542,81 +1473,7 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <figcaption>GPUs</figcaption>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/neuralnetworks/3%20Model106.png"></p>
-<figcaption>NVIDIA</figcaption>
-</figure>
-</div>
 </div></div>
-</section>
-
-<section id="hardware-purchase-for-dl" class="title-slide slide level1 center">
-<h1>Hardware purchase for DL</h1>
-<p>In-house solution: the company buys the necessary hardware, and it is the direct owner</p>
-<ul>
-<li>Pros:
-<ul>
-<li>Extreme freedom of use of hardware</li>
-<li>In the long run, it tends to have lower costs</li>
-</ul></li>
-<li>Cons:
-<ul>
-<li>Hardware maintenance is required → the company needs specialized technicians</li>
-<li>Hardware ages (quickly) → necessary investments over time</li>
-<li>For large numbers of GPUs:
-<ul>
-<li>It is necessary to have specific server rooms → temperature and access control</li>
-<li>High energy consumption → consumption of the latest generation GPU: ~450W (!)</li>
-</ul></li>
-<li>The GPU market is quite expensive and volatile:
-<ul>
-<li>Very few companies are involved in the production process → TMSC</li>
-<li>Semiconductor shortage</li>
-<li>External elements influence the market: mining, wars,…</li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-
-<section id="hardware-for-dl-in-house-vs-external-solutions" class="title-slide slide level1 center">
-<h1>Hardware for DL: in-house vs external solutions</h1>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>External solution: the hardware is rented through the <em>PaaS</em> paradigm (Cloud)</p>
-<ul>
-<li>Pros:
-<ul>
-<li>Hardware maintenance is NOT required</li>
-<li>NO investment over time is required for hardware upgrades</li>
-<li>Dedicated server rooms are NOT required; energy consumption is not borne by the company</li>
-</ul></li>
-<li>Cons:
-<ul>
-<li>In the long run, it tends to have higher costs</li>
-<li>Cons already seen for cloud-based solutions:
-<ul>
-<li>Vendor <em>lock-in</em> → it is difficult to escape from the service provider</li>
-<li>Who really owns the data?</li>
-<li>Privacy issues</li>
-</ul></li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/neuralnetworks/3%20Model108.png"></p>
-<figcaption>COLAB</figcaption>
-</figure>
-</div>
-</div></div>
-<p>Examples:</p>
-<ul>
-<li><a href="https://cloud.google.com/products/calculator/">https://cloud.google.com/products/calculator/</a></li>
-<li><a href="https://www.leadergpu.com/#chose-best">https://www.leadergpu.com/#chose-best</a></li>
-<li><a href="https://buomsoo-kim.github.io/colab/2020/03/15/Google-newly-launches-colab-pro.md/">https://buomsoo-kim.github.io/colab/2020/03/15/Google-newly-launches-colab-pro.md/</a></li>
-<li><a href="https://calculator.aws/#/addService/EC2">https://calculator.aws/#/addService/EC2</a></li>
-</ul>
 </section>
 
 <section id="section-1" class="title-slide slide level1 center">
