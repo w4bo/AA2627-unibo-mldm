@@ -6,16 +6,6 @@ subtitle: "Neural Networks"
 
 <img src="./img/crispdm_me.svg" class="center-img">
 
-# Motivating problem: learn useful features
-
-Suppose we want to recognize handwritten digits from raw pixels.
-
-- A single pixel rarely determines the class
-- Useful evidence is distributed across strokes, edges, and shapes
-- The relationship between pixels and labels is highly non-linear
-
-Can a model learn intermediate representations instead of requiring us to design every feature?
-
 # Learning objectives
 
 By the end of this lecture, you will be able to:
@@ -81,9 +71,10 @@ The first Artificial Neuron (AN) was introduced by *Rosenblatt* in 1957
 
 - *Inputs* are digital numbers (not analog signals)
 - Inputs are *weighted* (signals are not all equally important)
-- Inputs are *merged* with a sum function (plus a *bias*)
+- Inputs are *merged* with a weighted sum function (plus a *bias*)
 - An *activation function* is used to generate the final output:
   - Also the human brain *filters inputs*, it is impossible to always take everything into account
+  - Perceptron uses the step function $H(x)=\begin{cases}1,&x\geq 0\\0,&x<0\end{cases}$
 
 :::
 ::: {.column width="50%"}
@@ -335,9 +326,26 @@ This covers any activation function, including polynomial activation functions.
 
 This is why deep neural networks work.
 
-# Neural networks training: intuition
+# Deep Neural Networks (DNN)
 
-![Training](./img/neuralnetworks/3 Model65.png)
+**Deep Learning**: a branch of ML that avoids the problematic phase of feature extraction (also) with high-dimensional inputs.
+
+:::: {.columns}
+::: {.column width="40%"}
+
+![Deep Learning](./img/neuralnetworks/ai-ml-dl.png)
+
+:::
+::: {.column width="60%"}
+
+![Deep Learning](./img/neuralnetworks/3 Model51.jpg)
+
+:::
+::::
+
+Feature extraction requires human intervention.
+
+- ... Often, this is the weak link in the chain!
 
 # Neural networks training
 
@@ -366,26 +374,9 @@ How is it possible to train a neural network?
 :::
 ::::
 
-# Deep Neural Networks (DNN)
+# Neural networks training: intuition
 
-**Deep Learning**: a branch of ML that avoids the problematic phase of feature extraction (also) with high-dimensional inputs.
-
-:::: {.columns}
-::: {.column width="40%"}
-
-![Deep Learning](./img/neuralnetworks/ai-ml-dl.png)
-
-:::
-::: {.column width="60%"}
-
-![Deep Learning](./img/neuralnetworks/3 Model51.jpg)
-
-:::
-::::
-
-Feature extraction requires human intervention.
-
-- ... Often, this is the weak link in the chain!
+![Training](./img/neuralnetworks/3 Model65.png)
 
 # ANN and DNN training
 
@@ -427,7 +418,7 @@ The *cost function* is a mathematical formulation of the learning goal
 - Measures the error between the prediction and the ground truth (label)
 - Presents the performance (or error) in the form of a single real number
 
-**Cross Entropy** is the distance between what the model believes the output distribution should be & what the original distribution is
+**Cross Entropy** is the distance between what the model believes the output distribution should be and what the original distribution is
 
 - To use the *Cross Entropy* loss, the output layer must output probabilities.
 - *Binary Cross Entropy (BCE)*
@@ -579,7 +570,7 @@ Drawbacks
 - *Selecting an optimal batch size requires some experimentation*, as it can affect both the speed and stability of convergence.
 - Mini-batch gradient descent is *less stable than full-batch gradient descent*, especially for small batch sizes.
 
-# Gradient descent
+# Gradient descent {visibility="hidden"}
 
 [Many algorithms exist](https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Extensions_and_variants), such as **Adam** (Adaptive Moment Estimation)
 
@@ -676,7 +667,7 @@ flowchart LR
     H2(("h2"))
     YH(("y_hat"))
     Y(("y"))
-    C(("loss"))
+    C["loss function"]
 
     X1 -- "w11" --> H1
     X2 -- "w12" --> H1
@@ -1001,9 +992,6 @@ It is common to create line plots that show epochs along the *x*-axis and the lo
 
 ![Learning curves](./img/neuralnetworks/3 Model77.png)
 
-- Usually, at the beginning of the learning, the value of the loss function drops rapidly
-- Starting of the overfitting
-
 :::
 ::::
 
@@ -1021,27 +1009,6 @@ sklearn.neural_network.MLPClassifier(
  ...
 )
 ```
-
-# Developing AI systems
-
-It is not just important how well a particular classifier works.
-
-- *How to develop an AI system*?
-- *When is it better to use Machine Learning*? And *Deep Learning*?
-- *What about hardware for AI*?
-
-# How to develop an AI project?
-
-- We have seen the main steps necessary for the realization of an AI project
-  - *Data Collection*
-  - *Data Processing* (and feature extraction)
-  - *Model training*
-  - *Prediction analysis* (through metrics)
-- However, there are other important considerations:
-  - *When to address a problem through ML*?
-  - *When to address a problem through DL*?
-  - *What are the hardware resources needed*?
-  - *What are the software resources needed*?
 
 # Machine Learning vs Deep Learning
 
@@ -1079,71 +1046,13 @@ Having one or more GPUs available is today a fundamental factor:
 - GPUs are essential for parallelizing (and therefore speeding up) calculations.
 - As seen, the deeper a network is, the more computational load is introduced
 
-To date, Nvidia, a company that dominates the market:
-
-- The parallelization of the calculations is possible thanks to the CUDA libraries (*Compute Unified Device Architecture*, the true core business of Nvidia)
-- Google has started a competition by introducing TPU (*Tensor Processor Unit*)
-
 :::
 ::: {.column width="30%"}
 
 ![GPUs](./img/neuralnetworks/3 Model105.png)
 
-![NVIDIA](./img/neuralnetworks/3 Model106.png)
-
 :::
 ::::
-
-# Hardware purchase for DL
-
-In-house solution: the company buys the necessary hardware, and it is the direct owner
-
-- Pros:
-  - Extreme freedom of use of hardware
-  - In the long run, it tends to have lower costs
-- Cons:
-  - Hardware maintenance is required → the company needs specialized technicians
-  - Hardware ages (quickly) → necessary investments over time
-  - For large numbers of GPUs:
-    - It is necessary to have specific server rooms → temperature and access control
-    - High energy consumption → consumption of the latest generation GPU: ~450W (!)
-  - The GPU market is quite expensive and volatile:
-    - Very few companies are involved in the production process → TMSC
-    - Semiconductor shortage
-    - External elements influence the market: mining, wars,...
-
-# Hardware for DL: in-house vs external solutions
-
-:::: {.columns}
-::: {.column width="60%"}
-
-External solution: the hardware is rented through the *PaaS* paradigm (Cloud)
-
-- Pros:
-  - Hardware maintenance is NOT required
-  - NO investment over time is required for hardware upgrades
-  - Dedicated server rooms are NOT required; energy consumption is not borne by the company
-- Cons:
-  - In the long run, it tends to have higher costs
-  - Cons already seen for cloud-based solutions:
-    - Vendor *lock-in* → it is difficult to escape from the service provider
-    - Who really owns the data?
-    - Privacy issues
-
-:::
-::: {.column width="40%"}
-
-![COLAB](./img/neuralnetworks/3 Model108.png)
-
-:::
-::::
-
-Examples:
-
-- [https://cloud.google.com/products/calculator/](https://cloud.google.com/products/calculator/)
-- [https://www.leadergpu.com/#chose-best](https://www.leadergpu.com/#chose-best)
-- [https://buomsoo-kim.github.io/colab/2020/03/15/Google-newly-launches-colab-pro.md/](https://buomsoo-kim.github.io/colab/2020/03/15/Google-newly-launches-colab-pro.md/)
-- [https://calculator.aws/#/addService/EC2](https://calculator.aws/#/addService/EC2)
 
 #
 
