@@ -1,3 +1,17 @@
+## [1.0.39](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.38...1.0.39) (2026-09-21)
+
+### Bug Fixes
+
+* switch to penguin dataset ([8cbcd6e](https://github.com/w4bo/AA2627-unibo-mldm/commit/8cbcd6e96e37fc2cac19bc2ff28a168f31e3a7ea))
+* switch to penguin dataset ([551029f](https://github.com/w4bo/AA2627-unibo-mldm/commit/551029fbb834c8b52fe48dc39352117609b8fedd))
+* switch to penguin dataset ([e94ec71](https://github.com/w4bo/AA2627-unibo-mldm/commit/e94ec71af8c96aab2dd27243c52ffe9944d36fb6))
+* update slides ([2048a01](https://github.com/w4bo/AA2627-unibo-mldm/commit/2048a01956fc87d6268775d42d841abeafd0b8fa))
+* update slides ([fe8bbce](https://github.com/w4bo/AA2627-unibo-mldm/commit/fe8bbce97b4157c765c5c221606a0296ceba7b51))
+
+### Build and continuous integration
+
+* **deps:** update dependency ubuntu to v26 ([#38](https://github.com/w4bo/AA2627-unibo-mldm/issues/38)) ([091447d](https://github.com/w4bo/AA2627-unibo-mldm/commit/091447d38b9a39531b5f4da86b50ef2de9258c23))
+
 ## [1.0.38](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.37...1.0.38) (2026-09-17)
 
 ### Bug Fixes
