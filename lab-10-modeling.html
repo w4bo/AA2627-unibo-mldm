@@ -205,7 +205,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Machine Learning and Data Mining (Module I)</h1>
-  <p class="subtitle">Lab 10 - Modeling with Penguins</p>
+  <p class="subtitle">Lab 02 - Classification</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -260,7 +260,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="lets-train-some-machine-learning-models" class="title-slide slide level1 center">
 <h1>Let’s train some machine learning models</h1>
-<div id="modeling-hidden-iris-setup" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:15.398260Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:15.397948Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:15.418418Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:15.417508Z&quot;}}" data-execution_count="2">
+<div id="modeling-hidden-iris-setup" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.391914Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.391583Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:33.414374Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:33.413406Z&quot;}}" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>penguins <span class="op">=</span> pd.read_csv(find_dataset(<span class="st">"penguins.csv"</span>))</span>
@@ -396,7 +396,75 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="class-understanding" class="title-slide slide level1 center">
 <h1>Class understanding</h1>
 
-<img data-src="./img/lab-10-classification/penguin_class.png" class="r-stretch"></section>
+<img data-src="./img/lab-10-classification/penguin_class.png" class="r-stretch"><div id="penguins-class-balance" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.416173Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.415992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:33.424744Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:33.423967Z&quot;}}" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, balanced_accuracy_score</span>
+<span id="cb2-2"><a href="" aria-label="2"></a></span>
+<span id="cb2-3"><a href="" aria-label="3"></a>class_distribution <span class="op">=</span> (</span>
+<span id="cb2-4"><a href="" aria-label="4"></a>    df[<span class="st">"species"</span>]</span>
+<span id="cb2-5"><a href="" aria-label="5"></a>    .value_counts()</span>
+<span id="cb2-6"><a href="" aria-label="6"></a>    .reindex(target_names)</span>
+<span id="cb2-7"><a href="" aria-label="7"></a>    .rename_axis(<span class="st">"species"</span>)</span>
+<span id="cb2-8"><a href="" aria-label="8"></a>    .to_frame(<span class="st">"count"</span>)</span>
+<span id="cb2-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb2-10"><a href="" aria-label="10"></a>class_distribution[<span class="st">"proportion"</span>] <span class="op">=</span> class_distribution[<span class="st">"count"</span>] <span class="op">/</span> class_distribution[<span class="st">"count"</span>].<span class="bu">sum</span>()</span>
+<span id="cb2-11"><a href="" aria-label="11"></a></span>
+<span id="cb2-12"><a href="" aria-label="12"></a></span>
+<span id="cb2-13"><a href="" aria-label="13"></a>class_distribution</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">proportion</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">species</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Adelie</th>
+<td>151</td>
+<td>0.441520</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Chinstrap</th>
+<td>68</td>
+<td>0.198830</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Gentoo</th>
+<td>123</td>
+<td>0.359649</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
 
 <section id="feature-understanding" class="title-slide slide level1 center">
 <h1>Feature understanding</h1>
@@ -422,35 +490,35 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section>
 <section id="decision-tree" class="title-slide slide level1 center">
 <h1>Decision tree</h1>
-<div id="qRGDyke9OGij" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:15.420210Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:15.420038Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:15.479223Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:15.478114Z&quot;}}" data-outputid="28adc7ac-dafc-4623-98c5-dda0795d6ca5" data-execution_count="3">
+<div id="qRGDyke9OGij" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.432254Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.431935Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:33.496529Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:33.495504Z&quot;}}" data-outputid="28adc7ac-dafc-4623-98c5-dda0795d6ca5" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier  <span class="co"># Import the model</span></span>
-<span id="cb2-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
-<span id="cb2-3"><a href="" aria-label="3"></a></span>
-<span id="cb2-4"><a href="" aria-label="4"></a>clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed)  <span class="co"># Instantiate and fit the model (on the training set)</span></span>
-<span id="cb2-5"><a href="" aria-label="5"></a>clf.fit(X_train, y_train)  <span class="co"># Train the model</span></span>
-<span id="cb2-6"><a href="" aria-label="6"></a>y_pred <span class="op">=</span> clf.predict(X_test)  <span class="co"># Predict new values</span></span>
-<span id="cb2-7"><a href="" aria-label="7"></a>accuracy_score(y_test, y_pred)  <span class="co"># Evaluate the model (on the test set)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier  <span class="co"># Import the model</span></span>
+<span id="cb3-2"><a href="" aria-label="2"></a></span>
+<span id="cb3-3"><a href="" aria-label="3"></a>clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed)  <span class="co"># Instantiate and fit the model (on the training set)</span></span>
+<span id="cb3-4"><a href="" aria-label="4"></a>clf.fit(X_train, y_train)  <span class="co"># Train the model</span></span>
+<span id="cb3-5"><a href="" aria-label="5"></a>y_pred <span class="op">=</span> clf.predict(X_test)  <span class="co"># Predict new values</span></span>
+<span id="cb3-6"><a href="" aria-label="6"></a>decision_tree_test_score <span class="op">=</span> evaluation_metric(y_test, y_pred)  <span class="co"># Evaluate the model (on the test set)</span></span>
+<span id="cb3-7"><a href="" aria-label="7"></a>decision_tree_test_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>0.9855072463768116</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>0.9761904761904763</code></pre>
 </div>
 </div>
 </section>
 <section id="plotting-the-tree" class="slide level2">
 <h2>Plotting the tree</h2>
-<div id="TCYt3BziRjqK" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:15.481746Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:15.481537Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:15.687388Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:15.686415Z&quot;}}" data-outputid="a5c6ce55-6e0d-4504-e4c8-408382791a1d" data-execution_count="4">
+<div id="TCYt3BziRjqK" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.503498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.503299Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:33.725085Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:33.724000Z&quot;}}" data-outputid="a5c6ce55-6e0d-4504-e4c8-408382791a1d" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
-<span id="cb4-2"><a href="" aria-label="2"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb4-3"><a href="" aria-label="3"></a>plot_tree(clf, feature_names<span class="op">=</span>X.columns, class_names<span class="op">=</span>target_names, filled<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb5-3"><a href="" aria-label="3"></a>plot_tree(clf, feature_names<span class="op">=</span>X.columns, class_names<span class="op">=</span>target_names, filled<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-5-output-1.png" width="466" height="315"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-8-output-1.png" width="466" height="315"></p>
 </figure>
 </div>
 </div>
@@ -458,14 +526,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="checking-feature-relevance" class="slide level2">
 <h2>Checking feature relevance</h2>
-<div id="JV7m4ZKqPaJm" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:15.690199Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:15.689688Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:15.700523Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:15.699391Z&quot;}}" data-outputid="efeb6271-4cec-4fcb-b621-84f298272ad7" data-execution_count="5">
+<div id="JV7m4ZKqPaJm" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.727070Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.726870Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:33.735972Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:33.734904Z&quot;}}" data-outputid="efeb6271-4cec-4fcb-b621-84f298272ad7" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>feature_importance_df <span class="op">=</span> pd.DataFrame({<span class="st">'Feature'</span>: X.columns, <span class="st">'Importance'</span>: clf.feature_importances_})  <span class="co"># Create a DataFrame to display feature importance</span></span>
-<span id="cb5-2"><a href="" aria-label="2"></a>feature_importance_df <span class="op">=</span> feature_importance_df.sort_values([<span class="st">'Importance'</span>, <span class="st">'Feature'</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>])  <span class="co"># Sort the DataFrame by importance in descending order</span></span>
-<span id="cb5-3"><a href="" aria-label="3"></a>feature_importance_df  <span class="co"># Display the feature importance </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>feature_importance_df <span class="op">=</span> pd.DataFrame({<span class="st">'Feature'</span>: X.columns, <span class="st">'Importance'</span>: clf.feature_importances_})  <span class="co"># Create a DataFrame to display feature importance</span></span>
+<span id="cb6-2"><a href="" aria-label="2"></a>feature_importance_df <span class="op">=</span> feature_importance_df.sort_values([<span class="st">'Importance'</span>, <span class="st">'Feature'</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>])  <span class="co"># Sort the DataFrame by importance in descending order</span></span>
+<span id="cb6-3"><a href="" aria-label="3"></a>feature_importance_df  <span class="co"># Display the feature importance </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -519,12 +587,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section></section>
 <section id="feature-selection-checking-correlations" class="title-slide slide level1 center">
 <h1>Feature selection: checking correlations</h1>
-<div id="e8799449" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:15.702813Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:15.702508Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:15.712500Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:15.711550Z&quot;}}" data-execution_count="6">
+<div id="e8799449" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.737760Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.737582Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:33.745151Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:33.744379Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>X_train.corr(method<span class="op">=</span><span class="st">'pearson'</span>, numeric_only<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>X_train.corr(method<span class="op">=</span><span class="st">'pearson'</span>, numeric_only<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -589,15 +657,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="most-relevant-penguin-measurements" class="title-slide slide level1 center">
 <h1>Most relevant penguin measurements</h1>
-<div id="8h4GlwOOPlz3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:15.721618Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:15.721444Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:15.800150Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:15.799245Z&quot;}}" data-outputid="a3ff9957-5136-4fe3-d3e0-dc7a7ddf2bfe" data-execution_count="8">
+<div id="8h4GlwOOPlz3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.752417Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.752203Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:33.840631Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:33.839688Z&quot;}}" data-outputid="a3ff9957-5136-4fe3-d3e0-dc7a7ddf2bfe" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[:<span class="dv">2</span>].tolist())  <span class="co"># plot the 2 most important features</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[:<span class="dv">2</span>].tolist())  <span class="co"># plot the 2 most important features</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-9-output-1.png" width="327" height="230"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-12-output-1.png" width="327" height="230"></p>
 </figure>
 </div>
 </div>
@@ -606,15 +674,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="less-relevant-penguin-measurements" class="title-slide slide level1 center">
 <h1>Less relevant penguin measurements</h1>
-<div id="nFNaqWIOT-Rd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:15.802112Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:15.801934Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:15.876086Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:15.875061Z&quot;}}" data-outputid="e57d7a46-c26b-4bfc-c956-f67944b26ada" data-execution_count="9">
+<div id="nFNaqWIOT-Rd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.842496Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.842315Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:33.936394Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:33.935404Z&quot;}}" data-outputid="e57d7a46-c26b-4bfc-c956-f67944b26ada" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[<span class="dv">2</span>:].tolist())  <span class="co"># plot the 2 lest important features</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>plot(df, clf, feature_importance_df[<span class="st">'Feature'</span>].iloc[<span class="dv">2</span>:].tolist())  <span class="co"># plot the 2 lest important features</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-10-output-1.png" width="328" height="230"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-13-output-1.png" width="328" height="230"></p>
 </figure>
 </div>
 </div>
@@ -628,15 +696,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth1" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=1</code></h1>
-<div id="5d66e1c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:15.892057Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:15.891890Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:16.143213Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:16.142329Z&quot;}}" data-execution_count="11">
+<div id="5d66e1c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:33.953413Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:33.953103Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:34.216917Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:34.215795Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-12-output-1.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-15-output-1.png" width="668" height="532"></p>
 </figure>
 </div>
 </div>
@@ -645,15 +713,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth2" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=2</code></h1>
-<div id="a334f69e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:16.145110Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:16.144921Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:16.356903Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:16.356116Z&quot;}}" data-execution_count="12">
+<div id="a334f69e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:34.218793Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:34.218614Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:34.481254Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:34.480184Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-13-output-1.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-16-output-1.png" width="668" height="532"></p>
 </figure>
 </div>
 </div>
@@ -662,15 +730,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth4" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=4</code></h1>
-<div id="11077234" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:16.359293Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:16.359077Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:16.545823Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:16.544977Z&quot;}}" data-execution_count="13">
+<div id="11077234" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:34.483115Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:34.482940Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:34.720983Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:34.720040Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">4</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">4</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-14-output-1.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-17-output-1.png" width="668" height="532"></p>
 </figure>
 </div>
 </div>
@@ -679,15 +747,28 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="decision-boundaries-max_depth6" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>max_depth=6</code></h1>
-<div id="6fd5a7ac" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:16.548041Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:16.547851Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:16.734079Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:16.733021Z&quot;}}" data-execution_count="14">
+<div id="6fd5a7ac" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:34.723039Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:34.722862Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:34.958331Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:34.957269Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">6</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>tree <span class="op">=</span> plot_boundary(DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">6</span>, random_state<span class="op">=</span>seed), <span class="st">"decisiontree_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-15-output-1.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-18-output-1.png" width="668" height="532"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+<section id="plotting-training-and-cross-validation-accuracy" class="title-slide slide level1 center">
+<h1>Plotting training and cross-validation accuracy</h1>
+<div id="b0ec6d95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:34.960185Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:34.959992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:35.294044Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:35.293002Z&quot;}}" data-execution_count="18">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-19-output-1.png" width="369" height="273"></p>
 </figure>
 </div>
 </div>
@@ -710,7 +791,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>In scikit-learn they are passed as arguments to the constructor of the estimator classes</li>
 <li>Any parameter provided when constructing an estimator may be optimized</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>estimator.get_params()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>estimator.get_params()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A search consists of:</p>
 <ul>
 <li>an estimator <span class="math inline">\((\checkmark)\)</span></li>
@@ -726,18 +807,19 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p><strong>Search Space</strong>: space where each dimension represents a hyperparameter and each point represents one model configuration.</p>
 <p>Consider the following hyperparameters of a random forest:</p>
 <ul>
-<li><code>max_depth</code>: maximum depth of a single tree, <code>min_samples_leaf</code>: minimum number of samples required to be at a leaf node</li>
+<li><code>max_depth</code>: maximum depth of a single tree</li>
+<li><code>n_estimators</code>: number of trees in the forest</li>
 </ul>
 <p>Assume that the domain of the two parameters is the following:</p>
 <ul>
-<li><code>max_depth</code> <span class="math inline">\(\in [1, 10]\)</span>, <code>min_samples_leaf</code> <span class="math inline">\(\in [2, 20]\)</span></li>
+<li><code>max_depth</code> <span class="math inline">\(\in [1, 10]\)</span>, <code>n_estimators</code> <span class="math inline">\(\in [20, 200]\)</span></li>
 </ul>
 <p>Then, our 2D-search space is</p>
-<div id="a7d501a3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:16.735920Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:16.735725Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:16.828977Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:16.828047Z&quot;}}" data-execution_count="15">
+<div id="a7d501a3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:35.300663Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:35.300489Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:35.416988Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:35.416166Z&quot;}}" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-16-output-1.png" width="369" height="273"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-21-output-1.png" width="369" height="273"></p>
 </figure>
 </div>
 </div>
@@ -758,11 +840,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The probability of finding at least one good configuration is above 95% after trying out 60 configurations (<span class="math inline">\(1 − 0.95^{60} = 0.953 &gt; 0.95\)</span>)</p>
 </blockquote></li>
 </ul>
-<div id="6a13c5d0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:16.830771Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:16.830556Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:17.019032Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:17.018111Z&quot;}}" data-execution_count="16">
+<div id="6a13c5d0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:35.419200Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:35.419022Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:35.636799Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:35.635643Z&quot;}}" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-17-output-1.png" width="656" height="273"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-22-output-1.png" width="753" height="273"></p>
 </figure>
 </div>
 </div>
@@ -784,51 +866,39 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h2>Example of cross correlation</h2>
 
 <img data-src="img/remote/github-asset-d3a1aff6.png" class="r-stretch"></section></section>
-<section id="plotting-training-and-cross-validation-accuracy" class="title-slide slide level1 center">
-<h1>Plotting training and cross-validation accuracy</h1>
-<div id="b0ec6d95" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:17.021354Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:17.021155Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:17.293705Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:17.292609Z&quot;}}" data-execution_count="17">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-18-output-1.png" width="369" height="273"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-
 <section id="random-forest" class="title-slide slide level1 center">
 <h1>Random forest</h1>
-<div id="aa8c6cae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:17.295514Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:17.295323Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:31.491537Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:31.490707Z&quot;}}" data-execution_count="18">
+<div id="aa8c6cae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:35.638679Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:35.638504Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:52.585497Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:52.584646Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
-<span id="cb14-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
-<span id="cb14-3"><a href="" aria-label="3"></a><span class="im">from</span> scipy.stats <span class="im">import</span> randint</span>
-<span id="cb14-4"><a href="" aria-label="4"></a>rf <span class="op">=</span> RandomForestClassifier(random_state<span class="op">=</span>seed)  <span class="co"># Define a Random Forest Classifier</span></span>
-<span id="cb14-5"><a href="" aria-label="5"></a>param_dist <span class="op">=</span> {  <span class="co"># Set up the parameter grid for random search</span></span>
-<span id="cb14-6"><a href="" aria-label="6"></a>    <span class="st">'n_estimators'</span>: randint(<span class="dv">2</span>, <span class="dv">200</span>),        <span class="co"># Number of trees in the forest</span></span>
-<span id="cb14-7"><a href="" aria-label="7"></a>    <span class="st">'max_depth'</span>: randint(<span class="dv">2</span>, <span class="dv">20</span>),            <span class="co"># Maximum depth of the tree</span></span>
-<span id="cb14-8"><a href="" aria-label="8"></a>    <span class="st">'min_samples_split'</span>: randint(<span class="dv">2</span>, <span class="dv">20</span>),    <span class="co"># Minimum number of samples to split a node</span></span>
-<span id="cb14-9"><a href="" aria-label="9"></a>    <span class="st">'min_samples_leaf'</span>: randint(<span class="dv">1</span>, <span class="dv">20</span>),     <span class="co"># Minimum number of samples in a leaf node</span></span>
-<span id="cb14-10"><a href="" aria-label="10"></a>}</span>
-<span id="cb14-11"><a href="" aria-label="11"></a>random_search <span class="op">=</span> RandomizedSearchCV(rf, param_distributions<span class="op">=</span>param_dist, n_iter<span class="op">=</span><span class="dv">50</span>, scoring<span class="op">=</span><span class="st">'accuracy'</span>, cv<span class="op">=</span>cv, random_state<span class="op">=</span>seed, n_jobs<span class="op">=-</span><span class="dv">1</span>)  <span class="co"># Setup RandomizedSearchCV</span></span>
-<span id="cb14-12"><a href="" aria-label="12"></a>random_search.fit(X_train, y_train)  <span class="co"># Fit the random search model</span></span>
-<span id="cb14-13"><a href="" aria-label="13"></a><span class="bu">print</span>(<span class="st">"Best Parameters from Random Search:"</span>, random_search.best_params_)  <span class="co"># Output the best parameters </span></span>
-<span id="cb14-14"><a href="" aria-label="14"></a>best_rf <span class="op">=</span> random_search.best_estimator_</span>
-<span id="cb14-15"><a href="" aria-label="15"></a>test_accuracy <span class="op">=</span> best_rf.score(X_test, y_test)  <span class="co"># Evaluate the model with the best parameters on the test set</span></span>
-<span id="cb14-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="st">"Best Cross-validation Accuracy:"</span>, random_search.best_score_, <span class="st">"</span><span class="ch">\n</span><span class="st">Test Set Accuracy with Best Parameters:"</span>, test_accuracy)  <span class="co"># Output the best score</span></span>
-<span id="cb14-17"><a href="" aria-label="17"></a>forest <span class="op">=</span> plot_boundary(best_rf, <span class="st">"rf_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
+<span id="cb15-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb15-3"><a href="" aria-label="3"></a><span class="im">from</span> scipy.stats <span class="im">import</span> randint</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>rf <span class="op">=</span> RandomForestClassifier(random_state<span class="op">=</span>seed)  <span class="co"># Define a Random Forest Classifier</span></span>
+<span id="cb15-5"><a href="" aria-label="5"></a>param_dist <span class="op">=</span> {  <span class="co"># Set up the parameter grid for random search</span></span>
+<span id="cb15-6"><a href="" aria-label="6"></a>    <span class="st">'n_estimators'</span>: randint(<span class="dv">2</span>, <span class="dv">200</span>),        <span class="co"># Number of trees in the forest</span></span>
+<span id="cb15-7"><a href="" aria-label="7"></a>    <span class="st">'max_depth'</span>: randint(<span class="dv">2</span>, <span class="dv">20</span>),            <span class="co"># Maximum depth of the tree</span></span>
+<span id="cb15-8"><a href="" aria-label="8"></a>    <span class="st">'min_samples_split'</span>: randint(<span class="dv">2</span>, <span class="dv">20</span>),    <span class="co"># Minimum number of samples to split a node</span></span>
+<span id="cb15-9"><a href="" aria-label="9"></a>    <span class="st">'min_samples_leaf'</span>: randint(<span class="dv">1</span>, <span class="dv">20</span>),     <span class="co"># Minimum number of samples in a leaf node</span></span>
+<span id="cb15-10"><a href="" aria-label="10"></a>}</span>
+<span id="cb15-11"><a href="" aria-label="11"></a>random_search <span class="op">=</span> RandomizedSearchCV(rf, param_distributions<span class="op">=</span>param_dist, n_iter<span class="op">=</span><span class="dv">50</span>, scoring<span class="op">=</span>evaluation_scorer, cv<span class="op">=</span>cv, random_state<span class="op">=</span>seed, n_jobs<span class="op">=-</span><span class="dv">1</span>)  <span class="co"># Setup RandomizedSearchCV</span></span>
+<span id="cb15-12"><a href="" aria-label="12"></a>random_search.fit(X_train, y_train)  <span class="co"># Fit the random search model</span></span>
+<span id="cb15-13"><a href="" aria-label="13"></a><span class="bu">print</span>(<span class="st">"Best Parameters from Random Search:"</span>, random_search.best_params_)  <span class="co"># Output the best parameters </span></span>
+<span id="cb15-14"><a href="" aria-label="14"></a>best_rf <span class="op">=</span> random_search.best_estimator_</span>
+<span id="cb15-15"><a href="" aria-label="15"></a>test_score <span class="op">=</span> evaluation_metric(y_test, best_rf.predict(X_test))  <span class="co"># Evaluate the model with the selected metric on the test set</span></span>
+<span id="cb15-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="ss">f"Best cross-validation </span><span class="sc">{</span>metric_label<span class="sc">.</span>lower()<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>random_search<span class="sc">.</span>best_score_<span class="sc">:.3f}</span><span class="ss">"</span>)  <span class="co"># Output the best score</span></span>
+<span id="cb15-17"><a href="" aria-label="17"></a><span class="bu">print</span>(<span class="ss">f"Test set </span><span class="sc">{</span>metric_label<span class="sc">.</span>lower()<span class="sc">}</span><span class="ss"> with best parameters: </span><span class="sc">{</span>test_score<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb15-18"><a href="" aria-label="18"></a>forest <span class="op">=</span> plot_boundary(best_rf, <span class="st">"rf_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Best Parameters from Random Search: {'max_depth': 18, 'min_samples_leaf': 10, 'min_samples_split': 17, 'n_estimators': 16}
-Best Cross-validation Accuracy: 0.956094276094276 
-Test Set Accuracy with Best Parameters: 1.0</code></pre>
+<pre><code>Best Parameters from Random Search: {'max_depth': 4, 'min_samples_leaf': 3, 'min_samples_split': 2, 'n_estimators': 124}
+Best cross-validation balanced accuracy: 0.949
+Test set balanced accuracy with best parameters: 1.000</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-19-output-2.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-23-output-2.png" width="668" height="532"></p>
 </figure>
 </div>
 </div>
@@ -837,11 +907,11 @@ Test Set Accuracy with Best Parameters: 1.0</code></pre>
 
 <section id="k-nearest-neighbors" class="title-slide slide level1 center">
 <h1>k-Nearest Neighbors</h1>
-<div id="368e55d6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:31.493454Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:31.493255Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:31.642865Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:31.642049Z&quot;}}" data-execution_count="19">
+<div id="368e55d6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:52.593027Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:52.592845Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:52.787467Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:52.786533Z&quot;}}" data-execution_count="24">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-20-output-1.png" width="817" height="458"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-25-output-1.png" width="817" height="458"></p>
 </figure>
 </div>
 </div>
@@ -855,17 +925,17 @@ Test Set Accuracy with Best Parameters: 1.0</code></pre>
 
 <section id="decision-boundaries-k1-no-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=1</code> (no normalization)</h1>
-<div id="313f0aeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:31.645073Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:31.644896Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:31.874257Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:31.873501Z&quot;}}" data-execution_count="20">
+<div id="313f0aeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:52.789436Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:52.789209Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:53.074430Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:53.073447Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
-<span id="cb16-2"><a href="" aria-label="2"></a></span>
-<span id="cb16-3"><a href="" aria-label="3"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb17-2"><a href="" aria-label="2"></a></span>
+<span id="cb17-3"><a href="" aria-label="3"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-21-output-1.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-26-output-1.png" width="668" height="532"></p>
 </figure>
 </div>
 </div>
@@ -874,15 +944,15 @@ Test Set Accuracy with Best Parameters: 1.0</code></pre>
 
 <section id="decision-boundaries-k1-min-max-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=1</code> (min-max normalization)</h1>
-<div id="fd0b352a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:31.876454Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:31.876255Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:32.103881Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:32.102766Z&quot;}}" data-execution_count="21">
+<div id="fd0b352a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:53.076311Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:53.076079Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:53.358272Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:53.357261Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">1</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-22-output-1.png" width="674" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-27-output-1.png" width="674" height="532"></p>
 </figure>
 </div>
 </div>
@@ -891,15 +961,15 @@ Test Set Accuracy with Best Parameters: 1.0</code></pre>
 
 <section id="decision-boundaries-k10-min-max-normalization" class="title-slide slide level1 center">
 <h1>Decision boundaries: <code>k=10</code> (min-max normalization)</h1>
-<div id="8c2f5371" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:32.105711Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:32.105489Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:32.399832Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:32.398709Z&quot;}}" data-execution_count="22">
+<div id="8c2f5371" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:53.360064Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:53.359889Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:53.701665Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:53.700667Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">10</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>knn <span class="op">=</span> plot_boundary(KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">10</span>), <span class="st">"knn_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-23-output-1.png" width="674" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-28-output-1.png" width="674" height="532"></p>
 </figure>
 </div>
 </div>
@@ -908,35 +978,36 @@ Test Set Accuracy with Best Parameters: 1.0</code></pre>
 
 <section id="plotting-training-and-cross-validation-accuracy-1" class="title-slide slide level1 center">
 <h1>Plotting training and cross-validation accuracy</h1>
-<div id="40f79431" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:32.401698Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:32.401460Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:32.702773Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:32.701992Z&quot;}}" data-execution_count="23">
+<div id="40f79431" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:53.708774Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:53.708598Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:54.116766Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:54.115910Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Prepare to store k values and corresponding accuracies</span></span>
-<span id="cb19-2"><a href="" aria-label="2"></a>k_s <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb19-3"><a href="" aria-label="3"></a>train_accuracies, cv_accuracies, cv_stds <span class="op">=</span> [], [], []</span>
-<span id="cb19-4"><a href="" aria-label="4"></a><span class="cf">for</span> k <span class="kw">in</span> k_s:  <span class="co"># Train k-NN classifiers with increasing k</span></span>
-<span id="cb19-5"><a href="" aria-label="5"></a>    knn <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span>k)</span>
-<span id="cb19-6"><a href="" aria-label="6"></a>    knn.fit(X_train, y_train)</span>
-<span id="cb19-7"><a href="" aria-label="7"></a>    train_acc <span class="op">=</span> accuracy_score(y_train, knn.predict(X_train))  <span class="co"># Compute accuracy for training set</span></span>
-<span id="cb19-8"><a href="" aria-label="8"></a>    cv_scores <span class="op">=</span> cross_val_score(knn, X_train, y_train, cv<span class="op">=</span>cv, scoring<span class="op">=</span><span class="st">"accuracy"</span>)  <span class="co"># Evaluate with CV on the training set</span></span>
-<span id="cb19-9"><a href="" aria-label="9"></a>    train_accuracies.append(train_acc)</span>
-<span id="cb19-10"><a href="" aria-label="10"></a>    cv_accuracies.append(cv_scores.mean())</span>
-<span id="cb19-11"><a href="" aria-label="11"></a>    cv_stds.append(cv_scores.std())</span>
-<span id="cb19-12"><a href="" aria-label="12"></a><span class="co"># Plot accuracies</span></span>
-<span id="cb19-13"><a href="" aria-label="13"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
-<span id="cb19-14"><a href="" aria-label="14"></a>plt.plot(k_s, train_accuracies, label<span class="op">=</span><span class="st">"Training"</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
-<span id="cb19-15"><a href="" aria-label="15"></a>plt.errorbar(k_s, cv_accuracies, yerr<span class="op">=</span>cv_stds, label<span class="op">=</span><span class="st">"CV"</span>, marker<span class="op">=</span><span class="st">"o"</span>, capsize<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb19-16"><a href="" aria-label="16"></a>plt.xticks(k_s)</span>
-<span id="cb19-17"><a href="" aria-label="17"></a>plt.xlabel(<span class="st">"k"</span>)</span>
-<span id="cb19-18"><a href="" aria-label="18"></a>plt.ylabel(<span class="st">"Accuracy"</span>)</span>
-<span id="cb19-19"><a href="" aria-label="19"></a>plt.legend()</span>
-<span id="cb19-20"><a href="" aria-label="20"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb19-21"><a href="" aria-label="21"></a>plt.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Prepare to store k values and corresponding accuracies</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a>k_s <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>)</span>
+<span id="cb20-3"><a href="" aria-label="3"></a>train_accuracies, cv_accuracies, cv_stds <span class="op">=</span> [], [], []</span>
+<span id="cb20-4"><a href="" aria-label="4"></a><span class="cf">for</span> k <span class="kw">in</span> k_s:  <span class="co"># Train k-NN classifiers with increasing k</span></span>
+<span id="cb20-5"><a href="" aria-label="5"></a>    knn <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span>k)</span>
+<span id="cb20-6"><a href="" aria-label="6"></a>    knn.fit(X_train, y_train)</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>    train_acc <span class="op">=</span> evaluation_metric(y_train, knn.predict(X_train))  <span class="co"># Compute accuracy for training set</span></span>
+<span id="cb20-8"><a href="" aria-label="8"></a>    cv_scores <span class="op">=</span> cross_val_score(knn, X_train, y_train, cv<span class="op">=</span>cv, scoring<span class="op">=</span>evaluation_scorer)  <span class="co"># Evaluate with CV on the training set</span></span>
+<span id="cb20-9"><a href="" aria-label="9"></a>    train_accuracies.append(train_acc)</span>
+<span id="cb20-10"><a href="" aria-label="10"></a>    cv_accuracies.append(cv_scores.mean())</span>
+<span id="cb20-11"><a href="" aria-label="11"></a>    cv_stds.append(cv_scores.std())</span>
+<span id="cb20-12"><a href="" aria-label="12"></a><span class="co"># Plot accuracies</span></span>
+<span id="cb20-13"><a href="" aria-label="13"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb20-14"><a href="" aria-label="14"></a>plt.plot(k_s, train_accuracies, label<span class="op">=</span><span class="st">"Training"</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb20-15"><a href="" aria-label="15"></a>plt.errorbar(k_s, cv_accuracies, yerr<span class="op">=</span>cv_stds, label<span class="op">=</span><span class="st">"CV"</span>, marker<span class="op">=</span><span class="st">"o"</span>, capsize<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb20-16"><a href="" aria-label="16"></a>plt.xticks(k_s)</span>
+<span id="cb20-17"><a href="" aria-label="17"></a>plt.xlabel(<span class="st">"k"</span>)</span>
+<span id="cb20-18"><a href="" aria-label="18"></a>plt.ylabel(metric_label)</span>
+<span id="cb20-19"><a href="" aria-label="19"></a>plt.legend()</span>
+<span id="cb20-20"><a href="" aria-label="20"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb20-21"><a href="" aria-label="21"></a>plt.tight_layout()</span>
+<span id="cb20-22"><a href="" aria-label="22"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-24-output-1.png" width="369" height="273"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-30-output-1.png" width="369" height="273"></p>
 </figure>
 </div>
 </div>
@@ -971,17 +1042,17 @@ Is this image a grape?</code></pre>
 
 <section id="perceptron-1" class="title-slide slide level1 center">
 <h1>Perceptron</h1>
-<div id="38b9e754" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:32.705157Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:32.704950Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:32.894679Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:32.893886Z&quot;}}" data-execution_count="24">
+<div id="38b9e754" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:54.124032Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:54.123842Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:54.362668Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:54.361559Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron</span>
-<span id="cb21-2"><a href="" aria-label="2"></a></span>
-<span id="cb21-3"><a href="" aria-label="3"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span>seed), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron</span>
+<span id="cb22-2"><a href="" aria-label="2"></a></span>
+<span id="cb22-3"><a href="" aria-label="3"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span>seed), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-25-output-1.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-32-output-1.png" width="668" height="532"></p>
 </figure>
 </div>
 </div>
@@ -990,15 +1061,15 @@ Is this image a grape?</code></pre>
 
 <section id="perceptron-changing-the-seed" class="title-slide slide level1 center">
 <h1>Perceptron: changing the seed</h1>
-<div id="04c0a645" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:32.896808Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:32.896588Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:33.086813Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:33.085978Z&quot;}}" data-execution_count="25">
+<div id="04c0a645" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:54.364546Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:54.364346Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:54.600964Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:54.600088Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span><span class="dv">10</span>), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span><span class="dv">10</span>), <span class="st">"perceptron_cplot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-26-output-1.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-33-output-1.png" width="668" height="532"></p>
 </figure>
 </div>
 </div>
@@ -1007,17 +1078,17 @@ Is this image a grape?</code></pre>
 
 <section id="perceptron-using-min-max-normalization" class="title-slide slide level1 center">
 <h1>Perceptron: using min-max normalization</h1>
-<div id="6254eef6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:33.088939Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:33.088752Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:33.272584Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:33.271473Z&quot;}}" data-execution_count="26">
+<div id="6254eef6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:54.603011Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:54.602813Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:54.832808Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:54.831789Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron</span>
-<span id="cb23-2"><a href="" aria-label="2"></a></span>
-<span id="cb23-3"><a href="" aria-label="3"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span>seed), <span class="st">"perceptron_cplot_norm"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron</span>
+<span id="cb24-2"><a href="" aria-label="2"></a></span>
+<span id="cb24-3"><a href="" aria-label="3"></a>perceptron <span class="op">=</span> plot_boundary(Perceptron(random_state<span class="op">=</span>seed), <span class="st">"perceptron_cplot_norm"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-27-output-1.png" width="674" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-34-output-1.png" width="674" height="532"></p>
 </figure>
 </div>
 </div>
@@ -1026,17 +1097,17 @@ Is this image a grape?</code></pre>
 
 <section id="multi-layer-perceptron" class="title-slide slide level1 center">
 <h1>Multi-layer perceptron</h1>
-<div id="56b111d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:33.274548Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:33.274357Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:33.791759Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:33.790816Z&quot;}}" data-execution_count="27">
+<div id="56b111d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:54.834688Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:54.834502Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:55.521982Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:55.520864Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>
-<span id="cb24-2"><a href="" aria-label="2"></a></span>
-<span id="cb24-3"><a href="" aria-label="3"></a>mlp <span class="op">=</span> plot_boundary(MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">20</span>), random_state<span class="op">=</span>seed, max_iter<span class="op">=</span><span class="dv">1000</span>), <span class="st">"mlp_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>
+<span id="cb25-2"><a href="" aria-label="2"></a></span>
+<span id="cb25-3"><a href="" aria-label="3"></a>mlp <span class="op">=</span> plot_boundary(MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">20</span>), random_state<span class="op">=</span>seed, max_iter<span class="op">=</span><span class="dv">1000</span>), <span class="st">"mlp_cplot"</span>, norm<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-28-output-1.png" width="674" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-35-output-1.png" width="674" height="532"></p>
 </figure>
 </div>
 </div>
@@ -1045,18 +1116,101 @@ Is this image a grape?</code></pre>
 
 <section id="multi-layer-perceptron-no-normalization" class="title-slide slide level1 center">
 <h1>Multi-layer perceptron: no normalization</h1>
-<div id="edb041e6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:00:33.793883Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:00:33.793656Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:00:34.277533Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:00:34.276494Z&quot;}}" data-execution_count="28">
+<div id="62b31e06" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:55.528727Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:55.528557Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:56.156763Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:56.155715Z&quot;}}" data-execution_count="36">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>
-<span id="cb25-2"><a href="" aria-label="2"></a></span>
-<span id="cb25-3"><a href="" aria-label="3"></a>mlp <span class="op">=</span> plot_boundary(MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">20</span>), random_state<span class="op">=</span>seed, max_iter<span class="op">=</span><span class="dv">1000</span>), <span class="st">"mlp_cplot"</span>, norm<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.neural_network <span class="im">import</span> MLPClassifier</span>
+<span id="cb26-2"><a href="" aria-label="2"></a></span>
+<span id="cb26-3"><a href="" aria-label="3"></a>mlp <span class="op">=</span> plot_boundary(MLPClassifier(hidden_layer_sizes<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">20</span>), random_state<span class="op">=</span>seed, max_iter<span class="op">=</span><span class="dv">1000</span>), <span class="st">"mlp_cplot"</span>, norm<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-29-output-1.png" width="668" height="532"></p>
+<p><img data-src="lab-10-modeling_files/figure-revealjs/cell-37-output-1.png" width="668" height="532"></p>
 </figure>
+</div>
+</div>
+</div>
+</section>
+
+<section id="model-performance-summary" class="title-slide slide level1 center">
+<h1>Model performance summary</h1>
+<div id="model-performance-summary-card" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-21T21:37:56.158613Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-21T21:37:56.158433Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-21T21:37:56.168016Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-21T21:37:56.167253Z&quot;}}" data-execution_count="37">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML, display</span>
+<span id="cb27-2"><a href="" aria-label="2"></a></span>
+<span id="cb27-3"><a href="" aria-label="3"></a>performance_summary <span class="op">=</span> (</span>
+<span id="cb27-4"><a href="" aria-label="4"></a>    pd.DataFrame(model_performance.values())</span>
+<span id="cb27-5"><a href="" aria-label="5"></a>    .loc[:, [<span class="st">"model"</span>, <span class="st">"configuration"</span>, <span class="st">"CV mean"</span>, <span class="st">"CV std"</span>, <span class="st">"test"</span>]]</span>
+<span id="cb27-6"><a href="" aria-label="6"></a>    .sort_values(<span class="st">"test"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb27-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb27-8"><a href="" aria-label="8"></a></span>
+<span id="cb27-9"><a href="" aria-label="9"></a>performance_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">model</th>
+<th data-quarto-table-cell-role="th">configuration</th>
+<th data-quarto-table-cell-role="th">CV mean</th>
+<th data-quarto-table-cell-role="th">CV std</th>
+<th data-quarto-table-cell-role="th">test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Random forest</td>
+<td>max_depth=4, min_samples_leaf=3, min_samples_s...</td>
+<td>0.949263</td>
+<td>0.014606</td>
+<td>1.00000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Decision tree</td>
+<td>max_depth=2</td>
+<td>0.927582</td>
+<td>0.022593</td>
+<td>0.97619</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>k-NN</td>
+<td>k=10, min-max normalization</td>
+<td>0.600907</td>
+<td>0.007346</td>
+<td>0.97619</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>MLP</td>
+<td>hidden_layer_sizes=(10, 20), min-max normaliza...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.97619</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
 </div>
@@ -1065,11 +1219,10 @@ Is this image a grape?</code></pre>
 <section id="exercise" class="title-slide slide level1 center">
 <h1>Exercise</h1>
 <ol type="1">
-<li>Add the <code>island</code> and <code>sex</code> columns to the feature matrix using an appropriate preprocessing pipeline</li>
+<li>Rather than training only on 2 features, use all the numeric ones</li>
 <li>Train a decision tree</li>
-<li>… try different configurations of hyperparameters</li>
-<li>What is your best accuracy?</li>
 <li>What are the most relevant features?</li>
+<li>Try different configurations of hyperparameters</li>
 </ol>
 
 </section>
