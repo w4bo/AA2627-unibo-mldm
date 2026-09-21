@@ -237,10 +237,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section id="section" class="title-slide slide level1 center">
-<h1></h1>
 
-<img src="./img/crispdm_me.svg" class="center-img r-stretch"></section>
 
 <section id="learning-objectives" class="title-slide slide level1 center">
 <h1>Learning objectives</h1>
@@ -279,19 +276,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </table>
 </section>
 
-<section id="recalling-the-machine-learning-pipeline" class="title-slide slide level1 center">
-<h1>Recalling the Machine Learning pipeline</h1>
-<p>We now focus on the model, the “heart” of the AI in our system.</p>
 
-<img data-src="./img/datapreprocessing/pipeline.svg" class="r-stretch quarto-figure-center"><p class="caption">Data pipeline</p><ul>
-<li>With <em>model</em>, we refer to the “mechanism” with which input data are transformed into outputs</li>
-<li>A ML algorithm <em>trains</em> a ML model
-<ul>
-<li>Usually, this “mechanism” is based on math, geometry, statistics, etc.</li>
-</ul></li>
-<li>Even with the best model available, the model will perform poorly if it trains on “dirty” data</li>
-</ul>
-</section>
 
 <section id="demos-and-useful-links" class="title-slide slide level1 center">
 <h1>Demos and useful links</h1>
@@ -328,20 +313,20 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="formal-definition-artificial-neuron" class="title-slide slide level1 center">
 <h1>Formal definition: artificial neuron</h1>
 <div class="columns">
-<div class="column" style="width:50%;">
-<p>The first scheme about the neuron was introduced by <span class="citation" data-cites="mcculloch1943logical">(<a href="#/references" role="doc-biblioref" onclick="">McCulloch and Pitts 1943</a>)</span></p>
+<div class="column" style="width:55%;">
+<p>The scheme about the neuron was introduced by <span class="citation" data-cites="mcculloch1943logical">(<a href="#/references" role="doc-biblioref" onclick="">McCulloch and Pitts 1943</a>)</span></p>
 <p>The first Artificial Neuron (AN) was introduced by <em>Rosenblatt</em> in 1957</p>
 <ul>
 <li><em>Inputs</em> are digital numbers (not analog signals)</li>
 <li>Inputs are <em>weighted</em> (signals are not all equally important)</li>
 <li>Inputs are <em>merged</em> with a weighted sum function (plus a <em>bias</em>)</li>
-<li>An <em>activation function</em> is used to generate the final output:
+<li>An <em>activation function</em> is used to fitler the output:
 <ul>
-<li>Also the human brain <em>filters inputs</em>, it is impossible to always take everything into account</li>
-<li>Perceptron uses the step function <span class="math inline">\(f(x)=\begin{cases}1,&amp;x\geq 0\\0,&amp;x&lt;0\end{cases}\)</span></li>
+<li>Perceptron uses the step function <span class="math inline">\(f(h)=\begin{cases}1,&amp;h\geq 0\\0,&amp;h&lt;0\end{cases}\)</span></li>
+<li><span class="math inline">\(h = \sum_i w_i x_i +b\)</span></li>
 </ul></li>
 </ul>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:45%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/neuralnetworks/3%20Model53.png"></p>
@@ -678,9 +663,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li><em>Greater number of hidden layers (therefore neurons)</em>
 <ul>
-<li>→ <em>better performance</em></li>
-<li>→ <em>need for more training data</em></li>
-<li>→ <em>greater computational load</em></li>
+<li><em>better performance</em></li>
+<li><em>need for more training data</em></li>
+<li><em>greater computational load</em></li>
 </ul></li>
 </ul>
 <p>How is it possible to train a neural network?</p>
@@ -704,8 +689,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="neural-networks-training-intuition" class="title-slide slide level1 center">
-<h1>Neural networks training: intuition</h1>
+<section id="mlp-in-scikit-learn" class="title-slide slide level1 center">
+<h1><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html">MLP</a> in Scikit-Learn</h1>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>sklearn.neural_network.MLPClassifier(</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>    hidden_layer_sizes<span class="op">=</span>(<span class="dv">100</span>,),</span>
+<span id="cb1-3"><a href="" aria-label="3"></a>    activation<span class="op">=</span><span class="st">"relu"</span>,</span>
+<span id="cb1-4"><a href="" aria-label="4"></a>    solver<span class="op">=</span><span class="st">"adam"</span>,</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>    batch_size<span class="op">=</span><span class="st">"auto"</span>,</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>    learning_rate<span class="op">=</span><span class="st">"constant"</span>,</span>
+<span id="cb1-7"><a href="" aria-label="7"></a>    max_iter<span class="op">=</span><span class="dv">200</span>,</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-9"><a href="" aria-label="9"></a> ...</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+
+<section id="ann-and-dnn-training-intuition" class="title-slide slide level1 center">
+<h1>ANN and DNN training: intuition</h1>
 
 <img data-src="./img/neuralnetworks/3%20Model65.png" class="r-stretch quarto-figure-center"><p class="caption">Training</p></section>
 
@@ -718,26 +717,21 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <video id="video_shortcode_videojs_video4" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="vid/sigmoid-big.mp4"></video>
 </section>
 
-<section id="ann-and-dnn-training-a-visual-guide" class="title-slide slide level1 center">
-<h1>ANN and DNN training: a visual guide</h1>
+<section id="ann-and-dnn-training-1" class="title-slide slide level1 center">
+<h1>ANN and DNN training</h1>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/neuralnetworks/3%20Model75.gif"></p>
 <figcaption>Gradient descent</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:50%;">
+<p>See also <a href="https://blog.skz.dev/gradient-descent">interactive gradient descent</a></p>
+</div><div class="column" style="width:60%;">
 <ol type="1">
-<li>This surface is the solution space of the <em>loss function</em>
-<ul>
-<li>low values → low error</li>
-</ul></li>
-<li><em>Starting point</em>
-<ul>
-<li>Output of the NN with initial (random) weights</li>
-</ul></li>
+<li>This surface is the solution space of the <em>loss function</em> (low values, low error)</li>
+<li><em>Starting point</em>: output of the NN with initial (random) weights</li>
 <li><em>Global minimum</em>: the desired goal point!</li>
 <li>The learning procedure is performed in an <em>iterative manner</em>
 <ul>
@@ -753,106 +747,33 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div></div>
 </section>
 
-<section id="ann-and-dnn-training-1" class="title-slide slide level1 center">
+
+
+
+
+
+
+<section id="ann-and-dnn-training-3" class="title-slide slide level1 center">
 <h1>ANN and DNN training</h1>
-<p>The <em>cost function</em> is a mathematical formulation of the learning goal</p>
-<ul>
-<li>Measures the error between the prediction and the ground truth (label)</li>
-<li>Presents the performance (or error) in the form of a single real number</li>
-</ul>
-<p><strong>Cross Entropy</strong> is the distance between what the model believes the output distribution should be and what the original distribution is</p>
-<ul>
-<li>To use the <em>Cross Entropy</em> loss, the output layer must output probabilities.</li>
-<li><em>Binary Cross Entropy (BCE)</em>
-<ul>
-<li><span class="math inline">\(Loss = -y_i \cdot log (\hat{y}_i) - (1 - y_i) \cdot log(1 - \hat{y}_i)\)</span>
-<ul>
-<li><span class="math inline">\(\hat{y}_i\)</span> is the i-th scalar value in the model output (prediction), <span class="math inline">\(y_i\)</span> is the corresponding target (label) value
-<ul>
-<li><span class="math inline">\(-y_i \cdot log (\hat{y}_i)\)</span> cancels out if the target is 0</li>
-<li><span class="math inline">\((1 - y_i) \cdot log(1 - \hat{y}_i)\)</span> cancels out if the target is 1</li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li><em>Categorical Cross Entropy (CCE)</em>
-<ul>
-<li><span class="math inline">\(Loss = -\sum_i y_i \cdot log(\hat{y}_i)\)</span></li>
-</ul></li>
-</ul>
-</section>
-
-<section id="softmax" class="title-slide slide level1 center">
-<h1>Softmax</h1>
-<p>The <em>softmax</em> layer transforms an <span class="math inline">\(n\)</span>-dimensional vector of real numbers into a vector of real numbers <span class="math inline">\(\in [0, 1]\)</span> which adds up to 1</p>
-<ul>
-<li>The Softmax activation function determines the final probability value of each class <span class="math inline">\(p_i = \frac{e^{a_k}}{\sum_{k=1}^n e^{a_k}}\)</span></li>
-<li>Softmax is a continuously differentiable function.</li>
-</ul>
-
-<img data-src="./img/neuralnetworks/3%20Model66.png" class="r-stretch quarto-figure-center"><p class="caption">Softmax</p><p>See also:</p>
-<ul>
-<li><a href="https://peterroelants.github.io/posts/cross-entropy-softmax/">Cross entropy softmax</a></li>
-<li><a href="https://www.analyticsvidhya.com/blog/2021/04/introduction-to-softmax-for-neural-network/">Introduction to softmax for neural network</a></li>
-</ul>
-</section>
-
-<section id="cross-entropy-softmax" class="title-slide slide level1 center">
-<h1>Cross Entropy + Softmax</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/neuralnetworks/3%20Model67.jpg"></p>
-<figcaption>Image classification</figcaption>
-</figure>
-</div>
-<div class="columns">
-<div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/neuralnetworks/3%20Model68.png"></p>
-<figcaption>CCE</figcaption>
-</figure>
-</div>
-<p><span class="math inline">\(CCE = -log_2 0.755 = 0.3677\)</span></p>
-</div><div class="column" style="width:33%;">
-<p>After some training iterations…</p>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="./img/neuralnetworks/3%20Model69.jpg"></p>
-<figcaption>CCE</figcaption>
-</figure>
-</div>
-<p><span class="math inline">\(CCE = -log_2 0.0938 = 0.0923\)</span></p>
-<p><em>The loss function has decreased!</em></p>
-</div></div>
-<p>See <a href="https://towardsdatascience.com/cross-entropy-loss-function-f38c4ec8643e">Cross entropy loss function</a></p>
-</section>
-
-<section id="ann-and-dnn-training-2" class="title-slide slide level1 center">
-<h1>ANN and DNN training</h1>
-<p>How to minimize the loss?</p>
-<ul>
-<li><em>Adjusting (changing) the weights and the bias of every neuron</em></li>
-</ul>
+<p>How to minimize the loss? <em>By adjusting (changing) the weights and the bias of every neuron</em></p>
 
 <img data-src="./img/neuralnetworks/3%20Model53.png" class="r-stretch quarto-figure-center"><p class="caption">Choosing the learning rate</p></section>
 
 <section id="gradient-descent" class="title-slide slide level1 center">
 <h1>Gradient descent</h1>
-<p><strong>Gradient descent</strong> is the rule used to improve the network parameters after we know the direction in which the loss increases.</p>
-<ul>
-<li>The <strong>gradient</strong> tells how the loss changes if each parameter changes a little</li>
-<li>To reduce the loss, move parameters in the opposite direction</li>
-<li>The <strong>learning rate</strong> <span class="math inline">\(\eta\)</span> controls how large each move is</li>
-<li>In a neural network, the parameters are the weights and biases</li>
-</ul>
 <div class="columns">
 <div class="column" style="width:75%;">
+<p><strong>Gradient descent</strong> is the rule used to improve the network parameters</p>
+<ul>
+<li>Intuition: if increasing a weight increases the loss, gradient descent decreases that weight.</li>
+<li>The <strong>gradient</strong> tells how the loss changes if each weight/parameter changes a little</li>
+<li>To reduce the loss, move parameters in the opposite direction</li>
+<li>The <strong>learning rate</strong> <span class="math inline">\(\eta\)</span> controls how large each move is</li>
+</ul>
 <p>If <span class="math inline">\(J(\Theta)\)</span> is the loss and <span class="math inline">\(\Theta\)</span> contains all weights and biases, one update is:</p>
 <p><span class="math display">\[
 \Theta_{\text{new}}=\Theta_{\text{old}}-\eta\nabla J(\Theta_{\text{old}})
 \]</span></p>
-<p>Intuition: if increasing a weight increases the loss, gradient descent decreases that weight.</p>
 </div><div class="column" style="width:25%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -870,12 +791,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p><strong>Vanilla Gradient Descent</strong></p>
 <ol type="1">
 <li>Start with random initial values for parameters (weights and biases)</li>
-<li>Use the current parameters to compute predictions on the training data</li>
+<li>Use the current parameters to compute predictions on the <strong>whole training data</strong></li>
 <li>Compute the loss: how far predictions are from targets</li>
 <li>Compute the gradient of the loss with respect to each parameter <span class="math inline">\(\nabla J(\Theta)\)</span></li>
 <li>Adjust each parameter in the opposite direction of the gradient: <span class="math inline">\(\Theta = \Theta-\eta \cdot \nabla J(\Theta)\)</span></li>
 <li>Repeat steps 2-5 for each <em>epoch (i.e., iteration over the entire dataset)</em> until the loss converges or reaches a predefined number of epochs</li>
 </ol>
+<p>Vanilla Gradient Descent</p>
+<ul>
+<li>Smooth convergence</li>
+<li>Not recommended for huge training dataset. <em>Why</em>?</li>
+</ul>
 </div><div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -884,11 +810,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </figure>
 </div>
 </div></div>
-<p>Vanilla Gradient Descent</p>
-<ul>
-<li>Smooth convergence</li>
-<li>Not recommended for huge training dataset → Slow and computationally expensive algorithm</li>
-</ul>
 </section>
 
 <section id="gradient-descent-2" class="title-slide slide level1 center">
@@ -897,7 +818,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <div class="column" style="width:75%;">
 <p><strong>(Mini-batch) Stochastic Gradient Descent (SGD)</strong></p>
 <ol type="1">
-<li>Start with random values for parameters (e.g., weights and biases)</li>
+<li>Start with random initial values for parameters (weights and biases)</li>
 <li>Split the dataset into multiple small batches of a predefined size</li>
 <li>For each mini-batch <span class="math inline">\(\mathbf{B}\)</span>:
 <ol type="1">
@@ -948,8 +869,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="delta-rule" class="title-slide slide level1 center">
-<h1>Delta rule</h1>
+<section id="gradient-descent-for-a-single-neuron-the-delta-rule" class="title-slide slide level1 center">
+<h1>Gradient descent for a single neuron: the delta rule</h1>
 <p>We can apply the <em>Widrow-Hoff (delta) Rule</em> on the <em>perceptron</em> (simple gradient descent technique)</p>
 <p>For a neuron <span class="math inline">\(j\)</span> with activation function <span class="math inline">\(g(x)\)</span>, the delta rule for neuron <span class="math inline">\(j\)</span>’s <span class="math inline">\(i\)</span>-th weight <span class="math inline">\(w_{ji}\)</span> is given by</p>
 <p><span class="math inline">\(\Delta w_{ij} = \eta (y_i - \hat{y}_i)g'(h_j)x_i\)</span></p>
@@ -972,10 +893,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>At each layer, the <strong>chain rule</strong> converts that signal into gradients for local weights and biases</li>
 </ul>
 
-<img data-src="./img/neuralnetworks/3%20Model74.png" class="r-stretch quarto-figure-center"><p class="caption">Chain rule</p><ul>
-<li>The delta rule is a special case of the more general backpropagation algorithm</li>
-</ul>
-</section>
+<img data-src="./img/neuralnetworks/3%20Model74.png" class="r-stretch quarto-figure-center"><p class="caption">Chain rule</p></section>
 
 <section id="backpropagation-1" class="title-slide slide level1 center">
 <h1>Backpropagation</h1>
@@ -1002,6 +920,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Let <span class="math inline">\(g=x^2\)</span>; then <span class="math inline">\(y=\sin(g)\)</span></li>
 <li><span class="math inline">\(\frac{\partial y}{\partial g} = \cos(g)\)</span> and <span class="math inline">\(\frac{\partial g}{\partial x} = 2x\)</span></li>
 <li>Therefore, <span class="math inline">\(\frac{\partial y}{\partial x} = \cos(x^2)\cdot 2x\)</span></li>
+</ul>
+</section>
+
+<section id="disclaimer-1" class="title-slide slide level1 center">
+<h1>Disclaimer!</h1>
+<p>The following slides (toy example) show the math behind ANN</p>
+<ul>
+<li>They are examples of how ANN are trained</li>
+<li>… but you can skip the math!</li>
 </ul>
 </section>
 
@@ -1056,13 +983,38 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="toy-example-wrong-prediction" class="title-slide slide level1 center">
 <h1>Toy example: wrong prediction</h1>
-<p>Before training, the network predicts too low for <span class="math inline">\((1,1)\rightarrow1\)</span>.</p>
+<p>Before training, the network predicts too low for <span class="math inline">\((x_1=1,x_2=1)\)</span>.</p>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    X1(("x1"))
+    X2(("x2"))
+    H1(("h1"))
+    H2(("h2"))
+    YH(("y_hat"))
+    Y(("y"))
+    C["loss function"]
+
+    X1 -- "w11" --&gt; H1
+    X2 -- "w12" --&gt; H1
+    H1 -- "w21" --&gt; H2
+    H2 -- "w31" --&gt; YH
+    YH --&gt; C
+    Y --&gt; C
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <ul>
 <li><span class="math inline">\(z_1=1+1-3=-1\)</span>, so <span class="math inline">\(h_1=\sigma(-1)=0.269\)</span></li>
 <li><span class="math inline">\(z_2=1\cdot0.269-1=-0.731\)</span>, so <span class="math inline">\(h_2=\sigma(-0.731)=0.325\)</span></li>
 <li><span class="math inline">\(z_3=1\cdot0.325-1=-0.675\)</span>, so <span class="math inline">\(\hat{y}=\sigma(-0.675)=0.337\)</span></li>
-<li>With threshold <span class="math inline">\(0.5\)</span>, the network predicts <strong>0</strong></li>
-<li>The correct target is <span class="math inline">\(y=1\)</span>, so the prediction must increase</li>
+<li>With threshold <span class="math inline">\(0.5\)</span>, the network predicts <span class="math inline">\(\hat{y}=0\)</span> but the correct target is <span class="math inline">\(y=1\)</span></li>
 </ul>
 </section>
 
@@ -1229,7 +1181,10 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <section id="toy-example-update-the-weights" class="title-slide slide level1 center">
 <h1>Toy example: update the weights</h1>
 <p>Gradient descent subtracts the gradient from each parameter: <span class="math inline">\(\theta \leftarrow \theta-\eta\frac{\partial C}{\partial \theta}\)</span>.</p>
-<p>Using <span class="math inline">\(\eta=10\)</span>. Since the gradients are negative, subtracting them increases the weights and biases.</p>
+<ul>
+<li>Since the gradients are negative, subtracting them increases the weights and biases.</li>
+<li>Assume <span class="math inline">\(\eta=10\)</span>.</li>
+</ul>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Layer 3 update</strong></p>
@@ -1252,11 +1207,14 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 
 <section id="toy-example-after-training" class="title-slide slide level1 center">
 <h1>Toy example: after training</h1>
-<p>The previous update fixes one example. After training on all four AND rows, one possible set of weights is:</p>
+<p>The previous update fixes one example.</p>
+<ul>
+<li><p>After training on all four AND rows, one possible set of weights is:</p>
 <ul>
 <li><span class="math inline">\(w_{11}=10,\; w_{12}=10,\; b_1=-15\)</span></li>
 <li><span class="math inline">\(w_{21}=10,\; b_2=-5\)</span></li>
 <li><span class="math inline">\(w_{31}=10,\; b_3=-5\)</span></li>
+</ul></li>
 </ul>
 <p>With threshold <span class="math inline">\(0.5\)</span>, the network now implements AND:</p>
 <table class="caption-top">
@@ -1341,8 +1299,7 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <li>Gradient descent changes the parameters using those gradients</li>
 <li>Differentiable activations are needed to pass gradients backward</li>
 </ul>
-<p>The learning rate is important: too small learns slowly; too large can overshoot.</p>
-<p>See <a href="https://blog.skz.dev/gradient-descent">this demo</a></p>
+<p>The learning rate is important. <em>Why</em>? See <a href="https://blog.skz.dev/gradient-descent">this demo</a></p>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1359,14 +1316,12 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <div class="column" style="width:50%;">
 <p>It is common to create line plots that show epochs along the <em>x</em>-axis and the loss value of the model on the <em>y</em>-axis.</p>
 <ul>
-<li>2 plots (usually overlapped):
+<li>2 plots (usually overlapped) of learning curves:
 <ul>
 <li>One for the training</li>
 <li>One for the validation</li>
 </ul></li>
-<li>These plots are called learning curves.</li>
-<li>Loss values (this is an error, then low values are ok for us!)</li>
-<li>These plots can help to diagnose whether the model has over-learned (<em>overfitting</em>), under-learned (<em>underfitting</em>), or suitably fits the training dataset.</li>
+<li>They help to diagnose whether the model has over-learned (<em>overfitting</em>), under-learned (<em>underfitting</em>), or suitably fits the training dataset.</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
@@ -1376,20 +1331,6 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 </figure>
 </div>
 </div></div>
-</section>
-
-<section id="mlp-in-scikit-learn" class="title-slide slide level1 center">
-<h1><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html">MLP</a> in Scikit-Learn</h1>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>sklearn.neural_network.MLPClassifier(</span>
-<span id="cb1-2"><a href="" aria-label="2"></a>    hidden_layer_sizes<span class="op">=</span>(<span class="dv">100</span>,),</span>
-<span id="cb1-3"><a href="" aria-label="3"></a>    activation<span class="op">=</span><span class="st">"relu"</span>,</span>
-<span id="cb1-4"><a href="" aria-label="4"></a>    solver<span class="op">=</span><span class="st">"adam"</span>,</span>
-<span id="cb1-5"><a href="" aria-label="5"></a>    batch_size<span class="op">=</span><span class="st">"auto"</span>,</span>
-<span id="cb1-6"><a href="" aria-label="6"></a>    learning_rate<span class="op">=</span><span class="st">"constant"</span>,</span>
-<span id="cb1-7"><a href="" aria-label="7"></a>    max_iter<span class="op">=</span><span class="dv">200</span>,</span>
-<span id="cb1-8"><a href="" aria-label="8"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-9"><a href="" aria-label="9"></a> ...</span>
-<span id="cb1-10"><a href="" aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 
 <section id="machine-learning-vs-deep-learning" class="title-slide slide level1 center">
@@ -1475,15 +1416,15 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 </div></div>
 </section>
 
-<section id="section-1" class="title-slide slide level1 center">
-<h1></h1>
-<p><a href="https://www.nytimes.com/2025/04/24/technology/chatgpt-alexa-please-thank-you.html">Saying ‘Thank You’ to ChatGPT Is Costly. But Maybe It’s Worth the Price.</a></p>
-</section>
-
 <section id="cottier2024rising" class="title-slide slide level1 center">
 <h1><span class="citation" data-cites="cottier2024rising">(<a href="#/references" role="doc-biblioref" onclick="">Cottier et al. 2024</a>)</span></h1>
 
 <img data-src="img/risingcost.png" class="r-stretch quarto-figure-center"><p class="caption">The rising costs of training frontier AI models</p></section>
+
+<section id="section-1" class="title-slide slide level1 center">
+<h1></h1>
+<p><a href="https://www.nytimes.com/2025/04/24/technology/chatgpt-alexa-please-thank-you.html">Saying ‘Thank You’ to ChatGPT Is Costly. But Maybe It’s Worth the Price.</a></p>
+</section>
 
 <section id="section-2" class="title-slide slide level1 center">
 <h1></h1>
@@ -1519,7 +1460,6 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <li>Data are scarce, biased, or not representative of deployment</li>
 <li>Training and validation losses indicate underfitting, overfitting, or unstable optimization</li>
 </ul>
-<p><strong>Remember:</strong> architecture defines the hypothesis space; loss defines the objective; backpropagation computes gradients; the optimizer updates parameters.</p>
 </section>
 
 <section id="references" class="title-slide slide level1 smaller scrollable">

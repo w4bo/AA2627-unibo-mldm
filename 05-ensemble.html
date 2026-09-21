@@ -242,8 +242,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Explain</strong> why combining several weak or unstable classifiers can improve prediction</li>
 <li><strong>Compare</strong> decision-level and confidence-level fusion rules</li>
 <li><strong>Distinguish</strong> bagging from boosting</li>
-<li><strong>Compute</strong> the main quantities used by AdaBoost</li>
-<li><strong>Relate</strong> AdaBoost to the original paper <span class="citation" data-cites="freund1997decision">(<a href="#/references" role="doc-biblioref" onclick="">Freund and Schapire 1997</a>)</span></li>
 </ul>
 </section>
 
@@ -267,7 +265,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 <tr class="even">
 <td><strong>Practice</strong></td>
-<td>Compute majority vote, weighted vote, and the main AdaBoost quantities</td>
+<td>Compute majority vote, weighted vote</td>
 </tr>
 </tbody>
 </table>
@@ -720,81 +718,15 @@ d' \approx \sqrt{d}
 </table>
 </section>
 
-<section id="weak-learners" class="title-slide slide level1 center">
-<h1>Weak learners</h1>
-<p>Boosting starts from a <strong>weak learner</strong>.</p>
-<p>A weak learner is not required to be highly accurate. It only needs to perform slightly better than random guessing.</p>
-<p>For binary classification:</p>
-<p><span class="math display">\[
-\epsilon_j &lt; 0.5
-\]</span></p>
-<p>AdaBoost turns a sequence of weak classifiers into a strong classifier by:</p>
-<ul>
-<li>Increasing the influence of hard examples</li>
-<li>Giving more voting power to more accurate classifiers</li>
-</ul>
-</section>
 
-<section id="adaboost-in-the-original-paper" class="title-slide slide level1 center">
-<h1>AdaBoost in the original paper</h1>
-<p>Freund and Schapire introduced AdaBoost as an adaptive boosting method that does not need prior knowledge of the weak learner’s accuracy <span class="citation" data-cites="freund1997decision">Freund and Schapire (<a href="#/references" role="doc-biblioref" onclick="">1997</a>)</span>.</p>
-<p>The paper connects boosting to a broader <strong>decision-theoretic</strong> setting.</p>
-<p>Key idea:</p>
-<ul>
-<li>Maintain a distribution of weights over training examples</li>
-<li>Train a weak classifier on the weighted data</li>
-<li>Increase the weights of misclassified examples</li>
-<li>Combine classifiers using weights based on their error</li>
-</ul>
-</section>
 
-<section id="adaboost-notation" class="title-slide slide level1 center">
-<h1>AdaBoost notation</h1>
-<p>Training set:</p>
-<p><span class="math display">\[
-D=\{(\boldsymbol{x}_1,y_1),\dots,(\boldsymbol{x}_N,y_N)\}
-\]</span></p>
-<p>For binary classification:</p>
-<p><span class="math display">\[
-y_i \in \{-1,+1\}
-\]</span></p>
-<p>At round <span class="math inline">\(j\)</span>:</p>
-<ul>
-<li><span class="math inline">\(w_i^{(j)}\)</span> is the weight of record <span class="math inline">\(i\)</span></li>
-<li><span class="math inline">\(C_j\)</span> is the classifier trained at round <span class="math inline">\(j\)</span></li>
-<li><span class="math inline">\(\epsilon_j\)</span> is its weighted error</li>
-<li><span class="math inline">\(\alpha_j\)</span> is its voting weight</li>
-</ul>
-</section>
 
-<section id="weighted-error" class="title-slide slide level1 center">
-<h1>Weighted error</h1>
-<p>The weighted error of classifier <span class="math inline">\(C_j\)</span> is:</p>
-<p><span class="math display">\[
-\epsilon_j=\sum_{i=1}^{N} w_i^{(j)} I(C_j(\boldsymbol{x}_i)\ne y_i)
-\]</span></p>
-<p>Interpretation:</p>
-<ul>
-<li>Misclassifying a high-weight record is expensive</li>
-<li>Correctly classifying a high-weight record is important</li>
-<li>The next classifier is pushed toward the current mistakes</li>
-</ul>
-<p>The weights satisfy:</p>
-<p><span class="math display">\[
-\sum_{i=1}^{N} w_i^{(j)}=1
-\]</span></p>
-</section>
 
-<section id="classifier-weight" class="title-slide slide level1 center">
-<h1>Classifier weight</h1>
-<p>AdaBoost assigns classifier <span class="math inline">\(C_j\)</span> the weight:</p>
-<p><span class="math display">\[
-\alpha_j=\frac{1}{2}\ln\left(\frac{1-\epsilon_j}{\epsilon_j}\right)
-\]</span></p>
-<p>If <span class="math inline">\(\epsilon_j\)</span> is small, <span class="math inline">\(\alpha_j\)</span> is large.</p>
-<p>If <span class="math inline">\(\epsilon_j=0.5\)</span>, then <span class="math inline">\(\alpha_j=0\)</span>.</p>
-<p>If <span class="math inline">\(\epsilon_j&gt;0.5\)</span>, the classifier is worse than random guessing and should not help the vote.</p>
-</section>
+
+
+
+
+
 
 <section id="weight-update" class="title-slide slide level1 center">
 <h1>Weight update</h1>
@@ -811,140 +743,17 @@ w_i^{(j+1)}=\frac{w_i^{(j)}\exp(-\alpha_j y_i C_j(\boldsymbol{x}_i))}{Z_j}
 
 <img data-src="img/multi/Immagine6.png" class="r-stretch"></section>
 
-<section id="final-adaboost-classifier" class="title-slide slide level1 center">
-<h1>Final AdaBoost classifier</h1>
-<p>The final prediction is a weighted vote:</p>
-<p><span class="math display">\[
-C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsymbol{x})\right)
-\]</span></p>
-<p>Each classifier contributes according to its reliability.</p>
-<ul>
-<li>More accurate classifiers have larger <span class="math inline">\(\alpha_j\)</span></li>
-<li>Less accurate classifiers have smaller <span class="math inline">\(\alpha_j\)</span></li>
-<li>The ensemble decision depends on the total weighted support for each class</li>
-</ul>
-</section>
 
-<section id="adaboost-algorithm" class="title-slide slide level1 center">
-<h1>AdaBoost algorithm</h1>
-<ol type="1">
-<li>Initialize all record weights: <span class="math inline">\(w_i^{(1)}=\frac{1}{N}\)</span></li>
-<li>For each round <span class="math inline">\(j=1,\dots,T\)</span>:
-<ul>
-<li>Train classifier <span class="math inline">\(C_j\)</span> using weights <span class="math inline">\(w^{(j)}\)</span></li>
-<li>Compute weighted error <span class="math inline">\(\epsilon_j\)</span></li>
-<li>Compute classifier weight <span class="math inline">\(\alpha_j\)</span></li>
-<li>Update the record weights</li>
-</ul></li>
-<li>Return the weighted vote of all classifiers</li>
-</ol>
-<p>The process is adaptive because each round changes the learning problem faced by the next classifier.</p>
-</section>
 
-<section id="adaboost-algorithm-in-pseudocode" class="title-slide slide level1 center">
-<h1>AdaBoost algorithm in pseudocode</h1>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize weights w_i = 1/N for i = 1, ..., N</span>
-<span id="cb1-2"><a href="" aria-label="2"></a></span>
-<span id="cb1-3"><a href="" aria-label="3"></a>for j = 1, ..., T:</span>
-<span id="cb1-4"><a href="" aria-label="4"></a>    Train classifier C_j on the weighted training set</span>
-<span id="cb1-5"><a href="" aria-label="5"></a>    Compute weighted error epsilon_j</span>
-<span id="cb1-6"><a href="" aria-label="6"></a></span>
-<span id="cb1-7"><a href="" aria-label="7"></a>    if epsilon_j &gt;= 0.5:</span>
-<span id="cb1-8"><a href="" aria-label="8"></a>        stop or discard the classifier</span>
-<span id="cb1-9"><a href="" aria-label="9"></a>    else:</span>
-<span id="cb1-10"><a href="" aria-label="10"></a>        alpha_j = 1/2 * ln((1 - epsilon_j) / epsilon_j)</span>
-<span id="cb1-11"><a href="" aria-label="11"></a>        Increase the weights of misclassified records</span>
-<span id="cb1-12"><a href="" aria-label="12"></a>        Decrease the weights of correctly classified records</span>
-<span id="cb1-13"><a href="" aria-label="13"></a>        Normalize weights so that their sum is 1</span>
-<span id="cb1-14"><a href="" aria-label="14"></a></span>
-<span id="cb1-15"><a href="" aria-label="15"></a>Return the weighted vote of C_1, ..., C_T</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The condition <span class="math inline">\(\epsilon_j&lt;0.5\)</span> is important: each base classifier must be better than random guessing.</p>
-</section>
 
-<section id="worked-mini-example" class="title-slide slide level1 center">
-<h1>Worked mini-example</h1>
-<p>Suppose a weak classifier has weighted error:</p>
-<p><span class="math display">\[
-\epsilon_1=0.20
-\]</span></p>
-<p>Then:</p>
-<p><span class="math display">\[
-\alpha_1=\frac{1}{2}\ln\left(\frac{0.80}{0.20}\right)=\frac{1}{2}\ln(4)\approx0.693
-\]</span></p>
-<p>Correctly classified records are multiplied by <span class="math inline">\(e^{-0.693}=0.50\)</span>.</p>
-<p>Misclassified records are multiplied by <span class="math inline">\(e^{0.693}=2.00\)</span>.</p>
-<p>After normalization, the next round pays more attention to the mistakes.</p>
-</section>
 
-<section id="adaboost-with-decision-stumps" class="title-slide slide level1 center">
-<h1>AdaBoost with decision stumps</h1>
-<p>AdaBoost is often introduced with decision stumps.</p>
-<p>Using the same dataset:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><span class="math inline">\(x\)</span></th>
-<th style="text-align: center;">0.1</th>
-<th style="text-align: center;">0.2</th>
-<th style="text-align: center;">0.3</th>
-<th style="text-align: center;">0.4</th>
-<th style="text-align: center;">0.5</th>
-<th style="text-align: center;">0.6</th>
-<th style="text-align: center;">0.7</th>
-<th style="text-align: center;">0.8</th>
-<th style="text-align: center;">0.9</th>
-<th style="text-align: center;">1.0</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(y\)</span></td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">+1</td>
-</tr>
-</tbody>
-</table>
-<p>Each stump is simple, but the weights make later stumps focus on the regions earlier stumps misclassified.</p>
-<p>After several rounds, the weighted combination can behave like a deeper tree.</p>
-</section>
 
-<section id="geometric-intuition" class="title-slide slide level1 center">
-<h1>Geometric intuition</h1>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>Boosting can be viewed as repeatedly correcting the current decision boundary.</p>
-<ul>
-<li>With decision stumps, each individual classifier is simple, but their weighted sum can express a more flexible boundary.</li>
-</ul>
-</div><div class="column" style="width:40%;">
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A["simple rule"] --&gt; B["errors receive higher weight"]
-    B --&gt; C["new rule focuses on hard region"]
-    C --&gt; D["weighted combination of rules"]
-    D --&gt; E["stronger boundary"]
 
-    style E fill:#a3f7a3,stroke:#000
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div></div>
-</section>
+
+
+
+
+
 
 <section id="practical-cautions" class="title-slide slide level1 center">
 <h1>Practical cautions</h1>
@@ -971,7 +780,6 @@ C^*(\boldsymbol{x})=\operatorname{sign}\left(\sum_{j=1}^{T}\alpha_j C_j(\boldsym
 <li><strong>Bagging</strong> trains models on bootstrap samples and combines them by voting</li>
 <li><strong>Random forests</strong> add random feature selection to bagged decision trees</li>
 <li><strong>Boosting</strong> trains models sequentially, focusing on previous errors</li>
-<li><strong>AdaBoost</strong> uses exponential weight updates and a weighted vote</li>
 </ul>
 <p>The key question is always the same:</p>
 <p><strong>How do we create useful diversity among classifiers?</strong></p>
