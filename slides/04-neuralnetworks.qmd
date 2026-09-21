@@ -2,7 +2,7 @@
 subtitle: "Neural Networks"
 ---
 
-#
+# {visibility="hidden"}
 
 <img src="./img/crispdm_me.svg" class="center-img">
 
@@ -22,7 +22,7 @@ By the end of this lecture, you will be able to:
 | **Core** | Explain artificial neurons, layers, activation functions, loss, gradient descent, and backpropagation intuition |
 | **Practice** | Compute a small forward pass and interpret learning curves |
 
-# Recalling the Machine Learning pipeline
+# Recalling the Machine Learning pipeline {visibility="hidden"}
 
 We now focus on the model, the "heart" of the AI in our system.
 
@@ -63,21 +63,21 @@ Neural networks are **mathematically intensive**!
 # Formal definition: artificial neuron
 
 :::: {.columns}
-::: {.column width="50%"}
+::: {.column width="55%"}
 
-The first scheme about the neuron was introduced by [@mcculloch1943logical]
+The scheme about the neuron was introduced by [@mcculloch1943logical]
 
 The first Artificial Neuron (AN) was introduced by *Rosenblatt* in 1957
 
 - *Inputs* are digital numbers (not analog signals)
 - Inputs are *weighted* (signals are not all equally important)
 - Inputs are *merged* with a weighted sum function (plus a *bias*)
-- An *activation function* is used to generate the final output:
-  - Also the human brain *filters inputs*, it is impossible to always take everything into account
-  - Perceptron uses the step function $f(x)=\begin{cases}1,&x\geq 0\\0,&x<0\end{cases}$
+- An *activation function* is used to fitler the output:
+  - Perceptron uses the step function $f(h)=\begin{cases}1,&h\geq 0\\0,&h<0\end{cases}$
+  - $h = \sum_i w_i x_i +b$
 
 :::
-::: {.column width="50%"}
+::: {.column width="45%"}
 
 ![Artificial neuron](./img/neuralnetworks/3 Model53.png)
 
@@ -355,9 +355,9 @@ Feature extraction requires human intervention.
 General considerations about Neural Network architectures
 
 - *Greater number of hidden layers (therefore neurons)*
-  - → *better performance*
-  - → *need for more training data*
-  - → *greater computational load*
+  - *better performance*
+  - *need for more training data*
+  - *greater computational load*
 
 How is it possible to train a neural network?
 
@@ -374,7 +374,22 @@ How is it possible to train a neural network?
 :::
 ::::
 
-# Neural networks training: intuition
+# [MLP](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html) in Scikit-Learn
+
+```python
+sklearn.neural_network.MLPClassifier(
+    hidden_layer_sizes=(100,),
+    activation="relu",
+    solver="adam",
+    batch_size="auto",
+    learning_rate="constant",
+    max_iter=200,
+    shuffle=True,
+ ...
+)
+```
+
+# ANN and DNN training: intuition
 
 ![Training](./img/neuralnetworks/3 Model65.png)
 
@@ -386,20 +401,19 @@ Training a NN means tuning the weights to optimize the prediction accuracy.
 
 {{< video vid/sigmoid-big.mp4 >}}
 
-# ANN and DNN training: a visual guide
+# ANN and DNN training
 
 :::: {.columns}
-::: {.column width="50%"}
+::: {.column width="40%"}
 
 ![Gradient descent](./img/neuralnetworks/3 Model75.gif)
 
+See also [interactive gradient descent](https://blog.skz.dev/gradient-descent)
 :::
-::: {.column width="50%"}
+::: {.column width="60%"}
 
-1. This surface is the solution space of the *loss function*
-    - low values → low error
-2. *Starting point*
-    - Output of the NN with initial (random) weights
+1. This surface is the solution space of the *loss function* (low values, low error)
+2. *Starting point*: output of the NN with initial (random) weights
 3. *Global minimum*: the desired goal point!
 4. The learning procedure is performed in an *iterative manner*
     - Following the gradient, the optimizers look for the (global) minimum
@@ -411,7 +425,7 @@ Training a NN means tuning the weights to optimize the prediction accuracy.
 :::
 ::::
 
-# ANN and DNN training
+# ANN and DNN training {visibility="hidden"}
 
 The *cost function* is a mathematical formulation of the learning goal
 
@@ -429,7 +443,7 @@ The *cost function* is a mathematical formulation of the learning goal
 - *Categorical Cross Entropy (CCE)*
   - $Loss = -\sum_i y_i \cdot log(\hat{y}_i)$
 
-# Softmax
+# Softmax {visibility="hidden"}
 
 The *softmax* layer transforms an $n$-dimensional vector of real numbers into a vector of real numbers $\in [0, 1]$ which adds up to 1
 
@@ -443,7 +457,7 @@ See also:
 - [Cross entropy softmax](https://peterroelants.github.io/posts/cross-entropy-softmax/)
 - [Introduction to softmax for neural network](https://www.analyticsvidhya.com/blog/2021/04/introduction-to-softmax-for-neural-network/)
 
-# Cross Entropy + Softmax
+# Cross Entropy + Softmax {visibility="hidden"}
 
 ![Image classification](./img/neuralnetworks/3 Model67.jpg)
 
@@ -475,23 +489,22 @@ See [Cross entropy loss function](https://towardsdatascience.com/cross-entropy-l
 
 # ANN and DNN training
 
-How to minimize the loss?
-
-- *Adjusting (changing) the weights and the bias of every neuron*
+How to minimize the loss? *By adjusting (changing) the weights and the bias of every neuron*
 
 ![Choosing the learning rate](./img/neuralnetworks/3 Model53.png)
 
 # Gradient descent
 
-**Gradient descent** is the rule used to improve the network parameters after we know the direction in which the loss increases.
-
-- The **gradient** tells how the loss changes if each parameter changes a little
-- To reduce the loss, move parameters in the opposite direction
-- The **learning rate** $\eta$ controls how large each move is
-- In a neural network, the parameters are the weights and biases
 
 :::: {.columns}
 ::: {.column width="75%"}
+
+**Gradient descent** is the rule used to improve the network parameters
+
+- Intuition: if increasing a weight increases the loss, gradient descent decreases that weight.
+- The **gradient** tells how the loss changes if each weight/parameter changes a little
+- To reduce the loss, move parameters in the opposite direction
+- The **learning rate** $\eta$ controls how large each move is
 
 If $J(\Theta)$ is the loss and $\Theta$ contains all weights and biases, one update is:
 
@@ -499,7 +512,6 @@ $$
 \Theta_{\text{new}}=\Theta_{\text{old}}-\eta\nabla J(\Theta_{\text{old}})
 $$
 
-Intuition: if increasing a weight increases the loss, gradient descent decreases that weight.
 
 :::
 ::: {.column width="25%"}
@@ -517,11 +529,16 @@ Intuition: if increasing a weight increases the loss, gradient descent decreases
 **Vanilla Gradient Descent**
 
 1. Start with random initial values for parameters (weights and biases)
-2. Use the current parameters to compute predictions on the training data
+2. Use the current parameters to compute predictions on the **whole training data**
 3. Compute the loss: how far predictions are from targets
 4. Compute the gradient of the loss with respect to each parameter $\nabla J(\Theta)$
 5. Adjust each parameter in the opposite direction of the gradient: $\Theta = \Theta-\eta \cdot \nabla J(\Theta)$
 6. Repeat steps 2-5 for each *epoch (i.e., iteration over the entire dataset)* until the loss converges or reaches a predefined number of epochs
+
+Vanilla Gradient Descent
+
+- Smooth convergence
+- Not recommended for huge training dataset. *Why*?
 
 :::
 ::: {.column width="30%"}
@@ -531,11 +548,6 @@ Intuition: if increasing a weight increases the loss, gradient descent decreases
 :::
 ::::
 
-Vanilla Gradient Descent
-
-- Smooth convergence
-- Not recommended for huge training dataset → Slow and computationally expensive algorithm
-
 # Gradient descent
 
 :::: {.columns}
@@ -543,7 +555,7 @@ Vanilla Gradient Descent
 
 **(Mini-batch) Stochastic Gradient Descent (SGD)**
 
-1. Start with random values for parameters (e.g., weights and biases)
+1. Start with random initial values for parameters (weights and biases)
 2. Split the dataset into multiple small batches of a predefined size
 3. For each mini-batch $\mathbf{B}$:
     1. Make predictions using the current parameters for each sample in $\mathbf{B}$
@@ -603,7 +615,7 @@ Adam is based on two principles:
 - An epoch is comprised of one or more batches (or iterations).
 - The number of epochs is traditionally large (10, 100, 1000, ...)
 
-# Delta rule
+# Gradient descent for a single neuron: the delta rule
 
 We can apply the *Widrow-Hoff (delta) Rule* on the *perceptron* (simple gradient descent technique)
 
@@ -628,8 +640,6 @@ $\Delta w_{ij} = \eta (y_i - \hat{y}_i)g'(h_j)x_i$
 
 ![Chain rule](./img/neuralnetworks/3 Model74.png)
 
-- The delta rule is a special case of the more general backpropagation algorithm
-
 # Backpropagation
 
 Training step for one batch:
@@ -651,6 +661,13 @@ For instance, given $y = sin(x^2)$, it is:
 - Let $g=x^2$; then $y=\sin(g)$
 - $\frac{\partial y}{\partial g} = \cos(g)$ and $\frac{\partial g}{\partial x} = 2x$
 - Therefore, $\frac{\partial y}{\partial x} = \cos(x^2)\cdot 2x$
+
+# Disclaimer! 
+
+The following slides (toy example) show the math behind ANN
+
+- They are examples of how ANN are trained
+- ... but you can skip the math!
 
 # Toy example: learning AND
 
@@ -701,13 +718,31 @@ flowchart LR
 
 # Toy example: wrong prediction
 
-Before training, the network predicts too low for $(1,1)\rightarrow1$.
+Before training, the network predicts too low for $(x_1=1,x_2=1)$.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    X1(("x1"))
+    X2(("x2"))
+    H1(("h1"))
+    H2(("h2"))
+    YH(("y_hat"))
+    Y(("y"))
+    C["loss function"]
+
+    X1 -- "w11" --> H1
+    X2 -- "w12" --> H1
+    H1 -- "w21" --> H2
+    H2 -- "w31" --> YH
+    YH --> C
+    Y --> C
+```
 
 - $z_1=1+1-3=-1$, so $h_1=\sigma(-1)=0.269$
 - $z_2=1\cdot0.269-1=-0.731$, so $h_2=\sigma(-0.731)=0.325$
 - $z_3=1\cdot0.325-1=-0.675$, so $\hat{y}=\sigma(-0.675)=0.337$
-- With threshold $0.5$, the network predicts **0**
-- The correct target is $y=1$, so the prediction must increase
+- With threshold $0.5$, the network predicts $\hat{y}=0$ but the correct target is $y=1$
 
 # Toy example: derivative pieces
 
@@ -883,7 +918,8 @@ Notice the pattern: every hidden-layer error contains the next layer's error.
 
 Gradient descent subtracts the gradient from each parameter: $\theta \leftarrow \theta-\eta\frac{\partial C}{\partial \theta}$.
 
-Using $\eta=10$. Since the gradients are negative, subtracting them increases the weights and biases.
+- Since the gradients are negative, subtracting them increases the weights and biases.
+- Assume $\eta=10$. 
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -911,11 +947,13 @@ After this single update, $(1,1)$ gives $\hat{y}\approx0.75$: now the prediction
 
 # Toy example: after training
 
-The previous update fixes one example. After training on all four AND rows, one possible set of weights is:
+The previous update fixes one example.
 
-- $w_{11}=10,\; w_{12}=10,\; b_1=-15$
-- $w_{21}=10,\; b_2=-5$
-- $w_{31}=10,\; b_3=-5$
+- After training on all four AND rows, one possible set of weights is:
+
+  - $w_{11}=10,\; w_{12}=10,\; b_1=-15$
+  - $w_{21}=10,\; b_2=-5$
+  - $w_{31}=10,\; b_3=-5$
 
 With threshold $0.5$, the network now implements AND:
 
@@ -960,9 +998,7 @@ With threshold $0.5$, the network now implements AND:
 - Gradient descent changes the parameters using those gradients
 - Differentiable activations are needed to pass gradients backward
 
-The learning rate is important: too small learns slowly; too large can overshoot.
-
-See [this demo](https://blog.skz.dev/gradient-descent)
+The learning rate is important. *Why*? See [this demo](https://blog.skz.dev/gradient-descent)
 
 :::
 ::: {.column width="50%"}
@@ -979,12 +1015,10 @@ See [this demo](https://blog.skz.dev/gradient-descent)
 
 It is common to create line plots that show epochs along the *x*-axis and the loss value of the model on the *y*-axis.
 
-- 2 plots (usually overlapped):
+- 2 plots (usually overlapped) of learning curves:
   - One for the training
   - One for the validation
-- These plots are called learning curves.
-- Loss values (this is an error, then low values are ok for us!)
-- These plots can help to diagnose whether the model has over-learned (*overfitting*), under-learned (*underfitting*), or suitably fits the training dataset.
+- They help to diagnose whether the model has over-learned (*overfitting*), under-learned (*underfitting*), or suitably fits the training dataset.
 
 :::
 ::: {.column width="50%"}
@@ -993,21 +1027,6 @@ It is common to create line plots that show epochs along the *x*-axis and the lo
 
 :::
 ::::
-
-# [MLP](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html) in Scikit-Learn
-
-```python
-sklearn.neural_network.MLPClassifier(
-    hidden_layer_sizes=(100,),
-    activation="relu",
-    solver="adam",
-    batch_size="auto",
-    learning_rate="constant",
-    max_iter=200,
-    shuffle=True,
- ...
-)
-```
 
 # Machine Learning vs Deep Learning
 
@@ -1053,13 +1072,13 @@ Having one or more GPUs available is today a fundamental factor:
 :::
 ::::
 
-#
-
-[Saying ‘Thank You’ to ChatGPT Is Costly. But Maybe It’s Worth the Price.](https://www.nytimes.com/2025/04/24/technology/chatgpt-alexa-please-thank-you.html)
-
 # [@cottier2024rising]
 
 ![The rising costs of training frontier AI models](img/risingcost.png)
+
+#
+
+[Saying ‘Thank You’ to ChatGPT Is Costly. But Maybe It’s Worth the Price.](https://www.nytimes.com/2025/04/24/technology/chatgpt-alexa-please-thank-you.html)
 
 #
 
@@ -1089,7 +1108,5 @@ Having one or more GPUs available is today a fundamental factor:
 - A simpler model already meets the objective
 - Data are scarce, biased, or not representative of deployment
 - Training and validation losses indicate underfitting, overfitting, or unstable optimization
-
-**Remember:** architecture defines the hypothesis space; loss defines the objective; backpropagation computes gradients; the optimizer updates parameters.
 
 # References

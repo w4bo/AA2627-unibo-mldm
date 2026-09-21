@@ -9,15 +9,13 @@ By the end of this lecture, you will be able to:
 - **Explain** why combining several weak or unstable classifiers can improve prediction
 - **Compare** decision-level and confidence-level fusion rules
 - **Distinguish** bagging from boosting
-- **Compute** the main quantities used by AdaBoost
-- **Relate** AdaBoost to the original paper [@freund1997decision]
 
 # Learning priorities
 
 | Priority | What students should be able to do |
 |---|---|
 | **Core** | Explain voting, diversity, bagging, random forests, boosting, and weak learners |
-| **Practice** | Compute majority vote, weighted vote, and the main AdaBoost quantities |
+| **Practice** | Compute majority vote, weighted vote |
 
 # Why ensemble classifiers?
 
@@ -396,7 +394,7 @@ Unlike bagging, boosting classifiers are not independent: each round depends on 
 | Combination | Usually equal vote | Weighted vote |
 | Sensitivity | Robust to noise | Can emphasize noisy records |
 
-# Weak learners
+# Weak learners {visibility="hidden"}
 
 Boosting starts from a **weak learner**.
 
@@ -413,7 +411,7 @@ AdaBoost turns a sequence of weak classifiers into a strong classifier by:
 - Increasing the influence of hard examples
 - Giving more voting power to more accurate classifiers
 
-# AdaBoost in the original paper
+# AdaBoost in the original paper {visibility="hidden"}
 
 Freund and Schapire introduced AdaBoost as an adaptive boosting method that does not need prior knowledge of the weak learner's accuracy @freund1997decision.
 
@@ -426,7 +424,7 @@ Key idea:
 - Increase the weights of misclassified examples
 - Combine classifiers using weights based on their error
 
-# AdaBoost notation
+# AdaBoost notation {visibility="hidden"}
 
 Training set:
 
@@ -447,7 +445,7 @@ At round $j$:
 - $\epsilon_j$ is its weighted error
 - $\alpha_j$ is its voting weight
 
-# Weighted error
+# Weighted error {visibility="hidden"}
 
 The weighted error of classifier $C_j$ is:
 
@@ -467,7 +465,7 @@ $$
 \sum_{i=1}^{N} w_i^{(j)}=1
 $$
 
-# Classifier weight
+# Classifier weight {visibility="hidden"}
 
 AdaBoost assigns classifier $C_j$ the weight:
 
@@ -498,7 +496,7 @@ For binary labels:
 
 ![](img/multi/Immagine6.png)
 
-# Final AdaBoost classifier
+# Final AdaBoost classifier {visibility="hidden"}
 
 The final prediction is a weighted vote:
 
@@ -512,7 +510,7 @@ Each classifier contributes according to its reliability.
 - Less accurate classifiers have smaller $\alpha_j$
 - The ensemble decision depends on the total weighted support for each class
 
-# AdaBoost algorithm
+# AdaBoost algorithm {visibility="hidden"}
 
 1. Initialize all record weights: $w_i^{(1)}=\frac{1}{N}$
 2. For each round $j=1,\dots,T$:
@@ -524,7 +522,7 @@ Each classifier contributes according to its reliability.
 
 The process is adaptive because each round changes the learning problem faced by the next classifier.
 
-# AdaBoost algorithm in pseudocode
+# AdaBoost algorithm in pseudocode {visibility="hidden"}
 
 ```text
 Initialize weights w_i = 1/N for i = 1, ..., N
@@ -546,7 +544,7 @@ Return the weighted vote of C_1, ..., C_T
 
 The condition $\epsilon_j<0.5$ is important: each base classifier must be better than random guessing.
 
-# Worked mini-example
+# Worked mini-example {visibility="hidden"}
 
 Suppose a weak classifier has weighted error:
 
@@ -566,7 +564,7 @@ Misclassified records are multiplied by $e^{0.693}=2.00$.
 
 After normalization, the next round pays more attention to the mistakes.
 
-# AdaBoost with decision stumps
+# AdaBoost with decision stumps {visibility="hidden"}
 
 AdaBoost is often introduced with decision stumps.
 
@@ -580,7 +578,7 @@ Each stump is simple, but the weights make later stumps focus on the regions ear
 
 After several rounds, the weighted combination can behave like a deeper tree.
 
-# Geometric intuition
+# Geometric intuition {visibility="hidden"}
 
 :::: {.columns}
 ::: {.column width="60%"}
@@ -629,7 +627,6 @@ Ensembles improve classification by combining multiple predictors.
 - **Bagging** trains models on bootstrap samples and combines them by voting
 - **Random forests** add random feature selection to bagged decision trees
 - **Boosting** trains models sequentially, focusing on previous errors
-- **AdaBoost** uses exponential weight updates and a weighted vote
 
 The key question is always the same:
 
