@@ -66,28 +66,11 @@ For a partitioning clustering:
 
 The definition does **not** determine the right similarity, number of clusters, or cluster shape. Those are modeling choices.
 
-# What is NOT Clustering analysis?
-
-Supervised classification
-
-* It assumes classes to be known
-
-Segmentation
-
-* Partitioning students alphabetically by last name
-* The partitioning rule is given
-
-Querying a database
-
-* The selection and grouping criteria are given
-
-How many clusters?
-
-# Cluster notion can be ambiguous
+# Cluster notion can be ambiguous: how many clusters?
 
 ![How many clusters?](img/clustering/Immagine8.png)
 
-# Cluster notion can be ambiguous
+# Cluster notion can be ambiguous: how many clusters?
 
 ::::{.columns}
 :::{.column width="33%"}
@@ -581,7 +564,7 @@ Draw the cluster partitioning and the approximate position of the centroids chos
 
 ![K=2, K=3, K=3, K=2, K=3](img/clustering/14-Clustering_55.png)
 
-# Hierarchical Clustering
+# Hierarchical Clustering {visibility="hidden"}
 
 Produces a set of nested clusters organized as a hierarchical tree
 
@@ -595,7 +578,7 @@ Different values on the Y-axis correspond to different clusterings.
 
 ![Handling empty clusters](img/clustering/Immagine29.svg)
 
-# Hierarchical Clustering: pros and cons
+# Hierarchical Clustering: pros and cons {visibility="hidden"}
 
 Pros:
 
@@ -610,7 +593,7 @@ Cons:
 * In many configurations, it is sensitive to noise and outliers
 * A global optimization function is missing
 
-# Hierarchical Clustering approaches
+# Hierarchical Clustering approaches {visibility="hidden"}
 
 There are two approaches to building a hierarchical clustering.
 
@@ -625,7 +608,7 @@ Traditional hierarchical algorithms use a similarity or distance matrix.
 
 * A  $n \cdot n$ matrix storing the similarities/distances between pairs of points/clusters
 
-# Hierarchical Clustering algorithms
+# Hierarchical Clustering algorithms {visibility="hidden"}
 
 The basic algorithm is straightforward.
 
@@ -642,19 +625,19 @@ The key operation is the computation of the proximity of two clusters.
 
 * Different approaches to defining the distance between clusters distinguish the different algorithms
 
-# Hierarchical Clustering flow
+# Hierarchical Clustering flow {visibility="hidden"}
 
 Start with clusters of individual points and a proximity matrix.
 
 ![Proximity matrix](img/clustering/Immagine30.svg)
 
-# Hierarchical Clustering flow
+# Hierarchical Clustering flow {visibility="hidden"}
 
 After some merging steps, we have some clusters.
 
 ![Proximity matrix](img/clustering/Immagine31.svg)
 
-# Merging step
+# Merging step {visibility="hidden"}
 
 We want to merge the two closest clusters (C2 and C5) and update the proximity matrix.
 
@@ -662,7 +645,7 @@ We want to merge the two closest clusters (C2 and C5) and update the proximity m
 
 ![Proximity matrix](img/clustering/Immagine32.svg)
 
-# Inter-Cluster Distances
+# Inter-Cluster Distances {visibility="hidden"}
 
 ![Inter-Cluster Distances](img/clustering/Immagine33.svg)
 
@@ -673,31 +656,31 @@ We want to merge the two closest clusters (C2 and C5) and update the proximity m
 - Other methods driven by an objective function
     - Ward's Method uses squared error
 
-# Inter-Cluster Distances
+# Inter-Cluster Distances {visibility="hidden"}
 
 __MIN or Single link__: is the minimum distance between two cluster points
 
 ![MIN or Single link](img/clustering/Immagine34.svg)
 
-# Inter-Cluster Distances
+# Inter-Cluster Distances {visibility="hidden"}
 
 __MAX or Complete link__: is the maximum distance between all cluster points
 
 ![MAX or Complete link](img/clustering/Immagine35.svg)
 
-# Inter-Cluster Distances
+# Inter-Cluster Distances {visibility="hidden"}
 
 __Group Average__: is the average distance between all the cluster points
 
 ![Group Average](img/clustering/Immagine36.svg)
 
-# Inter-Cluster Distances
+# Inter-Cluster Distances {visibility="hidden"}
 
 __Centroids distance__
 
 ![Centroids distance](img/clustering/Immagine37.svg)
 
-# Hierarchical clustering: MIN
+# Hierarchical clustering: MIN {visibility="hidden"}
 
 ::::{.columns}
 :::{.column width="33%"}
@@ -720,7 +703,7 @@ __Centroids distance__
 
 After step 2: $Dist(\{3,6\}, \{2,5\})=min\bigl(dist(\{2,3\}), dist(\{2,6\}), dist(\{5,3\}), dist(\{5,6\})\bigr) = min(0.15,0.25,0.28,0.39)=0.15$
 
-# MIN: pros and cons
+# MIN: pros and cons {visibility="hidden"}
 
 It allows for managing non-spherical clusters too.
 
@@ -733,7 +716,7 @@ It allows for managing non-spherical clusters too.
 :::
 ::::
 
-# MIN: pros and cons
+# MIN: pros and cons {visibility="hidden"}
 
 It is subject to outliers and noise.
 
@@ -746,7 +729,7 @@ It is subject to outliers and noise.
 :::
 ::::
 
-# Hierarchical clustering: MAX
+# Hierarchical clustering: MAX {visibility="hidden"}
 
 ::::{.columns}
 :::{.column width="33%"}
@@ -773,7 +756,7 @@ After step 2...
 - $Dist\bigl(\{3,6\}, \{2,5\}\bigr)=max\bigl(dist(\{3,2\}), dist(\{3,5\}\bigr), dist(\{6,2\}), dist(\{6,5\})) = max(0.15,0.25,0.28,0.39)=0.39$
 - $Dist\bigl(\{3,6\}, \{1 \}\bigr)=max\bigl(dist(\{3,1\}), dist(\{6,1\})\bigr) = max(0.22,0.23)=0.23$
 
-# MAX: pros and cons
+# MAX: pros and cons {visibility="hidden"}
 
 Less affected by noise
 
@@ -788,7 +771,7 @@ Less affected by noise
 
 It tends to separate large clusters.
 
-# MAX: pros and cons
+# MAX: pros and cons {visibility="hidden"}
 
 Favor globular clusters
 
@@ -801,7 +784,7 @@ Favor globular clusters
 :::
 ::::
 
-# Hierarchical clustering: Group Average
+# Hierarchical clustering: Group Average {visibility="hidden"}
 
 The similarity between two clusters is the average of the similarity of the cluster pairs of points.
 
@@ -812,7 +795,7 @@ It is a compromise between MIN and MAX.
 * PROs: less affected by noise than MIN
 * CONS: Biased towards globular clusters
 
-# Hierarchical clustering: Group Average
+# Hierarchical clustering: Group Average {visibility="hidden"}
 
 ::::{.columns}
 :::{.column width="33%"}
@@ -838,7 +821,7 @@ After step 3...
 - $Dist(\{2,5 \}, \{1 \}) = (0.2357+0.3421)/(2 \cdot 1) = 0.2889$
 - $Dist(\{3,6,4\}, \{2,5\}) =(0.15+0.28+0.25+0.39+0.20+0.29)/(3\cdot 2) = 0.26$
 
-# Hierarchical clustering: Ward's Method
+# Hierarchical clustering: Ward's Method {visibility="hidden"}
 
 Similarity of two clusters is based on the increase in squared error when two clusters are merged.
 
@@ -852,11 +835,11 @@ It uses the same objective function as the K-means algorithm.
 * It can be used to initialize k-means: since it allows identifying the correct value of $k$ and an initial subdivision of the points
     * Please note that, due to not being able to cancel the choices made, the solutions found by the hierarchical methods are often sub-optimal.
 
-# Hierarchical clustering: Comparison
+# Hierarchical clustering: Comparison {visibility="hidden"}
 
 ![Comparison](img/clustering/Immagine44.svg)
 
-# Hierarchical clustering: computational complexity
+# Hierarchical clustering: computational complexity {visibility="hidden"}
 
 Space: $O(N^2)$ is the space occupied by the proximity matrix when the number of points is $N$
 
@@ -865,7 +848,7 @@ Time: $O(N^3)$
 * $N$ steps are needed to build the dendrogram. At each step, the proximity matrix must be updated and read
 * Prohibitive for large datasets
 
-# Hierarchical clustering: exercise
+# Hierarchical clustering: exercise {visibility="hidden"}
 
 Given the following similarity matrix, represent the dendrograms deriving from the hierarchical clustering obtained by
 
@@ -1089,7 +1072,7 @@ Associate similarity matrices with the data set
 :::
 ::::
 
-# Cophenetic distance
+# Cophenetic distance {visibility="hidden"}
 
 The previous measures represent validity indices for partitioning clustering algorithms.
 
