@@ -233,31 +233,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The definition does <strong>not</strong> determine the right similarity, number of clusters, or cluster shape. Those are modeling choices.</p>
 </section>
 
-<section id="what-is-not-clustering-analysis" class="title-slide slide level1 center">
-<h1>What is NOT Clustering analysis?</h1>
-<p>Supervised classification</p>
-<ul>
-<li>It assumes classes to be known</li>
-</ul>
-<p>Segmentation</p>
-<ul>
-<li>Partitioning students alphabetically by last name</li>
-<li>The partitioning rule is given</li>
-</ul>
-<p>Querying a database</p>
-<ul>
-<li>The selection and grouping criteria are given</li>
-</ul>
-<p>How many clusters?</p>
-</section>
-
-<section id="cluster-notion-can-be-ambiguous" class="title-slide slide level1 center">
-<h1>Cluster notion can be ambiguous</h1>
+<section id="cluster-notion-can-be-ambiguous-how-many-clusters" class="title-slide slide level1 center">
+<h1>Cluster notion can be ambiguous: how many clusters?</h1>
 
 <img data-src="img/clustering/Immagine8.png" class="r-stretch quarto-figure-center"><p class="caption">How many clusters?</p></section>
 
-<section id="cluster-notion-can-be-ambiguous-1" class="title-slide slide level1 center">
-<h1>Cluster notion can be ambiguous</h1>
+<section id="cluster-notion-can-be-ambiguous-how-many-clusters-1" class="title-slide slide level1 center">
+<h1>Cluster notion can be ambiguous: how many clusters?</h1>
 <div class="columns">
 <div class="column" style="width:33%;">
 <div class="quarto-figure quarto-figure-center">
@@ -522,7 +504,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="clusters-example" class="title-slide slide level1 center">
 <h1>10 clusters example</h1>
-<div id="505ea8f0" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="1">
+<div id="6c229be8" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -637,7 +619,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="failure-case-non-globular-clusters" class="title-slide slide level1 center">
 <h1>Failure case: non-globular clusters</h1>
 <p>SSE is based on an Euclidean distance that does not take into account the shape of objects</p>
-<div id="90083496" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="2">
+<div id="5d9951bb" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -737,564 +719,53 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img data-src="img/clustering/14-Clustering_55.png" class="r-stretch quarto-figure-center"><p class="caption">K=2, K=3, K=3, K=2, K=3</p></section>
 
-<section id="hierarchical-clustering" class="title-slide slide level1 center">
-<h1>Hierarchical Clustering</h1>
-<p>Produces a set of nested clusters organized as a hierarchical tree</p>
-<p>Can be visualized as a dendrogram</p>
-<ul>
-<li>A tree-like diagram that records the sequences of merges or splits</li>
-</ul>
-<p>Different values on the Y-axis correspond to different clusterings.</p>
-<ul>
-<li>Higher Y-axis values imply fewer clusters with more items</li>
-</ul>
 
-<img data-src="img/clustering/Immagine29.svg" class="r-stretch quarto-figure-center"><p class="caption">Handling empty clusters</p></section>
 
-<section id="hierarchical-clustering-pros-and-cons" class="title-slide slide level1 center">
-<h1>Hierarchical Clustering: pros and cons</h1>
-<p>Pros:</p>
-<ul>
-<li>The cluster number must not be defined a priori
-<ul>
-<li>The desired number of clusters can be obtained by ‘cutting’ the dendrogram to the appropriate level</li>
-</ul></li>
-<li>It can identify a taxonomy (hierarchical classification) of concepts
-<ul>
-<li>The most similar elements will be fused before the less similar elements</li>
-</ul></li>
-</ul>
-<p>Cons:</p>
-<ul>
-<li>Once a decision is made (merge), it can no longer be canceled</li>
-<li>In many configurations, it is sensitive to noise and outliers</li>
-<li>A global optimization function is missing</li>
-</ul>
-</section>
 
-<section id="hierarchical-clustering-approaches" class="title-slide slide level1 center">
-<h1>Hierarchical Clustering approaches</h1>
-<p>There are two approaches to building a hierarchical clustering.</p>
-<ul>
-<li>Agglomerative:
-<ul>
-<li>Start with the points as individual clusters</li>
-<li>At each step, merge the closest pair of clusters until only one cluster (or <span class="math inline">\(k\)</span> clusters) is left</li>
-</ul></li>
-<li>Divisive:
-<ul>
-<li>Start with one, all-inclusive cluster</li>
-<li>At each step, split a cluster until each cluster contains an individual point (or there are <span class="math inline">\(k\)</span> clusters)</li>
-</ul></li>
-</ul>
-<p>Traditional hierarchical algorithms use a similarity or distance matrix.</p>
-<ul>
-<li>A <span class="math inline">\(n \cdot n\)</span> matrix storing the similarities/distances between pairs of points/clusters</li>
-</ul>
-</section>
 
-<section id="hierarchical-clustering-algorithms" class="title-slide slide level1 center">
-<h1>Hierarchical Clustering algorithms</h1>
-<p>The basic algorithm is straightforward.</p>
-<pre><code>Compute the proximity matrix
-Let each data point be a cluster
-Repeat
-    Merge the two closest clusters
-    Update the proximity matrix
-Until only a single cluster remains</code></pre>
-<p>The key operation is the computation of the proximity of two clusters.</p>
-<ul>
-<li>Different approaches to defining the distance between clusters distinguish the different algorithms</li>
-</ul>
-</section>
 
-<section id="hierarchical-clustering-flow" class="title-slide slide level1 center">
-<h1>Hierarchical Clustering flow</h1>
-<p>Start with clusters of individual points and a proximity matrix.</p>
 
-<img data-src="img/clustering/Immagine30.svg" class="r-stretch quarto-figure-center"><p class="caption">Proximity matrix</p></section>
 
-<section id="hierarchical-clustering-flow-1" class="title-slide slide level1 center">
-<h1>Hierarchical Clustering flow</h1>
-<p>After some merging steps, we have some clusters.</p>
 
-<img data-src="img/clustering/Immagine31.svg" class="r-stretch quarto-figure-center"><p class="caption">Proximity matrix</p></section>
 
-<section id="merging-step" class="title-slide slide level1 center">
-<h1>Merging step</h1>
-<p>We want to merge the two closest clusters (C2 and C5) and update the proximity matrix.</p>
-<ul>
-<li>The affected cells are only those related to C2 and C5</li>
-</ul>
 
-<img data-src="img/clustering/Immagine32.svg" class="r-stretch quarto-figure-center"><p class="caption">Proximity matrix</p></section>
 
-<section id="inter-cluster-distances" class="title-slide slide level1 center">
-<h1>Inter-Cluster Distances</h1>
 
-<img data-src="img/clustering/Immagine33.svg" class="r-stretch quarto-figure-center"><p class="caption">Inter-Cluster Distances</p><ul>
-<li>MIN or Single link</li>
-<li>MAX or Complete link</li>
-<li>Group Average</li>
-<li>Centroid’s distance</li>
-<li>Other methods driven by an objective function
-<ul>
-<li>Ward’s Method uses squared error</li>
-</ul></li>
-</ul>
-</section>
 
-<section id="inter-cluster-distances-1" class="title-slide slide level1 center">
-<h1>Inter-Cluster Distances</h1>
-<p><strong>MIN or Single link</strong>: is the minimum distance between two cluster points</p>
 
-<img data-src="img/clustering/Immagine34.svg" class="r-stretch quarto-figure-center"><p class="caption">MIN or Single link</p></section>
 
-<section id="inter-cluster-distances-2" class="title-slide slide level1 center">
-<h1>Inter-Cluster Distances</h1>
-<p><strong>MAX or Complete link</strong>: is the maximum distance between all cluster points</p>
 
-<img data-src="img/clustering/Immagine35.svg" class="r-stretch quarto-figure-center"><p class="caption">MAX or Complete link</p></section>
 
-<section id="inter-cluster-distances-3" class="title-slide slide level1 center">
-<h1>Inter-Cluster Distances</h1>
-<p><strong>Group Average</strong>: is the average distance between all the cluster points</p>
 
-<img data-src="img/clustering/Immagine36.svg" class="r-stretch quarto-figure-center"><p class="caption">Group Average</p></section>
 
-<section id="inter-cluster-distances-4" class="title-slide slide level1 center">
-<h1>Inter-Cluster Distances</h1>
-<p><strong>Centroids distance</strong></p>
 
-<img data-src="img/clustering/Immagine37.svg" class="r-stretch quarto-figure-center"><p class="caption">Centroids distance</p></section>
 
-<section id="hierarchical-clustering-min" class="title-slide slide level1 center">
-<h1>Hierarchical clustering: MIN</h1>
-<div class="columns">
-<div class="column" style="width:33%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">p1</th>
-<th style="text-align: center;">p2</th>
-<th style="text-align: center;">p3</th>
-<th style="text-align: center;">p4</th>
-<th style="text-align: center;">p5</th>
-<th style="text-align: center;">p6</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">p1</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.24</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">0.34</td>
-<td style="text-align: center;">0.23</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p2</td>
-<td style="text-align: center;">0.24</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.20</td>
-<td style="text-align: center;">0.14</td>
-<td style="text-align: center;">0.25</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">p3</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.28</td>
-<td style="text-align: center;">0.11</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p4</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">0.20</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.29</td>
-<td style="text-align: center;">0.22</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">p5</td>
-<td style="text-align: center;">0.34</td>
-<td style="text-align: center;">0.14</td>
-<td style="text-align: center;">0.28</td>
-<td style="text-align: center;">0.29</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.39</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p6</td>
-<td style="text-align: center;">0.23</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">0.11</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.39</td>
-<td style="text-align: center;">0.00</td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine38.svg"></p>
-<figcaption>Dendrogram</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine39.svg"></p>
-<figcaption>Clustering</figcaption>
-</figure>
-</div>
-</div></div>
-<p>After step 2: <span class="math inline">\(Dist(\{3,6\}, \{2,5\})=min\bigl(dist(\{2,3\}), dist(\{2,6\}), dist(\{5,3\}), dist(\{5,6\})\bigr) = min(0.15,0.25,0.28,0.39)=0.15\)</span></p>
-</section>
 
-<section id="min-pros-and-cons" class="title-slide slide level1 center">
-<h1>MIN: pros and cons</h1>
-<p>It allows for managing non-spherical clusters too.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="img/clustering/14-Clustering_59.png"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="img/clustering/14-Clustering_60.png"></p>
-</div></div>
-</section>
 
-<section id="min-pros-and-cons-1" class="title-slide slide level1 center">
-<h1>MIN: pros and cons</h1>
-<p>It is subject to outliers and noise.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="img/clustering/14-Clustering_62.png"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="img/clustering/14-Clustering_61.png"></p>
-</div></div>
-</section>
 
-<section id="hierarchical-clustering-max" class="title-slide slide level1 center">
-<h1>Hierarchical clustering: MAX</h1>
-<div class="columns">
-<div class="column" style="width:33%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">p1</th>
-<th style="text-align: center;">p2</th>
-<th style="text-align: center;">p3</th>
-<th style="text-align: center;">p4</th>
-<th style="text-align: center;">p5</th>
-<th style="text-align: center;">p6</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">p1</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.24</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">0.34</td>
-<td style="text-align: center;">0.23</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p2</td>
-<td style="text-align: center;">0.24</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.20</td>
-<td style="text-align: center;">0.14</td>
-<td style="text-align: center;">0.25</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">p3</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.28</td>
-<td style="text-align: center;">0.11</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p4</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">0.20</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.29</td>
-<td style="text-align: center;">0.22</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">p5</td>
-<td style="text-align: center;">0.34</td>
-<td style="text-align: center;">0.14</td>
-<td style="text-align: center;">0.28</td>
-<td style="text-align: center;">0.29</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.39</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p6</td>
-<td style="text-align: center;">0.23</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">0.11</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.39</td>
-<td style="text-align: center;">0.00</td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine40.svg"></p>
-<figcaption>Dendrogram</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine41.svg"></p>
-<figcaption>Clustering</figcaption>
-</figure>
-</div>
-</div></div>
-<p>After step 2…</p>
-<ul>
-<li><span class="math inline">\(Dist\bigl(\{3,6\}, \{4 \}\bigr)=max\bigl(dist(\{3,4\}), dist(\{6,4\})\bigr) = max(0.15,0.22)=0.22\)</span></li>
-<li><span class="math inline">\(Dist\bigl(\{3,6\}, \{2,5\}\bigr)=max\bigl(dist(\{3,2\}), dist(\{3,5\}\bigr), dist(\{6,2\}), dist(\{6,5\})) = max(0.15,0.25,0.28,0.39)=0.39\)</span></li>
-<li><span class="math inline">\(Dist\bigl(\{3,6\}, \{1 \}\bigr)=max\bigl(dist(\{3,1\}), dist(\{6,1\})\bigr) = max(0.22,0.23)=0.23\)</span></li>
-</ul>
-</section>
 
-<section id="max-pros-and-cons" class="title-slide slide level1 center">
-<h1>MAX: pros and cons</h1>
-<p>Less affected by noise</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="img/clustering/14-Clustering_65.png"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="img/clustering/14-Clustering_64.png"></p>
-</div></div>
-<p>It tends to separate large clusters.</p>
-</section>
 
-<section id="max-pros-and-cons-1" class="title-slide slide level1 center">
-<h1>MAX: pros and cons</h1>
-<p>Favor globular clusters</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="img/clustering/14-Clustering_66.png"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="img/clustering/14-Clustering_67.png"></p>
-</div></div>
-</section>
 
-<section id="hierarchical-clustering-group-average" class="title-slide slide level1 center">
-<h1>Hierarchical clustering: Group Average</h1>
-<p>The similarity between two clusters is the average of the similarity of the cluster pairs of points.</p>
-<p><span class="math inline">\(proximity(c_i, c_j) = \frac{1}{|c_i| \cdot |c_j|} \sum_{p \in c_i} \sum_{q \in c_j} proximity(p, q)\)</span></p>
-<p>It is a compromise between MIN and MAX.</p>
-<ul>
-<li>PROs: less affected by noise than MIN</li>
-<li>CONS: Biased towards globular clusters</li>
-</ul>
-</section>
 
-<section id="hierarchical-clustering-group-average-1" class="title-slide slide level1 center">
-<h1>Hierarchical clustering: Group Average</h1>
-<div class="columns">
-<div class="column" style="width:33%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;">p1</th>
-<th style="text-align: center;">p2</th>
-<th style="text-align: center;">p3</th>
-<th style="text-align: center;">p4</th>
-<th style="text-align: center;">p5</th>
-<th style="text-align: center;">p6</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">p1</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.24</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">0.34</td>
-<td style="text-align: center;">0.23</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p2</td>
-<td style="text-align: center;">0.24</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.20</td>
-<td style="text-align: center;">0.14</td>
-<td style="text-align: center;">0.25</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">p3</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.28</td>
-<td style="text-align: center;">0.11</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p4</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">0.20</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.29</td>
-<td style="text-align: center;">0.22</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">p5</td>
-<td style="text-align: center;">0.34</td>
-<td style="text-align: center;">0.14</td>
-<td style="text-align: center;">0.28</td>
-<td style="text-align: center;">0.29</td>
-<td style="text-align: center;">0.00</td>
-<td style="text-align: center;">0.39</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p6</td>
-<td style="text-align: center;">0.23</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">0.11</td>
-<td style="text-align: center;">0.22</td>
-<td style="text-align: center;">0.39</td>
-<td style="text-align: center;">0.00</td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:33%;">
 
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine43.svg"></p>
-<figcaption>Clustering</figcaption>
-</figure>
-</div>
-</div></div>
-<p>After step 3…</p>
-<ul>
-<li><span class="math inline">\(Dist(\{3,6,4\}, \{1 \}) = (0.22+0.37+0.23)/(3 \cdot 1) = 0.28\)</span></li>
-<li><span class="math inline">\(Dist(\{2,5 \}, \{1 \}) = (0.2357+0.3421)/(2 \cdot 1) = 0.2889\)</span></li>
-<li><span class="math inline">\(Dist(\{3,6,4\}, \{2,5\}) =(0.15+0.28+0.25+0.39+0.20+0.29)/(3\cdot 2) = 0.26\)</span></li>
-</ul>
-</section>
 
-<section id="hierarchical-clustering-wards-method" class="title-slide slide level1 center">
-<h1>Hierarchical clustering: Ward’s Method</h1>
-<p>Similarity of two clusters is based on the increase in squared error when two clusters are merged.</p>
-<ul>
-<li><p>Similar to group average if the distance between points is the distance squared</p></li>
-<li><p>PROS: Less susceptible to noise and outliers CONS: Biased towards globular clusters</p></li>
-</ul>
-<p>It uses the same objective function as the K-means algorithm.</p>
-<ul>
-<li>It can be used to initialize k-means: since it allows identifying the correct value of <span class="math inline">\(k\)</span> and an initial subdivision of the points
-<ul>
-<li>Please note that, due to not being able to cancel the choices made, the solutions found by the hierarchical methods are often sub-optimal.</li>
-</ul></li>
-</ul>
-</section>
 
-<section id="hierarchical-clustering-comparison" class="title-slide slide level1 center">
-<h1>Hierarchical clustering: Comparison</h1>
 
-<img data-src="img/clustering/Immagine44.svg" class="r-stretch quarto-figure-center"><p class="caption">Comparison</p></section>
 
-<section id="hierarchical-clustering-computational-complexity" class="title-slide slide level1 center">
-<h1>Hierarchical clustering: computational complexity</h1>
-<p>Space: <span class="math inline">\(O(N^2)\)</span> is the space occupied by the proximity matrix when the number of points is <span class="math inline">\(N\)</span></p>
-<p>Time: <span class="math inline">\(O(N^3)\)</span></p>
-<ul>
-<li><span class="math inline">\(N\)</span> steps are needed to build the dendrogram. At each step, the proximity matrix must be updated and read</li>
-<li>Prohibitive for large datasets</li>
-</ul>
-</section>
 
-<section id="hierarchical-clustering-exercise" class="title-slide slide level1 center">
-<h1>Hierarchical clustering: exercise</h1>
-<p>Given the following similarity matrix, represent the dendrograms deriving from the hierarchical clustering obtained by</p>
-<ul>
-<li>Single link</li>
-<li>Complete link</li>
-</ul>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">simil</th>
-<th style="text-align: center;">p1</th>
-<th style="text-align: center;">p2</th>
-<th style="text-align: center;">p3</th>
-<th style="text-align: center;">p4</th>
-<th style="text-align: center;">p5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">p1</td>
-<td style="text-align: center;">1.00</td>
-<td style="text-align: center;">0.10</td>
-<td style="text-align: center;">0.41</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.35</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p2</td>
-<td style="text-align: center;">0.10</td>
-<td style="text-align: center;">1.00</td>
-<td style="text-align: center;">0.64</td>
-<td style="text-align: center;">0.47</td>
-<td style="text-align: center;">0.98</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">p3</td>
-<td style="text-align: center;">0.41</td>
-<td style="text-align: center;">0.64</td>
-<td style="text-align: center;">1.0</td>
-<td style="text-align: center;">0.44</td>
-<td style="text-align: center;">0.85</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">p4</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.47</td>
-<td style="text-align: center;">0.44</td>
-<td style="text-align: center;">1.00</td>
-<td style="text-align: center;">0.76</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">p5</td>
-<td style="text-align: center;">0.35</td>
-<td style="text-align: center;">0.98</td>
-<td style="text-align: center;">0.85</td>
-<td style="text-align: center;">0.76</td>
-<td style="text-align: center;">1.00</td>
-</tr>
-</tbody>
-</table>
-</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <section id="dbscan" class="title-slide slide level1 center">
 <h1>DBSCAN</h1>
@@ -1547,56 +1018,7 @@ Until only a single cluster remains</code></pre>
 </div></div>
 </section>
 
-<section id="cophenetic-distance" class="title-slide slide level1 center">
-<h1>Cophenetic distance</h1>
-<p>The previous measures represent validity indices for partitioning clustering algorithms.</p>
-<p>In the case of hierarchical clustering, a measure often used is the cophenetic distance, that is, given two elements, it is the proximity to which they are placed together by an agglomerative clustering algorithm.</p>
-<ul>
-<li>In the underlying dendrogram, the pairs of points (3,4), (6,4) have a distance of 0.15 because the clusters to which they belong are merged at that value of the proximity matrix</li>
-</ul>
-<p>Calculating the cophenetic distance for all pairs of points, we obtain a matrix that allows us to calculate the CoPhenetic Correlation Coefficient (CPCC)</p>
-<ul>
-<li>The term Cophenetic comes from biology: phenetics (Greek: phainein – to appear), also known as taximetrics, is an attempt to classify organisms based on overall similarity, usually in morphology or other observable traits, regardless of their phylogeny or evolutionary relation.</li>
-<li>The CPCC is the correlation index between the cophenetic distance matrix and the dissimilarity matrix of the points</li>
-<li>A high correlation indicates that the clustering algorithm has respected the dissimilarity between the elements</li>
-</ul>
-<div class="columns">
-<div class="column" style="width:50%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Distance</th>
-<th style="text-align: center;">CPCC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">Single link</td>
-<td style="text-align: center;">0.44</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Complete link</td>
-<td style="text-align: center;">0.63</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">Group average</td>
-<td style="text-align: center;">0.66</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Ward’s</td>
-<td style="text-align: center;">0.64</td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine56.svg"></p>
-<figcaption>Ward’s</figcaption>
-</figure>
-</div>
-</div></div>
-</section>
+
 
 <section id="statistical-framework-for-clustering-validation" class="title-slide slide level1 center">
 <h1>Statistical framework for clustering validation</h1>
