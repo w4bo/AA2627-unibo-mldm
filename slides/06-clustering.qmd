@@ -160,43 +160,23 @@ Clusters with shared properties or in which the shared property derives from the
 # K-means Clustering
 
 ::::{.columns}
-:::{.column width="50%"}
+:::{.column width="40%"}
 Partitional clustering approach
 
 - Number of clusters, K, must be specified
 - Each cluster is associated with a centroid (center point)
 - Each point is assigned to the cluster with the closest centroid
 :::
-:::{.column width="50%"}
+:::{.column width="60%"}
 ```
 kmeans(k, points):
-    // Initialize centroids
-    centroids ← list of k starting centroids
-    converged ← false
-    while converged == false do
-        // Create empty clusters
-        clusters ← list of k empty lists
-        // Assign each point to the nearest centroid
-        for i ← 0 to length(points) - 1 do
-            point ← points[i]
-            closestIndex ← 0
-            minDistance ← distance(point, centroids[0])
-            for j ← 1 to k - 1 do
-                d ← distance(point, centroids[j])
-                if d < minDistance THEN
-                    minDistance ← d
-                    closestIndex ← j
-            clusters[closestIndex].append(point)
-        // Recalculate centroids as the mean of each cluster
-        newCentroids ← empty list
-        for i ← 0 to k - 1 do
-            newCentroid ← calculateCentroid(clusters[i])
-            newCentroids.append(newCentroid)
-        // Check for convergence
-        if newCentroids == centroids THEN
-            converged ← true
-        else
-            centroids ← newCentroids
+    choose k initial centroids
+
+    repeat
+        assign each point to the nearest centroid
+        update each centroid as the mean of its assigned points
+    until assignments do not change
+
     return clusters
 ```
 :::
@@ -251,17 +231,11 @@ Algorithm complexity is $O(n \cdot K \cdot I \cdot d )$
 
 # Evaluating k-means clusters
 
-The most common measure is the Sum of Squared Error (SSE)
+The most common measure is the Sum of Squared Error
 
-* For each point, the error is the distance to the nearest cluster
-* To get SSE, we square these errors and sum them.
-
-$SSE = \sum_{i=1}^K\sum_{x \in C_i} dist(x, m_i)^2$
-
-* $x$ is a data point in cluster $C_i$ and $m_i$ is the representative point for cluster $C_i$
-* The centroid  $m_i$ that minimizes the SSE when  $dist$ is the Euclidean distance is the average of the cluster points.
-
-$m_i = \frac{1}{|C_i|} \sum_{x \in C_i} x$
+* $SSE = \sum_{i=1}^K\sum_{x \in C_i} dist(x, m_i)^2$
+* For each point, the error is the distance to the nearest cluster centroid.
+* The centroid $m_i$ is the average of the cluster points, $x$ is a data point in cluster $C_i$.
 
 One easy way to reduce SSE is to increase  $K$, the number of clusters.
 
@@ -269,16 +243,15 @@ One easy way to reduce SSE is to increase  $K$, the number of clusters.
 
 # Convergence and optimality
 
-There is only a finite number of ways to partition  $n$ records into  $k$ groups. So there is only a finite number of possible configurations in which all the centers are centroids of the points they possess.
+Clusters may change in an iteration.
 
-If the configuration changes in an iteration, the distortion must be improved. So every time the configuration changes, it must lead to a state never visited before
-
+* So every time the configuration changes, it must lead to a state never visited before
 * The reassignment of records to centroids is done based on smaller distances
 * The calculation of the new centroids minimizes the value of SSE for the cluster
 
-Therefore, the algorithm must stop due to the unavailability of further configurations to visit.
+The algorithm must stop due to the unavailability of further configurations to visit.
 
-It is not necessarily true that the final configuration is the one that has the minimum value of SSE, as shown in the following slide.
+- It is not necessarily true that the final configuration is the one that has the minimum value of SSE. *Why*?
 
 # Convergence to sub-optimality
 
@@ -432,7 +405,7 @@ The value of SSE leads to the identification of centroids to have clusters of th
 :::
 ::::
 
-different density
+# K-means limits: different density
 
 More dense clusters lead to smaller intra-cluster distances, so less dense areas require more medians to minimize the total value of SSE.
 
