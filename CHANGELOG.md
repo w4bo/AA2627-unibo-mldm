@@ -1,3 +1,17 @@
+## [1.0.40](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.39...1.0.40) (2026-09-22)
+
+### Dependency updates
+
+* **deps:** update slides/utils digest to d04452e ([2544bf5](https://github.com/w4bo/AA2627-unibo-mldm/commit/2544bf5fb1353bf17c964b982a96b06d4ba1adad))
+* **deps:** update slides/utils digest to d04452e ([ffd5fe5](https://github.com/w4bo/AA2627-unibo-mldm/commit/ffd5fe55ac56402484b2d9562287c8d16c8cdd1a))
+
+### Bug Fixes
+
+* switch to penguin dataset ([38ac77e](https://github.com/w4bo/AA2627-unibo-mldm/commit/38ac77ee30a884e06cee73edb19bd269f716dacb))
+* switch to penguin dataset ([80cab08](https://github.com/w4bo/AA2627-unibo-mldm/commit/80cab08d15300eec4972aa379330b846717fc98a))
+* switch to penguin dataset ([5cee805](https://github.com/w4bo/AA2627-unibo-mldm/commit/5cee8057ce5caa315e4316b7fa55ffe426268e74))
+* update slides ([de2c74e](https://github.com/w4bo/AA2627-unibo-mldm/commit/de2c74ef60542c7b5c3f163e9178e03976b320e8))
+
 ## [1.0.39](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.38...1.0.39) (2026-09-21)
 
 ### Bug Fixes
