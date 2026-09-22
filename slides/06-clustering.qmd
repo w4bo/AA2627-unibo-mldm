@@ -84,19 +84,19 @@ The definition does **not** determine the right similarity, number of clusters, 
 :::
 ::::
 
-# Type of clustering
+# Type of *clustering*
 
 __Partitioning clustering__: a division of objects into non-overlapping subsets (clusters). Each object belongs exactly to a cluster.
 
 ![Partitioning clustering](img/clustering/Immagine12.png)
 
-# Type of clustering
+# Type of *clustering*
 
 __Hierarchical clustering__: a set of nested clusters organized as a hierarchical tree
 
 ![Hierarchical clustering and dendrogram](img/clustering/Immagine13.png)
 
-# Further cluster classification
+# Type of *clustering*
 
 __Exclusive vs non-exclusive__
 
@@ -112,11 +112,7 @@ __Partial vs complete__
 
 * In a partial clustering, some points may not belong to any of the clusters.
 
-__Heterogeneous vs homogeneous__
-
-* In a heterogeneous cluster, clusters can have very different sizes, shapes, and densities
-
-# Cluster types: Well-Separated
+# Types of *cluster*: Well-Separated {visibility="hidden"}
 
 Well-Separated Cluster:
 
@@ -124,7 +120,7 @@ Well-Separated Cluster:
 
 ![Well-Separated Clusters](img/clustering/Immagine14.svg)
 
-# Cluster types: Center-based
+# Types of *cluster*: Center-based
 
 Center-based
 
@@ -133,7 +129,7 @@ Center-based
 
 ![4 center-based clusters](img/clustering/Immagine15.svg)
 
-# Cluster types: Contiguity-Based
+# Types of *cluster*: Contiguity-Based {visibility="hidden"}
 
 Contiguous cluster (Nearest neighbor or Transitive)
 
@@ -141,7 +137,7 @@ Contiguous cluster (Nearest neighbor or Transitive)
 
 ![8 contiguous clusters](img/clustering/Immagine16.svg)
 
-# Cluster types: Density-Based
+# Types of *cluster*: Density-Based
 
 Density-based
 
@@ -151,13 +147,15 @@ Density-based
 
 ![6 density-based clusters](img/clustering/Immagine17.svg)
 
-# Cluster types: Conceptual cluster
+# Types of *cluster*: Conceptual cluster {visibility="hidden"}
 
 Clusters with shared properties or in which the shared property derives from the whole set of points (that models a particular concept)
 
 * Specific techniques are needed to express the underlying concept.
 
 ![2 overlapped circles](img/clustering/Immagine18.svg)
+
+# Center-based clustering
 
 # K-means Clustering
 
@@ -434,7 +432,7 @@ The value of SSE leads to the identification of centroids to have clusters of th
 :::
 ::::
 
-# K-means limits: different density
+different density
 
 More dense clusters lead to smaller intra-cluster distances, so less dense areas require more medians to minimize the total value of SSE.
 
@@ -447,7 +445,7 @@ More dense clusters lead to smaller intra-cluster distances, so less dense areas
 :::
 ::::
 
-# Failure case: non-globular clusters
+# K-means limits: non-globular clusters
 
 SSE is based on an Euclidean distance that does not take into account the shape of objects
 
@@ -542,6 +540,8 @@ The definition of "natural" clusters then requires a technique to bring together
 ![K-means (10 Cluster)](img/clustering/14-Clustering_52.png)
 :::
 ::::
+
+# How do we choose the right number of clusters?
 
 # Choosing K: the elbow method
 
@@ -863,6 +863,8 @@ Given the following similarity matrix, represent the dendrograms deriving from t
 | p4 | 0.55 | 0.47 | 0.44 | 1.00 | 0.76 |
 | p5 | 0.35 | 0.98 | 0.85 | 0.76 | 1.00 |
 
+# Density-based clustering
+
 # DBSCAN
 
 DBSCAN is a density-based approach
@@ -1007,7 +1009,7 @@ Cohesion and separation can be calculated both for graph-based representations..
 - $cohesion(C_i) = \sum_{u \in C_i} proximity(u, m_i)$
 - $separation(C_i, C_j) = proximity(m_i, m_j)$
 
-# Measuring Cluster Validity Via Correlation
+# Measuring Cluster Validity Via Correlation {visibility="hidden"}
 
 Two matrices are used.
 
@@ -1026,7 +1028,7 @@ Not a good measure for some density or contiguity-based clusters (such as those 
 
 * In this case, the distances between the points are not correlated with their membership in the same cluster
 
-# Measuring Cluster Validity Via Correlation
+# Measuring Cluster Validity Via Correlation {visibility="hidden"}
 
 Correlation between the incidence matrix and the proximity matrix on the result of the k-means algorithm on two different data sets.
 
@@ -1035,31 +1037,31 @@ Correlation between the incidence matrix and the proximity matrix on the result 
 
 ![Corr = -0.9235 vs Corr = -0.5810](img/clustering/Immagine51.svg)
 
-# Measuring Cluster Validity Via Correlation
+# Measuring Cluster Validity Via Correlation {visibility="hidden"}
 
 The visualization is obtained by ordering the similarity matrix based on the groupings defined by the clusters.
 
 ![Cluster Validity Via Correlation](img/clustering/Immagine52.svg)
 
-# Measuring Cluster Validity Via Correlation
+# Measuring Cluster Validity Via Correlation {visibility="hidden"}
 
 If the data is uniformly distributed, the matrix is more "shaded."
 
 ![K-means](img/clustering/Immagine53.svg)
 
-# Measuring Cluster Validity Via Correlation
+# Measuring Cluster Validity Via Correlation {visibility="hidden"}
 
 If the data is uniformly distributed, the matrix is more "shaded."
 
 ![DBSCAN](img/clustering/Immagine54.svg)
 
-# Measuring Cluster Validity Via Correlation
+# Measuring Cluster Validity Via Correlation {visibility="hidden"}
 
 If the data is uniformly distributed, the matrix is more "shaded."
 
 ![Complete link](img/clustering/Immagine55.svg)
 
-# Exercise
+# Exercise {visibility="hidden"}
 
 Associate similarity matrices with the data set
 
@@ -1148,38 +1150,43 @@ Alternatively, statistical indices, such as the Hopkins statistic, could be used
 
 # Clustering Tendency: Hopkins statistic
 
-Given a dataset $Q$ of $n$ real points, we generate a dataset $P$ of $m$ points ($m$ << $n$) by randomly distributing them in the data space.
+Hopkins asks a simple question:
 
-For each point $p_i \in P$, the distance $u_i$ from the point to its nearest-neighbor in the real dataset $Q$ is calculated.
+> Do real data points look more "near each other" than points placed randomly in the same space?
 
-Other $m$ points from the real dataset $q_i \in Q$ are sampled, and for each of them, the distance $w_i$ from the point to its nearest-neighbor in the real dataset $Q$ is calculated.
-The Hopkins statistic is defined as:
+Procedure:
+
+1. Sample some real points from the dataset
+2. Generate the same number of random points in the data space
+3. For both groups, measure the distance to the nearest real neighbor
+4. Compare the two distance sums
 
 $H = \frac{\sum_{i=1}^{m} u_i}{\sum_{i=1}^{m} u_i + \sum_{i=1}^{m} w_i}$
 
-* If the distance to the nearest neighbor is about the same for both generated and sampled points, then $H \approx 0.5$. Then the data set has a random distribution.
-* If $H \approx 1$ (very small values of $w_i$) the data are well clustered
-* If $H \approx 0$ (very small values of $u_i$), the data are evenly distributed (equally spaced).
+- $u_i$: distance from a random point to the nearest real point
+- $w_i$: distance from a real sampled point to the nearest other real point
 
-# Clustering Tendency: Hopkins statistic
+# Clustering Tendency: interpreting Hopkins
 
+If the data contain clusters, a sampled real point is usually close to another real point, while a random point may fall in an empty region.
+
+| Value | Intuition | Interpretation |
+|---|---|---|
+| $H \approx 0.5$ | Random and real points have similar nearest-neighbor distances | No strong clustering tendency |
+| $H \rightarrow 1$ | Real points are much closer to each other than random points are | Clustered structure |
+| $H \rightarrow 0$ | Random points are closer to real points than sampled real points are | Regular/evenly spaced structure |
+
+::::{.columns}
+:::{.column width="33%"}
 ![Hopkins statistic](img/clustering/Immagine61.svg)
-
-# Clustering Tendency: Hopkins statistic
-
-![Hopkins statistic](img/clustering/Immagine62.svg)
-
-# Clustering Tendency: Hopkins statistic
-
+:::
+:::{.column width="33%"}
 ![Hopkins statistic](img/clustering/Immagine63.svg)
-
-# Clustering Tendency: Hopkins statistic
-
-![Hopkins statistic](img/clustering/Immagine64.svg)
-
-# Clustering Tendency: Hopkins statistic
-
+:::
+:::{.column width="33%"}
 ![Hopkins statistic](img/clustering/Immagine65.svg)
+:::
+::::
 
 # External measures for clustering validation
 
