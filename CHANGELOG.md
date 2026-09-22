@@ -1,3 +1,9 @@
+## [1.0.42](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.41...1.0.42) (2026-09-22)
+
+### Bug Fixes
+
+* simplifying slides ([fe8e6cd](https://github.com/w4bo/AA2627-unibo-mldm/commit/fe8e6cdb7ca4fbbd1d8dc00fc78f9f4469436d6d))
+
 ## [1.0.41](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.40...1.0.41) (2026-09-22)
 
 ### Bug Fixes
