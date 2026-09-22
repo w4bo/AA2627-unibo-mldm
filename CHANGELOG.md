@@ -1,3 +1,10 @@
+## [1.0.43](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.42...1.0.43) (2026-09-22)
+
+### Bug Fixes
+
+* simplify clustering ([764018a](https://github.com/w4bo/AA2627-unibo-mldm/commit/764018a634a12ec895db1fa53d7d89b2affe2c69))
+* simplify clustering ([6168a03](https://github.com/w4bo/AA2627-unibo-mldm/commit/6168a031cf98c5b1cfaafe2d98c9066bd78b9894))
+
 ## [1.0.42](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.41...1.0.42) (2026-09-22)
 
 ### Bug Fixes
