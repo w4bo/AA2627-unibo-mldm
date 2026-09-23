@@ -1,3 +1,9 @@
+## [1.0.45](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.44...1.0.45) (2026-09-23)
+
+### Bug Fixes
+
+* correct English typos in slides and notebooks ([64b6e03](https://github.com/w4bo/AA2627-unibo-mldm/commit/64b6e03537be9959a36ca6e4647298c038a95f8d))
+
 ## [1.0.44](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.43...1.0.44) (2026-09-23)
 
 ### Bug Fixes
