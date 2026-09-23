@@ -41,18 +41,18 @@ Each *row* (or *data item/record*) is a customer subscription, each *column* is 
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
-| 2                 | 3                   | 2               | basic     | no       | *yes*   |
-| 4                 | 6                   | 1               | basic     | no       | *yes*   |
-| 6                 | 15                  | 0               | standard  | yes      | *no*    |
-| 12                | 22                  | 0               | premium   | yes      | *no*    |
-| 3                 | 4                   | 3               | basic     | no       | *yes*   |
-| 8                 | 18                  | 0               | standard  | yes      | *no*    |
-| 5                 | 7                   | 1               | basic     | yes      | *no*    |
-| 1                 | 2                   | 2               | basic     | no       | *yes*   |
-| 10                | 20                  | 0               | premium   | yes      | *no*    |
-| 7                 | 12                  | 1               | standard  | yes      | *no*    |
-| 2                 | 5                   | 2               | basic     | no       | *yes*   |
-| 9                 | 16                  | 0               | premium   | yes      | *no*    |
+| 2                 | 3                   | 2               | basic     | no       | ✅   |
+| 4                 | 6                   | 1               | basic     | no       | ✅   |
+| 6                 | 15                  | 0               | standard  | yes      | ❌    |
+| 12                | 22                  | 0               | premium   | yes      | ❌    |
+| 3                 | 4                   | 3               | basic     | no       | ✅   |
+| 8                 | 18                  | 0               | standard  | yes      | ❌    |
+| 5                 | 7                   | 1               | basic     | yes      | ❌    |
+| 1                 | 2                   | 2               | basic     | no       | ✅   |
+| 10                | 20                  | 0               | premium   | yes      | ❌    |
+| 7                 | 12                  | 1               | standard  | yes      | ❌    |
+| 2                 | 5                   | 2               | basic     | no       | ✅   |
+| 9                 | 16                  | 0               | premium   | yes      | ❌    |
 
 # Training and test sets
 
@@ -77,23 +77,23 @@ Disadvantages:
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
-| 2                 | 3                   | 2               | basic     | no       | *yes*   |
-| 4                 | 6                   | 1               | basic     | no       | *yes*   |
-| 6                 | 15                  | 0               | standard  | yes      | *no*    |
-| 12                | 22                  | 0               | premium   | yes      | *no*    |
-| 3                 | 4                   | 3               | basic     | no       | *yes*   |
-| 8                 | 18                  | 0               | standard  | yes      | *no*    |
-| 5                 | 7                   | 1               | basic     | yes      | *no*    |
-| 1                 | 2                   | 2               | basic     | no       | *yes*   |
-| 10                | 20                  | 0               | premium   | yes      | *no*    |
+| 2                 | 3                   | 2               | basic     | no       | ✅   |
+| 4                 | 6                   | 1               | basic     | no       | ✅   |
+| 6                 | 15                  | 0               | standard  | yes      | ❌    |
+| 12                | 22                  | 0               | premium   | yes      | ❌    |
+| 3                 | 4                   | 3               | basic     | no       | ✅   |
+| 8                 | 18                  | 0               | standard  | yes      | ❌    |
+| 5                 | 7                   | 1               | basic     | yes      | ❌    |
+| 1                 | 2                   | 2               | basic     | no       | ✅   |
+| 10                | 20                  | 0               | premium   | yes      | ❌    |
 
 *Test set*: used for testing the generalization capability of the model
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
-| 7                 | 12                  | 1               | standard  | yes      | *no*    |
-| 2                 | 5                   | 2               | basic     | no       | *yes*   |
-| 9                 | 16                  | 0               | premium   | yes      | *no*    |
+| 7                 | 12                  | 1               | standard  | yes      | ❌    |
+| 2                 | 5                   | 2               | basic     | no       | ✅   |
+| 9                 | 16                  | 0               | premium   | yes      | ❌    |
 
 # Supervised learning: decision trees
 
@@ -105,9 +105,9 @@ flowchart LR
 +-----+----------+-------+
 | ... | type     | churn |
 +-----+----------+-------+
-| ... | basic    | yes   |
-| ... | basic    | yes   |
-| ... | standard | no    |
+| ... | basic    | ✅   |
+| ... | basic    | ✅   |
+| ... | standard | ❌    |
 | ... | ...      | ...   |
 </pre>")]
 G[("Test set
@@ -125,9 +125,9 @@ Predicted class
 +-------+
 | churn |
 +-------+
-| yes   |
-| yes   |
-| no    |
+| ✅   |
+| ✅   |
+| ❌    |
 </pre>")]
     A -->|Induction| B[Learn Model]
     C(DT Algorithm) --> B
@@ -218,15 +218,15 @@ flowchart TD
 :::{.column width=70%}
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
-| 2                 | 3                   | 2               | basic     | no       | yes   |
-| 4                 | 6                   | 1               | basic     | no       | yes   |
-| 6                 | 15                  | 0               | standard  | yes      | no    |
-| 12                | 22                  | 0               | premium   | yes      | no    |
-| 3                 | 4                   | 3               | basic     | no       | yes   |
-| 8                 | 18                  | 0               | standard  | yes      | no    |
-| 5                 | 7                   | 1               | basic     | yes      | no    |
-| 1                 | 2                   | 2               | basic     | no       | yes   |
-| 10                | 20                  | 0               | premium   | yes      | no    |
+| 2                 | 3                   | 2               | basic     | no       | ✅   |
+| 4                 | 6                   | 1               | basic     | no       | ✅   |
+| 6                 | 15                  | 0               | standard  | yes      | ❌    |
+| 12                | 22                  | 0               | premium   | yes      | ❌    |
+| 3                 | 4                   | 3               | basic     | no       | ✅   |
+| 8                 | 18                  | 0               | standard  | yes      | ❌    |
+| 5                 | 7                   | 1               | basic     | yes      | ❌    |
+| 1                 | 2                   | 2               | basic     | no       | ✅   |
+| 10                | 20                  | 0               | premium   | yes      | ❌    |
 :::
 :::{.column width=30%}
 ```{mermaid}
@@ -303,7 +303,7 @@ flowchart TD
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | **`auto_pay`** | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
-| 1                 | 2                   | 2               | basic     | **no**       | ?   |
+| 1                 | 2                   | 2               | basic     | *no*       | ?   |
 
 ```{mermaid}
 %%| echo: false
@@ -332,7 +332,7 @@ flowchart TD
 
 | `months_subscribed` | `monthly_watch_hours` | `tickets` | `type` | `auto_pay` | `churn` |
 | :-----------------: | :-------------------: | :---------------: | :---------: | :--------: | :-----: |
-| 1                 | 2                   | 2               | basic     | no       | **yes**   |
+| 1                 | 2                   | 2               | basic     | no       | *✅*   |
 
 ```{mermaid}
 %%| echo: false
@@ -895,15 +895,15 @@ Consider these churn-prediction training records:
 
 | `customer_id` | `auto_pay` | `monthly_watch_hours` | `tickets` | `churn` |
 | :- | :-: | :-: | :-: | :-: |
-| C-1048 | no | 3 | 3 | *yes* |
-| C-1172 | no | 5 | 2 | *yes* |
-| C-1325 | no | 6 | 4 | *yes* |
-| C-1390 | no | 8 | 2 | *yes* |
-| C-1451 | yes | 7 | 1 | *no* |
-| C-1516 | yes | 10 | 1 | *no* |
-| C-1642 | yes | 12 | 0 | *no* |
-| C-1775 | yes | 14 | 1 | *no* |
-| C-1833 | yes | 16 | 0 | *no* |
+| C-1048 | no | 3 | 3 | ✅ |
+| C-1172 | no | 5 | 2 | ✅ |
+| C-1325 | no | 6 | 4 | ✅ |
+| C-1390 | no | 8 | 2 | ✅ |
+| C-1451 | yes | 7 | 1 | ❌ |
+| C-1516 | yes | 10 | 1 | ❌ |
+| C-1642 | yes | 12 | 0 | ❌ |
+| C-1775 | yes | 14 | 1 | ❌ |
+| C-1833 | yes | 16 | 0 | ❌ |
 
 At the root: 4 `yes` and 5 `no`, so $Gini(root)=0.494$.
 

@@ -21,7 +21,7 @@ By the end of this lecture, you will be able to:
 
 An **ensemble classifier** combines the predictions of several base classifiers.
 
-The central idea is simple:
+The idea is simple:
 
 - One classifier may be wrong on some records
 - Another classifier may make different errors
@@ -31,19 +31,12 @@ The central idea is simple:
 
 # Why diversity matters
 
-If all classifiers make the same errors, voting repeats the same mistake.
+If *all* classifiers make the same errors, voting repeats the same mistake.
 
 An ensemble becomes useful when its members are both:
 
 - **Competent**: each classifier is better than random guessing
 - **Diverse**: their errors are at least partly different
-
-Ensembles can be organized in different ways:
-
-- **Parallel**: classifiers work independently and their outputs are merged
-- **Cascade**: the output of one classifier influences the next classifier
-
-In practice, real independence is difficult to obtain, but partial diversity can still improve performance.
 
 # A probabilistic intuition
 
@@ -143,8 +136,6 @@ The **Borda count** is useful when classifiers produce a ranking of classes rath
 - Scores are summed across classifiers
 - The class with the highest score is selected
 
-This is still a decision-level method: it merges symbolic decisions or rankings, not calibrated probabilities.
-
 ![Borda count](img/ensemble/borda-count.png)
 
 # Confidence-level fusion
@@ -155,7 +146,7 @@ These values can be merged through different functions:
 
 - Sum, Product, Minimum, Maximum, Weighted sum
 
-The sum is often more robust than the product. *Why?*
+The sum is often more robust than the product. *Why*?
 
 <details>
 <summary>Answer</summary>
@@ -165,8 +156,6 @@ If one classifier assigns confidence 0, a product rule forces the whole combined
 ![Confidence score](img/ensemble/confidence-fusion.jpeg)
 
 # How to build a composite classifier
-
-There are several ways to build diversity among classifiers.
 
 **Changing the training set**
 
@@ -194,14 +183,21 @@ There are several ways to build diversity among classifiers.
 
 Another way to build an ensemble is to transform a multi-class problem into several binary problems.
 
-- Partition the classes into two groups, $A_0$ and $A_1$
+- Partition the classes into groups
 - Train a binary classifier to separate the two groups
 - Repeat with different class partitions
 - Aggregate the binary decisions into scores for the original classes
 
-This idea appears in **Error-Correcting Output Coding**.
+# One Versus All
 
-The final class is the one with the highest accumulated score.
+For example, given a picture of a piece of fruit, four different recognizers might be trained, each answering a different yes/no question:
+
+    Is this image an apple?
+    Is this image an orange?
+    Is this image a banana?
+    Is this image a grape?
+
+![](img/remote/google-mlcc-one-vs-all-binary-classifiers.png)
 
 # Bias, variance, and noise
 
@@ -211,28 +207,19 @@ Prediction error can be discussed through three components.
 - **Variance**: error due to sensitivity to the specific training set
 - **Noise**: irreducible randomness or ambiguity in the data
 
-Different ensemble strategies target different parts of the problem.
-
-- *Bagging* mainly reduces **variance**
-- *Boosting* can reduce **bias** and variance, but may become sensitive to noise
-
-# Bias and variance intuition
-
 Different classifiers have different abilities to model decision boundaries.
 
-- A model with high **bias** is too restricted to represent the true boundary
-- A model with high **variance** changes too much when the training set changes
-- A model affected by **noise** cannot remove ambiguity already present in the data
+- A model with high **bias** is too restricted to represent the true boundary (a very shallow decision tree may have high bias)
+- A model with high **variance** changes too much when the training set changes (a 1-NN classifier may have low bias but high variance)
+- A model affected by **noise** cannot remove ambiguity already present in the data (mislabeled records can hurt any classifier)
 
-For example:
-
-- A very shallow decision tree may have high bias
-- A 1-NN classifier may have low bias but high variance
-- Mislabeled records can hurt any classifier
 
 # Bagging and boosting
 
-![Both methods combine multiple models, but they create diversity in different ways.](img/ensemble/bagging-vs-boosting.png)
+![Both methods combine multiple models, but they create diversity in different ways. Bagging = stabilize; Boosting = correct](img/ensemble/bagging-vs-boosting.png)
+
+- *Bagging* mainly reduces **variance**
+- *Boosting* reduces **bias** and often variance, but may become sensitive to noise (e.g., AdaBoost, Gradient Boosting, and XGBoost)
 
 # Bagging
 
@@ -288,21 +275,19 @@ where $I(\cdot)$ is 1 when the condition is true and 0 otherwise.
 
 # Bagging with a decision stump
 
-Consider a one-level binary decision tree, also called a **decision stump**.
-
-It can only make rules such as:
+Consider a one-level binary decision tree, also called a **decision stump** where $s$ is the split point learn by the stump:
 
 $$
-x \le s \rightarrow -1,\qquad x>s \rightarrow +1
+x \le s \rightarrow ❌,\qquad x>s \rightarrow ✅
 $$
 
-where $s$ is the split point.
+A single stump cannot perfectly model this pattern. *Why*?
+
 
 | $x$ | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1.0 |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| $y$ | +1 | +1 | +1 | -1 | -1 | -1 | -1 | +1 | +1 | +1 |
+| $y$ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ |
 
-A single stump cannot perfectly model this pattern.
 
 # What bagging changes
 
@@ -311,13 +296,13 @@ With bootstrap samples, different stumps may choose different split points.
 Some samples emphasize the left boundary:
 
 $$
-x \le 0.3 \rightarrow +1,\qquad x>0.3 \rightarrow -1
+x \le 0.3 \rightarrow ✅,\qquad x>0.3 \rightarrow ❌
 $$
 
 Other samples emphasize the right boundary:
 
 $$
-x \le 0.7 \rightarrow -1,\qquad x>0.7 \rightarrow +1
+x \le 0.7 \rightarrow ❌,\qquad x>0.7 \rightarrow ✅
 $$
 
 The ensemble vote can approximate a more expressive classifier than one stump alone.
@@ -326,15 +311,8 @@ The ensemble vote can approximate a more expressive classifier than one stump al
 
 Bagging is useful when the base learner is **unstable**.
 
-An unstable learner changes its decision boundary noticeably when the training set changes slightly.
-
-Typical examples:
-
-- Decision trees
-- Neural networks trained from random initialization
-- High-variance models trained on small datasets
-
-Bagging is less useful for very stable models, because bootstrap samples produce very similar classifiers.
+- An unstable learner changes its decision boundary noticeably when the training set changes slightly.
+- Bagging is less useful for very stable models, because bootstrap samples produce very similar classifiers.
 
 # Random forest
 
@@ -346,16 +324,8 @@ It introduces randomness in two places:
 
 - **Rows**: each tree is trained on a bootstrap sample
 - **Features**: each split considers only a random subset of features
-
-This second mechanism prevents all trees from repeatedly choosing the same dominant feature.
-
-Typical choice for classification:
-
-$$
-d' \approx \sqrt{d}
-$$
-
-where $d$ is the number of features and $d'$ is the number considered at each split.
+    - This prevents all trees from repeatedly choosing the same dominant feature.
+    - Typical choice for classification: $d' \approx \sqrt{d}$, where $d$ is the number of features and $d'$ is the number considered at each split.
 :::
 :::{.column width="40%"}
 ![Random forest](img/ensemble/random-forest.png)
@@ -366,7 +336,8 @@ where $d$ is the number of features and $d'$ is the number considered at each sp
 
 **Boosting** builds classifiers sequentially.
 
-Each new classifier focuses more strongly on the records that previous classifiers handled badly.
+- Each new classifier focuses more strongly on the records that previous classifiers handled badly.
+- Unlike bagging, boosting classifiers are not independent: each round depends on the previous one.
 
 ```{mermaid}
 %%| echo: false
@@ -382,7 +353,7 @@ flowchart LR
     V --> Y["prediction"]
 ```
 
-Unlike bagging, boosting classifiers are not independent: each round depends on the previous one.
+
 
 # Bagging vs boosting
 
@@ -603,34 +574,17 @@ flowchart TD
 :::
 ::::
 
-# Practical cautions
-
-Boosting is powerful, but it is not magic.
-
-Be careful when:
-
-- Labels are noisy
-- Outliers are mislabeled
-- The weak learner overfits the reweighted data
-- The number of rounds is too large
-
-Validation data should be used to tune:
-
-- Number of boosting rounds
-- Base learner complexity
-- Learning rate, when using modern boosting variants
+Adaboos [@freund1997decision], XGBoost [@chen2016xgboost], and LightGBM [@ke2017lightgbm] could be target algorithms for your assignment!
 
 # Summary
+
+The key question is: **how do we create useful diversity among classifiers?**
 
 Ensembles improve classification by combining multiple predictors.
 
 - **Bagging** trains models on bootstrap samples and combines them by voting
-- **Random forests** add random feature selection to bagged decision trees
+    - **Random forests** add random feature selection to bagged decision trees
 - **Boosting** trains models sequentially, focusing on previous errors
-
-The key question is always the same:
-
-**How do we create useful diversity among classifiers?**
 
 # References
 
