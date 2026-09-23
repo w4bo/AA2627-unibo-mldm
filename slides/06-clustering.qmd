@@ -1099,22 +1099,28 @@ Cons
 
 # DBSCAN: choosing Eps and MinPts
 
-The idea is that for points in a cluster, their kth nearest neighbors are at roughly the same distance.
+Choose $MinPts$ first, then use it to estimate $Eps$.
 
-Noise points have the kth nearest neighbor at a farther distance.
+* $MinPts$ defines how dense a region must be before DBSCAN treats it as a cluster
+* A common starting point is $MinPts \geq d + 1$, where $d$ is the number of dimensions
+* In practice, larger values make DBSCAN more conservative and more robust to noise
+* For two-dimensional datasets, $MinPts = 4$ is a common default
 
-So, plot the sorted distance of every point to its kth nearest neighbor.
+Once $MinPts$ is fixed, choose $Eps$ with a $k$-distance plot:
 
-* $Eps$ value is given by the y-axis in $p$
-* $MinPts$ value is given by  $k$
-* The result depends on the value of $k$, but the trend of the curve remains similar for reasonable values of $k$
-* A value of $k$ normally used for two-dimensional datasets is 4
+* For each point, compute the distance to its $k$-th nearest neighbor, with $k = MinPts$
+* Sort these distances from smallest to largest
+* Points inside dense clusters have similar $k$-neighbor distances
+* Noise and sparse points have much larger distances
+* Choose $Eps$ near the "elbow" of the curve, where distances start increasing sharply
 
 ![Choosing Eps and MinPts](img/clustering/14-Clustering_73.png)
 
+# Evaluation of clustering results
+
 # Cluster validity
 
-For supervised classification techniques, there are several measures to evaluate the validity of the results 
+For supervised classification techniques, there are several measures to evaluate the validity of the results
 
 * Accuracy, precision, recall
 
@@ -1371,24 +1377,29 @@ Two approaches are possible.
 
 # External measures for clustering validation: Entropy and Purity
 
-Entropy: for each cluster $i$ let $p_{ij} = \frac{m_{ij}}{m_i}$ the probability that a member of cluster $i$ belongs to class $j$
+Assume external class labels are available.
 
-* $m_i = \text{\# of objects in cluster i}$
-* $m_{ij} = \text{\# of objects of class j in cluster i}$
+For each cluster $i$:
 
-Cluster $i$ entropy is $e_i$ while whole clustering entropy is $e$
+* $m_i = \text{\# objects in cluster } i$
+* $m_{ij} = \text{\# objects of class } j \text{ in cluster } i$
+* $p_{ij} = \frac{m_{ij}}{m_i}$ is the fraction of cluster $i$ that belongs to class $j$
+
+**Entropy** measures how mixed the classes are inside each cluster.
 
 - $e_i = - \sum_{j=1}^{L} p_{ij} \cdot log_2(p_{ij})$
-- $e = -\sum_{i=1}^{K} \frac{m_i}{m} \cdot e_i$
-    - $L=$# class $K=$# clusters
+- $e = \sum_{i=1}^{K} \frac{m_i}{m} \cdot e_i$
 
-Purity is computed as:
+Lower entropy means cleaner clusters.
 
-* $p_i$ measures how "strong" the relationship is between cluster and class
-  * It is minimal when the points belonging to the cluster are equally distributed among the classes
+**Purity** keeps only the majority class in each cluster.
 
 - $p_i = max_j(p_{ij})$
 - $p = \sum_{i=1}^{K} \frac{m_i}{m} \cdot p_i$
+
+Higher purity means cleaner clusters.
+
+$L=$ #classes, $K=$ #clusters, $m=$ #objects
 
 # A final comment
 
