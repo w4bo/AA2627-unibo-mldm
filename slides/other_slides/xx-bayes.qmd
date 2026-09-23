@@ -54,9 +54,9 @@ Let $\boldsymbol{A}=(A_1, A_2,..., A_n)$ be the vector describing the set of att
 
 If $C$ is non-deterministically related to the values taken by $\boldsymbol{A}$, we can treat the two variables as random variables and capture their probabilistic relationships using $P(C|\boldsymbol{A})$
 
-During the training phase we learn the probabilistic ties $P(C|\boldsymbol{A})$ for each combination of values assumed by $\boldsymbol{A}$ and $C$
+During the training phase, we learn the probabilistic relationships $P(C|\boldsymbol{A})$ for each combination of values assumed by $\boldsymbol{A}$ and $C$
 
-Knowing these probabilities, a test record can be classified by finding the label of class $c$ that maximizes the a posteriori probability $P(\boldsymbol{C}=c|A_1=a_1,..., A_n=a_n)$
+Knowing these probabilities, a test record can be classified by finding the class label $c$ that maximizes the posterior probability $P(\boldsymbol{C}=c|A_1=a_1,..., A_n=a_n)$
 
 # Bayesian Classifiers Principle (cont.)
 
@@ -80,11 +80,11 @@ $P(Evade=No|\boldsymbol{A})$ and $P(Evade=Yes|\boldsymbol{A})$
 
 Calculating $P(C|A)$ for every possible value of $C$ and $\boldsymbol{A}$ requires a very large training set even for a small number of attributes
 
-- Bayes' theorem is useful here because it allows the a posteriori probability $P(C|\boldsymbol{A})$ to be expressed in terms of $P(\boldsymbol{A}|C)$, $P(C)$, and $P(\boldsymbol{A})$
+- Bayes' theorem is useful here because it allows the posterior probability $P(C|\boldsymbol{A})$ to be expressed in terms of $P(\boldsymbol{A}|C)$, $P(C)$, and $P(\boldsymbol{A})$
 
 $P(C|A_1, A_2, ..., A_n)=\frac{P(A_1, A_2, ..., A_n|C)\cdot P(C)}{P(A_1, A_2, ..., A_n)}$
 
-- Since $P(\boldsymbol{A})$ is constant in this formula, the problem of maximizing the a posteriori probability is equivalent to choosing the value of $C$ that maximizes
+- Since $P(\boldsymbol{A})$ is constant in this formula, the problem of maximizing the posterior probability is equivalent to choosing the value of $C$ that maximizes
 
 $P(A_1, A_2, ..., A_n|C)\cdot P(C)$
 
@@ -97,13 +97,13 @@ Assume independence between $A_i$ attributes when the class is known (__conditio
 * Given three random variables $X$, $Y$ and $Z$, $X$ is said to be independent of $Y$ given $Z$ if $P(X|Y,Z)=P(X|Z)$
 * In other words, if the value taken by $Z$ is known, knowing the value of $Y$ does not affect the value taken by $X$
 
-Due to stochastic independence, we can write:
+Because of conditional independence, we can write:
 
 $P(X,Y|Z)=\frac{P(X,Y,Z)}{P(Z)}=\frac{P(X,Y,Z)}{P(Y,Z)} \cdot=\frac{P(Y,Z)}{P(Z)}=P(X|Y,Z)\cdot P(Y|Z)=P(X|Z) \cdot P(Y|Z)$
 
 # Naïve Bayes (cont.)
 
-The assumption of independence between attributes $A_i$ when class $C$ is known allows rewriting:
+The assumption of independence between attributes $A_i$ when class $C$ is known allows us to rewrite:
 
 $P(A_1, A_2, ..., A_n |C) = P(A_1| C) \cdot P(A_2| C) \cdot ...\cdot P(A_n| C)$
 

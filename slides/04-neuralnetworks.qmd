@@ -28,8 +28,8 @@ We now focus on the model, the "heart" of the AI in our system.
 
 ![Data pipeline](./img/datapreprocessing/pipeline.svg)
 
-- With *model*, we refer to the "mechanism" with which input data are transformed into outputs
-- A ML algorithm *trains* a ML model
+- By *model*, we mean the "mechanism" by which input data are transformed into outputs
+- An ML algorithm *trains* an ML model
   - Usually, this "mechanism" is based on math, geometry, statistics, etc.
 - Even with the best model available, the model will perform poorly if it trains on "dirty" data
 
@@ -534,7 +534,7 @@ $$
 Vanilla Gradient Descent
 
 - Smooth convergence
-- Not recommended for huge training dataset. *Why*?
+- Not recommended for huge training datasets. *Why*?
 
 :::
 ::: {.column width="30%"}
@@ -643,11 +643,11 @@ Training step for one batch:
 1. *Forward Pass*: the network takes input data, computes outputs layer by layer, and calculates a final prediction.
     - $\hat{y}=f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{1}(W^{1}x)\cdots))$
 1. *Loss Calculation*: the loss function quantifies the difference between the predicted output and the true output.
-    - Given an input-output pair (x, y), it is $C(y_i, \hat{y_i}) = C(y,f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{2}(W^{2}f^{1}(W^{1}x))\cdots )))$
+    - Given an input-output pair (x, y), it is $C(y_i, \hat{y_i}) = C(y, f^{L}(W^{L}f^{L-1}(W^{L-1}\cdots f^{2}(W^{2}f^{1}(W^{1}x))\cdots )))$
 1. *Backward Pass*: gradients are computed by propagating the error backward to each layer in the network, using the *chain rule*
 1. *Parameter Update*: using gradient descent, each parameter (weight and bias) is updated to reduce the error.
 
-The **chain rule** tells us how to differentiate composite functions: functions made by applying one transformation after another.
+The **chain rule** tells us how to differentiate composite functions: functions built by applying one transformation after another.
 
 - Given two functions $f()$ and $g()$, if $y=f(g(x))$, then $\frac{\partial y}{\partial x} = \frac{\partial y}{\partial g} \cdot \frac{\partial g}{\partial x}$
 - In a neural network, each layer is one transformation, so the loss is a long composition of transformations
