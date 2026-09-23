@@ -209,8 +209,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Bayesian Classifiers Principle</h1>
 <p>Let <span class="math inline">\(\boldsymbol{A}=(A_1, A_2,..., A_n)\)</span> be the vector describing the set of attributes, and let <span class="math inline">\(C\)</span> be the class variable.</p>
 <p>If <span class="math inline">\(C\)</span> is non-deterministically related to the values taken by <span class="math inline">\(\boldsymbol{A}\)</span>, we can treat the two variables as random variables and capture their probabilistic relationships using <span class="math inline">\(P(C|\boldsymbol{A})\)</span></p>
-<p>During the training phase we learn the probabilistic ties <span class="math inline">\(P(C|\boldsymbol{A})\)</span> for each combination of values assumed by <span class="math inline">\(\boldsymbol{A}\)</span> and <span class="math inline">\(C\)</span></p>
-<p>Knowing these probabilities, a test record can be classified by finding the label of class <span class="math inline">\(c\)</span> that maximizes the a posteriori probability <span class="math inline">\(P(\boldsymbol{C}=c|A_1=a_1,..., A_n=a_n)\)</span></p>
+<p>During the training phase, we learn the probabilistic relationships <span class="math inline">\(P(C|\boldsymbol{A})\)</span> for each combination of values assumed by <span class="math inline">\(\boldsymbol{A}\)</span> and <span class="math inline">\(C\)</span></p>
+<p>Knowing these probabilities, a test record can be classified by finding the class label <span class="math inline">\(c\)</span> that maximizes the posterior probability <span class="math inline">\(P(\boldsymbol{C}=c|A_1=a_1,..., A_n=a_n)\)</span></p>
 </section>
 
 <section id="bayesian-classifiers-principle-cont." class="title-slide slide level1 center">
@@ -238,11 +238,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Bayesian Classifiers Principle (cont.)</h1>
 <p>Calculating <span class="math inline">\(P(C|A)\)</span> for every possible value of <span class="math inline">\(C\)</span> and <span class="math inline">\(\boldsymbol{A}\)</span> requires a very large training set even for a small number of attributes</p>
 <ul>
-<li>Bayes’ theorem is useful here because it allows the a posteriori probability <span class="math inline">\(P(C|\boldsymbol{A})\)</span> to be expressed in terms of <span class="math inline">\(P(\boldsymbol{A}|C)\)</span>, <span class="math inline">\(P(C)\)</span>, and <span class="math inline">\(P(\boldsymbol{A})\)</span></li>
+<li>Bayes’ theorem is useful here because it allows the posterior probability <span class="math inline">\(P(C|\boldsymbol{A})\)</span> to be expressed in terms of <span class="math inline">\(P(\boldsymbol{A}|C)\)</span>, <span class="math inline">\(P(C)\)</span>, and <span class="math inline">\(P(\boldsymbol{A})\)</span></li>
 </ul>
 <p><span class="math inline">\(P(C|A_1, A_2, ..., A_n)=\frac{P(A_1, A_2, ..., A_n|C)\cdot P(C)}{P(A_1, A_2, ..., A_n)}\)</span></p>
 <ul>
-<li>Since <span class="math inline">\(P(\boldsymbol{A})\)</span> is constant in this formula, the problem of maximizing the a posteriori probability is equivalent to choosing the value of <span class="math inline">\(C\)</span> that maximizes</li>
+<li>Since <span class="math inline">\(P(\boldsymbol{A})\)</span> is constant in this formula, the problem of maximizing the posterior probability is equivalent to choosing the value of <span class="math inline">\(C\)</span> that maximizes</li>
 </ul>
 <p><span class="math inline">\(P(A_1, A_2, ..., A_n|C)\cdot P(C)\)</span></p>
 <p>How to estimate <span class="math inline">\(P(A_1, A_2, ..., A_n|C) \rightarrow\)</span> <strong>Naïve Bayes</strong></p>
@@ -255,13 +255,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Given three random variables <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>, <span class="math inline">\(X\)</span> is said to be independent of <span class="math inline">\(Y\)</span> given <span class="math inline">\(Z\)</span> if <span class="math inline">\(P(X|Y,Z)=P(X|Z)\)</span></li>
 <li>In other words, if the value taken by <span class="math inline">\(Z\)</span> is known, knowing the value of <span class="math inline">\(Y\)</span> does not affect the value taken by <span class="math inline">\(X\)</span></li>
 </ul>
-<p>Due to stochastic independence, we can write:</p>
+<p>Because of conditional independence, we can write:</p>
 <p><span class="math inline">\(P(X,Y|Z)=\frac{P(X,Y,Z)}{P(Z)}=\frac{P(X,Y,Z)}{P(Y,Z)} \cdot=\frac{P(Y,Z)}{P(Z)}=P(X|Y,Z)\cdot P(Y|Z)=P(X|Z) \cdot P(Y|Z)\)</span></p>
 </section>
 
 <section id="naïve-bayes-cont." class="title-slide slide level1 center">
 <h1>Naïve Bayes (cont.)</h1>
-<p>The assumption of independence between attributes <span class="math inline">\(A_i\)</span> when class <span class="math inline">\(C\)</span> is known allows rewriting:</p>
+<p>The assumption of independence between attributes <span class="math inline">\(A_i\)</span> when class <span class="math inline">\(C\)</span> is known allows us to rewrite:</p>
 <p><span class="math inline">\(P(A_1, A_2, ..., A_n |C) = P(A_1| C) \cdot P(A_2| C) \cdot ...\cdot P(A_n| C)\)</span></p>
 <p>Instead of having to calculate the conditional probability for each combination of values of <span class="math inline">\(\boldsymbol{A}\)</span>, it is sufficient to calculate <span class="math inline">\(P(A_k| C)\)</span> for each <span class="math inline">\(A_k\)</span> and <span class="math inline">\(C=c_j\)</span>.</p>
 <p>The new point is classified as <span class="math inline">\(C=c_{j*}\)</span> if:</p>
