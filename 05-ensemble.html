@@ -274,7 +274,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="why-ensemble-classifiers" class="title-slide slide level1 center">
 <h1>Why ensemble classifiers?</h1>
 <p>An <strong>ensemble classifier</strong> combines the predictions of several base classifiers.</p>
-<p>The central idea is simple:</p>
+<p>The idea is simple:</p>
 <ul>
 <li>One classifier may be wrong on some records</li>
 <li>Another classifier may make different errors</li>
@@ -285,18 +285,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="why-diversity-matters" class="title-slide slide level1 center">
 <h1>Why diversity matters</h1>
-<p>If all classifiers make the same errors, voting repeats the same mistake.</p>
+<p>If <em>all</em> classifiers make the same errors, voting repeats the same mistake.</p>
 <p>An ensemble becomes useful when its members are both:</p>
 <ul>
 <li><strong>Competent</strong>: each classifier is better than random guessing</li>
 <li><strong>Diverse</strong>: their errors are at least partly different</li>
 </ul>
-<p>Ensembles can be organized in different ways:</p>
-<ul>
-<li><strong>Parallel</strong>: classifiers work independently and their outputs are merged</li>
-<li><strong>Cascade</strong>: the output of one classifier influences the next classifier</li>
-</ul>
-<p>In practice, real independence is difficult to obtain, but partial diversity can still improve performance.</p>
 </section>
 
 <section id="a-probabilistic-intuition" class="title-slide slide level1 center">
@@ -399,7 +393,6 @@ P(error)=\sum_{i=13}^{25} {25 \choose i}\epsilon^i(1-\epsilon)^{25-i}
 <li>Scores are summed across classifiers</li>
 <li>The class with the highest score is selected</li>
 </ul>
-<p>This is still a decision-level method: it merges symbolic decisions or rankings, not calibrated probabilities.</p>
 
 <img data-src="img/ensemble/borda-count.png" class="r-stretch quarto-figure-center"><p class="caption">Borda count</p></section>
 
@@ -410,7 +403,7 @@ P(error)=\sum_{i=13}^{25} {25 \choose i}\epsilon^i(1-\epsilon)^{25-i}
 <ul>
 <li>Sum, Product, Minimum, Maximum, Weighted sum</li>
 </ul>
-<p>The sum is often more robust than the product. <em>Why?</em></p>
+<p>The sum is often more robust than the product. <em>Why</em>?</p>
 <details>
 <summary>
 Answer
@@ -422,7 +415,6 @@ If one classifier assigns confidence 0, a product rule forces the whole combined
 
 <section id="how-to-build-a-composite-classifier" class="title-slide slide level1 center">
 <h1>How to build a composite classifier</h1>
-<p>There are several ways to build diversity among classifiers.</p>
 <p><strong>Changing the training set</strong></p>
 <ul>
 <li>Build several datasets from the original training data</li>
@@ -451,14 +443,22 @@ If one classifier assigns confidence 0, a product rule forces the whole combined
 <h1>Multi-class decomposition</h1>
 <p>Another way to build an ensemble is to transform a multi-class problem into several binary problems.</p>
 <ul>
-<li>Partition the classes into two groups, <span class="math inline">\(A_0\)</span> and <span class="math inline">\(A_1\)</span></li>
+<li>Partition the classes into groups</li>
 <li>Train a binary classifier to separate the two groups</li>
 <li>Repeat with different class partitions</li>
 <li>Aggregate the binary decisions into scores for the original classes</li>
 </ul>
-<p>This idea appears in <strong>Error-Correcting Output Coding</strong>.</p>
-<p>The final class is the one with the highest accumulated score.</p>
 </section>
+
+<section id="one-versus-all" class="title-slide slide level1 center">
+<h1>One Versus All</h1>
+<p>For example, given a picture of a piece of fruit, four different recognizers might be trained, each answering a different yes/no question:</p>
+<pre><code>Is this image an apple?
+Is this image an orange?
+Is this image a banana?
+Is this image a grape?</code></pre>
+
+<img data-src="img/remote/google-mlcc-one-vs-all-binary-classifiers.png" class="r-stretch"></section>
 
 <section id="bias-variance-and-noise" class="title-slide slide level1 center">
 <h1>Bias, variance, and noise</h1>
@@ -468,33 +468,22 @@ If one classifier assigns confidence 0, a product rule forces the whole combined
 <li><strong>Variance</strong>: error due to sensitivity to the specific training set</li>
 <li><strong>Noise</strong>: irreducible randomness or ambiguity in the data</li>
 </ul>
-<p>Different ensemble strategies target different parts of the problem.</p>
-<ul>
-<li><em>Bagging</em> mainly reduces <strong>variance</strong></li>
-<li><em>Boosting</em> can reduce <strong>bias</strong> and variance, but may become sensitive to noise</li>
-</ul>
-</section>
-
-<section id="bias-and-variance-intuition" class="title-slide slide level1 center">
-<h1>Bias and variance intuition</h1>
 <p>Different classifiers have different abilities to model decision boundaries.</p>
 <ul>
-<li>A model with high <strong>bias</strong> is too restricted to represent the true boundary</li>
-<li>A model with high <strong>variance</strong> changes too much when the training set changes</li>
-<li>A model affected by <strong>noise</strong> cannot remove ambiguity already present in the data</li>
-</ul>
-<p>For example:</p>
-<ul>
-<li>A very shallow decision tree may have high bias</li>
-<li>A 1-NN classifier may have low bias but high variance</li>
-<li>Mislabeled records can hurt any classifier</li>
+<li>A model with high <strong>bias</strong> is too restricted to represent the true boundary (a very shallow decision tree may have high bias)</li>
+<li>A model with high <strong>variance</strong> changes too much when the training set changes (a 1-NN classifier may have low bias but high variance)</li>
+<li>A model affected by <strong>noise</strong> cannot remove ambiguity already present in the data (mislabeled records can hurt any classifier)</li>
 </ul>
 </section>
 
 <section id="bagging-and-boosting" class="title-slide slide level1 center">
 <h1>Bagging and boosting</h1>
 
-<img data-src="img/ensemble/bagging-vs-boosting.png" class="r-stretch quarto-figure-center"><p class="caption">Both methods combine multiple models, but they create diversity in different ways.</p></section>
+<img data-src="img/ensemble/bagging-vs-boosting.png" class="r-stretch quarto-figure-center"><p class="caption">Both methods combine multiple models, but they create diversity in different ways. Bagging = stabilize; Boosting = correct</p><ul>
+<li><em>Bagging</em> mainly reduces <strong>variance</strong></li>
+<li><em>Boosting</em> reduces <strong>bias</strong> and often variance, but may become sensitive to noise (e.g., AdaBoost, Gradient Boosting, and XGBoost)</li>
+</ul>
+</section>
 
 <section id="bagging" class="title-slide slide level1 center">
 <h1>Bagging</h1>
@@ -543,12 +532,11 @@ C^*(\boldsymbol{x})=\arg\max_y \sum_{j=1}^{T} I(C_j(\boldsymbol{x})=y)
 
 <section id="bagging-with-a-decision-stump" class="title-slide slide level1 center">
 <h1>Bagging with a decision stump</h1>
-<p>Consider a one-level binary decision tree, also called a <strong>decision stump</strong>.</p>
-<p>It can only make rules such as:</p>
+<p>Consider a one-level binary decision tree, also called a <strong>decision stump</strong> where <span class="math inline">\(s\)</span> is the split point learn by the stump:</p>
 <p><span class="math display">\[
-x \le s \rightarrow -1,\qquad x&gt;s \rightarrow +1
+x \le s \rightarrow ❌,\qquad x&gt;s \rightarrow ✅
 \]</span></p>
-<p>where <span class="math inline">\(s\)</span> is the split point.</p>
+<p>A single stump cannot perfectly model this pattern. <em>Why</em>?</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -568,20 +556,19 @@ x \le s \rightarrow -1,\qquad x&gt;s \rightarrow +1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(y\)</span></td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">+1</td>
-<td style="text-align: center;">+1</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
 </tr>
 </tbody>
 </table>
-<p>A single stump cannot perfectly model this pattern.</p>
 </section>
 
 <section id="what-bagging-changes" class="title-slide slide level1 center">
@@ -589,11 +576,11 @@ x \le s \rightarrow -1,\qquad x&gt;s \rightarrow +1
 <p>With bootstrap samples, different stumps may choose different split points.</p>
 <p>Some samples emphasize the left boundary:</p>
 <p><span class="math display">\[
-x \le 0.3 \rightarrow +1,\qquad x&gt;0.3 \rightarrow -1
+x \le 0.3 \rightarrow ✅,\qquad x&gt;0.3 \rightarrow ❌
 \]</span></p>
 <p>Other samples emphasize the right boundary:</p>
 <p><span class="math display">\[
-x \le 0.7 \rightarrow -1,\qquad x&gt;0.7 \rightarrow +1
+x \le 0.7 \rightarrow ❌,\qquad x&gt;0.7 \rightarrow ✅
 \]</span></p>
 <p>The ensemble vote can approximate a more expressive classifier than one stump alone.</p>
 </section>
@@ -601,14 +588,10 @@ x \le 0.7 \rightarrow -1,\qquad x&gt;0.7 \rightarrow +1
 <section id="when-bagging-helps" class="title-slide slide level1 center">
 <h1>When bagging helps</h1>
 <p>Bagging is useful when the base learner is <strong>unstable</strong>.</p>
-<p>An unstable learner changes its decision boundary noticeably when the training set changes slightly.</p>
-<p>Typical examples:</p>
 <ul>
-<li>Decision trees</li>
-<li>Neural networks trained from random initialization</li>
-<li>High-variance models trained on small datasets</li>
+<li>An unstable learner changes its decision boundary noticeably when the training set changes slightly.</li>
+<li>Bagging is less useful for very stable models, because bootstrap samples produce very similar classifiers.</li>
 </ul>
-<p>Bagging is less useful for very stable models, because bootstrap samples produce very similar classifiers.</p>
 </section>
 
 <section id="random-forest" class="title-slide slide level1 center">
@@ -619,14 +602,12 @@ x \le 0.7 \rightarrow -1,\qquad x&gt;0.7 \rightarrow +1
 <p>It introduces randomness in two places:</p>
 <ul>
 <li><strong>Rows</strong>: each tree is trained on a bootstrap sample</li>
-<li><strong>Features</strong>: each split considers only a random subset of features</li>
+<li><strong>Features</strong>: each split considers only a random subset of features
+<ul>
+<li>This prevents all trees from repeatedly choosing the same dominant feature.</li>
+<li>Typical choice for classification: <span class="math inline">\(d' \approx \sqrt{d}\)</span>, where <span class="math inline">\(d\)</span> is the number of features and <span class="math inline">\(d'\)</span> is the number considered at each split.</li>
+</ul></li>
 </ul>
-<p>This second mechanism prevents all trees from repeatedly choosing the same dominant feature.</p>
-<p>Typical choice for classification:</p>
-<p><span class="math display">\[
-d' \approx \sqrt{d}
-\]</span></p>
-<p>where <span class="math inline">\(d\)</span> is the number of features and <span class="math inline">\(d'\)</span> is the number considered at each split.</p>
 </div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -640,7 +621,10 @@ d' \approx \sqrt{d}
 <section id="boosting" class="title-slide slide level1 center">
 <h1>Boosting</h1>
 <p><strong>Boosting</strong> builds classifiers sequentially.</p>
-<p>Each new classifier focuses more strongly on the records that previous classifiers handled badly.</p>
+<ul>
+<li>Each new classifier focuses more strongly on the records that previous classifiers handled badly.</li>
+<li>Unlike bagging, boosting classifiers are not independent: each round depends on the previous one.</li>
+</ul>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -662,7 +646,6 @@ d' \approx \sqrt{d}
 </div>
 </div>
 </div>
-<p>Unlike bagging, boosting classifiers are not independent: each round depends on the previous one.</p>
 </section>
 
 <section id="bagging-vs-boosting" class="title-slide slide level1 center">
@@ -729,34 +712,17 @@ d' \approx \sqrt{d}
 
 
 
-<section id="practical-cautions" class="title-slide slide level1 center">
-<h1>Practical cautions</h1>
-<p>Boosting is powerful, but it is not magic.</p>
-<p>Be careful when:</p>
-<ul>
-<li>Labels are noisy</li>
-<li>Outliers are mislabeled</li>
-<li>The weak learner overfits the reweighted data</li>
-<li>The number of rounds is too large</li>
-</ul>
-<p>Validation data should be used to tune:</p>
-<ul>
-<li>Number of boosting rounds</li>
-<li>Base learner complexity</li>
-<li>Learning rate, when using modern boosting variants</li>
-</ul>
-</section>
-
 <section id="summary" class="title-slide slide level1 center">
 <h1>Summary</h1>
+<p>The key question is: <strong>how do we create useful diversity among classifiers?</strong></p>
 <p>Ensembles improve classification by combining multiple predictors.</p>
 <ul>
-<li><strong>Bagging</strong> trains models on bootstrap samples and combines them by voting</li>
+<li><strong>Bagging</strong> trains models on bootstrap samples and combines them by voting
+<ul>
 <li><strong>Random forests</strong> add random feature selection to bagged decision trees</li>
+</ul></li>
 <li><strong>Boosting</strong> trains models sequentially, focusing on previous errors</li>
 </ul>
-<p>The key question is always the same:</p>
-<p><strong>How do we create useful diversity among classifiers?</strong></p>
 </section>
 
 <section id="references" class="title-slide slide level1 smaller scrollable">
@@ -768,8 +734,14 @@ Breiman, Leo. 1996. <span>“Bagging Predictors.”</span> <em>Machine Learning<
 <div id="ref-breiman2001random" class="csl-entry" role="listitem">
 Breiman, Leo. 2001. <span>“Random Forests.”</span> <em>Machine Learning</em> 45 (1): 5–32. <a href="https://doi.org/10.1023/A:1010933404324">https://doi.org/10.1023/A:1010933404324</a>.
 </div>
+<div id="ref-chen2016xgboost" class="csl-entry" role="listitem">
+Chen, Tianqi, and Carlos Guestrin. 2016. <span>“Xgboost: A Scalable Tree Boosting System.”</span> <em>Proceedings of the 22nd Acm Sigkdd International Conference on Knowledge Discovery and Data Mining</em>, 785–94.
+</div>
 <div id="ref-freund1997decision" class="csl-entry" role="listitem">
 Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Generalization of on-Line Learning and an Application to Boosting.”</span> <em>Journal of Computer and System Sciences</em> 55 (1): 119–39. <a href="https://doi.org/10.1006/jcss.1997.1504">https://doi.org/10.1006/jcss.1997.1504</a>.
+</div>
+<div id="ref-ke2017lightgbm" class="csl-entry" role="listitem">
+Ke, Guolin, Qi Meng, Thomas Finley, et al. 2017. <span>“Lightgbm: A Highly Efficient Gradient Boosting Decision Tree.”</span> <em>Advances in Neural Information Processing Systems</em> 30.
 </div>
 </div>
 
@@ -777,7 +749,7 @@ Freund, Yoav, and Robert E. Schapire. 1997. <span>“A Decision-Theoretic Genera
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>MLDM Module I — M. Francia — A.Y. 2026/27</p>
+<p>MLDM Module I - M. Francia - A.Y. 2026/27</p>
 </div>
 </div></div>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="06-clustering_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="06-clustering_files/libs/clipboard/clipboard.min.js"></script>
 <script src="06-clustering_files/libs/quarto-html/tabby.min.js"></script>
 <script src="06-clustering_files/libs/quarto-html/popper.min.js"></script>
 <script src="06-clustering_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -129,6 +129,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -152,7 +155,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>By the end of this lecture, you will be able to:</p>
 <ul>
 <li><strong>Explain</strong> why different notions of a cluster can produce different answers</li>
-<li><strong>Execute</strong> the main steps of k-means, hierarchical clustering, and DBSCAN</li>
+<li><strong>Execute</strong> the main steps of k-means and DBSCAN</li>
 <li><strong>Select</strong> an algorithm based on cluster shape, density, noise, and interpretability</li>
 <li><strong>Evaluate</strong> clustering results without assuming that every partition is meaningful</li>
 </ul>
@@ -184,31 +187,357 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </table>
 </section>
 
-<section id="roadmap" class="title-slide slide level1 center">
-<h1>Roadmap</h1>
-<p>We will separate three questions:</p>
-<ol type="1">
-<li><strong>What is a cluster?</strong> Separation, shape, density, and ambiguity</li>
-<li><strong>How does the algorithm define clusters?</strong> Centroids, linkages, or density reachability</li>
-<li><strong>Can we trust the result?</strong> Validation, stability, and domain usefulness</li>
-</ol>
-</section>
-
 <section id="motivating-problem-discover-customer-segments" class="title-slide slide level1 center">
 <h1>Motivating problem: discover customer segments</h1>
-<p>A company has customer behavior data but no segment labels.</p>
+<p>A mall has customer behavior data but no segment labels.</p>
 <ul>
 <li>Some customers buy frequently but spend little</li>
 <li>Others purchase rarely but place large orders</li>
 <li>Some may not fit any stable segment</li>
 </ul>
-<p>The business question is not just “how many groups exist?”</p>
+<p>The business question is “what are the different customer segments?”</p>
 <ul>
 <li>Can we design different offers for different behaviors?</li>
-<li>Are the groups stable enough to act on?</li>
-<li>Which customers should be treated as exceptions rather than forced into a segment?</li>
+<li>How can we identify customers who don’t fit into any existing segment?</li>
 </ul>
-<p>Clustering proposes candidate groups; the domain question decides whether they are useful.</p>
+</section>
+
+<section id="suppose-we-observe-a-few-mall-customers-with-no-segment-label" class="title-slide slide level1 center">
+<h1>Suppose we observe a few mall customers with <em>no segment label</em></h1>
+<div id="cc814bc6" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">customer_id</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">annual_income_k</th>
+<th data-quarto-table-cell-role="th">spending_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>C01</td>
+<td>22</td>
+<td>25</td>
+<td>78</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>C02</td>
+<td>24</td>
+<td>28</td>
+<td>82</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>C03</td>
+<td>27</td>
+<td>30</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>C04</td>
+<td>29</td>
+<td>33</td>
+<td>88</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>C05</td>
+<td>46</td>
+<td>70</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>C06</td>
+<td>49</td>
+<td>73</td>
+<td>31</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>C07</td>
+<td>52</td>
+<td>76</td>
+<td>28</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>C08</td>
+<td>55</td>
+<td>79</td>
+<td>35</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>C09</td>
+<td>31</td>
+<td>82</td>
+<td>76</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>C10</td>
+<td>34</td>
+<td>86</td>
+<td>84</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>C11</td>
+<td>36</td>
+<td>90</td>
+<td>81</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>C12</td>
+<td>39</td>
+<td>94</td>
+<td>89</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="clustering-finds-useful-groups-segments-in-unlabeled-data" class="title-slide slide level1 center">
+<h1>Clustering finds useful groups (segments) in unlabeled data</h1>
+<div id="9090de45" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">customer_id</th>
+<th data-quarto-table-cell-role="th">cluster</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">annual_income_k</th>
+<th data-quarto-table-cell-role="th">spending_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>C08</td>
+<td>0</td>
+<td>55</td>
+<td>79</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>C07</td>
+<td>0</td>
+<td>52</td>
+<td>76</td>
+<td>28</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>C06</td>
+<td>0</td>
+<td>49</td>
+<td>73</td>
+<td>31</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>C05</td>
+<td>0</td>
+<td>46</td>
+<td>70</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>C04</td>
+<td>1</td>
+<td>29</td>
+<td>33</td>
+<td>88</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>C03</td>
+<td>1</td>
+<td>27</td>
+<td>30</td>
+<td>74</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>C02</td>
+<td>1</td>
+<td>24</td>
+<td>28</td>
+<td>82</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>C01</td>
+<td>1</td>
+<td>22</td>
+<td>25</td>
+<td>78</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>C09</td>
+<td>2</td>
+<td>31</td>
+<td>82</td>
+<td>76</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>C10</td>
+<td>2</td>
+<td>34</td>
+<td>86</td>
+<td>84</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>C11</td>
+<td>2</td>
+<td>36</td>
+<td>90</td>
+<td>81</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>C12</td>
+<td>2</td>
+<td>39</td>
+<td>94</td>
+<td>89</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="group-profiles-can-be-summarized-with-descriptive-statistics" class="title-slide slide level1 center">
+<h1>Group profiles can be summarized with descriptive statistics</h1>
+<div id="49c8498d" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">customers</th>
+<th data-quarto-table-cell-role="th">avg_age</th>
+<th data-quarto-table-cell-role="th">avg_income_k</th>
+<th data-quarto-table-cell-role="th">avg_spending</th>
+<th data-quarto-table-cell-role="th">interpretation</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">cluster</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>4</td>
+<td>50.5</td>
+<td>74.5</td>
+<td>29.5</td>
+<td>High income, low spending</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>4</td>
+<td>25.5</td>
+<td>29.0</td>
+<td>80.5</td>
+<td>Lower income, high spending</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>4</td>
+<td>35.0</td>
+<td>88.0</td>
+<td>82.5</td>
+<td>High income, high spending</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="roadmap" class="title-slide slide level1 center">
+<h1>Roadmap</h1>
+<p>We will separate three questions:</p>
+<ol type="1">
+<li><strong>What is a cluster?</strong> Separation, shape, density, and ambiguity</li>
+<li><strong>How does the algorithm define clusters?</strong> Centroids or density reachability</li>
+<li><strong>Can we trust the result?</strong> Validation, stability, and domain usefulness</li>
+</ol>
 </section>
 
 <section id="intuition-similar-objects-form-groups" class="title-slide slide level1 center">
@@ -230,7 +559,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><span class="math inline">\(C_i \cap C_j=\emptyset\)</span> for <span class="math inline">\(i\neq j\)</span></li>
 <li><span class="math inline">\(\bigcup_{i=1}^{K}C_i=X\)</span></li>
 </ul>
-<p>The definition does <strong>not</strong> determine the right similarity, number of clusters, or cluster shape. Those are modeling choices.</p>
+<p>The definition does <strong>not</strong> determine the right similarity, number of clusters, or cluster shape.</p>
+<ul>
+<li><em>Those are modeling choices.</em></li>
+</ul>
 </section>
 
 <section id="cluster-notion-can-be-ambiguous-how-many-clusters" class="title-slide slide level1 center">
@@ -240,30 +572,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="cluster-notion-can-be-ambiguous-how-many-clusters-1" class="title-slide slide level1 center">
 <h1>Cluster notion can be ambiguous: how many clusters?</h1>
-<div class="columns">
-<div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine9.png"></p>
-<figcaption>2</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine10.png"></p>
-<figcaption>4</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine11.png"></p>
-<figcaption>6</figcaption>
-</figure>
-</div>
-</div></div>
-</section>
+
+<img data-src="img/clustering/Immagine9.png" class="r-stretch quarto-figure-center"><p class="caption">2</p></section>
+
+<section id="cluster-notion-can-be-ambiguous-how-many-clusters-2" class="title-slide slide level1 center">
+<h1>Cluster notion can be ambiguous: how many clusters?</h1>
+
+<img data-src="img/clustering/Immagine10.png" class="r-stretch quarto-figure-center"><p class="caption">4</p></section>
+
+<section id="cluster-notion-can-be-ambiguous-how-many-clusters-3" class="title-slide slide level1 center">
+<h1>Cluster notion can be ambiguous: how many clusters?</h1>
+
+<img data-src="img/clustering/Immagine11.png" class="r-stretch quarto-figure-center"><p class="caption">6</p></section>
 
 <section id="type-of-clustering" class="title-slide slide level1 center">
 <h1>Type of <em>clustering</em></h1>
@@ -299,10 +619,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="types-of-cluster-center-based" class="title-slide slide level1 center">
 <h1>Types of <em>cluster</em>: Center-based</h1>
-<p>Center-based</p>
 <ul>
-<li>A cluster is a set of points such that a point in the cluster is closer (or more similar) to the “center” of the cluster, rather than to the center of each other cluster</li>
-<li>Cluster center is called the centroid if it is computed as the average of all the cluster’s points, or the medoid if it is computed as the “more representative” cluster point</li>
+<li>A cluster is a set of points such that a point in the cluster is closer to the “center” of the cluster, rather than the centers of other clusters</li>
+<li>Cluster center is called <em>centroid</em> if it is computed as the average of all the cluster’s points
+<ul>
+<li>… or <em>medoid</em> if it is computed as the “more representative” cluster point</li>
+</ul></li>
 </ul>
 
 <img data-src="img/clustering/Immagine15.svg" class="r-stretch quarto-figure-center"><p class="caption">4 center-based clusters</p></section>
@@ -311,7 +633,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="types-of-cluster-density-based" class="title-slide slide level1 center">
 <h1>Types of <em>cluster</em>: Density-Based</h1>
-<p>Density-based</p>
 <ul>
 <li><p>A cluster is a dense region of points, which is separated by low-density regions from other regions of high density.</p></li>
 <li><p>Used when the clusters are irregular or twisted, and when noise and outliers are present.</p></li>
@@ -328,25 +649,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="k-means-clustering" class="title-slide slide level1 center">
 <h1>K-means Clustering</h1>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Partitional clustering approach</p>
-<ul>
-<li>Number of clusters, K, must be specified</li>
-<li>Each cluster is associated with a centroid (center point)</li>
-<li>Each point is assigned to the cluster with the closest centroid</li>
-</ul>
-</div><div class="column" style="width:60%;">
 <pre><code>kmeans(k, points):
-    choose k initial centroids
+    (randomly) choose k initial centroids
 
     repeat
         assign each point to the nearest centroid
-        update each centroid as the mean of its assigned points
+        update each centroid (mean of cluster points)
     until assignments do not change
 
     return clusters</code></pre>
-</div></div>
 </section>
 
 <section id="worked-example-one-k-means-iteration" class="title-slide slide level1 center">
@@ -360,46 +671,50 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>K-means monotonically reduces its objective, but the final solution can still depend on the initial centroids.</p>
 </section>
 
-<section id="convergence-and-optimality" class="title-slide slide level1 center">
-<h1>Convergence and optimality</h1>
-<div class="columns">
-<div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
+<section id="worked-example" class="title-slide slide level1 center">
+<h1>Worked example</h1>
+<div id="4716e48f" class="cell" data-dpi="160" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
 <figure>
-<p><img data-src="img/clustering/Immagine20.svg"></p>
-<figcaption>Original points and natural clusters</figcaption>
+<p><img data-src="06-clustering_files/figure-revealjs/cell-5-output-1.png" width="1142" height="132"></p>
 </figure>
 </div>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine19.svg"></p>
-<figcaption>Optimal clusters</figcaption>
-</figure>
 </div>
-</div><div class="column" style="width:33%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine21.svg"></p>
-<figcaption>Sub-ottimal clusters</figcaption>
-</figure>
 </div>
-</div></div>
 </section>
 
-<section id="convergence-to-optimality" class="title-slide slide level1 center">
-<h1>Convergence to optimality</h1>
+<section id="random-starts-can-lead-to-different-final-configurations." class="title-slide slide level1 center">
+<h1>Random starts can lead to different final configurations.</h1>
+<div id="027f7af9" class="cell" data-dpi="160" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="06-clustering_files/figure-revealjs/cell-6-output-1.png" width="1142" height="132"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 
-<img data-src="img/clustering/Immagine22.svg" class="r-stretch quarto-figure-center"><p class="caption">Convergence to optimality</p></section>
+<section id="convergence-and-optimality" class="title-slide slide level1 center">
+<h1>Convergence and optimality</h1>
+<div id="19ecb8c4" class="cell" data-dpi="160" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="06-clustering_files/figure-revealjs/cell-7-output-1.png" width="1142" height="566"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 
 <section id="k-means-clustering-details" class="title-slide slide level1 center">
 <h1>K-means Clustering: details</h1>
 <p>Initial centroids are often chosen randomly.</p>
 <ul>
 <li>Clusters produced vary from one run to another.</li>
-</ul>
-<p>The centroid is (typically) the mean of the points in the cluster.</p>
-<ul>
 <li><em>Closeness</em> is measured by Euclidean distance, cosine similarity, correlation, etc.</li>
 </ul>
 <p>K-means will converge for common similarity measures mentioned above, and most of the convergence happens in the first few iterations.</p>
@@ -409,7 +724,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 <p>Algorithm complexity is <span class="math inline">\(O(n \cdot K \cdot I \cdot d )\)</span></p>
 <ul>
-<li><span class="math inline">\(n\)</span> = number of points, <span class="math inline">\(K\)</span> = number of clusters, <span class="math inline">\(I\)</span> = number of iterations, <span class="math inline">\(d\)</span> = number of attributes</li>
+<li><span class="math inline">\(n\)</span> = number of points, <span class="math inline">\(K\)</span> = number of clusters, <span class="math inline">\(I\)</span> = number of iterations, <span class="math inline">\(d\)</span> = dimensionality of the data</li>
 </ul>
 </section>
 
@@ -418,77 +733,42 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The most common measure is the Sum of Squared Error</p>
 <ul>
 <li><span class="math inline">\(SSE = \sum_{i=1}^K\sum_{x \in C_i} dist(x, m_i)^2\)</span></li>
-<li>For each point, the error is the distance to the nearest cluster centroid.</li>
-<li>The centroid <span class="math inline">\(m_i\)</span> is the average of the cluster points, <span class="math inline">\(x\)</span> is a data point in cluster <span class="math inline">\(C_i\)</span>.</li>
+<li>For each point <span class="math inline">\(x\)</span>, the error is the distance to the nearest cluster centroid <span class="math inline">\(m_i\)</span> of cluster <span class="math inline">\(C_i\)</span>.</li>
 </ul>
 <p>One easy way to reduce SSE is to increase <span class="math inline">\(K\)</span>, the number of clusters.</p>
 <ul>
 <li>A good clustering with a smaller <span class="math inline">\(K\)</span> can have a lower SSE than a poor clustering with a higher <span class="math inline">\(K\)</span></li>
-</ul>
-</section>
-
-<section id="convergence-and-optimality-1" class="title-slide slide level1 center">
-<h1>Convergence and optimality</h1>
-<p>Clusters may change in an iteration.</p>
-<ul>
-<li>So every time the configuration changes, it must lead to a state never visited before</li>
-<li>The reassignment of records to centroids is done based on smaller distances</li>
-<li>The calculation of the new centroids minimizes the value of SSE for the cluster</li>
-</ul>
-<p>The algorithm must stop due to the unavailability of further configurations to visit.</p>
-<ul>
 <li>It is not necessarily true that the final configuration is the one that has the minimum value of SSE. <em>Why</em>?</li>
 </ul>
 </section>
 
-<section id="convergence-to-sub-optimality" class="title-slide slide level1 center">
-<h1>Convergence to sub-optimality</h1>
-
-<img data-src="img/clustering/Immagine23.svg" class="r-stretch quarto-figure-center"><p class="caption">Convergence to sub-optimality</p></section>
-
 <section id="importance-of-choosing-initial-centroids" class="title-slide slide level1 center">
 <h1>Importance of Choosing Initial Centroids</h1>
 <p>If there are real <span class="math inline">\(K\)</span> clusters, the probability of choosing a centroid from each cluster is very limited.</p>
+<p>Assuming the clusters have the same cardinality <span class="math inline">\(n\)</span>:</p>
 <ul>
-<li>Assuming the clusters have the same cardinality <span class="math inline">\(n\)</span> :</li>
-</ul>
-<p><span class="math inline">\(P=\frac{\text{\# ways of choosing a centroid by cluster}}{\text{\# ways of choosing K centroids}}=\frac{(n)^K \cdot K!}{(n \cdot K)^K}=\frac{K!}{K^K}\)</span></p>
+<li><span class="math inline">\(P=\frac{\text{\# ways of choosing a centroid by cluster}}{\text{\# ways of choosing K centroids}}=\frac{(n)^K \cdot K!}{(n \cdot K)^K}=\frac{K!}{K^K}\)</span>
 <ul>
-<li><span class="math inline">\(K\)</span> = 10, probability is <span class="math inline">\(\frac{10!}{10^{10}} \approx 0.00036\)</span></li>
+<li>If <span class="math inline">\(K\)</span> = 10, probability is <span class="math inline">\(\frac{10!}{10^{10}} \approx 0.00036\)</span></li>
+</ul></li>
+<li>Sometimes the centroids will reposition themselves correctly, sometimes not…</li>
 </ul>
-<p>Sometimes the centroids will reposition themselves correctly, sometimes not…</p>
 </section>
 
 <section id="clusters-example" class="title-slide slide level1 center">
 <h1>10 clusters example</h1>
-<div id="0abba28f" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="1">
+<div id="0e06837d" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="06-clustering_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="1046" height="492"></p>
+<p><img data-src="06-clustering_files/figure-revealjs/cell-8-output-1.png" class="quarto-figure quarto-figure-center" width="1046" height="417"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 
-<section id="solution-to-the-problems-induced-by-the-choice-of-initial-centroids" class="title-slide slide level1 center">
-<h1>Solution to the problems induced by the choice of initial centroids</h1>
-<p>Run the algorithm several times with different initial centroids.</p>
-<ul>
-<li>It can help, but the probability is not on our side!</li>
-</ul>
-<p>Perform a sampling of the points and use a hierarchical clustering technique to identify <span class="math inline">\(k\)</span> initial centroids.</p>
-<p>Select more than <span class="math inline">\(k\)</span> initial centroids and then select from these to use</p>
-<ul>
-<li>The selection criterion is to keep those more “separated.”</li>
-</ul>
-<p>Use post-processing techniques to eliminate the identified erroneous cluster.</p>
-<p>Bisecting K-means</p>
-<ul>
-<li>Less affected by the problem</li>
-</ul>
-</section>
+
 
 <section id="handling-empty-clusters" class="title-slide slide level1 center">
 <h1>Handling empty clusters</h1>
@@ -498,8 +778,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 <p>Different strategies are possible to identify an alternative centroid.</p>
 <ul>
-<li><p>Choose the item that most contributes to the value of SSE</p></li>
-<li><p>Choose an item of the cluster with the highest SSE. Normally, this causes the cluster to split into two clusters that include the closest elements.</p></li>
+<li>Choose the item that most contributes to the value of SSE</li>
+<li>Choose an item of the cluster with the highest SSE.
+<ul>
+<li>Normally, this causes the cluster to split into two clusters that include the closest elements.</li>
+</ul></li>
 </ul>
 </section>
 
@@ -510,7 +793,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="handling-outlier" class="title-slide slide level1 center">
 <h1>Handling outlier</h1>
-<p>The goodness of clustering can be negatively influenced by the presence of outliers that tend to “shift” the cluster centroids, so that to reduce the increase in the SSE, they determine</p>
+<p>The goodness of clustering can be negatively influenced by the presence of outliers that tend to “shift” the cluster centroids</p>
 <ul>
 <li>Since SSE is the square of a distance, the far points heavily affect its value</li>
 </ul>
@@ -576,11 +859,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="k-means-limits-non-globular-clusters" class="title-slide slide level1 center">
 <h1>K-means limits: non-globular clusters</h1>
 <p>SSE is based on an Euclidean distance that does not take into account the shape of objects</p>
-<div id="47b069e4" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="2">
+<div id="00970438" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="06-clustering_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="950" height="302"></p>
+<p><img data-src="06-clustering_files/figure-revealjs/cell-9-output-1.png" class="quarto-figure quarto-figure-center" width="950" height="302"></p>
 </figure>
 </div>
 </div>
@@ -838,7 +1121,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="cluster-validity" class="title-slide slide level1 center">
 <h1>Cluster validity</h1>
-<p>For supervised classification techniques, there are several measures to evaluate the validity of the results based on the comparison between the known labels of the test set and those calculated by the algorithm.</p>
+<p>For supervised classification techniques, there are several measures to evaluate the validity of the results</p>
 <ul>
 <li>Accuracy, precision, recall</li>
 </ul>
@@ -860,17 +1143,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Validity measures</h1>
 <p>Numerical measures that are applied to judge various aspects of cluster validity are classified into the following three types.</p>
 <ul>
-<li>Internal Index: Used to measure the goodness of a clustering structure without respect to external information.
+<li><strong>Internal Index</strong>: Used to measure the goodness of a clustering structure <em>without respect to external information</em>.
 <ul>
 <li>Sum of Squared Error (SSE)</li>
 </ul></li>
-<li>External Index: Used to measure the extent to which cluster labels match externally supplied class labels.
+<li><strong>External Index</strong>: Used to measure the extent to which cluster labels match <em>externally supplied class labels</em>.
 <ul>
 <li>Entropy</li>
-</ul></li>
-<li>Relative Index: Used to compare two different clusterings or clusters.
-<ul>
-<li>Often an external or internal index is used for this function, e.g., SSE or entropy</li>
 </ul></li>
 </ul>
 </section>
@@ -953,34 +1232,25 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="cluster-in-random-data" class="title-slide slide level1 center">
 <h1>Cluster in random data</h1>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:33%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/clustering/Immagine57.svg"></p>
 <figcaption>Original random points</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:33%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/clustering/Immagine58.svg"></p>
 <figcaption>K-means</figcaption>
 </figure>
 </div>
-</div></div>
-<div class="columns">
-<div class="column" style="width:50%;">
+</div><div class="column" style="width:33%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/clustering/Immagine59.svg"></p>
 <figcaption>DBSCAN</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/clustering/Immagine60.svg"></p>
-<figcaption>Complete Link</figcaption>
 </figure>
 </div>
 </div></div>
@@ -1164,10 +1434,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td><strong>k-means</strong></td>
 </tr>
 <tr class="even">
-<td>A hierarchy or dendrogram is useful</td>
-<td><strong>Hierarchical clustering</strong></td>
-</tr>
-<tr class="odd">
 <td>Irregular shapes, noise, and unknown <span class="math inline">\(K\)</span></td>
 <td><strong>DBSCAN</strong></td>
 </tr>
@@ -1185,7 +1451,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>MLDM Module I — M. Francia — A.Y. 2026/27</p>
+<p>MLDM Module I - M. Francia - A.Y. 2026/27</p>
 </div>
 </div></div>
 
