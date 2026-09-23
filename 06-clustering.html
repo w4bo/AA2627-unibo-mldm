@@ -204,7 +204,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="suppose-we-observe-a-few-mall-customers-with-no-segment-label" class="title-slide slide level1 center">
 <h1>Suppose we observe a few mall customers with <em>no segment label</em></h1>
-<div id="e77e74be" class="cell" data-execution_count="1">
+<div id="3da74748" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 <style scoped="">
@@ -326,7 +326,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="clustering-finds-useful-groups-segments-in-unlabeled-data" class="title-slide slide level1 center">
 <h1>Clustering finds useful groups (segments) in unlabeled data</h1>
-<div id="becdc0bb" class="cell" data-execution_count="2">
+<div id="35357f21" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <style scoped="">
@@ -461,7 +461,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="group-profiles-can-be-summarized-with-descriptive-statistics" class="title-slide slide level1 center">
 <h1>Group profiles can be summarized with descriptive statistics</h1>
-<div id="002b42ca" class="cell" data-execution_count="3">
+<div id="c7dddea1" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -673,7 +673,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="worked-example" class="title-slide slide level1 center">
 <h1>Worked example</h1>
-<div id="4b02b1f9" class="cell" data-dpi="160" data-execution_count="4">
+<div id="27d8ce92" class="cell" data-dpi="160" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -686,7 +686,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="random-starts-can-lead-to-different-final-configurations." class="title-slide slide level1 center">
 <h1>Random starts can lead to different final configurations.</h1>
-<div id="25ab6568" class="cell" data-dpi="160" data-execution_count="5">
+<div id="66c2c05f" class="cell" data-dpi="160" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -699,7 +699,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="convergence-and-optimality" class="title-slide slide level1 center">
 <h1>Convergence and optimality</h1>
-<div id="09b0d017" class="cell" data-dpi="160" data-execution_count="6">
+<div id="94a4123b" class="cell" data-dpi="160" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -757,7 +757,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="clusters-example" class="title-slide slide level1 center">
 <h1>10 clusters example</h1>
-<div id="870bbd9e" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="7">
+<div id="addb825f" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -859,7 +859,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="k-means-limits-non-globular-clusters" class="title-slide slide level1 center">
 <h1>K-means limits: non-globular clusters</h1>
 <p>SSE is based on an Euclidean distance that does not take into account the shape of objects</p>
-<div id="d0701b8b" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="8">
+<div id="54cce735" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1107,17 +1107,28 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="dbscan-choosing-eps-and-minpts" class="title-slide slide level1 center">
 <h1>DBSCAN: choosing Eps and MinPts</h1>
-<p>The idea is that for points in a cluster, their kth nearest neighbors are at roughly the same distance.</p>
-<p>Noise points have the kth nearest neighbor at a farther distance.</p>
-<p>So, plot the sorted distance of every point to its kth nearest neighbor.</p>
+<p>Choose <span class="math inline">\(MinPts\)</span> first, then use it to estimate <span class="math inline">\(Eps\)</span>.</p>
 <ul>
-<li><span class="math inline">\(Eps\)</span> value is given by the y-axis in <span class="math inline">\(p\)</span></li>
-<li><span class="math inline">\(MinPts\)</span> value is given by <span class="math inline">\(k\)</span></li>
-<li>The result depends on the value of <span class="math inline">\(k\)</span>, but the trend of the curve remains similar for reasonable values of <span class="math inline">\(k\)</span></li>
-<li>A value of <span class="math inline">\(k\)</span> normally used for two-dimensional datasets is 4</li>
+<li><span class="math inline">\(MinPts\)</span> defines how dense a region must be before DBSCAN treats it as a cluster</li>
+<li>A common starting point is <span class="math inline">\(MinPts \geq d + 1\)</span>, where <span class="math inline">\(d\)</span> is the number of dimensions</li>
+<li>In practice, larger values make DBSCAN more conservative and more robust to noise</li>
+<li>For two-dimensional datasets, <span class="math inline">\(MinPts = 4\)</span> is a common default</li>
+</ul>
+<p>Once <span class="math inline">\(MinPts\)</span> is fixed, choose <span class="math inline">\(Eps\)</span> with a <span class="math inline">\(k\)</span>-distance plot:</p>
+<ul>
+<li>For each point, compute the distance to its <span class="math inline">\(k\)</span>-th nearest neighbor, with <span class="math inline">\(k = MinPts\)</span></li>
+<li>Sort these distances from smallest to largest</li>
+<li>Points inside dense clusters have similar <span class="math inline">\(k\)</span>-neighbor distances</li>
+<li>Noise and sparse points have much larger distances</li>
+<li>Choose <span class="math inline">\(Eps\)</span> near the “elbow” of the curve, where distances start increasing sharply</li>
 </ul>
 
 <img data-src="img/clustering/14-Clustering_73.png" class="r-stretch quarto-figure-center"><p class="caption">Choosing Eps and MinPts</p></section>
+
+<section id="evaluation-of-clustering-results" class="title-slide slide level1 center">
+<h1>Evaluation of clustering results</h1>
+
+</section>
 
 <section id="cluster-validity" class="title-slide slide level1 center">
 <h1>Cluster validity</h1>
@@ -1374,28 +1385,26 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="external-measures-for-clustering-validation-entropy-and-purity" class="title-slide slide level1 center">
 <h1>External measures for clustering validation: Entropy and Purity</h1>
-<p>Entropy: for each cluster <span class="math inline">\(i\)</span> let <span class="math inline">\(p_{ij} = \frac{m_{ij}}{m_i}\)</span> the probability that a member of cluster <span class="math inline">\(i\)</span> belongs to class <span class="math inline">\(j\)</span></p>
+<p>Assume external class labels are available.</p>
+<p>For each cluster <span class="math inline">\(i\)</span>:</p>
 <ul>
-<li><span class="math inline">\(m_i = \text{\# of objects in cluster i}\)</span></li>
-<li><span class="math inline">\(m_{ij} = \text{\# of objects of class j in cluster i}\)</span></li>
+<li><span class="math inline">\(m_i = \text{\# objects in cluster } i\)</span></li>
+<li><span class="math inline">\(m_{ij} = \text{\# objects of class } j \text{ in cluster } i\)</span></li>
+<li><span class="math inline">\(p_{ij} = \frac{m_{ij}}{m_i}\)</span> is the fraction of cluster <span class="math inline">\(i\)</span> that belongs to class <span class="math inline">\(j\)</span></li>
 </ul>
-<p>Cluster <span class="math inline">\(i\)</span> entropy is <span class="math inline">\(e_i\)</span> while whole clustering entropy is <span class="math inline">\(e\)</span></p>
+<p><strong>Entropy</strong> measures how mixed the classes are inside each cluster.</p>
 <ul>
 <li><span class="math inline">\(e_i = - \sum_{j=1}^{L} p_{ij} \cdot log_2(p_{ij})\)</span></li>
-<li><span class="math inline">\(e = -\sum_{i=1}^{K} \frac{m_i}{m} \cdot e_i\)</span>
-<ul>
-<li><span class="math inline">\(L=\)</span># class <span class="math inline">\(K=\)</span># clusters</li>
-</ul></li>
+<li><span class="math inline">\(e = \sum_{i=1}^{K} \frac{m_i}{m} \cdot e_i\)</span></li>
 </ul>
-<p>Purity is computed as:</p>
+<p>Lower entropy means cleaner clusters.</p>
+<p><strong>Purity</strong> keeps only the majority class in each cluster.</p>
 <ul>
-<li><span class="math inline">\(p_i\)</span> measures how “strong” the relationship is between cluster and class
-<ul>
-<li>It is minimal when the points belonging to the cluster are equally distributed among the classes</li>
-</ul></li>
 <li><span class="math inline">\(p_i = max_j(p_{ij})\)</span></li>
 <li><span class="math inline">\(p = \sum_{i=1}^{K} \frac{m_i}{m} \cdot p_i\)</span></li>
 </ul>
+<p>Higher purity means cleaner clusters.</p>
+<p><span class="math inline">\(L=\)</span> #classes, <span class="math inline">\(K=\)</span> #clusters, <span class="math inline">\(m=\)</span> #objects</p>
 </section>
 
 <section id="a-final-comment" class="title-slide slide level1 center">
