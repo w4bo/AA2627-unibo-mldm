@@ -1,3 +1,9 @@
+## [1.0.51](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.50...1.0.51) (2026-09-25)
+
+### Bug Fixes
+
+* association rules ([7470cb2](https://github.com/w4bo/AA2627-unibo-mldm/commit/7470cb2f07585d626ac880877b51781c404204a1))
+
 ## [1.0.50](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.49...1.0.50) (2026-09-25)
 
 ### Bug Fixes
