@@ -663,11 +663,9 @@ fig.tight_layout()
 plt.show()
 ```
 
-# K-means: possible solutions
+# Possible solutions?
 
-Use a higher $k$ value, thus identifying portions of clusters.
-
-The definition of "natural" clusters then requires a technique to bring together the identified clusters.
+# Possible solution: use a higher $k$ value
 
 ::::{.columns}
 :::{.column width="50%"}
@@ -678,11 +676,7 @@ The definition of "natural" clusters then requires a technique to bring together
 :::
 ::::
 
-# K-means: possible solutions
-
-Use a higher $k$ value, thus identifying portions of clusters.
-
-The definition of "natural" clusters then requires a technique to bring together the identified clusters.
+# Possible solution: use a higher $k$ value
 
 ::::{.columns}
 :::{.column width="50%"}
@@ -693,11 +687,7 @@ The definition of "natural" clusters then requires a technique to bring together
 :::
 ::::
 
-# K-means: possible solutions
-
-Use a higher $k$ value, thus identifying portions of clusters.
-
-The definition of "natural" clusters then requires a technique to bring together the identified clusters.
+# Possible solution: use a higher $k$ value
 
 ::::{.columns}
 :::{.column width="50%"}
@@ -712,9 +702,8 @@ The definition of "natural" clusters then requires a technique to bring together
 
 # Choosing K: the elbow method
 
-It consists of executing k-means several times with increasing values for k
+Execute k-means several times with increasing values for k (higher k, lower SSE)
 
-* SSE value will decrease
 * $k < \#NaturalCluster$: SSE includes inter-cluster distances
 * $k \ge \#NaturalCluster$: SSE includes intra-cluster distances
 * The "elbow" occurs when SSE starts decreasing more slowly since it is generated only by intra-cluster distances
@@ -1099,6 +1088,8 @@ Cons
 
 # DBSCAN: choosing Eps and MinPts
 
+::::{.columns}
+:::{.column width="50%"}
 Choose $MinPts$ first, then use it to estimate $Eps$.
 
 * $MinPts$ defines how dense a region must be before DBSCAN treats it as a cluster
@@ -1113,8 +1104,11 @@ Once $MinPts$ is fixed, choose $Eps$ with a $k$-distance plot:
 * Points inside dense clusters have similar $k$-neighbor distances
 * Noise and sparse points have much larger distances
 * Choose $Eps$ near the "elbow" of the curve, where distances start increasing sharply
-
+:::
+:::{.column width="50%"}
 ![Choosing Eps and MinPts](img/clustering/14-Clustering_73.png)
+:::
+::::
 
 # Evaluation of clustering results
 
@@ -1146,19 +1140,17 @@ Numerical measures that are applied to judge various aspects of cluster validity
 
 # Internal measures
 
-Cluster Cohesion: Measures how closely related the objects in a cluster are.
+Cluster Cohesion: Measures how closely related the objects in a cluster are (Within cluster Sum of Squares or SSE)
 
-* Cohesion is measured by the Within cluster Sum of Squares (WSS or SSE)
 * $SSE = WSS = \sum_{i=1}\sum_{x \in C_i} dist(x, m_i)^2$
 
-Cluster Separation: Measure how distinct or well-separated a cluster is from other clusters
+Cluster Separation: Measure how distinct or well-separated a cluster is from other clusters (Between cluster Sum of Squares)
 
-* Separation is measured by the Between cluster Sum of Squares (BSS)
 * $BSS = \sum_{i=1} |C_i| \cdot dist(m_i, m)^2$
 
 # Internal Measures: Cohesion and Separation
 
-Cohesion and separation can be calculated both for graph-based representations...
+Cohesion and separation can be calculated for graph-based representations...
 
 * Cohesion is the sum of the weights of the arcs between the nodes belonging to a cluster
 * The separation is the sum of the weights of the arcs between the nodes belonging to distinct clusters
@@ -1170,7 +1162,7 @@ Cohesion and separation can be calculated both for graph-based representations..
 
 # Internal Measures: Cohesion and Separation
 
-... both for representations based on centroids
+... as well as for representations based on centroids
 
 * Cohesion is the sum of the weights of the arcs between the nodes belonging to a cluster $C_i$ and the relative centroid $m_i$
 * The separation is the sum of the weights of the arches between the centroids
@@ -1275,9 +1267,7 @@ Calculating the cophenetic distance for all pairs of points, we obtain a matrix 
 
 # Statistical framework for clustering validation
 
-Internal measures often return measurements that must be interpreted.
-
-* _Is a value of 10 good or bad?_
+Internal measures often return measurements that must be interpreted: _Is a value of 10 good or bad?_
 
 Statistics can provide a suitable methodology for assessing the goodness of a measurement.
 
@@ -1362,44 +1352,34 @@ External information is usually the class labels of the objects on which cluster
 If class labels are available, why perform clustering?
 
 * Compare the results of different clustering techniques
-
 * Evaluate the possibility of automatically obtaining an otherwise manual classification
 
 Two approaches are possible.
 
-* Classification-oriented: evaluate the extent to which clusters contain objects belonging to the same class
-
+* *Classification-oriented*: evaluate the extent to which clusters contain objects belonging to the same class
   * Entropy, purity, F-measure
-
-* Similarity-oriented: they measure how often two objects that belong to the same cluster belong to the same class
-
+* *Similarity-oriented*: they measure how often two objects that belong to the same cluster belong to the same class
   * They use similarity measures for binary data: Jaccard
 
 # External measures for clustering validation: Entropy and Purity
 
 Assume external class labels are available.
 
-For each cluster $i$:
+$L=$ #classes, $K=$ #clusters, $m=$ #objects, given a cluster $c_i$:
 
-* $m_i = \text{\# objects in cluster } i$
-* $m_{ij} = \text{\# objects of class } j \text{ in cluster } i$
-* $p_{ij} = \frac{m_{ij}}{m_i}$ is the fraction of cluster $i$ that belongs to class $j$
+* $m_i = |c_i|$
+* $m_{ij} = \text{\# objects of class } j \in c_i$
+* $p_{ij} = \frac{m_{ij}}{m_i}$ is the fraction of cluster $c_i$ that belongs to class $j$
 
-**Entropy** measures how mixed the classes are inside each cluster.
+**Entropy** measures how mixed the classes are inside each cluster: lower entropy means cleaner clusters.
 
 - $e_i = - \sum_{j=1}^{L} p_{ij} \cdot log_2(p_{ij})$
 - $e = \sum_{i=1}^{K} \frac{m_i}{m} \cdot e_i$
 
-Lower entropy means cleaner clusters.
-
-**Purity** keeps only the majority class in each cluster.
+**Purity** keeps only the majority class in each cluster: higher purity means cleaner clusters.
 
 - $p_i = max_j(p_{ij})$
 - $p = \sum_{i=1}^{K} \frac{m_i}{m} \cdot p_i$
-
-Higher purity means cleaner clusters.
-
-$L=$ #classes, $K=$ #clusters, $m=$ #objects
 
 # A final comment
 
