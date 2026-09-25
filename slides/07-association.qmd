@@ -49,6 +49,21 @@ They are also useful for arranging goods.
 - Goal: identify products bought together by a sufficiently large number of customers
 - Method: use receipt data to identify dependencies between products
 
+# Market Basket Analysis: What Can Be Done?
+
+Association rules turn transaction data into candidate actions.
+
+| Pattern | Possible business action |
+|---|---|
+| $\{\text{Pasta}\} \to \{\text{Tomato Sauce}\}$ | Place products near each other or create a bundle |
+| $\{\text{Baby Formula}\} \to \{\text{Diapers}\}$ | Target coupons to shoppers likely to need replenishment |
+| $\{\text{Printer}\} \to \{\text{Ink Cartridge}\}$ | Recommend accessories at checkout |
+| $\{\text{Tortilla Chips}, \text{Salsa}\} \to \{\text{Beer}\}$ | Plan cross-promotions before weekends or events |
+
+The rule does not prove that one product causes the purchase of another.
+
+It suggests where a marketing team may test an action.
+
 # Frequent Itemsets
 
 An **itemset** is a collection of one or more items.
@@ -96,6 +111,22 @@ Read the confidence as:
 > Among the 3 transactions that contain Milk and Diaper, 2 also contain Beer.
 
 So the rule is correct for two thirds of the transactions where the antecedent appears.
+
+# Association Rules: Marketing Interpretation
+
+Consider:
+
+$$\{\text{Coffee Beans}\} \to \{\text{Chocolate}\}$$
+
+with support $8\%$ and confidence $35\%$.
+
+- **Support $8\%$**: the pair occurs in enough baskets to matter operationally
+- **Confidence $35\%$**: among customers buying coffee beans, more than one third also buy chocolate
+- **Possible action**: recommend chocolate to coffee buyers, test an end-cap display, or send a coupon after a coffee purchase
+
+A high-confidence rule with very low support may be too rare for a campaign.
+
+A moderate-confidence rule with high support can still be valuable because it affects many customers.
 
 # Support and Confidence: Statistical Interpretation
 
@@ -494,6 +525,28 @@ flowchart BT
 :::
 ::::
 
+# Why Maximal Itemsets Matter
+
+Maximal itemsets answer the question:
+
+> What are the largest groups of products that still appear frequently together?
+
+Example with product names:
+
+- If $\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}$ is maximal frequent, then the smaller baskets $\{\text{Pasta}, \text{Tomato Sauce}\}$ and $\{\text{Tomato Sauce}, \text{Parmesan}\}$ are frequent too
+- If adding $\text{Wine}$ makes the set infrequent, then the maximal itemset marks the practical boundary of the recurring meal-kit pattern
+
+Applications:
+
+- Design bundles around the largest recurring baskets
+- Identify product families for shelf layout and category management
+- Reduce a huge set of frequent itemsets to a short list of broad shopping missions
+
+Limitation:
+
+- Maximal itemsets do not keep the exact support of their subsets
+- They are useful for summarizing, but less useful when marketing needs precise campaign sizing
+
 # Closed Itemset
 
 An itemset is **closed** if none of its adjacent supersets has the same support.
@@ -581,6 +634,24 @@ flowchart BT
 ```
 :::
 ::::
+
+# Why Closed Itemsets Matter
+
+Closed itemsets answer a different question:
+
+> Which itemsets preserve the complete support information without listing every frequent subset?
+
+Example:
+
+- Suppose every basket containing $\{\text{Pasta}, \text{Tomato Sauce}\}$ also contains $\text{Parmesan}$
+- Then $\{\text{Pasta}, \text{Tomato Sauce}\}$ and $\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}$ have the same support
+- The smaller itemset is not closed because it adds no new support information
+
+Applications:
+
+- Keep campaign-size information while removing redundant patterns
+- Detect "always together" products, such as a device and a required accessory
+- Build dashboards where analysts need accurate supports but not thousands of repeated itemsets
 
 # Closed vs Maximal Itemsets: Example
 
@@ -728,6 +799,24 @@ For $L=\{A,B,C,D\}$, candidate rules include:
 - $AB \to CD$, $AC \to BD$, $AD \to BC$, $BC \to AD$, $BD \to AC$, $CD \to AB$
 
 If $|L|=k$, there are $2^k-2$ candidate association rules, excluding $L \to \emptyset$ and $\emptyset \to L$.
+
+# Association Rules: From Itemsets to Actions
+
+For the frequent itemset:
+
+$$L=\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}$$
+
+candidate rules include:
+
+- $\{\text{Pasta}, \text{Tomato Sauce}\} \to \{\text{Parmesan}\}$
+- $\{\text{Pasta}, \text{Parmesan}\} \to \{\text{Tomato Sauce}\}$
+- $\{\text{Tomato Sauce}\} \to \{\text{Pasta}, \text{Parmesan}\}$
+
+The same itemset can generate rules with different marketing meanings:
+
+- Recommend Parmesan when pasta and sauce are already in the basket
+- Discount tomato sauce to shoppers who often buy pasta and Parmesan
+- Avoid over-interpreting a rule if the consequent is already very popular for everyone
 
 # Rule Generation: Confidence Pruning
 
