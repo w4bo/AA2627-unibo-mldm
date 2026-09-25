@@ -309,6 +309,43 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
+<section id="market-basket-analysis-what-can-be-done" class="title-slide slide level1 center">
+<h1>Market Basket Analysis: What Can Be Done?</h1>
+<p>Association rules turn transaction data into candidate actions.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pattern</th>
+<th>Possible business action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\{\text{Pasta}\} \to \{\text{Tomato Sauce}\}\)</span></td>
+<td>Place products near each other or create a bundle</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\{\text{Baby Formula}\} \to \{\text{Diapers}\}\)</span></td>
+<td>Target coupons to shoppers likely to need replenishment</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\{\text{Printer}\} \to \{\text{Ink Cartridge}\}\)</span></td>
+<td>Recommend accessories at checkout</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\{\text{Tortilla Chips}, \text{Salsa}\} \to \{\text{Beer}\}\)</span></td>
+<td>Plan cross-promotions before weekends or events</td>
+</tr>
+</tbody>
+</table>
+<p>The rule does not prove that one product causes the purchase of another.</p>
+<p>It suggests where a marketing team may test an action.</p>
+</section>
+
 <section id="frequent-itemsets" class="title-slide slide level1 center">
 <h1>Frequent Itemsets</h1>
 <p>An <strong>itemset</strong> is a collection of one or more items.</p>
@@ -351,6 +388,20 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Among the 3 transactions that contain Milk and Diaper, 2 also contain Beer.</p>
 </blockquote>
 <p>So the rule is correct for two thirds of the transactions where the antecedent appears.</p>
+</section>
+
+<section id="association-rules-marketing-interpretation" class="title-slide slide level1 center">
+<h1>Association Rules: Marketing Interpretation</h1>
+<p>Consider:</p>
+<p><span class="math display">\[\{\text{Coffee Beans}\} \to \{\text{Chocolate}\}\]</span></p>
+<p>with support <span class="math inline">\(8\%\)</span> and confidence <span class="math inline">\(35\%\)</span>.</p>
+<ul>
+<li><strong>Support <span class="math inline">\(8\%\)</span></strong>: the pair occurs in enough baskets to matter operationally</li>
+<li><strong>Confidence <span class="math inline">\(35\%\)</span></strong>: among customers buying coffee beans, more than one third also buy chocolate</li>
+<li><strong>Possible action</strong>: recommend chocolate to coffee buyers, test an end-cap display, or send a coupon after a coffee purchase</li>
+</ul>
+<p>A high-confidence rule with very low support may be too rare for a campaign.</p>
+<p>A moderate-confidence rule with high support can still be valuable because it affects many customers.</p>
 </section>
 
 <section id="support-and-confidence-statistical-interpretation" class="title-slide slide level1 center">
@@ -896,6 +947,30 @@ those with count at least 3.
 </div></div>
 </section>
 
+<section id="why-maximal-itemsets-matter" class="title-slide slide level1 center">
+<h1>Why Maximal Itemsets Matter</h1>
+<p>Maximal itemsets answer the question:</p>
+<blockquote>
+<p>What are the largest groups of products that still appear frequently together?</p>
+</blockquote>
+<p>Example with product names:</p>
+<ul>
+<li>If <span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}\)</span> is maximal frequent, then the smaller baskets <span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}\}\)</span> and <span class="math inline">\(\{\text{Tomato Sauce}, \text{Parmesan}\}\)</span> are frequent too</li>
+<li>If adding <span class="math inline">\(\text{Wine}\)</span> makes the set infrequent, then the maximal itemset marks the practical boundary of the recurring meal-kit pattern</li>
+</ul>
+<p>Applications:</p>
+<ul>
+<li>Design bundles around the largest recurring baskets</li>
+<li>Identify product families for shelf layout and category management</li>
+<li>Reduce a huge set of frequent itemsets to a short list of broad shopping missions</li>
+</ul>
+<p>Limitation:</p>
+<ul>
+<li>Maximal itemsets do not keep the exact support of their subsets</li>
+<li>They are useful for summarizing, but less useful when marketing needs precise campaign sizing</li>
+</ul>
+</section>
+
 <section id="closed-itemset" class="title-slide slide level1 center">
 <h1>Closed Itemset</h1>
 <p>An itemset is <strong>closed</strong> if none of its adjacent supersets has the same support.</p>
@@ -1005,6 +1080,26 @@ those with count at least 3.
 </div>
 </div>
 </div></div>
+</section>
+
+<section id="why-closed-itemsets-matter" class="title-slide slide level1 center">
+<h1>Why Closed Itemsets Matter</h1>
+<p>Closed itemsets answer a different question:</p>
+<blockquote>
+<p>Which itemsets preserve the complete support information without listing every frequent subset?</p>
+</blockquote>
+<p>Example:</p>
+<ul>
+<li>Suppose every basket containing <span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}\}\)</span> also contains <span class="math inline">\(\text{Parmesan}\)</span></li>
+<li>Then <span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}\}\)</span> and <span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}\)</span> have the same support</li>
+<li>The smaller itemset is not closed because it adds no new support information</li>
+</ul>
+<p>Applications:</p>
+<ul>
+<li>Keep campaign-size information while removing redundant patterns</li>
+<li>Detect “always together” products, such as a device and a required accessory</li>
+<li>Build dashboards where analysts need accurate supports but not thousands of repeated itemsets</li>
+</ul>
 </section>
 
 <section id="closed-vs-maximal-itemsets-example" class="title-slide slide level1 center">
@@ -1232,6 +1327,24 @@ those with count at least 3.
 <li><span class="math inline">\(AB \to CD\)</span>, <span class="math inline">\(AC \to BD\)</span>, <span class="math inline">\(AD \to BC\)</span>, <span class="math inline">\(BC \to AD\)</span>, <span class="math inline">\(BD \to AC\)</span>, <span class="math inline">\(CD \to AB\)</span></li>
 </ul>
 <p>If <span class="math inline">\(|L|=k\)</span>, there are <span class="math inline">\(2^k-2\)</span> candidate association rules, excluding <span class="math inline">\(L \to \emptyset\)</span> and <span class="math inline">\(\emptyset \to L\)</span>.</p>
+</section>
+
+<section id="association-rules-from-itemsets-to-actions" class="title-slide slide level1 center">
+<h1>Association Rules: From Itemsets to Actions</h1>
+<p>For the frequent itemset:</p>
+<p><span class="math display">\[L=\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}\]</span></p>
+<p>candidate rules include:</p>
+<ul>
+<li><span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}\} \to \{\text{Parmesan}\}\)</span></li>
+<li><span class="math inline">\(\{\text{Pasta}, \text{Parmesan}\} \to \{\text{Tomato Sauce}\}\)</span></li>
+<li><span class="math inline">\(\{\text{Tomato Sauce}\} \to \{\text{Pasta}, \text{Parmesan}\}\)</span></li>
+</ul>
+<p>The same itemset can generate rules with different marketing meanings:</p>
+<ul>
+<li>Recommend Parmesan when pasta and sauce are already in the basket</li>
+<li>Discount tomato sauce to shoppers who often buy pasta and Parmesan</li>
+<li>Avoid over-interpreting a rule if the consequent is already very popular for everyone</li>
+</ul>
 </section>
 
 <section id="rule-generation-confidence-pruning" class="title-slide slide level1 center">
