@@ -1,3 +1,9 @@
+## [1.0.54](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.53...1.0.54) (2026-10-02)
+
+### Bug Fixes
+
+* clustering ([a9aee5c](https://github.com/w4bo/AA2627-unibo-mldm/commit/a9aee5c0fe7a491ba243d448caac21a11a129980))
+
 ## [1.0.53](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.52...1.0.53) (2026-10-02)
 
 ### Bug Fixes
