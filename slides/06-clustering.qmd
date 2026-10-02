@@ -51,7 +51,8 @@ mall_customers = pd.DataFrame({
 mall_customers
 ```
 
-# Clustering finds useful groups (segments) in unlabeled data
+# Group profiles can be summarized with descriptive statistics
+
 
 ```{python}
 #| echo: false
@@ -65,11 +66,7 @@ X_mall = scaler.fit_transform(mall_customers[features])
 
 kmeans = KMeans(n_clusters=3, n_init=20, random_state=42)
 mall_clustered = mall_customers.assign(cluster=kmeans.fit_predict(X_mall))
-
-mall_clustered[["customer_id", "cluster"] + features].sort_values("cluster")
 ```
-
-# Group profiles can be summarized with descriptive statistics
 
 ```{python}
 #| echo: false
@@ -98,6 +95,13 @@ cluster_summary["interpretation"] = [
 cluster_summary
 ```
 
+# Clustering finds useful groups (segments) in unlabeled data
+
+```{python}
+#| echo: false
+mall_clustered[["customer_id", "cluster"] + features].sort_values("cluster")
+```
+
 # Roadmap
 
 We will separate three questions:
@@ -110,8 +114,8 @@ We will separate three questions:
 
 Finding groups of objects such that objects that belong to the same group are more "similar" to each other than objects belonging to different groups.
 
-- Inter-cluster distances are maximized
-- Intra-cluster distances are minimized
+- *Inter*-cluster distances are *maximized*
+- *Intra*-cluster distances are *minimized*
 
 ![Clustering (or Clustering Analysis)](img/clustering/Immagine7.png)
 
@@ -125,9 +129,7 @@ For a partitioning clustering:
 - $C_i \cap C_j=\emptyset$ for $i\neq j$
 - $\bigcup_{i=1}^{K}C_i=X$
 
-The definition does **not** determine the right similarity, number of clusters, or cluster shape.
-
-- *Those are modeling choices.*
+The definition does **not** determine the right similarity, number of clusters, or cluster shape: *those are modeling choices.*
 
 # Cluster notion can be ambiguous: how many clusters?
 
@@ -434,12 +436,12 @@ Initial centroids are often chosen randomly.
 * Clusters produced vary from one run to another.
 * *Closeness* is measured by Euclidean distance, cosine similarity, correlation, etc.
 
-K-means will converge for common similarity measures mentioned above, and most of the convergence happens in the first few iterations.
+K-means will converge for common distance measures, and most of the convergence happens in the first few iterations.
 
 * The algorithm can converge to a suboptimal solution
 * Often, the stopping condition is relaxed to "Until relatively few points change clusters."
 
-Algorithm complexity is $O(n \cdot K \cdot I \cdot d )$
+Algorithm complexity is $O(n \cdot K \cdot I \cdot d )$. *Why*?
 
 * $n$ = number of points, $K$ = number of clusters, $I$ = number of iterations, $d$ = dimensionality of the data
 
@@ -567,7 +569,7 @@ Different strategies are possible to identify an alternative centroid.
 
 ![Handling empty clusters](img/clustering/Immagine28.svg)
 
-# Handling outlier
+# Handling outliers
 
 The goodness of clustering can be negatively influenced by the presence of outliers that tend to "shift" the cluster centroids
 
@@ -576,6 +578,60 @@ The goodness of clustering can be negatively influenced by the presence of outli
 Outliers, if identified, can be eliminated during preprocessing.
 
 * Outlier concepts depend on the application domain
+
+# K-means with outliers: Python example
+
+```{python}
+#| warning: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4.3
+#| dpi: 160
+
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.cluster import KMeans
+
+rng = np.random.default_rng(12)
+left = rng.normal(loc=(-2.2, 0.0), scale=0.35, size=(45, 2))
+right = rng.normal(loc=(2.0, 0.1), scale=0.35, size=(15, 2))
+outliers = np.array([[5.8, 1.8], [6.2, 2.1], [6.6, 1.5]])
+
+X_clean = np.vstack([left, right])
+X_outliers = np.vstack([X_clean, outliers])
+
+clean_model = KMeans(n_clusters=2, n_init=20, random_state=0).fit(X_clean)
+outlier_model = KMeans(n_clusters=2, n_init=20, random_state=0).fit(X_outliers)
+
+clean_centers = clean_model.cluster_centers_[np.argsort(clean_model.cluster_centers_[:, 0])]
+outlier_centers = outlier_model.cluster_centers_[np.argsort(outlier_model.cluster_centers_[:, 0])]
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 4.3), sharex=True, sharey=True)
+plots = [
+    (axes[0], X_clean, clean_model.labels_, clean_centers, "Without outliers"),
+    (axes[1], X_outliers, outlier_model.labels_, outlier_centers, "With three outliers"),
+]
+
+for ax, X, labels, centers, title in plots:
+    ax.scatter(X[:, 0], X[:, 1], c=labels, cmap="Set2", s=28, edgecolors="white", linewidths=0.3)
+    ax.scatter(centers[:, 0], centers[:, 1], c="black", marker="x", s=150, linewidths=2.5)
+    ax.set_title(title)
+    ax.set_aspect("equal", adjustable="box")
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+axes[1].scatter(outliers[:, 0], outliers[:, 1], facecolors="none", edgecolors="red", s=120, linewidths=1.8)
+axes[1].arrow(
+    clean_centers[1, 0], clean_centers[1, 1],
+    outlier_centers[1, 0] - clean_centers[1, 0],
+    outlier_centers[1, 1] - clean_centers[1, 1],
+    color="red", width=0.015, head_width=0.16, length_includes_head=True
+)
+axes[1].text(3.0, 0.7, "centroid shifts", color="red")
+
+fig.tight_layout()
+plt.show()
+```
 
 # K-means: limits
 
