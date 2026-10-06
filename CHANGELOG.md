@@ -1,3 +1,11 @@
+## [1.0.56](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.55...1.0.56) (2026-10-06)
+
+### Bug Fixes
+
+* clustering lab download ([b03b6ff](https://github.com/w4bo/AA2627-unibo-mldm/commit/b03b6ffc90d74df94d7a086f46a0858f033a88df))
+* switch title and subtitle ([086ccc4](https://github.com/w4bo/AA2627-unibo-mldm/commit/086ccc4e2682ca81f39b887def8aaf2a91bf4440))
+* update quarto version ([cd1eaac](https://github.com/w4bo/AA2627-unibo-mldm/commit/cd1eaac6e292018407c5d306b35c4d8d235eece1))
+
 ## [1.0.55](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.54...1.0.55) (2026-10-06)
 
 ### Bug Fixes
