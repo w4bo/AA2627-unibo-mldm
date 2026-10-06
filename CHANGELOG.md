@@ -1,3 +1,16 @@
+## [1.0.55](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.54...1.0.55) (2026-10-06)
+
+### Bug Fixes
+
+* do not generate old slides ([ac502d2](https://github.com/w4bo/AA2627-unibo-mldm/commit/ac502d2e11619e75ed1654bf21ada3a3240b2a18))
+* don't publish pdf files to make CI faster ([5c7c1de](https://github.com/w4bo/AA2627-unibo-mldm/commit/5c7c1deaf5216a71a854dca4f587aeb0bee12a3e))
+* don't publish pptx slides ([e6e302f](https://github.com/w4bo/AA2627-unibo-mldm/commit/e6e302fea37e8d5eb83ba036c519d5f29c8e430c))
+* improve error tracking ([221fc01](https://github.com/w4bo/AA2627-unibo-mldm/commit/221fc012fc2972dd354a0e2a617976c402ec8f8d))
+* improve error tracking ([01733de](https://github.com/w4bo/AA2627-unibo-mldm/commit/01733de51a7405b214e8a5e0dd61e5948a7ec80c))
+* improve error tracking ([91957a8](https://github.com/w4bo/AA2627-unibo-mldm/commit/91957a827cfaadc288dde8a3ab6aa280846a0238))
+* improve intro ([4d88103](https://github.com/w4bo/AA2627-unibo-mldm/commit/4d88103ce0a91d776d29fa7a52fd455df31809b3))
+* restore linux version ([6a5e9d6](https://github.com/w4bo/AA2627-unibo-mldm/commit/6a5e9d69fbfba728f0d09173cea26c6413fbe9fb))
+
 ## [1.0.54](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.53...1.0.54) (2026-10-02)
 
 ### Bug Fixes
