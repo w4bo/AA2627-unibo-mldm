@@ -6,8 +6,8 @@
 <script src="lab-04-clustering_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lab-04-clustering_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lab-04-clustering_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lab-04-clustering_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="lab-04-clustering_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
   <title>Lab 04 - Clustering</title>
@@ -245,7 +245,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li><code>class</code> is excluded from the distance computation and used only after clustering for external evaluation.</li>
 </ul>
-<div id="1d3f0274" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.043731Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.043608Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.050975Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.050596Z&quot;}}" data-execution_count="3">
+<div id="1d3f0274" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.008880Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.008699Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.019244Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.018470Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>iris <span class="op">=</span> load_arff_frame(<span class="st">"iris.arff"</span>)</span>
@@ -270,7 +270,7 @@ memory usage: 6.0 KB</code></pre>
 <section id="preprocessing-normalize-before-euclidean-distance" class="slide level2">
 <h2>Preprocessing: normalize before Euclidean distance</h2>
 <p>Distance-based algorithms are sensitive to scale.</p>
-<div id="d8e2e7f8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.052261Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.052144Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.059426Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.058989Z&quot;}}" data-execution_count="4">
+<div id="d8e2e7f8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.020963Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.020782Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.032118Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.031333Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>iris_features <span class="op">=</span> [<span class="st">"petallength"</span>, <span class="st">"petalwidth"</span>] <span class="co"># "sepallength", "sepalwidth", </span></span>
@@ -350,7 +350,7 @@ s(i) = \frac{b(i) - a(i)}{\max\{a(i), b(i)\}}
 </section>
 <section id="iris-internal-validation-elbow-and-silhouette-1" class="slide level2">
 <h2>Iris internal validation: elbow and silhouette</h2>
-<div id="3835c68c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.060498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.060383Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.124259Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.123667Z&quot;}}" data-execution_count="5">
+<div id="3835c68c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.033928Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.033751Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.152137Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.151299Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>iris_internal_scores <span class="op">=</span> []</span>
@@ -376,14 +376,14 @@ Answer
 <img data-src="lab-04-clustering_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
 <section id="k-means-when-k3" class="slide level2">
 <h2>K-means when k=3</h2>
-<div id="563ac0e6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.437476Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.437339Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.446322Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.445778Z&quot;}}" data-execution_count="8">
+<div id="563ac0e6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.672247Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.672035Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.685333Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.684661Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>Iterations to convergence: 5
 SSE / inertia: 1.7051
 Silhouette: 0.6758</code></pre>
 </div>
 </div>
-<div id="086690ae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.447514Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.447380Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.451775Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.451300Z&quot;}}" data-execution_count="9">
+<div id="086690ae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.687053Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.686888Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.692902Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.692177Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>iris_centers.<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -434,7 +434,7 @@ Silhouette: 0.6758</code></pre>
 </div>
 </div>
 </div>
-<div id="367e3ded" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.452898Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.452782Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.456763Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.456279Z&quot;}}" data-execution_count="10">
+<div id="367e3ded" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.694598Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.694408Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.700432Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.699593Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>iris_stds.<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -494,7 +494,7 @@ Silhouette: 0.6758</code></pre>
 M_{ij} = |C_i \cap L_j|
 \]</span></p>
 <p>Each row describes the true-class composition of one cluster; each column describes how one class is distributed across clusters.</p>
-<div id="1e77d988" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.457848Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.457725Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.466346Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.465896Z&quot;}}" data-execution_count="11">
+<div id="1e77d988" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.702009Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.701852Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.713734Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.713003Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>iris_table, iris_mapping, iris_predicted_class, iris_accuracy <span class="op">=</span> best_cluster_class_mapping(y_iris, iris_clusters)</span>
@@ -559,7 +559,7 @@ M_{ij} = |C_i \cap L_j|
 </section>
 <section id="iris-matched-class-confusion-matrix" class="slide level2">
 <h2>Iris matched-class confusion matrix</h2>
-<div id="35d45901" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.467410Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.467303Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.472512Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.472063Z&quot;}}" data-execution_count="12">
+<div id="35d45901" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.715689Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.715506Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.723135Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.722513Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>cm <span class="op">=</span> pd.DataFrame(</span>
@@ -626,7 +626,7 @@ M_{ij} = |C_i \cap L_j|
 <ul>
 <li>Entropy measures how mixed the true classes are inside each cluster: lower is better, and zero means every cluster contains a single species.</li>
 </ul>
-<div id="69bdb4fa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.473550Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.473439Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.482921Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.482505Z&quot;}}" data-execution_count="13">
+<div id="69bdb4fa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.725027Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.724842Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.740317Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.739458Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>iris_entropy_table, iris_entropy_by_cluster, iris_entropy_summary <span class="op">=</span> cluster_entropy_metrics(y_iris, iris_clusters)</span>
@@ -713,7 +713,7 @@ Setosa should have very low entropy because it is visually separated. Most of th
 <li><span class="math inline">\(H \approx 0.5\)</span>: no strong clustering tendency.</li>
 <li><span class="math inline">\(H \to 1\)</span>: random reference points fall farther from the data than real points do, suggesting cluster structure.</li>
 </ul>
-<div id="422fd9cd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.484049Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.483936Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.490990Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.490573Z&quot;}}" data-execution_count="14">
+<div id="422fd9cd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.742110Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.741940Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:11.752660Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:11.751747Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">12</span>)</span>
@@ -785,7 +785,7 @@ Iris should score above the random reference because the petal measurements cont
 </section>
 <section id="we-repeat-k-means-using-all-features." class="slide level2">
 <h2>We repeat K-means using all features.</h2>
-<div id="fb5ed1fd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.647527Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.647404Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.662102Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.661743Z&quot;}}" data-execution_count="16">
+<div id="fb5ed1fd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:11.998197Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:11.998015Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:12.020021Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:12.019157Z&quot;}}" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
@@ -863,7 +863,7 @@ Answer
 <li>This makes tables easier to compare across runs.</li>
 </ul></li>
 </ul>
-<div id="68db43e7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.810692Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.810528Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.817090Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.816668Z&quot;}}" data-execution_count="18">
+<div id="68db43e7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:12.281618Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:12.281370Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:12.291118Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:12.290340Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>food <span class="op">=</span> load_arff_frame(<span class="st">"FoodNutrients.arff"</span>)</span>
@@ -943,7 +943,7 @@ Answer
 </div>
 </div>
 </div>
-<div id="f7cdb0da" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.818227Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.818116Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.821873Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.821416Z&quot;}}" data-execution_count="19">
+<div id="f7cdb0da" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:12.292782Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:12.292611Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:12.297847Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:12.297162Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>food_features <span class="op">=</span> <span class="bu">list</span>(food.columns)</span>
@@ -959,7 +959,7 @@ Answer
 <li><strong>SSE / inertia</strong> decreases as <span class="math inline">\(k\)</span> grows, so the elbow is more informative than the absolute minimum.</li>
 <li><strong>Silhouette</strong> summarizes compactness and separation, but it should be interpreted together with cluster sizes and domain meaning.</li>
 </ul>
-<div id="b691b4b7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:44.931802Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:44.931644Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:44.936612Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:44.936211Z&quot;}}" data-execution_count="21">
+<div id="b691b4b7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:12.532456Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:12.532274Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:12.539489Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:12.538662Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="ss">f"KneeLocator elbow: k=</span><span class="sc">{</span>food_elbow<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -1089,7 +1089,7 @@ Answer
 <section id="verify-against-the-classified-file" class="slide level2">
 <h2>Verify against the classified file</h2>
 <p><code>FoodNutrientsClassified.arff</code> contains descriptive fields (<code>SuperType</code>, preparation, <code>Type</code>, and <code>Name</code>) followed by the same numeric nutrients. They are used only to interpret the already fitted <span class="math inline">\(k=6\)</span> clusters.</p>
-<div id="d569c866" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.511928Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.511778Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:45.520954Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:45.520570Z&quot;}}" data-execution_count="25">
+<div id="d569c866" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.533029Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.532835Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:13.546505Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:13.545745Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>food_classified <span class="op">=</span> load_arff_frame(<span class="st">"FoodNutrientsClassified.arff"</span>)</span>
@@ -1256,7 +1256,7 @@ Answer
 </section>
 <section id="food-by-type" class="slide level2">
 <h2>Food by type</h2>
-<div id="8b746001" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.522288Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.522174Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:45.527607Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:45.527108Z&quot;}}" data-execution_count="26">
+<div id="8b746001" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.548166Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.547992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:13.555934Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:13.555208Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>labels6 <span class="op">=</span> food_results[<span class="dv">6</span>][<span class="dv">1</span>]</span>
@@ -1370,7 +1370,7 @@ Answer
 </section>
 <section id="food-clusters-by-super-type" class="slide level2">
 <h2>Food clusters by super type</h2>
-<div id="7936208a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.528641Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.528537Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:45.541249Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:45.540760Z&quot;}}" data-execution_count="27">
+<div id="7936208a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.557613Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.557426Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:13.576742Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:13.575984Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>pd.crosstab(food_labeled[<span class="st">"cluster"</span>], food_labeled[<span class="st">"SuperType"</span>], margins<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1458,7 +1458,7 @@ Answer
 </section>
 <section id="food-clusters-by-type" class="slide level2">
 <h2>Food clusters by type</h2>
-<div id="e84bbe38" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.542542Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.542417Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:45.555547Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:45.555073Z&quot;}}" data-execution_count="28">
+<div id="e84bbe38" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.578505Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.578298Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:13.599908Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:13.599210Z&quot;}}" data-execution_count="28">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>pd.crosstab(food_labeled[<span class="st">"cluster"</span>], food_labeled[<span class="st">"Type"</span>], margins<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1591,7 +1591,7 @@ Answer
 </section>
 <section id="food-cluster-members" class="slide level2">
 <h2>Food cluster members</h2>
-<div id="7de35ed1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.556899Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.556768Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:45.559978Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:45.559470Z&quot;}}" data-execution_count="29">
+<div id="7de35ed1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.601679Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.601502Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:13.605901Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:13.605244Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="cf">for</span> cluster, group <span class="kw">in</span> food_labeled.groupby(<span class="st">"cluster"</span>, sort<span class="op">=</span><span class="va">True</span>):</span>
@@ -1615,7 +1615,7 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 <section id="the-coordinates-dataset" class="slide level2">
 <h2>The Coordinates dataset</h2>
 <p>Coordinates contains 480 two-dimensional points.</p>
-<div id="78fd7020" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.561142Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.561029Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:45.568074Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:45.567598Z&quot;}}" data-execution_count="30">
+<div id="78fd7020" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.607786Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.607609Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:13.618310Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:13.617631Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>coordinates <span class="op">=</span> load_arff_frame(<span class="st">"Coordinates.arff"</span>)</span>
@@ -1711,7 +1711,7 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 </section>
 <section id="visualizing-the-data" class="slide level2">
 <h2>Visualizing the data</h2>
-<div id="676a5fa2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.569187Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.569076Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:45.637649Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:45.636863Z&quot;}}" data-execution_count="31">
+<div id="676a5fa2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.620351Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.620179Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:13.733994Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:13.733168Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
@@ -1726,7 +1726,7 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 <section id="the-coordinates-dataset-k-means" class="slide level2">
 <h2>The Coordinates dataset: K-means</h2>
 <p>We first repeat the <span class="math inline">\(k=2\ldots6\)</span> experiment and inspect how SSE changes.</p>
-<div id="3cf01b03" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.638959Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.638810Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:45.682851Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:45.682308Z&quot;}}" data-execution_count="32">
+<div id="3cf01b03" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.736125Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.735942Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:13.832010Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:13.831338Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a>coordinate_features <span class="op">=</span> [<span class="st">"X"</span>, <span class="st">"Y"</span>]</span>
@@ -1807,7 +1807,7 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 <section>
 <section id="k-means" class="title-slide slide level1 center">
 <h1>K-means</h1>
-<div id="e5392ac3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:45.684346Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:45.684195Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:46.041516Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:46.040930Z&quot;}}" data-execution_count="33">
+<div id="e5392ac3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:13.834104Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:13.833912Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:14.440526Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:14.439533Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">6</span>, figsize<span class="op">=</span>(<span class="dv">44</span>, <span class="dv">8</span>))</span>
@@ -1847,7 +1847,7 @@ C5: CLAMS_RAW, CLAMS_CANNED</code></pre>
 <h1>DBSCAN</h1>
 <p>The handout explores <code>(eps, minPts)</code> values <code>(0.10,4)</code>, <code>(0.10,8)</code>, <code>(0.05,4)</code>, <code>(0.06,3)</code>, and <code>(0.06,8)</code> on normalized coordinates.</p>
 
-<img data-src="lab-04-clustering_files/figure-revealjs/cell-36-output-1.png" class="r-stretch"><div id="2d072d27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-06T10:25:46.411519Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-06T10:25:46.411370Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-06T10:25:46.432256Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-06T10:25:46.431931Z&quot;}}" data-execution_count="36">
+<img data-src="lab-04-clustering_files/figure-revealjs/cell-36-output-1.png" class="r-stretch"><div id="2d072d27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-07T02:30:15.105698Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-07T02:30:15.105451Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-07T02:30:15.143165Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-07T02:30:15.141089Z&quot;}}" data-execution_count="36">
 <div class="cell-output cell-output-display" data-execution_count="36">
 <div>
 <style scoped="">
