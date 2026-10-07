@@ -37,18 +37,6 @@ Example rules:
 
 Rules discover **co-occurrence**, not causality.
 
-# Association Rules Applications
-
-Association rules are useful for marketing and sales promotion.
-
-- If $\{\text{Bagels}, \ldots\} \to \{\text{Potato Chips}\}$, potato chips as the consequent can suggest actions to increase potato chip sales
-- Bagels as the antecedent can suggest which products could be affected if the store interrupted bagel sales
-
-They are also useful for arranging goods.
-
-- Goal: identify products bought together by a sufficiently large number of customers
-- Method: use receipt data to identify dependencies between products
-
 # Market Basket Analysis: What Can Be Done?
 
 Association rules turn transaction data into candidate actions.
@@ -79,7 +67,9 @@ The **support** $s(X)$ is the fraction of transactions containing $X$.
 
 - Example: $s(\{\text{Milk}, \text{Bread}, \text{Diaper}\}) = 2/5$
 
-A **frequent itemset** has support greater than or equal to a threshold `minsup`.
+A **frequent itemset** has support greater than or equal to a threshold `minSup`.
+
+When the threshold is expressed as a cardinality, we call it the **minimum support cardinality**.
 
 # Association Rules
 
@@ -98,7 +88,7 @@ Association rules are evaluated using:
 - **Support**: fraction of transactions that include $X \cup Y$
 - **Confidence**: fraction of transactions containing $X$ that also contain $Y$
 
-# Association Rules
+# Association Rules: Computing Measures
 
 For $\{\text{Milk}, \text{Diaper}\} \to \{\text{Beer}\}$:
 
@@ -112,22 +102,6 @@ Read the confidence as:
 
 So the rule is correct for two thirds of the transactions where the antecedent appears.
 
-# Association Rules: Marketing Interpretation
-
-Consider:
-
-$$\{\text{Coffee Beans}\} \to \{\text{Chocolate}\}$$
-
-with support $8\%$ and confidence $35\%$.
-
-- **Support $8\%$**: the pair occurs in enough baskets to matter operationally
-- **Confidence $35\%$**: among customers buying coffee beans, more than one third also buy chocolate
-- **Possible action**: recommend chocolate to coffee buyers, test an end-cap display, or send a coupon after a coffee purchase
-
-A high-confidence rule with very low support may be too rare for a campaign.
-
-A moderate-confidence rule with high support can still be valuable because it affects many customers.
-
 # Support and Confidence: Statistical Interpretation
 
 Support indicates the probability that $X$ and $Y$ appear together in a transaction.
@@ -138,7 +112,7 @@ Confidence for $X \to Y$ models the conditional probability of $Y$ when $X$ is p
 
 $$c(X \to Y)=P(Y \mid X)=\frac{P(X \cup Y)}{P(X)}$$
 
-# Exercise
+# Checkpoint: Support and Confidence
 
 Given the following transactions, compute:
 
@@ -161,14 +135,14 @@ Given the following transactions, compute:
 
 Given a set of transactions $T$, find all association rules such that:
 
-- Support >= `minsup`
-- Confidence >= `minconf`
+- Support >= `minSup`
+- Confidence >= `minConf`
 
 Naive approach:
 
 - List all possible association rules
 - For each rule, compute support and confidence
-- Remove rules that do not meet `minsup` and `minconf`
+- Remove rules that do not meet `minSup` and `minConf`
 
 This is computationally prohibitive.
 
@@ -192,7 +166,7 @@ $$\{\text{Milk}, \text{Diaper}, \text{Beer}\}$$
 Association rule discovery is usually divided into two steps.
 
 1. **Generate frequent itemsets**
-   - Generate all itemsets with support at least `minsup`
+   - Generate all itemsets with support at least `minSup`
 2. **Generate rules**
    - For each frequent itemset, generate rules with high confidence
    - Each rule is a binary partition of the itemset
@@ -379,13 +353,13 @@ flowchart BT
 :::
 ::::
 
-Apriori uses this property to avoid exploring branches of the itemset lattice that cannot satisfy `minsup`.
+Apriori uses this property to avoid exploring branches of the itemset lattice that cannot satisfy `minSup`.
 
 # Apriori Example: Candidate Counts
 
-With `minsup = 3`, first count individual items.
+With minimum support cardinality equal to 3, first count individual items.
 
-| Item | Count |
+| Item | Support cardinality |
 |---|---:|
 | Bread | 4 |
 | Coke | 2 |
@@ -404,7 +378,7 @@ Bread, Milk, Beer, and Diaper.
 
 From the frequent 1-itemsets, count candidate 2-itemsets.
 
-| Itemset | Count |
+| Itemset | Support cardinality |
 |---|---:|
 | $\{\text{Bread}, \text{Milk}\}$ | 3 |
 | $\{\text{Bread}, \text{Beer}\}$ | 2 |
@@ -416,14 +390,14 @@ From the frequent 1-itemsets, count candidate 2-itemsets.
 Frequent 2-itemsets are 
 <details>
 <summary>Answer</summary>
-those with count at least 3.
+those with support cardinality at least 3.
 </details>
 
 # The Apriori Algorithm
 
 Initialize:
 
-$$F_1 = \{i \mid i \in I \land \sigma(\{i\}) \geq N \times \text{minsup}\}$$
+$$F_1 = \{i \mid i \in I \land \sigma(\{i\}) \geq N \times \text{minSup}\}$$
 
 Then repeat for $k=2,3,\ldots$:
 
@@ -435,7 +409,7 @@ for each transaction t in T:
     for each candidate itemset c in Ct:
         sigma(c) = sigma(c) + 1
 
-Fk = {c | c in Ck and sigma(c) >= N * minsup}
+Fk = {c | c in Ck and sigma(c) >= N * minSup}
 ```
 
 Stop when no new frequent itemsets are generated.
@@ -445,7 +419,7 @@ Stop when no new frequent itemsets are generated.
 ::::{.columns}
 :::{.column width="50%"}
 
-A frequent itemset is **maximal** if none of its adjacent supersets is frequent.
+A frequent itemset is **maximal** if none of its proper supersets is frequent.
 
 Maximal frequent itemsets define the border between:
 
@@ -470,10 +444,10 @@ flowchart BT
 
   AB["{A,B}"]
   AC["{A,C}"]
-  AD["{A,D}"]
+  AD["{A,D}<br/>maximal"]
   BC["{B,C}"]
   BD["{B,D}<br/>maximal"]
-  CD["{C,D}"]
+  CD["{C,D}<br/>maximal"]
 
   ABC["{A,B,C}<br/>maximal"]
   ABD["{A,B,D}<br/>infrequent"]
@@ -518,8 +492,8 @@ flowchart BT
   classDef frequent fill:#dcfce7,stroke:#15803d,color:#14532d
   classDef infrequent fill:#f3f4f6,stroke:#6b7280,color:#4b5563,stroke-dasharray: 5 5
   classDef maximal fill:#fef3c7,stroke:#d97706,color:#451a03,stroke-width:3px
-  class empty,A,B,C,D,AB,AC,AD,BC,CD frequent
-  class BD,ABC maximal
+  class empty,A,B,C,D,AB,AC,BC frequent
+  class AD,BD,CD,ABC maximal
   class ABD,ACD,BCD,ABCD infrequent
 ```
 :::
@@ -549,7 +523,7 @@ Limitation:
 
 # Closed Itemset
 
-An itemset is **closed** if none of its adjacent supersets has the same support.
+An itemset is **closed** if none of its proper supersets has the same support.
 
 ::::{.columns}
 :::{.column width="50%"}
@@ -564,7 +538,7 @@ Example transaction set:
 | 4 | $\{A,B,D\}$ |
 | 5 | $\{A,B,C,D\}$ |
 
-In this example, itemsets are closed only when every adjacent superset has lower support.
+In this example, itemsets are closed only when every proper superset has lower support.
 
 :::
 :::{.column width="50%"}
@@ -746,26 +720,9 @@ flowchart BT
 :::
 ::::
 
-# Closed vs Maximal Itemsets: Efficiency
-
-From an efficiency point of view, closed and maximal itemsets provide more compact representations than all frequent itemsets.
-
-- They are fewer than frequent itemsets
-- This matters when the number of itemsets is very high
-- Only closed itemsets determine a lossless compression of frequent patterns
-- Closed itemsets contain complete support information for the frequent itemsets they represent
-
-# Closed vs Maximal Itemsets: Semantics
-
-From the semantic point of view:
-
-- **Maximal itemsets** are the most complex events that characterize the domain for a given support threshold
-- Non-maximal itemsets can be considered partial descriptions or construction steps of the maximal event
-- **Closed itemsets** preserve support information and therefore provide a more faithful representation of the frequent-pattern structure
-
 # Frequent Itemset Exercise
 
-Given the lattice and transaction list, label each node assuming $s()=30\%$:
+Given the lattice and transaction list, label each node assuming `minSup` $=30\%$:
 
 - **M**: maximal frequent
 - **C**: closed frequent
@@ -800,31 +757,13 @@ For $L=\{A,B,C,D\}$, candidate rules include:
 
 If $|L|=k$, there are $2^k-2$ candidate association rules, excluding $L \to \emptyset$ and $\emptyset \to L$.
 
-# Association Rules: From Itemsets to Actions
-
-For the frequent itemset:
-
-$$L=\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}$$
-
-candidate rules include:
-
-- $\{\text{Pasta}, \text{Tomato Sauce}\} \to \{\text{Parmesan}\}$
-- $\{\text{Pasta}, \text{Parmesan}\} \to \{\text{Tomato Sauce}\}$
-- $\{\text{Tomato Sauce}\} \to \{\text{Pasta}, \text{Parmesan}\}$
-
-The same itemset can generate rules with different marketing meanings:
-
-- Recommend Parmesan when pasta and sauce are already in the basket
-- Discount tomato sauce to shoppers who often buy pasta and Parmesan
-- Avoid over-interpreting a rule if the consequent is already very popular for everyone
-
 # Rule Generation: Confidence Pruning
 
 When rules are generated from the same frequent itemset, the numerator is always the same.
 
 For $L=\{A,B,C,D\}$, assume:
 
-| Itemset | Support count |
+| Itemset | Support cardinality |
 |---|---:|
 | $ABCD$ | 6 |
 | $ABC$ | 8 |
@@ -839,11 +778,11 @@ Then:
 | $AB \to CD$ | $6/12 = 50\%$ |
 | $A \to BCD$ | $6/20 = 30\%$ |
 
-As the consequent gets larger, the antecedent gets smaller and its support count cannot decrease, so confidence cannot increase.
+As the consequent gets larger, the antecedent gets smaller and its support cardinality cannot decrease, so confidence cannot increase.
 
 # Confidence Pruning: Example
 
-Suppose `minconf = 60%`.
+Suppose `minConf = 60%`.
 
 - $ABC \to D$ passes because $75\% \geq 60\%$
 - $AB \to CD$ fails because $50\% < 60\%$
@@ -936,7 +875,7 @@ To avoid generating rules with limited confidence, use a tiered approach.
 
 Example:
 
-- Rule $D \to ABC$ can be pruned if $AD \to BC$ has confidence below `minconf`
+- Rule $D \to ABC$ can be pruned if $AD \to BC$ has confidence below `minConf`
 
 # Interestingness
 
@@ -987,7 +926,7 @@ Example: a large commercial chain sells products priced from 1 euro to 10,000 eu
 
 # Datasets With Inhomogeneous Support: Threshold Choice
 
-Setting `minsup` is difficult when item supports differ strongly.
+Setting `minSup` is difficult when item supports differ strongly.
 
 If the threshold is too high:
 
@@ -1091,7 +1030,7 @@ Consider a dataset with two patterns:
 - $R_1: \text{Age} \in [16,24) \to \text{Chat online}=Y$ with $s=8.8\%$ and $c=81.5\%$
 - $R_2: \text{Age} \in [44,60) \to \text{Chat online}=N$ with $s=16.8\%$ and $c=81.5\%$
 
-Using `minsup = 5%` and `minconf = 65%`:
+Using `minSup = 5%` and `minConf = 65%`:
 
 - Large intervals reduce confidence because groups no longer capture homogeneous behavior
 - Narrow intervals reduce support because each group contains fewer transactions
