@@ -295,20 +295,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Rules discover <strong>co-occurrence</strong>, not causality.</p>
 </section>
 
-<section id="association-rules-applications" class="title-slide slide level1 center">
-<h1>Association Rules Applications</h1>
-<p>Association rules are useful for marketing and sales promotion.</p>
-<ul>
-<li>If <span class="math inline">\(\{\text{Bagels}, \ldots\} \to \{\text{Potato Chips}\}\)</span>, potato chips as the consequent can suggest actions to increase potato chip sales</li>
-<li>Bagels as the antecedent can suggest which products could be affected if the store interrupted bagel sales</li>
-</ul>
-<p>They are also useful for arranging goods.</p>
-<ul>
-<li>Goal: identify products bought together by a sufficiently large number of customers</li>
-<li>Method: use receipt data to identify dependencies between products</li>
-</ul>
-</section>
-
 <section id="market-basket-analysis-what-can-be-done" class="title-slide slide level1 center">
 <h1>Market Basket Analysis: What Can Be Done?</h1>
 <p>Association rules turn transaction data into candidate actions.</p>
@@ -361,7 +347,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li>Example: <span class="math inline">\(s(\{\text{Milk}, \text{Bread}, \text{Diaper}\}) = 2/5\)</span></li>
 </ul>
-<p>A <strong>frequent itemset</strong> has support greater than or equal to a threshold <code>minsup</code>.</p>
+<p>A <strong>frequent itemset</strong> has support greater than or equal to a threshold <code>minSup</code>.</p>
+<p>When the threshold is expressed as a cardinality, we call it the <strong>minimum support cardinality</strong>.</p>
 </section>
 
 <section id="association-rules" class="title-slide slide level1 center">
@@ -378,8 +365,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="association-rules-1" class="title-slide slide level1 center">
-<h1>Association Rules</h1>
+<section id="association-rules-computing-measures" class="title-slide slide level1 center">
+<h1>Association Rules: Computing Measures</h1>
 <p>For <span class="math inline">\(\{\text{Milk}, \text{Diaper}\} \to \{\text{Beer}\}\)</span>:</p>
 <p><span class="math display">\[s = \frac{\sigma(\text{Milk}, \text{Diaper}, \text{Beer})}{|T|} = \frac{2}{5} = 0.4\]</span></p>
 <p><span class="math display">\[c = \frac{\sigma(\text{Milk}, \text{Diaper}, \text{Beer})}{\sigma(\text{Milk}, \text{Diaper})} = \frac{2}{3} = 0.67\]</span></p>
@@ -390,20 +377,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>So the rule is correct for two thirds of the transactions where the antecedent appears.</p>
 </section>
 
-<section id="association-rules-marketing-interpretation" class="title-slide slide level1 center">
-<h1>Association Rules: Marketing Interpretation</h1>
-<p>Consider:</p>
-<p><span class="math display">\[\{\text{Coffee Beans}\} \to \{\text{Chocolate}\}\]</span></p>
-<p>with support <span class="math inline">\(8\%\)</span> and confidence <span class="math inline">\(35\%\)</span>.</p>
-<ul>
-<li><strong>Support <span class="math inline">\(8\%\)</span></strong>: the pair occurs in enough baskets to matter operationally</li>
-<li><strong>Confidence <span class="math inline">\(35\%\)</span></strong>: among customers buying coffee beans, more than one third also buy chocolate</li>
-<li><strong>Possible action</strong>: recommend chocolate to coffee buyers, test an end-cap display, or send a coupon after a coffee purchase</li>
-</ul>
-<p>A high-confidence rule with very low support may be too rare for a campaign.</p>
-<p>A moderate-confidence rule with high support can still be valuable because it affects many customers.</p>
-</section>
-
 <section id="support-and-confidence-statistical-interpretation" class="title-slide slide level1 center">
 <h1>Support and Confidence: Statistical Interpretation</h1>
 <p>Support indicates the probability that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> appear together in a transaction.</p>
@@ -412,8 +385,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p><span class="math display">\[c(X \to Y)=P(Y \mid X)=\frac{P(X \cup Y)}{P(X)}\]</span></p>
 </section>
 
-<section id="exercise" class="title-slide slide level1 center">
-<h1>Exercise</h1>
+<section id="checkpoint-support-and-confidence" class="title-slide slide level1 center">
+<h1>Checkpoint: Support and Confidence</h1>
 <p>Given the following transactions, compute:</p>
 <ul>
 <li>The itemset support for <span class="math inline">\(\{E\}\)</span>, <span class="math inline">\(\{B,D\}\)</span>, and <span class="math inline">\(\{B,D,E\}\)</span></li>
@@ -471,14 +444,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Problem Formulation</h1>
 <p>Given a set of transactions <span class="math inline">\(T\)</span>, find all association rules such that:</p>
 <ul>
-<li>Support &gt;= <code>minsup</code></li>
-<li>Confidence &gt;= <code>minconf</code></li>
+<li>Support &gt;= <code>minSup</code></li>
+<li>Confidence &gt;= <code>minConf</code></li>
 </ul>
 <p>Naive approach:</p>
 <ul>
 <li>List all possible association rules</li>
 <li>For each rule, compute support and confidence</li>
-<li>Remove rules that do not meet <code>minsup</code> and <code>minconf</code></li>
+<li>Remove rules that do not meet <code>minSup</code> and <code>minConf</code></li>
 </ul>
 <p>This is computationally prohibitive.</p>
 </section>
@@ -536,7 +509,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ol type="1">
 <li><strong>Generate frequent itemsets</strong>
 <ul>
-<li>Generate all itemsets with support at least <code>minsup</code></li>
+<li>Generate all itemsets with support at least <code>minSup</code></li>
 </ul></li>
 <li><strong>Generate rules</strong>
 <ul>
@@ -749,17 +722,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div></div>
-<p>Apriori uses this property to avoid exploring branches of the itemset lattice that cannot satisfy <code>minsup</code>.</p>
+<p>Apriori uses this property to avoid exploring branches of the itemset lattice that cannot satisfy <code>minSup</code>.</p>
 </section>
 
 <section id="apriori-example-candidate-counts" class="title-slide slide level1 center">
 <h1>Apriori Example: Candidate Counts</h1>
-<p>With <code>minsup = 3</code>, first count individual items.</p>
+<p>With minimum support cardinality equal to 3, first count individual items.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th>Item</th>
-<th style="text-align: right;">Count</th>
+<th style="text-align: right;">Support cardinality</th>
 </tr>
 </thead>
 <tbody>
@@ -805,7 +778,7 @@ Bread, Milk, Beer, and Diaper.
 <thead>
 <tr class="header">
 <th>Itemset</th>
-<th style="text-align: right;">Count</th>
+<th style="text-align: right;">Support cardinality</th>
 </tr>
 </thead>
 <tbody>
@@ -840,14 +813,14 @@ Frequent 2-itemsets are
 <summary>
 Answer
 </summary>
-those with count at least 3.
+those with support cardinality at least 3.
 </details>
 </section>
 
 <section id="the-apriori-algorithm" class="title-slide slide level1 center">
 <h1>The Apriori Algorithm</h1>
 <p>Initialize:</p>
-<p><span class="math display">\[F_1 = \{i \mid i \in I \land \sigma(\{i\}) \geq N \times \text{minsup}\}\]</span></p>
+<p><span class="math display">\[F_1 = \{i \mid i \in I \land \sigma(\{i\}) \geq N \times \text{minSup}\}\]</span></p>
 <p>Then repeat for <span class="math inline">\(k=2,3,\ldots\)</span>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Ck = apriori-gen(Fk-1)</span>
 <span id="cb1-2"><a href="" aria-label="2"></a></span>
@@ -856,7 +829,7 @@ those with count at least 3.
 <span id="cb1-5"><a href="" aria-label="5"></a>    for each candidate itemset c in Ct:</span>
 <span id="cb1-6"><a href="" aria-label="6"></a>        sigma(c) = sigma(c) + 1</span>
 <span id="cb1-7"><a href="" aria-label="7"></a></span>
-<span id="cb1-8"><a href="" aria-label="8"></a>Fk = {c | c in Ck and sigma(c) &gt;= N * minsup}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="" aria-label="8"></a>Fk = {c | c in Ck and sigma(c) &gt;= N * minSup}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Stop when no new frequent itemsets are generated.</p>
 </section>
 
@@ -864,7 +837,7 @@ those with count at least 3.
 <h1>Frequent Maximal Itemset</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>A frequent itemset is <strong>maximal</strong> if none of its adjacent supersets is frequent.</p>
+<p>A frequent itemset is <strong>maximal</strong> if none of its proper supersets is frequent.</p>
 <p>Maximal frequent itemsets define the border between:</p>
 <ul>
 <li>Frequent itemsets</li>
@@ -887,10 +860,10 @@ those with count at least 3.
 
   AB["{A,B}"]
   AC["{A,C}"]
-  AD["{A,D}"]
+  AD["{A,D}&lt;br/&gt;maximal"]
   BC["{B,C}"]
   BD["{B,D}&lt;br/&gt;maximal"]
-  CD["{C,D}"]
+  CD["{C,D}&lt;br/&gt;maximal"]
 
   ABC["{A,B,C}&lt;br/&gt;maximal"]
   ABD["{A,B,D}&lt;br/&gt;infrequent"]
@@ -935,8 +908,8 @@ those with count at least 3.
   classDef frequent fill:#dcfce7,stroke:#15803d,color:#14532d
   classDef infrequent fill:#f3f4f6,stroke:#6b7280,color:#4b5563,stroke-dasharray: 5 5
   classDef maximal fill:#fef3c7,stroke:#d97706,color:#451a03,stroke-width:3px
-  class empty,A,B,C,D,AB,AC,AD,BC,CD frequent
-  class BD,ABC maximal
+  class empty,A,B,C,D,AB,AC,BC frequent
+  class AD,BD,CD,ABC maximal
   class ABD,ACD,BCD,ABCD infrequent
 </pre>
 </div>
@@ -973,7 +946,7 @@ those with count at least 3.
 
 <section id="closed-itemset" class="title-slide slide level1 center">
 <h1>Closed Itemset</h1>
-<p>An itemset is <strong>closed</strong> if none of its adjacent supersets has the same support.</p>
+<p>An itemset is <strong>closed</strong> if none of its proper supersets has the same support.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Example transaction set:</p>
@@ -1007,7 +980,7 @@ those with count at least 3.
 </tr>
 </tbody>
 </table>
-<p>In this example, itemsets are closed only when every adjacent superset has lower support.</p>
+<p>In this example, itemsets are closed only when every proper superset has lower support.</p>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -1244,30 +1217,9 @@ those with count at least 3.
 </div></div>
 </section>
 
-<section id="closed-vs-maximal-itemsets-efficiency" class="title-slide slide level1 center">
-<h1>Closed vs Maximal Itemsets: Efficiency</h1>
-<p>From an efficiency point of view, closed and maximal itemsets provide more compact representations than all frequent itemsets.</p>
-<ul>
-<li>They are fewer than frequent itemsets</li>
-<li>This matters when the number of itemsets is very high</li>
-<li>Only closed itemsets determine a lossless compression of frequent patterns</li>
-<li>Closed itemsets contain complete support information for the frequent itemsets they represent</li>
-</ul>
-</section>
-
-<section id="closed-vs-maximal-itemsets-semantics" class="title-slide slide level1 center">
-<h1>Closed vs Maximal Itemsets: Semantics</h1>
-<p>From the semantic point of view:</p>
-<ul>
-<li><strong>Maximal itemsets</strong> are the most complex events that characterize the domain for a given support threshold</li>
-<li>Non-maximal itemsets can be considered partial descriptions or construction steps of the maximal event</li>
-<li><strong>Closed itemsets</strong> preserve support information and therefore provide a more faithful representation of the frequent-pattern structure</li>
-</ul>
-</section>
-
 <section id="frequent-itemset-exercise" class="title-slide slide level1 center">
 <h1>Frequent Itemset Exercise</h1>
-<p>Given the lattice and transaction list, label each node assuming <span class="math inline">\(s()=30\%\)</span>:</p>
+<p>Given the lattice and transaction list, label each node assuming <code>minSup</code> <span class="math inline">\(=30\%\)</span>:</p>
 <ul>
 <li><strong>M</strong>: maximal frequent</li>
 <li><strong>C</strong>: closed frequent</li>
@@ -1329,24 +1281,6 @@ those with count at least 3.
 <p>If <span class="math inline">\(|L|=k\)</span>, there are <span class="math inline">\(2^k-2\)</span> candidate association rules, excluding <span class="math inline">\(L \to \emptyset\)</span> and <span class="math inline">\(\emptyset \to L\)</span>.</p>
 </section>
 
-<section id="association-rules-from-itemsets-to-actions" class="title-slide slide level1 center">
-<h1>Association Rules: From Itemsets to Actions</h1>
-<p>For the frequent itemset:</p>
-<p><span class="math display">\[L=\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}\]</span></p>
-<p>candidate rules include:</p>
-<ul>
-<li><span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}\} \to \{\text{Parmesan}\}\)</span></li>
-<li><span class="math inline">\(\{\text{Pasta}, \text{Parmesan}\} \to \{\text{Tomato Sauce}\}\)</span></li>
-<li><span class="math inline">\(\{\text{Tomato Sauce}\} \to \{\text{Pasta}, \text{Parmesan}\}\)</span></li>
-</ul>
-<p>The same itemset can generate rules with different marketing meanings:</p>
-<ul>
-<li>Recommend Parmesan when pasta and sauce are already in the basket</li>
-<li>Discount tomato sauce to shoppers who often buy pasta and Parmesan</li>
-<li>Avoid over-interpreting a rule if the consequent is already very popular for everyone</li>
-</ul>
-</section>
-
 <section id="rule-generation-confidence-pruning" class="title-slide slide level1 center">
 <h1>Rule Generation: Confidence Pruning</h1>
 <p>When rules are generated from the same frequent itemset, the numerator is always the same.</p>
@@ -1355,7 +1289,7 @@ those with count at least 3.
 <thead>
 <tr class="header">
 <th>Itemset</th>
-<th style="text-align: right;">Support count</th>
+<th style="text-align: right;">Support cardinality</th>
 </tr>
 </thead>
 <tbody>
@@ -1400,12 +1334,12 @@ those with count at least 3.
 </tr>
 </tbody>
 </table>
-<p>As the consequent gets larger, the antecedent gets smaller and its support count cannot decrease, so confidence cannot increase.</p>
+<p>As the consequent gets larger, the antecedent gets smaller and its support cardinality cannot decrease, so confidence cannot increase.</p>
 </section>
 
 <section id="confidence-pruning-example" class="title-slide slide level1 center">
 <h1>Confidence Pruning: Example</h1>
-<p>Suppose <code>minconf = 60%</code>.</p>
+<p>Suppose <code>minConf = 60%</code>.</p>
 <ul>
 <li><span class="math inline">\(ABC \to D\)</span> passes because <span class="math inline">\(75\% \geq 60\%\)</span></li>
 <li><span class="math inline">\(AB \to CD\)</span> fails because <span class="math inline">\(50\% &lt; 60\%\)</span></li>
@@ -1500,7 +1434,7 @@ those with count at least 3.
 </ul>
 <p>Example:</p>
 <ul>
-<li>Rule <span class="math inline">\(D \to ABC\)</span> can be pruned if <span class="math inline">\(AD \to BC\)</span> has confidence below <code>minconf</code></li>
+<li>Rule <span class="math inline">\(D \to ABC\)</span> can be pruned if <span class="math inline">\(AD \to BC\)</span> has confidence below <code>minConf</code></li>
 </ul>
 </section>
 
@@ -1577,7 +1511,7 @@ those with count at least 3.
 
 <section id="datasets-with-inhomogeneous-support-threshold-choice" class="title-slide slide level1 center">
 <h1>Datasets With Inhomogeneous Support: Threshold Choice</h1>
-<p>Setting <code>minsup</code> is difficult when item supports differ strongly.</p>
+<p>Setting <code>minSup</code> is difficult when item supports differ strongly.</p>
 <p>If the threshold is too high:</p>
 <ul>
 <li>Associations among low-support items are missed</li>
@@ -1678,7 +1612,7 @@ those with count at least 3.
 <li><span class="math inline">\(R_1: \text{Age} \in [16,24) \to \text{Chat online}=Y\)</span> with <span class="math inline">\(s=8.8\%\)</span> and <span class="math inline">\(c=81.5\%\)</span></li>
 <li><span class="math inline">\(R_2: \text{Age} \in [44,60) \to \text{Chat online}=N\)</span> with <span class="math inline">\(s=16.8\%\)</span> and <span class="math inline">\(c=81.5\%\)</span></li>
 </ul>
-<p>Using <code>minsup = 5%</code> and <code>minconf = 65%</code>:</p>
+<p>Using <code>minSup = 5%</code> and <code>minConf = 65%</code>:</p>
 <ul>
 <li>Large intervals reduce confidence because groups no longer capture homogeneous behavior</li>
 <li>Narrow intervals reduce support because each group contains fewer transactions</li>
