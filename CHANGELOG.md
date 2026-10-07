@@ -1,3 +1,14 @@
+## [1.0.57](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.56...1.0.57) (2026-10-07)
+
+### Dependency updates
+
+* **deps:** update w4bo/quarto-slides docker tag to v1.0.32 ([#43](https://github.com/w4bo/AA2627-unibo-mldm/issues/43)) ([ce94820](https://github.com/w4bo/AA2627-unibo-mldm/commit/ce948208c2df8a7922cf9c6dc17c4a36a7638d39))
+
+### Bug Fixes
+
+* error in maximal itemset chart ([8114fc6](https://github.com/w4bo/AA2627-unibo-mldm/commit/8114fc6093b55c4159a03bd141d921ef0f2fa6e7))
+* typos ([e51c83f](https://github.com/w4bo/AA2627-unibo-mldm/commit/e51c83f437180c9b6eb4edb4dc0cf0b944fbca70))
+
 ## [1.0.56](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.55...1.0.56) (2026-10-06)
 
 ### Bug Fixes
