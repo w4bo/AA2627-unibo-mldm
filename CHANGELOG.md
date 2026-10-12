@@ -1,3 +1,18 @@
+## [1.0.58](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.57...1.0.58) (2026-10-12)
+
+### Dependency updates
+
+* **deps:** update slides/refs digest to 211532d ([#37](https://github.com/w4bo/AA2627-unibo-mldm/issues/37)) ([b64e31d](https://github.com/w4bo/AA2627-unibo-mldm/commit/b64e31d633733fd759a4dedba5c78f6d25613201))
+* **deps:** update slides/utils digest to 5739861 ([#41](https://github.com/w4bo/AA2627-unibo-mldm/issues/41)) ([c3b2680](https://github.com/w4bo/AA2627-unibo-mldm/commit/c3b2680d1d08c73dea37d800593b658afab43be4))
+
+### Bug Fixes
+
+* update outline ([051f020](https://github.com/w4bo/AA2627-unibo-mldm/commit/051f0206eb2cfb4e8ede83ee5041fffec88c0e4c))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v7.1.0 ([#44](https://github.com/w4bo/AA2627-unibo-mldm/issues/44)) ([43dc1ae](https://github.com/w4bo/AA2627-unibo-mldm/commit/43dc1aec3548f052513305e0b74a3a1d7c0f3222))
+
 ## [1.0.57](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.56...1.0.57) (2026-10-07)
 
 ### Dependency updates
