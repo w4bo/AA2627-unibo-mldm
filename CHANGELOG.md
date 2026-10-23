@@ -1,3 +1,25 @@
+## [1.0.59](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.58...1.0.59) (2026-10-23)
+
+### Dependency updates
+
+* **deps:** update node.js to 24.22 ([#45](https://github.com/w4bo/AA2627-unibo-mldm/issues/45)) ([830cb7c](https://github.com/w4bo/AA2627-unibo-mldm/commit/830cb7c4c407676b64c8811764b465ddb27b05f8))
+* **deps:** update slides/refs digest to 6c056c0 ([#48](https://github.com/w4bo/AA2627-unibo-mldm/issues/48)) ([6996682](https://github.com/w4bo/AA2627-unibo-mldm/commit/69966825ff6c0d4edc10984edffdd2dc7cc8a883))
+* **deps:** update slides/refs digest to 7fc1ce4 ([#46](https://github.com/w4bo/AA2627-unibo-mldm/issues/46)) ([6b7d39d](https://github.com/w4bo/AA2627-unibo-mldm/commit/6b7d39da720ce29df3b09fa40193ae744c66bb8a))
+* **deps:** update slides/refs digest to a5e468f ([#47](https://github.com/w4bo/AA2627-unibo-mldm/issues/47)) ([5d15604](https://github.com/w4bo/AA2627-unibo-mldm/commit/5d15604d0080a9025b7bc6b9b35988ab40482f8c))
+* **deps:** update slides/refs digest to b2f0eab ([#49](https://github.com/w4bo/AA2627-unibo-mldm/issues/49)) ([7733d53](https://github.com/w4bo/AA2627-unibo-mldm/commit/7733d53d88ae6765fcbf2bf891e7a7de99e6e8e6))
+
+### Bug Fixes
+
+* improve examples ([a2180fb](https://github.com/w4bo/AA2627-unibo-mldm/commit/a2180fb72ccdd758588618cb9f16cb4ff7f075a7))
+* improve examples ([8e6f375](https://github.com/w4bo/AA2627-unibo-mldm/commit/8e6f3759260ef8795302b037e09835b759b80fb9))
+* improve examples ([5ab08fa](https://github.com/w4bo/AA2627-unibo-mldm/commit/5ab08fa408edc1b9a4c3f9d063061b9c1bb41bbc))
+
+### General maintenance
+
+* add hype cycles ([e0c7059](https://github.com/w4bo/AA2627-unibo-mldm/commit/e0c705985189cafb84e9746751d3530da14c1bee))
+* add hype cycles ([fbcc631](https://github.com/w4bo/AA2627-unibo-mldm/commit/fbcc631ff1f1806482fe955ad5e43b265574fc72))
+* fix typos ([25b0e42](https://github.com/w4bo/AA2627-unibo-mldm/commit/25b0e42f293cab64f30ec28ca244ab63ba8079bb))
+
 ## [1.0.58](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.57...1.0.58) (2026-10-12)
 
 ### Dependency updates
