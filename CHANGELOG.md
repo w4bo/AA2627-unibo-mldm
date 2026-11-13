@@ -1,3 +1,24 @@
+## [1.0.60](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.59...1.0.60) (2026-11-13)
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.158 ([#55](https://github.com/w4bo/AA2627-unibo-mldm/issues/55)) ([7b54c6c](https://github.com/w4bo/AA2627-unibo-mldm/commit/7b54c6c355b58c19a7f957dfe59181ea67f97b3a))
+* **deps:** update node.js to v26 ([#52](https://github.com/w4bo/AA2627-unibo-mldm/issues/52)) ([63e42bf](https://github.com/w4bo/AA2627-unibo-mldm/commit/63e42bf395918615f1d5568146a513fe61fc33ab))
+* **deps:** update slides/refs digest to 2853218 ([#57](https://github.com/w4bo/AA2627-unibo-mldm/issues/57)) ([7771375](https://github.com/w4bo/AA2627-unibo-mldm/commit/777137571a718942b48cb9e6ced39949e2f44299))
+* **deps:** update slides/refs digest to 3c3e459 ([#51](https://github.com/w4bo/AA2627-unibo-mldm/issues/51)) ([e6a8ce8](https://github.com/w4bo/AA2627-unibo-mldm/commit/e6a8ce8433cba9938c661781646a82a0a1554296))
+* **deps:** update slides/refs digest to 835162f ([#56](https://github.com/w4bo/AA2627-unibo-mldm/issues/56)) ([805c2fa](https://github.com/w4bo/AA2627-unibo-mldm/commit/805c2fac96b78db4d7b9e65f7d10987bcc64da52))
+* **deps:** update slides/refs digest to cb8e19e ([#53](https://github.com/w4bo/AA2627-unibo-mldm/issues/53)) ([5b9c643](https://github.com/w4bo/AA2627-unibo-mldm/commit/5b9c643675a3437541119e764332a368fb565ffa))
+* **deps:** update slides/refs digest to fcf0966 ([#50](https://github.com/w4bo/AA2627-unibo-mldm/issues/50)) ([7ee9e86](https://github.com/w4bo/AA2627-unibo-mldm/commit/7ee9e8676da5c8b00ebbc2f0c4233a49d095e83b))
+
+### Bug Fixes
+
+* fix typos ([61a4fcf](https://github.com/w4bo/AA2627-unibo-mldm/commit/61a4fcf2a7f930636272e267c95afb0525caa78b))
+
+### General maintenance
+
+* add alias ([6c93b6b](https://github.com/w4bo/AA2627-unibo-mldm/commit/6c93b6bef6bea06e5e3f519b8b5a374a686c08bd))
+* add index.html ([9290377](https://github.com/w4bo/AA2627-unibo-mldm/commit/9290377d9386cbaed6347a253a78ea9aff15c570))
+
 ## [1.0.59](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.58...1.0.59) (2026-10-23)
 
 ### Dependency updates
