@@ -1,3 +1,9 @@
+## [1.0.61](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.60...1.0.61) (2026-11-13)
+
+### Bug Fixes
+
+* fix nn ([8c36f1a](https://github.com/w4bo/AA2627-unibo-mldm/commit/8c36f1a825307b62aa6980807c34fc346da4f1c7))
+
 ## [1.0.60](https://github.com/w4bo/AA2627-unibo-mldm/compare/1.0.59...1.0.60) (2026-11-13)
 
 ### Dependency updates
