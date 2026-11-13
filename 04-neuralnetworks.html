@@ -271,7 +271,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="intuition-compose-simple-computational-units" class="title-slide slide level1 center">
 <h1>Intuition: compose simple computational units</h1>
-<p><em>Neural Networks</em> (NN): the key idea is to imitate, as far as possible, the neurons of the human brain</p>
+<p><em>Neural Networks</em> (NN) are computational models loosely inspired by biological neurons.</p>
 <ul>
 <li><em>Networks</em> since neurons are connected to each other</li>
 <li>Several scientific studies reported the structure of the biological neuron:</li>
@@ -288,8 +288,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Formal definition: artificial neuron</h1>
 <div class="columns">
 <div class="column" style="width:55%;">
-<p>The scheme about the neuron was introduced by <span class="citation" data-cites="mcculloch1943logical">(<a href="#/references" role="doc-biblioref" onclick="">McCulloch and Pitts 1943</a>)</span></p>
-<p>The first Artificial Neuron (AN) was introduced by <em>Rosenblatt</em> in 1957</p>
+<p>An early artificial-neuron model was introduced by McCulloch and Pitts in 1943 <span class="citation" data-cites="mcculloch1943logical">(<a href="#/references" role="doc-biblioref" onclick="">McCulloch and Pitts 1943</a>)</span>.</p>
+<p>The <em>perceptron</em> was introduced by <em>Rosenblatt</em> in 1957.</p>
 <ul>
 <li><em>Inputs</em> are digital numbers (not analog signals)</li>
 <li>Inputs are <em>weighted</em> (signals are not all equally important)</li>
@@ -487,11 +487,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>An <em>output layer</em> (output of the network)</li>
 <li>One or more <em>hidden layer(s)</em></li>
 </ul>
-<p>Each neuron is fully connected to those of the next level.</p>
+<p>In a <strong>fully connected MLP</strong>, each neuron connects to every neuron in the next layer.</p>
 <ul>
-<li>Again, we try to imitate the hierarchical nature of our neurons</li>
-<li>We have “only” about ten levels between the retina and the actuator muscles.</li>
-<li>… otherwise, we would be too slow to react to stimuli.</li>
+<li>Hidden layers compose transformations of the inputs</li>
+<li>Nonlinear activations allow nonlinear decision boundaries</li>
 </ul>
 </div><div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-center">
@@ -570,36 +569,32 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="universal-approximation-theorem" class="title-slide slide level1 center">
 <h1>Universal Approximation Theorem</h1>
-<p><strong>Universal Approximation Theorem</strong>: a neural network with <em>at least 1 hidden layer</em> can approximate any continuous function <em>to any desired degree of accuracy</em>, given <em>sufficient neurons</em> in that hidden layer, the <em>right weights and biases</em>, and a <em>non-polynomial activation</em> function.</p>
+<p><strong>Universal Approximation Theorem</strong>: a feedforward network with <em>one hidden layer</em> can approximate any continuous function <em>uniformly on a compact domain</em> to any desired accuracy, given <em>sufficient neurons</em>, the <em>right weights and biases</em>, and a <em>continuous non-polynomial activation</em> function.</p>
 
 <img data-src="img/neuralnetworks/universaltheorem1.svg" class="r-stretch quarto-figure-center"><p class="caption">Universal Approximation Theorem</p><p>Limitations</p>
 <ul>
 <li>The theorem applies to feedforward neural networks with <span class="math inline">\(n\)</span> inputs, a single hidden layer (“shallow” and wide), and 1 output</li>
 <li>Achieving a close approximation might require an impractically large number of neurons, making the network hard to train</li>
 <li>The theorem assumes that the “right” weights and biases exist, but does not address how to find them</li>
-<li>Not applicable to discontinuous functions</li>
+<li>This uniform-approximation statement concerns continuous targets; other approximation results use different assumptions</li>
 </ul>
 </section>
 
-<section id="håstads-switching-lemma-hastad1986almost" class="title-slide slide level1 center">
-<h1>Håstad’s switching lemma <span class="citation" data-cites="hastad1986almost">(<a href="#/references" role="doc-biblioref" onclick="">Hastad 1986</a>)</span></h1>
-<p><strong>Håstad’s switching lemma</strong>: certain functions, while easily represented by deep networks with a modest number of neurons, require an exponentially larger number of neurons to represent accurately if constrained to a single hidden layer.</p>
-<p>“Global” functions are harder to approximate, for instance.</p>
+<section id="depth-and-expressive-power" class="title-slide slide level1 center">
+<h1>Depth and expressive power</h1>
+<p>Deeper neural networks can represent some functions with <strong>fewer neurons</strong> than shallow networks <span class="citation" data-cites="telgarsky2016benefits">(<a href="#/references" role="doc-biblioref" onclick="">Telgarsky 2016</a>)</span>.</p>
 <ul>
-<li>The <em>parity function</em> determines whether the number of 1s in a binary input string is odd or even.</li>
-<li>The <em>majority function</em> outputs 1 if more than half of the input bits are 1, and 0 otherwise.</li>
+<li>Additional layers compose simpler transformations</li>
+<li>The benefit depends on the activation functions, architecture, and target function</li>
 </ul>
-<p>This lemma provides a theoretical foundation for using depth in both circuit complexity and neural networks.</p>
-<ul>
-<li>It justifies the need for a layered structure when working with complex, globally-dependent functions.</li>
-</ul>
+<p>Greater depth does not automatically improve prediction accuracy.</p>
 </section>
 
 <section id="universal-approximation-theorem-kidger2020universal" class="title-slide slide level1 center">
 <h1>Universal Approximation Theorem <span class="citation" data-cites="kidger2020universal">(<a href="#/references" role="doc-biblioref" onclick="">Kidger and Lyons 2020</a>)</span></h1>
-<p><span class="citation" data-cites="kidger2020universal">(<a href="#/references" role="doc-biblioref" onclick="">Kidger and Lyons 2020</a>)</span>: let <span class="math inline">\(n\)</span> be the number of input neurons, <span class="math inline">\(m\)</span> be the number of output neurons, and let <span class="math inline">\(\rho\)</span> be any nonaffine continuous function, with a continuous, nonzero derivative at some point. The class of neural networks of arbitrary depth, width <span class="math inline">\(n + m + 2\)</span> and activation function <span class="math inline">\(\rho\)</span>, is dense in <span class="math inline">\(C(K; R^m)\)</span> for <span class="math inline">\(K \subseteq R^n\)</span> with <span class="math inline">\(K\)</span> compact. This covers any activation function, including polynomial activation functions.</p>
+<p><span class="citation" data-cites="kidger2020universal">(<a href="#/references" role="doc-biblioref" onclick="">Kidger and Lyons 2020</a>)</span>: let <span class="math inline">\(n\)</span> be the number of input neurons, <span class="math inline">\(m\)</span> be the number of output neurons, and let <span class="math inline">\(\rho\)</span> be any nonaffine continuous function, with a continuous, nonzero derivative at some point. The class of neural networks of arbitrary depth, width <span class="math inline">\(n + m + 2\)</span> and activation function <span class="math inline">\(\rho\)</span>, is dense in <span class="math inline">\(C(K; R^m)\)</span> for <span class="math inline">\(K \subseteq R^n\)</span> with <span class="math inline">\(K\)</span> compact. This covers activations satisfying the stated assumptions, including nonaffine polynomial activation functions.</p>
 
-<img data-src="img/neuralnetworks/universaltheorem2.svg" class="r-stretch quarto-figure-center"><p class="caption">Universal Approximation Theorem for Deep Narrow Networks</p><p>This is why deep neural networks work.</p>
+<img data-src="img/neuralnetworks/universaltheorem2.svg" class="r-stretch quarto-figure-center"><p class="caption">Universal Approximation Theorem for Deep Narrow Networks</p><p>The theorem establishes representational capacity for the stated class of activations; it does not guarantee successful training or generalization.</p>
 </section>
 
 <section id="deep-neural-networks-dnn" class="title-slide slide level1 center">
@@ -633,11 +628,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <div class="column" style="width:70%;">
 <p>General considerations about Neural Network architectures</p>
 <ul>
-<li><em>Greater number of hidden layers (therefore neurons)</em>
+<li><em>Greater depth can increase expressive capacity</em>
 <ul>
-<li><em>better performance</em></li>
-<li><em>need for more training data</em></li>
-<li><em>greater computational load</em></li>
+<li>Accuracy, data requirements, and computation depend on the architecture and task</li>
+<li>Width and total neuron count can vary independently of depth</li>
 </ul></li>
 </ul>
 <p>How is it possible to train a neural network?</p>
@@ -830,9 +824,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Typically, batch size is a multiple of the power of two (16, 32, 64,…)</li>
 <li>A too-small batch size can compromise the stability of the learning phase</li>
 <li>The larger the batch size, the more video memory is used! (check your GPU specs)</li>
-<li>Empirically, the batch size may be (at least) equal to the number of classes</li>
+<li>Choose batch size using memory, throughput, and validation behavior; a mini-batch need not contain every class</li>
 </ul>
-<p><strong>#Iterations</strong>: the size of the training set / the batch size</p>
+<p><strong>Updates per epoch</strong>: <span class="math inline">\(\lceil N / \text{batch size}\rceil\)</span> for <span class="math inline">\(N\)</span> training samples, if the final incomplete batch is kept</p>
 <p><strong>Epoch</strong>: the learning procedure is applied to the entire training dataset:</p>
 <ul>
 <li>One epoch means that each sample in the training has had an opportunity to update the weights</li>
@@ -843,16 +837,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="gradient-descent-for-a-single-neuron-the-delta-rule" class="title-slide slide level1 center">
 <h1>Gradient descent for a single neuron: the delta rule</h1>
-<p>We can apply the <em>Widrow-Hoff (delta) Rule</em> on the <em>perceptron</em> (simple gradient descent technique)</p>
-<p>For a neuron <span class="math inline">\(j\)</span> with activation function <span class="math inline">\(g(x)\)</span>, the delta rule for neuron <span class="math inline">\(j\)</span>’s <span class="math inline">\(i\)</span>-th weight <span class="math inline">\(w_{ji}\)</span> is given by</p>
-<p><span class="math inline">\(\Delta w_{ij} = \eta (y_i - \hat{y}_i)g'(h_j)x_i\)</span></p>
+<p>The <em>Widrow-Hoff (delta) rule</em> trains a linear unit with squared error; the generalized delta rule applies to differentiable activations.</p>
+<p>For an output neuron <span class="math inline">\(j\)</span> with differentiable activation <span class="math inline">\(g\)</span> and squared error, the update of its <span class="math inline">\(i\)</span>-th weight <span class="math inline">\(w_{ji}\)</span> is</p>
+<p><span class="math inline">\(\Delta w_{ji} = \eta (y_j - \hat{y}_j)g'(h_j)x_i\)</span></p>
 <ul>
 <li><span class="math inline">\(x_i\)</span> is the <span class="math inline">\(i\)</span>-th input</li>
-<li><span class="math inline">\(h\)</span> is the weighted sum of inputs <span class="math inline">\(h_{j}=\sum _{i}x_{i}w_{ji}\)</span></li>
+<li><span class="math inline">\(h_j\)</span> is the weighted sum of inputs plus bias: <span class="math inline">\(h_{j}=\sum _{i}x_{i}w_{ji}+b_j\)</span></li>
 <li><span class="math inline">\(g'()\)</span> is the derivative of the activation function</li>
-<li><span class="math inline">\(\hat{y}_i\)</span> is the actual output, <span class="math inline">\(y_i\)</span> is the target output</li>
+<li><span class="math inline">\(\hat{y}_j\)</span> is the predicted output, <span class="math inline">\(y_j\)</span> is the target output</li>
 <li><span class="math inline">\(\eta\)</span> is the learning rate</li>
 </ul>
+<p>A hard-threshold perceptron instead uses <span class="math inline">\(\Delta w_{ji}=\eta(y_j-\hat{y}_j)x_i\)</span>; it does not differentiate the step function.</p>
 </section>
 
 <section id="backpropagation" class="title-slide slide level1 center">
@@ -1305,8 +1300,9 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 </div></div>
 </section>
 
-<section id="machine-learning-vs-deep-learning" class="title-slide slide level1 center">
-<h1>Machine Learning vs Deep Learning</h1>
+<section id="conventional-tabular-ml-vs-deep-networks" class="title-slide slide level1 center">
+<h1>Conventional tabular ML vs deep networks</h1>
+<p>Deep learning is part of machine learning; these are task-dependent tendencies.</p>
 <div class="columns">
 <div class="column" style="width:55%;">
 <table class="caption-top">
@@ -1318,40 +1314,40 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <thead>
 <tr class="header">
 <th style="text-align: center;">Element</th>
-<th style="text-align: center;">Machine Learning</th>
-<th style="text-align: center;">Deep Learning</th>
+<th style="text-align: center;">Conventional tabular methods</th>
+<th style="text-align: center;">Deep networks</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><em>Data</em></td>
-<td style="text-align: center;">Large data<br>(~ hundreds)</td>
-<td style="text-align: center;">Huge data<br>(~ thousands)</td>
+<td style="text-align: center;">Can work with limited data</td>
+<td style="text-align: center;">Often needs more data or pretrained models</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><em>Accuracy</em></td>
-<td style="text-align: center;">High accuracy</td>
-<td style="text-align: center;">Best accuracy<br>(high-dimensional data)</td>
+<td style="text-align: center;">Depends on model and task</td>
+<td style="text-align: center;">Depends on architecture and task</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><em>Training time</em></td>
-<td style="text-align: center;">~minutes</td>
-<td style="text-align: center;">~hours, days</td>
+<td style="text-align: center;"><em>Training cost</em></td>
+<td style="text-align: center;">Often lower for tabular tasks</td>
+<td style="text-align: center;">Can be high for large models</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><em>Hardware</em></td>
-<td style="text-align: center;">CPU</td>
-<td style="text-align: center;">GPU</td>
+<td style="text-align: center;">Often CPU</td>
+<td style="text-align: center;">CPU; accelerators help at scale</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><em>Features</em></td>
-<td style="text-align: center;">Manual</td>
-<td style="text-align: center;">Learned</td>
+<td style="text-align: center;">Often engineered</td>
+<td style="text-align: center;">Often learned</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><em>Interpretability</em></td>
-<td style="text-align: center;">Good</td>
-<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Varies by model</td>
+<td style="text-align: center;">Often difficult</td>
 </tr>
 </tbody>
 </table>
@@ -1369,14 +1365,14 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <h1>Hardware for Deep Learning</h1>
 <div class="columns">
 <div class="column" style="width:70%;">
-<p>The training of NN, especially if they are deep, requires specialized hardware:</p>
+<p>Large-scale deep-learning training usually benefits substantially from GPUs or other accelerators:</p>
 <ul>
-<li>Before starting a project with DL, you need to ask if the company/lab has the necessary hardware</li>
+<li>Check the compute requirements of the chosen model and dataset</li>
 </ul>
-<p>Having one or more GPUs available is today a fundamental factor:</p>
+<p>Small neural networks can also train on CPUs.</p>
 <ul>
-<li>GPUs are essential for parallelizing (and therefore speeding up) calculations.</li>
-<li>As seen, the deeper a network is, the more computational load is introduced</li>
+<li>GPUs can speed up the parallel calculations used in training</li>
+<li>Total computation depends on width, depth, operations, and data size, not depth alone</li>
 </ul>
 </div><div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-center">
@@ -1441,14 +1437,14 @@ w_{11},w_{12}\rightarrow z_1\rightarrow h_1\rightarrow z_2\rightarrow h_2\righta
 <div id="ref-cottier2024rising" class="csl-entry" role="listitem">
 Cottier, Ben, Robi Rahman, Loredana Fattorini, Nestor Maslej, Tamay Besiroglu, and David Owen. 2024. <span>“The Rising Costs of Training Frontier AI Models.”</span> <em>arXiv Preprint arXiv:2405.21015</em>.
 </div>
-<div id="ref-hastad1986almost" class="csl-entry" role="listitem">
-Hastad, John. 1986. <span>“Almost Optimal Lower Bounds for Small Depth Circuits.”</span> <em>Proceedings of the Eighteenth Annual ACM Symposium on Theory of Computing</em>, 6–20.
-</div>
 <div id="ref-kidger2020universal" class="csl-entry" role="listitem">
 Kidger, Patrick, and Terry Lyons. 2020. <span>“Universal Approximation with Deep Narrow Networks.”</span> <em>Conference on Learning Theory</em>, 2306–27.
 </div>
 <div id="ref-mcculloch1943logical" class="csl-entry" role="listitem">
 McCulloch, Warren S, and Walter Pitts. 1943. <span>“A Logical Calculus of the Ideas Immanent in Nervous Activity.”</span> <em>The Bulletin of Mathematical Biophysics</em> 5: 115–33.
+</div>
+<div id="ref-telgarsky2016benefits" class="csl-entry" role="listitem">
+Telgarsky, Matus. 2016. <span>“Benefits of Depth in Neural Networks.”</span> <em>Proceedings of the 29th Annual Conference on Learning Theory</em>, Proceedings of machine learning research, vol. 49: 1517–39. <a href="https://proceedings.mlr.press/v49/telgarsky16.html">https://proceedings.mlr.press/v49/telgarsky16.html</a>.
 </div>
 </div>
 </section>
