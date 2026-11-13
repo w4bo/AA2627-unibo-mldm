@@ -161,32 +161,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="learning-priorities" class="title-slide slide level1 center">
-<h1>Learning priorities</h1>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Priority</th>
-<th>What students should be able to do</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Core</strong></td>
-<td>Explain cluster ambiguity, k-means, hierarchical clustering, DBSCAN, and cluster validity</td>
-</tr>
-<tr class="even">
-<td><strong>Practice</strong></td>
-<td>Run one k-means iteration and compare algorithms on shape, density, noise, and interpretability</td>
-</tr>
-</tbody>
-</table>
-</section>
-
 <section id="motivating-problem-discover-customer-segments" class="title-slide slide level1 center">
 <h1>Motivating problem: discover customer segments</h1>
 <p>A mall has customer behavior data but no segment labels.</p>
@@ -204,7 +178,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="suppose-we-observe-a-few-mall-customers-with-no-segment-label" class="title-slide slide level1 center">
 <h1>Suppose we observe a few mall customers with <em>no segment label</em></h1>
-<div id="4b132a5d" class="cell" data-execution_count="1">
+<div id="0147d22f" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 <style scoped="">
@@ -326,7 +300,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="group-profiles-can-be-summarized-with-descriptive-statistics" class="title-slide slide level1 center">
 <h1>Group profiles can be summarized with descriptive statistics</h1>
-<div id="e241ea07" class="cell" data-execution_count="3">
+<div id="8f6c4562" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -397,7 +371,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="clustering-finds-useful-groups-segments-in-unlabeled-data" class="title-slide slide level1 center">
 <h1>Clustering finds useful groups (segments) in unlabeled data</h1>
-<div id="76fc8eec" class="cell" data-execution_count="4">
+<div id="40386d52" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <style scoped="">
@@ -670,7 +644,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="worked-example" class="title-slide slide level1 center">
 <h1>Worked example</h1>
-<div id="0c496e00" class="cell" data-dpi="160" data-execution_count="5">
+<div id="fd358a17" class="cell" data-dpi="160" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -683,7 +657,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="random-starts-can-lead-to-different-final-configurations." class="title-slide slide level1 center">
 <h1>Random starts can lead to different final configurations.</h1>
-<div id="5397e91e" class="cell" data-dpi="160" data-execution_count="6">
+<div id="87786d60" class="cell" data-dpi="160" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -696,7 +670,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="convergence-and-optimality" class="title-slide slide level1 center">
 <h1>Convergence and optimality</h1>
-<div id="2056d677" class="cell" data-dpi="160" data-execution_count="7">
+<div id="a3595568" class="cell" data-dpi="160" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -712,9 +686,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Initial centroids are often chosen randomly.</p>
 <ul>
 <li>Clusters produced vary from one run to another.</li>
-<li><em>Closeness</em> is measured by Euclidean distance, cosine similarity, correlation, etc.</li>
+<li>Standard k-means uses Euclidean distance for assignment and arithmetic means to minimize squared Euclidean error.</li>
 </ul>
-<p>K-means will converge for common distance measures, and most of the convergence happens in the first few iterations.</p>
+<p>Standard Euclidean k-means converges, and most of the improvement often happens in the first few iterations.</p>
 <ul>
 <li>The algorithm can converge to a suboptimal solution</li>
 <li>Often, the stopping condition is relaxed to “Until relatively few points change clusters.”</li>
@@ -742,7 +716,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="importance-of-choosing-initial-centroids" class="title-slide slide level1 center">
 <h1>Importance of Choosing Initial Centroids</h1>
 <p>If there are real <span class="math inline">\(K\)</span> clusters, the probability of choosing a centroid from each cluster is very limited.</p>
-<p>Assuming the clusters have the same cardinality <span class="math inline">\(n\)</span>:</p>
+<p>Assuming <span class="math inline">\(K\)</span> clusters of equal cardinality <span class="math inline">\(n\)</span> and independent uniform draws <strong>with replacement</strong>:</p>
 <ul>
 <li><span class="math inline">\(P=\frac{\text{\# ways of choosing a centroid by cluster}}{\text{\# ways of choosing K centroids}}=\frac{(n)^K \cdot K!}{(n \cdot K)^K}=\frac{K!}{K^K}\)</span>
 <ul>
@@ -750,11 +724,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul></li>
 <li>Sometimes the centroids will reposition themselves correctly, sometimes not…</li>
 </ul>
+<p>When choosing <span class="math inline">\(K\)</span> distinct points <strong>without replacement</strong>, the exact probability is <span class="math inline">\(P=\frac{n^K}{\binom{nK}{K}}\)</span>; <span class="math inline">\(K!/K^K\)</span> is its large-cluster approximation.</p>
 </section>
 
 <section id="clusters-example" class="title-slide slide level1 center">
 <h1>10 clusters example</h1>
-<div id="0b4a9f37" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="8">
+<div id="8d1dc338" class="cell" data-dpi="160" data-fig-height="6" data-fig-width="11" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -802,7 +777,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="k-means-with-outliers-python-example" class="title-slide slide level1 center">
 <h1>K-means with outliers: Python example</h1>
-<div id="655042a8" class="cell" data-dpi="160" data-fig-height="4.3" data-fig-width="10" data-execution_count="9">
+<div id="31e85a23" class="cell" data-dpi="160" data-fig-height="4.3" data-fig-width="10" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -847,7 +822,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="k-means-limits-different-density" class="title-slide slide level1 center">
 <h1>K-means limits: different density</h1>
-<p>Denser clusters lead to smaller intra-cluster distances, so less dense areas require more medians to minimize the total value of SSE.</p>
+<p>Denser clusters lead to smaller intra-cluster distances, so less dense areas may receive more centroids when minimizing SSE.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
@@ -869,7 +844,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="k-means-limits-non-globular-clusters" class="title-slide slide level1 center">
 <h1>K-means limits: non-globular clusters</h1>
 <p>SSE is based on a Euclidean distance that does not take into account the shape of objects</p>
-<div id="af52c2e2" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="10">
+<div id="b676a4ce" class="cell" data-dpi="160" data-fig-height="4.5" data-fig-width="10" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -966,7 +941,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Draw the cluster partitioning and the approximate position of the centroids chosen by the k-means algorithm, assuming that:</p>
 <ul>
 <li>The points are equally distributed</li>
-<li>The distance function is SSE</li>
+<li>Use squared Euclidean distances and minimize the SSE objective</li>
 <li>The value of <span class="math inline">\(k\)</span> is shown below the figures</li>
 </ul>
 
@@ -1169,7 +1144,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="validity-measures" class="title-slide slide level1 center">
 <h1>Validity measures</h1>
-<p>Numerical measures that are applied to judge various aspects of cluster validity are classified into the following three types.</p>
+<p>Numerical measures that are applied to judge various aspects of cluster validity are classified into the following two types.</p>
 <ul>
 <li><strong>Internal Index</strong>: Used to measure the goodness of a clustering structure <em>without respect to external information</em>.
 <ul>
@@ -1246,7 +1221,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>We are looking for non-random patterns, so the more “atypical” the result we get, the more likely it is to represent a non-random pattern in the data</li>
 <li>Therefore, the idea is to compare the value of the measure with that obtained from random data.
 <ul>
-<li>If the value of the measure obtained on the data is unlikely for random data, then the clustering is valid</li>
+<li>An unlikely value under a specified random-data model is evidence against that model; also check cluster stability and domain relevance</li>
 </ul></li>
 </ul>
 <p>The issue of interpreting the measure value is less pressing when comparing the results of two clusters.</p>
@@ -1301,14 +1276,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Procedure:</p>
 <ol type="1">
 <li>Sample some real points from the dataset</li>
-<li>Generate the same number of random points in the data space</li>
+<li>Generate the same number of points uniformly in the axis-aligned bounding box of the data</li>
 <li>For both groups, measure the distance to the nearest real neighbor</li>
-<li>Compare the two distance sums</li>
+<li>Compare sums of distances raised to the data dimension <span class="math inline">\(d\)</span></li>
 </ol>
-<p><span class="math inline">\(H = \frac{\sum_{i=1}^{m} u_i}{\sum_{i=1}^{m} u_i + \sum_{i=1}^{m} w_i}\)</span></p>
+<p><span class="math inline">\(H = \frac{\sum_{i=1}^{m} u_i^d}{\sum_{i=1}^{m} u_i^d + \sum_{i=1}^{m} w_i^d}\)</span></p>
 <ul>
 <li><span class="math inline">\(u_i\)</span>: distance from a random point to the nearest real point</li>
 <li><span class="math inline">\(w_i\)</span>: distance from a real sampled point to the nearest other real point</li>
+<li><span class="math inline">\(d\)</span>: number of Euclidean dimensions; the sampling region defines the reference model</li>
 </ul>
 </section>
 

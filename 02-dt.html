@@ -161,32 +161,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="learning-priorities" class="title-slide slide level1 center">
-<h1>Learning priorities</h1>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Priority</th>
-<th>What students should be able to do</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Core</strong></td>
-<td>Explain the tree representation, root-to-leaf rules, split conditions, impurity, and overfitting</td>
-</tr>
-<tr class="even">
-<td><strong>Practice</strong></td>
-<td>Compute Gini, Entropy, Gain, and GainRatio on a small candidate split</td>
-</tr>
-</tbody>
-</table>
-</section>
-
 <section id="motivating-problem-who-will-churn" class="title-slide slide level1 center">
 <h1>Motivating problem: who will churn?</h1>
 <p><strong>Customer churn</strong> is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.</p>
@@ -1041,7 +1015,7 @@ Predicted class
 
 <section id="learning-the-tree" class="title-slide slide level1 center">
 <h1>Learning the tree</h1>
-<p>The decision tree grows exponentially with the number of attributes.</p>
+<p>In the worst case, tree size can grow exponentially with the number of binary attributes.</p>
 <p>Many algorithms are available:</p>
 <ul>
 <li>Algorithms generally use greedy techniques that locally make the “best” choice.</li>
@@ -1157,7 +1131,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 
 <section id="example" class="title-slide slide level1 center">
 <h1>Example</h1>
-<div id="fe4d5c94" class="cell" data-execution_count="1">
+<div id="0bbfd413" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1192,7 +1166,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </ul>
 <p>Decision trees are robust enough to handle strongly correlated attributes.</p>
 <ul>
-<li>One of the two attributes will not be considered</li>
+<li>Trees can often use one correlated feature in place of another, but may still split on both</li>
 <li>It is also possible to try to discard one of the preprocessing attributes through appropriate feature selection techniques</li>
 </ul>
 </section>
@@ -1360,7 +1334,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 <div class="column" style="width:50%;">
 <p><em>N-ary split</em>: The split condition is expressed as a Boolean test that results in multiple ranges of values.</p>
 <ul>
-<li>The algorithm must consider the entire possible range of values as possible split points</li>
+<li>Candidate boundaries lie between successive distinct observed values</li>
 </ul>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -1384,7 +1358,7 @@ result = <strong>PostPrune</strong>(<em>TreeGrowth</em>(E, F));<br>
 </div><div class="column" style="width:50%;">
 <p><em>Binary split</em>: The split condition is expressed as a binary comparison test.</p>
 <ul>
-<li>The algorithm must consider all values as possible split points</li>
+<li>With <span class="math inline">\(m\)</span> distinct observed values, thresholds between successive values give <span class="math inline">\(m-1\)</span> nonempty binary partitions</li>
 </ul>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -1552,7 +1526,7 @@ Answer
 <h1>Computing Gini for <em>continuous</em> attributes</h1>
 <p>It requires defining the split point using a binary condition.</p>
 <ul>
-<li>The number of possible conditions is equal to the number of distinct values of the attribute.</li>
+<li>With <span class="math inline">\(m\)</span> distinct observed values, there are <span class="math inline">\(m-1\)</span> nonempty binary partitions, obtained by thresholds between successive values.</li>
 <li>We can calculate a count matrix for each split value.
 <ul>
 <li>The matrix counts the elements of each class for attribute values greater than or less than the split value.</li>
@@ -1847,8 +1821,8 @@ Gini(customer\_id)=\sum_{i=1}^{9}\frac{1}{9}\cdot 0=0
 <h1>Decision-tree response to overfitting</h1>
 <p>Decision trees can overfit because repeated splits make the decision boundary increasingly specific to the training data.</p>
 <ul>
-<li>The shared evaluation lecture defines underfitting, overfitting, and generalization error</li>
-<li>Here we focus on tree-specific controls: stopping criteria, pre-pruning, post-pruning, and complexity penalties</li>
+<li>Pruning controls overfitting by limiting tree complexity</li>
+<li>Tree-specific controls include stopping criteria, pre-pruning, post-pruning, and complexity penalties</li>
 </ul>
 </section>
 
@@ -1876,7 +1850,7 @@ Gini(customer\_id)=\sum_{i=1}^{9}\frac{1}{9}\cdot 0=0
 <li>Replace a subtree with a leaf if this reduces the generalization error (i.e., on the validation set)</li>
 <li>Choose to collapse the sub-tree that determines the maximum error reduction (N.B. greedy choice)</li>
 </ul>
-<p>Instances in the new leaf can be tagged based on the label that appears most frequently in the sub-trees</p>
+<p>Assign the new leaf the majority class among the training records reaching the pruned node.</p>
 <p>Post-pruning is more effective but involves more computational cost.</p>
 <ul>
 <li>It is based on the evidence of the result of a complete tree.</li>

@@ -245,32 +245,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="learning-priorities" class="title-slide slide level1 center">
-<h1>Learning priorities</h1>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Priority</th>
-<th>What students should be able to do</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Core</strong></td>
-<td>Explain voting, diversity, bagging, random forests, boosting, and weak learners</td>
-</tr>
-<tr class="even">
-<td><strong>Practice</strong></td>
-<td>Compute majority vote, weighted vote</td>
-</tr>
-</tbody>
-</table>
-</section>
-
 <section id="why-ensemble-classifiers" class="title-slide slide level1 center">
 <h1>Why ensemble classifiers?</h1>
 <p>An <strong>ensemble classifier</strong> combines the predictions of several base classifiers.</p>
@@ -424,7 +398,7 @@ If one classifier assigns confidence 0, a product rule forces the whole combined
 <div class="fragment">
 <p><strong>Changing the attributes</strong></p>
 <ul>
-<li>Train each classifier on a subset of features</li>
+<li>In random forests, each split considers a new random subset of candidate features</li>
 <li>Useful when features are redundant or highly correlated</li>
 <li>Example: random forests</li>
 </ul>
@@ -585,7 +559,49 @@ x \le 0.3 \rightarrow ✅,\qquad x&gt;0.3 \rightarrow ❌
 <p><span class="math display">\[
 x \le 0.7 \rightarrow ❌,\qquad x&gt;0.7 \rightarrow ✅
 \]</span></p>
-<p>The ensemble vote can approximate a more expressive classifier than one stump alone.</p>
+<p>A third bootstrap sample containing only positive records produces a constant-positive classifier <span class="math inline">\(C_0\)</span>.</p>
+<p>The majority vote of these three classifiers recovers the pattern:</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Region</th>
+<th style="text-align: center;">Left-boundary stump</th>
+<th style="text-align: center;">Right-boundary stump</th>
+<th style="text-align: center;"><span class="math inline">\(C_0\)</span></th>
+<th style="text-align: center;">Majority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x \leq 0.3\)</span></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(0.3 &lt; x \leq 0.7\)</span></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(x &gt; 0.7\)</span></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
 </section>
 
 <section id="when-bagging-helps" class="title-slide slide level1 center">
@@ -625,9 +641,11 @@ x \le 0.7 \rightarrow ❌,\qquad x&gt;0.7 \rightarrow ✅
 <h1>Boosting</h1>
 <p><strong>Boosting</strong> builds classifiers sequentially.</p>
 <ul>
-<li>Each new classifier focuses more strongly on the records that previous classifiers handled badly.</li>
+<li>In <strong>AdaBoost</strong>, each new classifier focuses more strongly on misclassified records by increasing their weights.</li>
 <li>Unlike bagging, boosting classifiers are not independent: each round depends on the previous one.</li>
 </ul>
+<p><strong>Gradient boosting</strong> (including XGBoost and LightGBM) fits loss gradients and combines predictions additively.</p>
+<p>AdaBoost workflow:</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -651,14 +669,14 @@ x \le 0.7 \rightarrow ❌,\qquad x&gt;0.7 \rightarrow ✅
 </div>
 </section>
 
-<section id="bagging-vs-boosting" class="title-slide slide level1 center">
-<h1>Bagging vs boosting</h1>
+<section id="bagging-vs-adaboost" class="title-slide slide level1 center">
+<h1>Bagging vs AdaBoost</h1>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th>Aspect</th>
 <th>Bagging</th>
-<th>Boosting</th>
+<th>AdaBoost</th>
 </tr>
 </thead>
 <tbody>

@@ -228,34 +228,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="learning-priorities" class="title-slide slide level1 center">
-<h1>Learning priorities</h1>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Priority</th>
-<th>What students should be able to do</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Core</strong></td>
-<td>Explain itemsets, support, confidence, Apriori, and rule interpretation</td>
-</tr>
-<tr class="even">
-<td><strong>Practice</strong></td>
-<td>Compute supports, confidences, and frequent itemsets on a small transaction table</td>
-</tr>
-</tbody>
-</table>
-</section>
-
-<section id="the-walmart-market-basket-use-case" class="title-slide slide level1 center">
-<h1>The Walmart “market basket” use case</h1>
+<section id="a-market-basket-toy-example" class="title-slide slide level1 center">
+<h1>A market-basket toy example</h1>
+<p>Adapted from Tan, Steinbach, and Kumar, <em>Introduction to Data Mining</em>.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -286,7 +261,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Example rules:</p>
+<p>Candidate rules (not necessarily supported by these transactions):</p>
 <ul>
 <li><span class="math inline">\(\{\text{Diaper}\} \to \{\text{Beer}\}\)</span></li>
 <li><span class="math inline">\(\{\text{Milk}, \text{Bread}\} \to \{\text{Eggs}, \text{Coke}\}\)</span></li>
@@ -355,7 +330,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Association Rules</h1>
 <p>An <strong>association rule</strong> is an implication of the form:</p>
 <p><span class="math display">\[X \to Y\]</span></p>
-<p>where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are itemsets.</p>
+<p>where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are nonempty, disjoint itemsets (<span class="math inline">\(X \cap Y=\emptyset\)</span>).</p>
 <p>Example:</p>
 <p><span class="math display">\[\{\text{Milk}, \text{Diaper}\} \to \{\text{Beer}\}\]</span></p>
 <p>Association rules are evaluated using:</p>
@@ -929,7 +904,7 @@ those with support cardinality at least 3.
 <p>Example with product names:</p>
 <ul>
 <li>If <span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}\)</span> is maximal frequent, then the smaller baskets <span class="math inline">\(\{\text{Pasta}, \text{Tomato Sauce}\}\)</span> and <span class="math inline">\(\{\text{Tomato Sauce}, \text{Parmesan}\}\)</span> are frequent too</li>
-<li>If adding <span class="math inline">\(\text{Wine}\)</span> makes the set infrequent, then the maximal itemset marks the practical boundary of the recurring meal-kit pattern</li>
+<li>Maximality requires that adding any further item, not just <span class="math inline">\(\text{Wine}\)</span>, makes the set infrequent</li>
 </ul>
 <p>Applications:</p>
 <ul>
@@ -1070,7 +1045,7 @@ those with support cardinality at least 3.
 <p>Applications:</p>
 <ul>
 <li>Keep campaign-size information while removing redundant patterns</li>
-<li>Detect “always together” products, such as a device and a required accessory</li>
+<li>Detect combinations that always imply another item, such as a device that always comes with a required accessory</li>
 <li>Build dashboards where analysts need accurate supports but not thousands of repeated itemsets</li>
 </ul>
 </section>
@@ -1271,7 +1246,7 @@ those with support cardinality at least 3.
 <p>Once we have a frequent itemset <span class="math inline">\(L\)</span>, every association rule made from it is obtained by choosing a non-empty proper subset <span class="math inline">\(f\)</span> as the <strong>antecedent</strong>, and putting the remaining items <span class="math inline">\(L \setminus f\)</span> as the <strong>consequent</strong>.</p>
 <p>In compact notation:</p>
 <p><span class="math display">\[f \to L \setminus f\]</span></p>
-<p>and the rule satisfies the minimum confidence constraint.</p>
+<p>Keep only candidates whose confidence meets <code>minConf</code>.</p>
 <p>For <span class="math inline">\(L=\{A,B,C,D\}\)</span>, candidate rules include:</p>
 <ul>
 <li><span class="math inline">\(ABC \to D\)</span>, <span class="math inline">\(ABD \to C\)</span>, <span class="math inline">\(ACD \to B\)</span>, <span class="math inline">\(BCD \to A\)</span></li>
@@ -1542,13 +1517,13 @@ those with support cardinality at least 3.
 
 <section id="cross-support-pattern-why-it-matters" class="title-slide slide level1 center">
 <h1>Cross-Support Pattern: Why It Matters</h1>
-<p>With threshold <code>thr = 0.3</code>, itemsets such as <span class="math inline">\(\{p,q,r\}\)</span>, <span class="math inline">\(\{p,r\}\)</span>, and <span class="math inline">\(\{p,q\}\)</span> can become cross-support patterns.</p>
+<p>Reuse <span class="math inline">\(s(\text{milk})=70\%\)</span> and <span class="math inline">\(s(\text{caviar})=0.04\%\)</span>: their support ratio is <span class="math inline">\(0.0004/0.7 \approx 0.00057\)</span>.</p>
 <p>The related association rules may have high confidence but little practical interest.</p>
+<p>If every caviar basket also contains milk:</p>
 <ul>
-<li><span class="math inline">\(c(\{q\} \to \{p\})=4/5=80\%\)</span></li>
-<li><span class="math inline">\(s(\{p,q\})=4/30=13.3\%\)</span></li>
-<li><span class="math inline">\(s(\{q,r\})=5/30=16.7\%\)</span></li>
-<li><span class="math inline">\(c(\{p\} \to \{q\})=4/25=16\%\)</span></li>
+<li><span class="math inline">\(c(\{\text{caviar}\} \to \{\text{milk}\})=100\%\)</span></li>
+<li><span class="math inline">\(s(\{\text{milk},\text{caviar}\})=0.04\%\)</span></li>
+<li>The confidence is high, but the rule covers very few transactions and milk is already common</li>
 </ul>
 <p>Support and confidence alone may not capture correlation or affinity among itemsets.</p>
 </section>

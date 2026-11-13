@@ -162,32 +162,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="learning-priorities" class="title-slide slide level1 center">
-<h1>Learning priorities</h1>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Priority</th>
-<th>What students should be able to do</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Core</strong></td>
-<td>Explain train/validation/test splits, confusion matrix, accuracy, precision, recall, F-measure, overfitting, and underfitting</td>
-</tr>
-<tr class="even">
-<td><strong>Practice</strong></td>
-<td>Compute metrics from a small confusion matrix and choose a metric for a business or safety objective</td>
-</tr>
-</tbody>
-</table>
-</section>
-
 <section id="why-evaluation-comes-before-algorithms" class="title-slide slide level1 center">
 <h1>Why evaluation comes before algorithms</h1>
 <p>A model is useful only if it generalizes beyond the data used to build it.</p>
@@ -196,7 +170,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Evaluation estimates whether those patterns will survive on future data</li>
 <li>The final test set estimates performance only after choices have been made</li>
 </ul>
-<p>The same evaluation vocabulary will return in decision trees, k-NN, neural networks, ensembles, and the final assignment.</p>
 </section>
 
 <section id="training-and-test-sets" class="title-slide slide level1 center">
@@ -368,7 +341,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>#Record of class 1 = 10</li>
 </ul>
 <p>A model that always returns class 0 will have an accuracy of <span class="math inline">\(\frac{9990}{10000}\)</span> = 99.9%</p>
-<p>In the case of binary classification problems, the class “rare” is also called a positive class.</p>
+<p>The positive class is the class of interest. In rare-event detection, it is often the minority class.</p>
 </section>
 
 <section id="precision-and-recall" class="title-slide slide level1 center">
@@ -458,7 +431,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li>The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers.</li>
 <li>So if the harmonic average is high, it means both precision and recall are.</li>
-<li>… so there have been no false negatives or false positives</li>
+<li>High F1 means both precision and recall are high; it does not imply zero errors</li>
 </ul>
 </section>
 
@@ -596,12 +569,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img data-src="./img/cv/grid_search_cross_validation.png" class="r-stretch quarto-figure-center"><p class="caption">Cross validation</p><ul>
 <li>Cross-validation creates <span class="math inline">\(k\)</span> different classifiers</li>
-<li>Report the <strong>average</strong> performance to estimate how well the model configuration generalizes</li>
+<li>Use the <strong>average</strong> validation performance to compare model configurations</li>
 <li>Also report the <strong>standard deviation</strong> across folds:
 <ul>
 <li>Low standard deviation means the result is stable across different train/test splits</li>
 <li>High standard deviation means performance depends strongly on which records end up in the fold</li>
 </ul></li>
+<li>After selecting a configuration, estimate final performance on untouched test data or with nested cross-validation; the selected CV mean can be optimistic</li>
 </ul>
 </section>
 
