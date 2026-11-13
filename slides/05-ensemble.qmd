@@ -10,13 +10,6 @@ By the end of this lecture, you will be able to:
 - **Compare** decision-level and confidence-level fusion rules
 - **Distinguish** bagging from boosting
 
-# Learning priorities
-
-| Priority | What students should be able to do |
-|---|---|
-| **Core** | Explain voting, diversity, bagging, random forests, boosting, and weak learners |
-| **Practice** | Compute majority vote, weighted vote |
-
 # Why ensemble classifiers?
 
 An **ensemble classifier** combines the predictions of several base classifiers.
@@ -166,7 +159,7 @@ If one classifier assigns confidence 0, a product rule forces the whole combined
 :::{.fragment}
 **Changing the attributes**
 
-- Train each classifier on a subset of features
+- In random forests, each split considers a new random subset of candidate features
 - Useful when features are redundant or highly correlated
 - Example: random forests
 :::
@@ -306,7 +299,15 @@ $$
 x \le 0.7 \rightarrow ❌,\qquad x>0.7 \rightarrow ✅
 $$
 
-The ensemble vote can approximate a more expressive classifier than one stump alone.
+A third bootstrap sample containing only positive records produces a constant-positive classifier $C_0$.
+
+The majority vote of these three classifiers recovers the pattern:
+
+| Region | Left-boundary stump | Right-boundary stump | $C_0$ | Majority |
+|---|:---:|:---:|:---:|:---:|
+| $x \leq 0.3$ | ✅ | ❌ | ✅ | ✅ |
+| $0.3 < x \leq 0.7$ | ❌ | ❌ | ✅ | ❌ |
+| $x > 0.7$ | ❌ | ✅ | ✅ | ✅ |
 
 # When bagging helps
 
@@ -337,8 +338,12 @@ It introduces randomness in two places:
 
 **Boosting** builds classifiers sequentially.
 
-- Each new classifier focuses more strongly on the records that previous classifiers handled badly.
+- In **AdaBoost**, each new classifier focuses more strongly on misclassified records by increasing their weights.
 - Unlike bagging, boosting classifiers are not independent: each round depends on the previous one.
+
+**Gradient boosting** (including XGBoost and LightGBM) fits loss gradients and combines predictions additively.
+
+AdaBoost workflow:
 
 ```{mermaid}
 %%| echo: false
@@ -356,9 +361,9 @@ flowchart LR
 
 
 
-# Bagging vs boosting
+# Bagging vs AdaBoost
 
-| Aspect | Bagging | Boosting |
+| Aspect | Bagging | AdaBoost |
 |---|---|---|
 | Training | Parallel | Sequential |
 | Data distribution | Bootstrap samples | Reweighted records |
@@ -488,6 +493,7 @@ Each classifier contributes according to its reliability.
 2. For each round $j=1,\dots,T$:
     - Train classifier $C_j$ using weights $w^{(j)}$
     - Compute weighted error $\epsilon_j$
+    - If $\epsilon_j=0$, return $C_j$ as the final classifier
     - Compute classifier weight $\alpha_j$
     - Update the record weights
 3. Return the weighted vote of all classifiers
@@ -503,7 +509,9 @@ for j = 1, ..., T:
     Train classifier C_j on the weighted training set
     Compute weighted error epsilon_j
 
-    if epsilon_j >= 0.5:
+    if epsilon_j == 0:
+        return C_j
+    elif epsilon_j >= 0.5:
         stop or discard the classifier
     else:
         alpha_j = 1/2 * ln((1 - epsilon_j) / epsilon_j)

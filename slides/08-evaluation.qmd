@@ -12,13 +12,6 @@ By the end of this lecture, you will be able to:
 - **Use** cross-validation for model selection without contaminating the final test
 - **Recognize** common forms of data leakage
 
-# Learning priorities
-
-| Priority | What students should be able to do |
-|---|---|
-| **Core** | Explain train/validation/test splits, confusion matrix, accuracy, precision, recall, F-measure, overfitting, and underfitting |
-| **Practice** | Compute metrics from a small confusion matrix and choose a metric for a business or safety objective |
-
 # Why evaluation comes before algorithms
 
 A model is useful only if it generalizes beyond the data used to build it.
@@ -26,8 +19,6 @@ A model is useful only if it generalizes beyond the data used to build it.
 - Algorithms learn patterns from training data
 - Evaluation estimates whether those patterns will survive on future data
 - The final test set estimates performance only after choices have been made
-
-The same evaluation vocabulary will return in decision trees, k-NN, neural networks, ensembles, and the final assignment.
 
 # Training, and test sets
 
@@ -112,7 +103,7 @@ Accuracy is not an appropriate metric if the classes contain a very different nu
 
 A model that always returns class 0 will have an accuracy of $\frac{9990}{10000}$ = 99.9%
 
-In the case of binary classification problems, the class "rare" is also called a positive class.
+The positive class is the class of interest. In rare-event detection, it is often the minority class.
 
 # Precision and recall
 
@@ -188,14 +179,14 @@ F-measure represents the harmonic mean of precision and recall.
 
 - The harmonic average between two x and y numbers tends to be close to the smallest of the two numbers.
 - So if the harmonic average is high, it means both precision and recall are.
-- ... so there have been no false negatives or false positives
+- High F1 means both precision and recall are high; it does not imply zero errors
 
 # Cost-based evaluation {visibility="hidden"}
 
-Accuracy, Precision, Recall, and F-measure classify an instance as positive if $P(+, i)>P(-, i)$.
+A decision threshold converts scores into class predictions; accuracy, precision, recall, and F-measure evaluate those predictions.
 
-- They assume that FN and FP have the same weight, thus they are Cost-Insensitive
-- In many domains, this is not true!
+- These metrics do not impose a threshold or encode application-specific error costs; precision omits FN, while recall omits FP
+- Cost-sensitive decisions choose a threshold to minimize expected cost
     - For a cancer screening test, for example, we may be prepared to put up with a relatively high false positive rate in order to get a high true positive; it is most important to identify possible cancer sufferers
     - For a follow-up test after treatment, however, a different threshold might be more desirable, since we want to minimize false negatives; we don't want to tell a patient they're clear if this is not actually the case.
 
@@ -250,11 +241,11 @@ Predictions of Model M2
 
 | Predicted $\downarrow$ / Expected $\rightarrow$ | **Class=+** | **Class=-** |
 | :-: | :-: | :-: |
-| **Class=+** | 250 | 45 |
-| **Class=-** | 5 | 200 |
+| **Class=+** | 205 | 45 |
+| **Class=-** | 5 | 245 |
 
 - Accuracy = 90%
-- Cost = 4255
+- Cost = 4300
 :::
 
 :::
@@ -356,15 +347,15 @@ Lack of points at the bottom of the chart makes it difficult to find a proper cl
 
 Unlike previous approaches, the extracted records are replaced. If the initial dataset consists of $N$ records, you can create an $N$-record set in which each record has approximately a 63.2% probability of appearing (with $N$ sufficiently large)
 
-$1 - (1 - \frac{1}{N})^N = 1 - e^{-1} = 0.632$
+$1 - (1 - \frac{1}{N})^N \approx 1 - e^{-1} \approx 0.632$
 
 - Records that are not used even once in the current training set form the validation set
 
 The procedure is repeated $b$ times. Commonly, the model's accuracy is calculated as:
 
-$Acc_{boot} = \frac{1}{b} \sum_{i=1}^b 0.632 \cdot Acc_i + 0.368 \cdot Acc_s$
+$Acc_{.632} = 0.368 \cdot Acc_{apparent} + 0.632 \cdot Acc_{OOB}$
 
-where $Acc_i$ is the accuracy of the $i$-th bootstrap, $Acc_s$ is the accuracy of the complete dataset
+where $Acc_{apparent}$ is the accuracy of the model fitted and evaluated on the full training dataset. For $Acc_{OOB}$, average each record's correctness over bootstrap models that excluded it, then average across records, using $b$ resamples.
 
 The bootstrap does not create a (new) dataset with more information, but it can stabilize the obtained results of the available dataset. It is therefore particularly useful for small datasets.
 
@@ -415,10 +406,11 @@ Common examples:
 ![Cross validation](./img/cv/grid_search_cross_validation.png)
 
 - Cross-validation creates $k$ different classifiers
-- Report the **average** performance to estimate how well the model configuration generalizes
+- Use the **average** validation performance to compare model configurations
 - Also report the **standard deviation** across folds:
   - Low standard deviation means the result is stable across different train/test splits
   - High standard deviation means performance depends strongly on which records end up in the fold
+- After selecting a configuration, estimate final performance on untouched test data or with nested cross-validation; the selected CV mean can be optimistic
 
 # Cross validation
 

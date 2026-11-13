@@ -25,13 +25,6 @@ By the end of this lecture, you will be able to:
 - **Recognize** why feature scaling is essential for distance-based learning
 - **Diagnose** failure cases caused by irrelevant features and high dimensionality
 
-# Learning priorities
-
-| Priority | What students should be able to do |
-|---|---|
-| **Core** | Explain lazy learning, distance metrics, majority vote, and why scaling matters |
-| **Practice** | Compute a k-NN prediction and select $k$ using validation data |
-
 # If it walks like a duck and quacks like a duck, it's probably a duck
 
 ![If it walks like a duck and quacks like a duck, it's probably a duck](img/knn/Immagine1.png)
@@ -303,10 +296,11 @@ fig.tight_layout()
 plt.show()
 ```
 
-# Feature scaling is not optional
+# Check feature scales before computing distances
 
 k-NN compares records using distances.
 
+- Scale or weight features when their units would distort similarity.
 - If features have very different numeric ranges, large-scale features dominate the distance even when they are not more informative.
 
 Example:
@@ -419,7 +413,7 @@ The pipeline fits preprocessing only on the training folds during cross-validati
 
 k-NN is sensitive to the number of features.
 
-- each feature contributes noise to the distance
+- Irrelevant or noisy features add unwanted contributions to distance
 - irrelevant features can dominate the distance metric
 - truly similar records may appear far apart
 
@@ -727,7 +721,7 @@ After computing $n$ distances, k-NN must identify the smallest $k$:
 
 - Sort every distance: $O(n\log n)$
 
-The complete brute-force prediction (more optimized solution exist) cost is:
+With full sorting, brute-force prediction costs:
 
 $$
 O(nd+n\log n)

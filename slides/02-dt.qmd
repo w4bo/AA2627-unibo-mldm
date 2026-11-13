@@ -14,13 +14,6 @@ By the end of this lecture, you will be able to:
 - **Compute and interpret** impurity and gain
 - **Diagnose** overfitting and choose an appropriate pruning strategy
 
-# Learning priorities
-
-| Priority | What students should be able to do |
-|---|---|
-| **Core** | Explain the tree representation, root-to-leaf rules, split conditions, impurity, and overfitting |
-| **Practice** | Compute Gini, Entropy, Gain, and GainRatio on a small candidate split |
-
 # Motivating problem: who will churn?
 
 **Customer churn** is a critical metric when it is much less expensive to retain existing customers than it is to acquire new customers.
@@ -379,7 +372,7 @@ flowchart LR
 
 # Learning the tree
 
-The decision tree grows exponentially with the number of attributes.
+In the worst case, tree size can grow exponentially with the number of binary attributes.
 
 Many algorithms are available:
 
@@ -560,7 +553,7 @@ Classification using a decision tree is extremely fast and provides easy interpr
 
 Decision trees are robust enough to handle strongly correlated attributes.
 
-- One of the two attributes will not be considered
+- Trees can often use one correlated feature in place of another, but may still split on both
 - It is also possible to try to discard one of the preprocessing attributes through appropriate feature selection techniques
 
 # Characteristic features {background-color="#121011"}
@@ -681,7 +674,7 @@ flowchart TD
 :::{.column width=50%}
 *N-ary split*: The split condition is expressed as a Boolean test that results in multiple ranges of values.
 
-- The algorithm must consider the entire possible range of values as possible split points
+- Candidate boundaries lie between successive distinct observed values
 
 ```{mermaid}
 %%| echo: false
@@ -698,7 +691,7 @@ flowchart TD
 :::{.column width=50%}
 *Binary split*: The split condition is expressed as a binary comparison test.
 
-- The algorithm must consider all values as possible split points
+- With $m$ distinct observed values, thresholds between successive values give $m-1$ nonempty binary partitions
 
 ```{mermaid}
 %%| echo: false
@@ -850,7 +843,7 @@ It is usually more efficient to create a "count matrix" for each candidate split
 
 It requires defining the split point using a binary condition.
 
-- The number of possible conditions is equal to the number of distinct values of the attribute.
+- With $m$ distinct observed values, there are $m-1$ nonempty binary partitions, obtained by thresholds between successive values.
 - We can calculate a count matrix for each split value.
     - The matrix counts the elements of each class for attribute values greater than or less than the split value.
 
@@ -1007,8 +1000,8 @@ See [Evaluation of classifiers](08-evaluation)
 
 Decision trees can overfit because repeated splits make the decision boundary increasingly specific to the training data.
 
-- The shared evaluation lecture defines underfitting, overfitting, and generalization error
-- Here we focus on tree-specific controls: stopping criteria, pre-pruning, post-pruning, and complexity penalties
+- Pruning controls overfitting by limiting tree complexity
+- Tree-specific controls include stopping criteria, pre-pruning, post-pruning, and complexity penalties
 
 # Handling overfitting: pre-pruning (early stopping)
 
@@ -1033,7 +1026,7 @@ Examine the decision tree nodes obtained with a bottom-up logic
 - Replace a subtree with a leaf if this reduces the generalization error (i.e., on the validation set)
 - Choose to collapse the sub-tree that determines the maximum error reduction (N.B. greedy choice)
 
-Instances in the new leaf can be tagged based on the label that appears most frequently in the sub-trees
+Assign the new leaf the majority class among the training records reaching the pruned node.
 
 Post-pruning is more effective but involves more computational cost.
 
@@ -1088,7 +1081,7 @@ $Cost(model, data)=Cost(model)+Cost(data|model)$
 Datasets with $n$ records described by 16 binary attributes and 3 class values
 
 - Each inner node is modeled with the ID of the used attribute: $log_2(16)=4$ bits
-- Each leaf is modeled with the ID of the class: $log_2(3)=2$ bits
+- Each leaf is modeled with the ID of the class using a fixed-width code: $\lceil log_2(3)\rceil=2$ bits
 - Each error is modeled with its position in the training set, considering $n$ record: $log_2(n)$
 
 Cost:
@@ -1106,7 +1099,7 @@ The generalization error is estimated by adding to the error on the training set
     - $\Sigma(t_i)$: leaf-related penalty $i$
     - $n(t_i)$ number of records in the training set belonging to leaf $i$
 
-$E(T)=\frac{\sum_{i=1}^k e(t_i)+\Sigma(t_i)}{\sum_{i=1}^k n(t_i)}$
+$E(T)=\frac{\sum_{i=1}^k \left(e(t_i)+\Sigma(t_i)\right)}{\sum_{i=1}^k n(t_i)}$
 
 For binary trees, a penalty equal to 0.5 implies that a node should always be expanded into the two child nodes if it improves the classification of at least one record.
 
@@ -1160,7 +1153,7 @@ Widely used decision-tree algorithm. It extends ID3 and Hunt's algorithm.
 - It uses $GainRatio$ as a criterion for determining the split attribute
 - It manages continuous attributes by determining a split point that divides the range of values into two
 - It manages data with missing values. Missing attributes are not considered to calculate $GainRatio$.
-- It can handle attributes that are associated with different weights
+- It can handle weighted training cases, including fractional weights when routing cases with missing values
 - It runs post-pruning on the created tree
 
 **The tree construction stops when:**

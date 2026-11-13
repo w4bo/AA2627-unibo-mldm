@@ -12,14 +12,9 @@ By the end of this lecture, you will be able to:
 - **Interpret** closed, maximal, and multi-level itemsets
 - **Diagnose** redundant, uninteresting, and cross-support patterns
 
-# Learning priorities
+# A market-basket toy example
 
-| Priority | What students should be able to do |
-|---|---|
-| **Core** | Explain itemsets, support, confidence, Apriori, and rule interpretation |
-| **Practice** | Compute supports, confidences, and frequent itemsets on a small transaction table |
-
-# The Walmart "market basket" use case
+Adapted from Tan, Steinbach, and Kumar, *Introduction to Data Mining*.
 
 | TID | Items |
 |---:|---|
@@ -29,7 +24,7 @@ By the end of this lecture, you will be able to:
 | 4 | Bread, Milk, Diaper, Beer |
 | 5 | Bread, Milk, Diaper, Coke |
 
-Example rules:
+Candidate rules (not necessarily supported by these transactions):
 
 - $\{\text{Diaper}\} \to \{\text{Beer}\}$
 - $\{\text{Milk}, \text{Bread}\} \to \{\text{Eggs}, \text{Coke}\}$
@@ -77,7 +72,7 @@ An **association rule** is an implication of the form:
 
 $$X \to Y$$
 
-where $X$ and $Y$ are itemsets.
+where $X$ and $Y$ are nonempty, disjoint itemsets ($X \cap Y=\emptyset$).
 
 Example:
 
@@ -508,7 +503,7 @@ Maximal itemsets answer the question:
 Example with product names:
 
 - If $\{\text{Pasta}, \text{Tomato Sauce}, \text{Parmesan}\}$ is maximal frequent, then the smaller baskets $\{\text{Pasta}, \text{Tomato Sauce}\}$ and $\{\text{Tomato Sauce}, \text{Parmesan}\}$ are frequent too
-- If adding $\text{Wine}$ makes the set infrequent, then the maximal itemset marks the practical boundary of the recurring meal-kit pattern
+- Maximality requires that adding any further item, not just $\text{Wine}$, makes the set infrequent
 
 Applications:
 
@@ -624,7 +619,7 @@ Example:
 Applications:
 
 - Keep campaign-size information while removing redundant patterns
-- Detect "always together" products, such as a device and a required accessory
+- Detect combinations that always imply another item, such as a device that always comes with a required accessory
 - Build dashboards where analysts need accurate supports but not thousands of repeated itemsets
 
 # Closed vs Maximal Itemsets: Example
@@ -747,7 +742,7 @@ In compact notation:
 
 $$f \to L \setminus f$$
 
-and the rule satisfies the minimum confidence constraint.
+Keep only candidates whose confidence meets `minConf`.
 
 For $L=\{A,B,C,D\}$, candidate rules include:
 
@@ -960,14 +955,15 @@ $$0.0004/0.7 = 0.00058 < 0.01$$
 
 # Cross-Support Pattern: Why It Matters
 
-With threshold `thr = 0.3`, itemsets such as $\{p,q,r\}$, $\{p,r\}$, and $\{p,q\}$ can become cross-support patterns.
+Reuse $s(\text{milk})=70\%$ and $s(\text{caviar})=0.04\%$: their support ratio is $0.0004/0.7 \approx 0.00057$.
 
 The related association rules may have high confidence but little practical interest.
 
-- $c(\{q\} \to \{p\})=4/5=80\%$
-- $s(\{p,q\})=4/30=13.3\%$
-- $s(\{q,r\})=5/30=16.7\%$
-- $c(\{p\} \to \{q\})=4/25=16\%$
+If every caviar basket also contains milk:
+
+- $c(\{\text{caviar}\} \to \{\text{milk}\})=100\%$
+- $s(\{\text{milk},\text{caviar}\})=0.04\%$
+- The confidence is high, but the rule covers very few transactions and milk is already common
 
 Support and confidence alone may not capture correlation or affinity among itemsets.
 

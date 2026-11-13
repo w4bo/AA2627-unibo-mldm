@@ -14,13 +14,6 @@ By the end of this lecture, you will be able to:
 - **Select** an algorithm based on cluster shape, density, noise, and interpretability
 - **Evaluate** clustering results without assuming that every partition is meaningful
 
-# Learning priorities
-
-| Priority | What students should be able to do |
-|---|---|
-| **Core** | Explain cluster ambiguity, k-means, hierarchical clustering, DBSCAN, and cluster validity |
-| **Practice** | Run one k-means iteration and compare algorithms on shape, density, noise, and interpretability |
-
 # Motivating problem: discover customer segments
 
 A mall has customer behavior data but no segment labels.
@@ -434,9 +427,9 @@ plt.show()
 Initial centroids are often chosen randomly.
 
 * Clusters produced vary from one run to another.
-* *Closeness* is measured by Euclidean distance, cosine similarity, correlation, etc.
+* Standard k-means uses Euclidean distance for assignment and arithmetic means to minimize squared Euclidean error.
 
-K-means will converge for common distance measures, and most of the convergence happens in the first few iterations.
+Standard Euclidean k-means converges, and most of the improvement often happens in the first few iterations.
 
 * The algorithm can converge to a suboptimal solution
 * Often, the stopping condition is relaxed to "Until relatively few points change clusters."
@@ -461,11 +454,13 @@ One easy way to reduce SSE is to increase  $K$, the number of clusters.
 
 If there are real $K$ clusters, the probability of choosing a centroid from each cluster is very limited.
 
-Assuming the clusters have the same cardinality  $n$:
+Assuming $K$ clusters of equal cardinality $n$ and independent uniform draws **with replacement**:
 
 * $P=\frac{\text{\# ways of choosing a centroid by cluster}}{\text{\# ways of choosing K centroids}}=\frac{(n)^K \cdot K!}{(n \cdot K)^K}=\frac{K!}{K^K}$
     * If $K$ = 10, probability is $\frac{10!}{10^{10}} \approx 0.00036$
 * Sometimes the centroids will reposition themselves correctly, sometimes not...
+
+When choosing $K$ distinct points **without replacement**, the exact probability is $P=\frac{n^K}{\binom{nK}{K}}$; $K!/K^K$ is its large-cluster approximation.
 
 # 10 clusters example
 
@@ -658,7 +653,7 @@ The value of SSE leads to the identification of centroids to have clusters of th
 
 # K-means limits: different density
 
-Denser clusters lead to smaller intra-cluster distances, so less dense areas require more medians to minimize the total value of SSE.
+Denser clusters lead to smaller intra-cluster distances, so less dense areas may receive more centroids when minimizing SSE.
 
 ::::{.columns}
 :::{.column width="50%"}
@@ -772,7 +767,7 @@ Execute k-means several times with increasing values for k (higher k, lower SSE)
 Draw the cluster partitioning and the approximate position of the centroids chosen by the k-means algorithm, assuming that:
 
 * The points are equally distributed
-* The distance function is SSE
+* Use squared Euclidean distances and minimize the SSE objective
 * The value of $k$ is shown below the figures
 
 ![K=2, K=3, K=3, K=2, K=3](img/clustering/14-Clustering_55.png)
@@ -1188,7 +1183,7 @@ This is not the case of clustering. So why evaluate clustering validity?
 
 # Validity measures
 
-Numerical measures that are applied to judge various aspects of cluster validity are classified into the following three types.
+Numerical measures that are applied to judge various aspects of cluster validity are classified into the following two types.
 
 * **Internal Index**: Used to measure the goodness of a clustering structure *without respect to external information*.
   * Sum of Squared Error (SSE)
@@ -1242,7 +1237,7 @@ Two matrices are used.
 
 Compute the correlation between the two matrices.
 
-High correlation indicates that points that belong to the same cluster are close to each other.
+A strongly negative correlation indicates that points belonging to the same cluster have small distances.
 
 Not a good measure for some density or contiguity-based clusters (such as those obtained with density-based algorithms or contiguity measures)
 
@@ -1253,7 +1248,7 @@ Not a good measure for some density or contiguity-based clusters (such as those 
 Correlation between the incidence matrix and the proximity matrix for the result of the k-means algorithm on two different datasets.
 
 * The correlation is negative because small distances in the proximity matrix correspond to large values (1) in the incidence matrix
-* Obviously, if the distance matrix had been used instead of the similarity matrix, the correlation would have been positive
+* If a similarity matrix were used instead of the distance matrix, good compact clusters would give a positive correlation
 
 ![Corr = -0.9235 vs Corr = -0.5810](img/clustering/Immagine51.svg)
 
@@ -1330,7 +1325,7 @@ Statistics can provide a suitable methodology for assessing the goodness of a me
 
 * We are looking for non-random patterns, so the more "atypical" the result we get, the more likely it is to represent a non-random pattern in the data
 * Therefore, the idea is to compare the value of the measure with that obtained from random data.
-  * If the value of the measure obtained on the data is unlikely for random data, then the clustering is valid
+  * An unlikely value under a specified random-data model is evidence against that model; also check cluster stability and domain relevance
 
 The issue of interpreting the measure value is less pressing when comparing the results of two clusters.
 
@@ -1369,14 +1364,15 @@ Hopkins asks a simple question:
 Procedure:
 
 1. Sample some real points from the dataset
-2. Generate the same number of random points in the data space
+2. Generate the same number of points uniformly in the axis-aligned bounding box of the data
 3. For both groups, measure the distance to the nearest real neighbor
-4. Compare the two distance sums
+4. Compare sums of distances raised to the data dimension $d$
 
-$H = \frac{\sum_{i=1}^{m} u_i}{\sum_{i=1}^{m} u_i + \sum_{i=1}^{m} w_i}$
+$H = \frac{\sum_{i=1}^{m} u_i^d}{\sum_{i=1}^{m} u_i^d + \sum_{i=1}^{m} w_i^d}$
 
 - $u_i$: distance from a random point to the nearest real point
 - $w_i$: distance from a real sampled point to the nearest other real point
+- $d$: number of Euclidean dimensions; the sampling region defines the reference model
 
 # Clustering Tendency: interpreting Hopkins
 
